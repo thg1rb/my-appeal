@@ -38,6 +38,11 @@ public class MainApplication extends Application {
         // Professor
         FXRouter.when("professor-student-list", viewPath + "professor-student-list.fxml");
         FXRouter.when("professor-student-appeal", viewPath + "professor-student-appeal.fxml");
+
+        // Faculty
+        FXRouter.when("faculty-appeal-manage", viewPath + "faculty-appeal-manage.fxml");
+        FXRouter.when("faculty-approver-manage", viewPath + "faculty-approver-manage.fxml");
+
     }
 
     public static void main(String[] args) {
