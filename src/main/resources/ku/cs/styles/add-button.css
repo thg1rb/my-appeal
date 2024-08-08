@@ -1,0 +1,11 @@
+.add-button{
+    -fx-background-color: transparent;
+}
+.add-button:hover{
+    -fx-background-color: #007D2A;
+    -fx-text-fill: white;
+    -fx-background-radius: 10px 10px 10px 10px;
+}
+.add-button{
+    -fx-cursor: hand;
+}
