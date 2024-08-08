@@ -43,6 +43,10 @@ public class MainApplication extends Application {
         FXRouter.when("faculty-appeal-manage", viewPath + "faculty-appeal-manage.fxml");
         FXRouter.when("faculty-approver-manage", viewPath + "faculty-approver-manage.fxml");
 
+        // Major
+        FXRouter.when("major-appeal-manage", viewPath + "major-appeal-manage.fxml");
+        FXRouter.when("major-approver-manage", viewPath + "major-approver-manage.fxml");
+        FXRouter.when("major-nisit-manage", viewPath + "major-nisit-manage.fxml");
     }
 
     public static void main(String[] args) {
