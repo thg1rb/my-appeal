@@ -23,12 +23,12 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button layoutX="746.0" layoutY="461.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="139.0" styleClass="login-button" stylesheets="@../styles/button.css" text="ต่อไป">
+            <Button layoutX="746.0" layoutY="461.0" mnemonicParsing="false" onAction="#onNextButtonClick" prefHeight="45.0" prefWidth="139.0" styleClass="login-button" stylesheets="@../styles/button.css" text="ต่อไป">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Label layoutX="612.0" layoutY="405.0" text="*ข้อมูลของท่านไม่อยู่ในระบบ กรุณาติดต่อเจ้าหน้าที่" textFill="RED">
+            <Label fx:id="errorLabel" layoutX="612.0" layoutY="405.0" text="*ข้อมูลของท่านไม่อยู่ในระบบ กรุณาติดต่อเจ้าหน้าที่" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>
