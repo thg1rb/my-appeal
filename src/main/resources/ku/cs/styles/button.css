@@ -1,6 +1,7 @@
 /* Sidebar Button Click */
 .sidebar-button {
     -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
 
 .sidebar-button:hover {
