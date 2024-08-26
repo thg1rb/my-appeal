@@ -3,20 +3,26 @@ package ku.cs.models;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class User {
+    private String role;
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+    private String fullName;
+    private boolean ban;
 
     public User() {}
-    public User(String username, String password) {
+    public User(String username, String password, String role) {
+        this.role = role;
         this.username = username;
+        this.ban = false;
         setPassword(password);
     }
-    public User(String userName, String password, String firstName, String lastName) {
-        this(userName, password);
+    public User(String userName, String password, String firstName, String lastName, String role) {
+        this(userName, password, role);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.fullName = firstName + " " + lastName;
     }
 
     public boolean isUsername(String username) {
@@ -32,13 +38,17 @@ public class User {
         return result.verified;
     }
 
-    public String getUserId() { return username; }
-
-    public String getPassword() { return password; }
+    public String getUsername() { return username; }
 
     public String getFirstName() { return firstName; }
 
     public String getLastName() { return lastName; }
+
+    public String getFullName() { return fullName; }
+
+    public String getRole() { return role; }
+
+    public boolean isBanned() { return ban; }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
