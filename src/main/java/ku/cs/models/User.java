@@ -1,51 +1,51 @@
 package ku.cs.models;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class User {
-    private String userName;
-    private String initialPassword;
+    private String username;
     private String password;
     private String firstName;
     private String lastName;
 
     public User() {}
-    public User(String userName, String initialPassword, String firstName, String lastName) {
-        this.userName = userName;
-        this.initialPassword = initialPassword;
-        this.password = initialPassword;
+    public User(String username, String password) {
+        this.username = username;
+        setPassword(password);
+    }
+    public User(String userName, String password, String firstName, String lastName) {
+        this(userName, password);
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public String getUserId() {
-        return userName;
+    public boolean isUsername(String username) {
+        return this.username.equals(username);
     }
 
-    public String getInitialPassword() {
-        return initialPassword;
+    public void setPassword(String password) {
+        this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
 
-    public String getPassword() {
-        return password;
+    public boolean validatePassword(String password) {
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
+        return result.verified;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getUserId() { return username; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getPassword() { return password; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 }
