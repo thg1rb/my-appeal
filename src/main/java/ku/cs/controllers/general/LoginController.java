@@ -39,7 +39,7 @@ public class LoginController {
         user = userList.findUserByUsername(username);
 
         if(user == null) {
-            errorLabel.setText("User not found");
+            errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
             if(user.validatePassword(password)){
@@ -80,7 +80,7 @@ public class LoginController {
                 }
             }
             else{
-                errorLabel.setText("Invalid password");
+                errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
             }
         }
 
