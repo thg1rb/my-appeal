@@ -50,14 +50,14 @@ public class LoginController {
                         throw new RuntimeException(e);
                     }
                 }
-                else if ( user.getRole().equals("เจ้าหน้าที่ภาควิชา") ){
+                else if ( user.getRole().equals("เจ้าหน้าที่คณะ") ){
                     try {
                         FXRouter.goTo("faculty-appeal-manage");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                else if ( user.getRole().equals("เจ้าหน้าที่คณะ") ){
+                else if ( user.getRole().equals("เจ้าหน้าที่ภาควิชา") ){
                     try {
                         FXRouter.goTo("major-appeal-manage");
                     } catch (IOException e) {
