@@ -25,7 +25,6 @@ public class AdminUserManagementController {
         userList = usersDatasource.readData();
 
         showTable(userList);
-
     }
 
     private void showTable(UserList userList){
@@ -38,7 +37,6 @@ public class AdminUserManagementController {
         TableColumn<User, Double> roleColumn = new TableColumn<>("Role");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        // ล้าง column เดิมทั้งหมดที่มีอยู่ใน table แล้วเพิ่ม column ใหม่
         allRoleTableView.getColumns().clear();
         allRoleTableView.getColumns().add(nameColumn);
         allRoleTableView.getColumns().add(usernameColumn);
@@ -46,7 +44,6 @@ public class AdminUserManagementController {
 
         allRoleTableView.getItems().clear();
 
-        // ใส่ข้อมูล Student ทั้งหมดจาก studentList ไปแสดงใน TableView
         for (User user: userList.getUsers()) {
             allRoleTableView.getItems().add(user);
         }
