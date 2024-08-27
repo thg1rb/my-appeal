@@ -5,6 +5,12 @@ public class RetireAppeal extends Appeal {
     private int tcas;       // เข้า TCAS รอบที่ (1, 2, 3, 4)
     private String details; // รายละเอียด
 
+    public RetireAppeal(double gpa, int tcas, String details) {
+        super("Retire Appeal");
+        this.gpa = gpa;
+        this.tcas = tcas;
+        this.details = details;
+    }
     // Setter
     public void setGpa(double gpa) {
         this.gpa = gpa;
