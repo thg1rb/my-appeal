@@ -42,7 +42,7 @@ public class LoginController {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
-            if(user.validatePassword(password)){
+            if( user.validatePassword(password) ){
                 if ( user.getRole().equals("ผู้ดูแลระบบ") ) {
                     try {
                     FXRouter.goTo("admin-dashboard");
@@ -83,58 +83,6 @@ public class LoginController {
                 errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
             }
         }
-
-        // Debug Username && Password
-        // Admin
-        if (username.equals("admin") && password.equals("admin")) {
-            try {
-                FXRouter.goTo("admin-dashboard");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Faculty
-        else if (username.equals("faculty") && password.equals("faculty")) {
-            try {
-                FXRouter.goTo("faculty-appeal-manage");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Major
-        else if (username.equals("major") && password.equals("major")) {
-            try {
-                FXRouter.goTo("major-appeal-manage");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Professor
-        else if (username.equals("professor") && password.equals("professor")) {
-            try {
-                FXRouter.goTo("professor-student-appeal");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Student
-        else if (username.equals("student") && password.equals("student")) {
-            try {
-                FXRouter.goTo("student-track-appeal");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Username or Password doesn't exist in the data
-        else {
-            errorLabel.setText("*ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง");
-        }
-
     }
 
     // ไปที่หน้าลงทะเบียน (ข้อมูลส่วนบุคคล)

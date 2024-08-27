@@ -34,7 +34,7 @@ public class AdminUserManagementController {
         TableColumn<User, String> usernameColumn = new TableColumn<>("Username");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User, Double> roleColumn = new TableColumn<>("Role");
+        TableColumn<User, String> roleColumn = new TableColumn<>("Role");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         allRoleTableView.getColumns().clear();
