@@ -2,7 +2,7 @@ package ku.cs.models;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-public class User {
+public abstract class User {
     private String role;
     private String username;
     private String password;
@@ -11,7 +11,6 @@ public class User {
     private String fullName;
     private boolean ban;
 
-    public User() {}
     public User(String username, String password, String role) {
         this.role = role;
         this.username = username;
@@ -57,5 +56,7 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public abstract void login();
 
 }

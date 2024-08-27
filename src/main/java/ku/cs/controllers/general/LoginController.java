@@ -42,42 +42,8 @@ public class LoginController {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
-            if( user.validatePassword(password) ){
-                if ( user.getRole().equals("ผู้ดูแลระบบ") ) {
-                    try {
-                    FXRouter.goTo("admin-dashboard");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if ( user.getRole().equals("เจ้าหน้าที่คณะ") ){
-                    try {
-                        FXRouter.goTo("faculty-appeal-manage");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if ( user.getRole().equals("เจ้าหน้าที่ภาควิชา") ){
-                    try {
-                        FXRouter.goTo("major-appeal-manage");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if ( user.getRole().equals("อาจารย์ที่ปรึกษา") ){
-                    try {
-                        FXRouter.goTo("professor-student-appeal");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else if (user.getRole().equals("นิสิต") ){
-                    try {
-                        FXRouter.goTo("student-track-appeal");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+            if (user.validatePassword(password)){
+                user.login();
             }
             else{
                 errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
