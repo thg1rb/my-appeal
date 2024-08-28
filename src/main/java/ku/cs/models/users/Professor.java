@@ -16,6 +16,9 @@ public class Professor extends User {
         this.id = id;
     }
 
+    public String getFaculty() { return faculty; }
+    public String getMajor() { return major; }
+    public String getId() { return id; }
 
     @Override
     public void login() {

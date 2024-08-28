@@ -29,7 +29,7 @@ public class Approver {
     public String getFullName() { return fullName; }
     public String getRole() { return role; }
 
-
+    //delete later
     public static void main(String[] args) {
         StaffMajor majorStaff = new StaffMajor("test","test","จนท", "ภาค", "วิท", "คอม");
         Approver a = new Approver("ผู้อนุมัติระดับภาควิชา", "ทดลอง", "รักษาการณ์แทนหัวหน้าภาควิชา", majorStaff);

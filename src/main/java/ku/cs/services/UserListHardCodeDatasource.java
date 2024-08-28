@@ -19,7 +19,7 @@ public class UserListHardCodeDatasource implements Datasource<UserList> {
         list.addUser(new Nisit("malee", "test-password", "มาลี", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
         list.addUser(new Nisit("macbook", "test-password", "แม้คบุ้ค", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
         list.addUser(new Nisit("windows", "test-password", "วินโดว์", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("creatorTester", "test-password", "ทดลอง", "เชนนิ่ง", "test@email.com", "วิทยาศาสตร์", majorStaffTest));
+        list.addUser(new Nisit("creatorCreateStudentTester", "test-password", "ทดลอง", "เชนนิ่ง", "test@email.com", "วิทยาศาสตร์", majorStaffTest));
         return list;
     }
 
