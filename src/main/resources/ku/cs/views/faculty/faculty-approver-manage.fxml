@@ -107,9 +107,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="611.0" layoutY="54.0" mnemonicParsing="false" onAction="#addApproverButton" text="Button" />
+      <Button layoutX="1249.0" layoutY="786.0" mnemonicParsing="false" onAction="#addApproverButton" prefHeight="33.0" prefWidth="90.0" style="-fx-background-color: #3aff3a;" text="เพิ่ม" />
       <Pane fx:id="backgroundAddApproverPane" layoutX="1.0" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
-      <Pane fx:id="addApproverPane" layoutX="291.0" layoutY="247.0" prefHeight="285.0" prefWidth="944.0" style="-fx-background-color: #FFFFFF;" visible="false">
+      <Pane fx:id="addApproverPane" layoutX="291.0" layoutY="247.0" prefHeight="285.0" prefWidth="944.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
          <children>
             <TextField layoutX="37.0" layoutY="86.0" prefHeight="45.0" prefWidth="262.0" />
             <TextField layoutX="344.0" layoutY="87.0" prefHeight="45.0" prefWidth="262.0" />
@@ -129,12 +129,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="409.0" layoutY="190.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="117.0" style="-fx-background-color: #3aff3a;" text="เพิ่ม">
+            <Button layoutX="409.0" layoutY="190.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="117.0" style="-fx-background-color: #3aff3a; -fx-background-radius: 20;" text="เพิ่ม">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="865.0" layoutY="12.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #ff0000;" text="ปิด">
+            <Button layoutX="865.0" layoutY="12.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #ff0000; -fx-background-radius: 20;" text="ปิด">
                <font>
                   <Font size="14.0" />
                </font>
