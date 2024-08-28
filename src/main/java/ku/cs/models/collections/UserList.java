@@ -1,6 +1,6 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.User;
+import ku.cs.models.users.User;
 
 import java.util.ArrayList;
 
