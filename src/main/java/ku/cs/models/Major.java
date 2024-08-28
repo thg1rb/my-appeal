@@ -6,7 +6,11 @@ public class Major {
     private String majorId;
 
     public Major() { }
-    public Major(String majorName, String faculty, String majorId) { }
+    public Major(String majorName, String faculty, String majorId) {
+        this.majorName = majorName;
+        this.faculty = faculty;
+        this.majorId = majorId;
+    }
 
     public void setMajorName(String majorName) { this.majorName = majorName; }
 
