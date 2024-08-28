@@ -27,7 +27,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent; -fx-background-radius: 00 20 20 20;">
                      <children>
-                        <TableView prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
+                        <TableView fx:id="allAppealTable" prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
                           <columns>
                             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Date/Time" />
                             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
@@ -47,7 +47,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 00 20 20 20;">
                      <children>
-                        <TableView prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
+                        <TableView fx:id="selfAppealTable" prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
                            <columns>
                               <TableColumn prefWidth="183.0" style="-fx-font-size: 20;" text="Date/Time" />
                               <TableColumn prefWidth="183.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
