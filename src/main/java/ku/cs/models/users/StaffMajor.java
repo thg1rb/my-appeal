@@ -1,4 +1,4 @@
-package ku.cs.models;
+package ku.cs.models.users;
 
 import ku.cs.services.FXRouter;
 
@@ -13,6 +13,9 @@ public class StaffMajor extends User {
         this.faculty = faculty;
         this.major = major;
     }
+
+    public String getFaculty() { return faculty; }
+    public String getMajor() { return major; }
 
     @Override
     public void login() {

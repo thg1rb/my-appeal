@@ -1,4 +1,4 @@
-package ku.cs.models;
+package ku.cs.models.users;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -38,13 +38,9 @@ public abstract class User {
     }
 
     public String getUsername() { return username; }
-
     public String getFirstName() { return firstName; }
-
     public String getLastName() { return lastName; }
-
     public String getFullName() { return fullName; }
-
     public String getRole() { return role; }
 
     public boolean isBanned() { return ban; }

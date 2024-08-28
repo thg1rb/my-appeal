@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import ku.cs.models.User;
+import ku.cs.models.users.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.Datasource;
