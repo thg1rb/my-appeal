@@ -1,4 +1,4 @@
-package ku.cs.models;
+package ku.cs.models.users;
 
 import ku.cs.services.FXRouter;
 
@@ -11,6 +11,8 @@ public class StaffFaculty extends User {
         super(username, password, firstName, lastName, "เจ้าหน้าที่คณะ");
         this.faculty = faculty;
     }
+
+    public String getFaculty() { return faculty; }
 
     @Override
     public void login() {

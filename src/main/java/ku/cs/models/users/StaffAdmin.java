@@ -1,4 +1,4 @@
-package ku.cs.models;
+package ku.cs.models.users;
 
 import ku.cs.services.FXRouter;
 

@@ -1,13 +1,14 @@
 package ku.cs.services;
 
-import ku.cs.models.*;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.users.*;
 
 public class UserListHardCodeDatasource implements Datasource<UserList> {
     UserList list;
     @Override
     public UserList readData() {
         list = new UserList();
+        User majorStaffTest = new StaffMajor("majorTest", "test-password", "จนท.คณะ", "ทดลอง", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์");
         list.addUser(new StaffAdmin("admin", "admin123", "ไชยวัตน์", "หนูวัฒนา"));
         list.addUser(new Professor("Bright", "thgirb", "บวรัตน์", "รุ่งรัตนไชย", "Science", "Computer", "6610101010"));
         list.addUser(new StaffMajor("Ton", "tonnam1678", "เกิดสิริ", "ศรีเจริญ", "Science", "Computer"));
@@ -18,6 +19,7 @@ public class UserListHardCodeDatasource implements Datasource<UserList> {
         list.addUser(new Nisit("malee", "test-password", "มาลี", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
         list.addUser(new Nisit("macbook", "test-password", "แม้คบุ้ค", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
         list.addUser(new Nisit("windows", "test-password", "วินโดว์", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
+        list.addUser(new Nisit("creatorTester", "test-password", "ทดลอง", "เชนนิ่ง", "test@email.com", "วิทยาศาสตร์", majorStaffTest));
         return list;
     }
 
