@@ -30,13 +30,5 @@ public class Approver {
     public String getRole() { return role; }
 
 
-    public static void main(String[] args) {
-        StaffMajor majorStaff = new StaffMajor("test","test","จนท", "ภาค", "วิท", "คอม");
-        Approver a = new Approver("ผู้อนุมัติระดับภาควิชา", "ทดลอง", "รักษาการณ์แทนหัวหน้าภาควิชา", majorStaff);
-        StaffFaculty facultyStaff = new StaffFaculty("test","test", "จนท", "คณะ", "วิท");
-        Approver b = new Approver("อนุมัติระดับคณะ", "ทดลอง", "รักษาการณ์แทนคณบดี", facultyStaff);
 
-        System.out.println(a.getRole());
-        System.out.println(b.getRole());
-    }
 }

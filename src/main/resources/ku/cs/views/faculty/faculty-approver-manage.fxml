@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,7 +33,7 @@
                </font>
             </Text>
          </children></Pane>
-      <TableView layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="approverTableView" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../styles/table-view.css">
         <columns>
           <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-background-radius: 20 00 00 00;" text="Role" />
           <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337; -fx-background-radius: 20;" text="Name" />
@@ -107,54 +106,5 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="1249.0" layoutY="786.0" mnemonicParsing="false" onAction="#addApproverButton" prefHeight="33.0" prefWidth="90.0" style="-fx-background-color: #3aff3a;" text="เพิ่ม" />
-      <Pane fx:id="backgroundAddApproverPane" layoutX="1.0" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
-      <Pane fx:id="addApproverPane" layoutX="291.0" layoutY="247.0" prefHeight="285.0" prefWidth="944.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
-         <children>
-            <TextField layoutX="37.0" layoutY="86.0" prefHeight="45.0" prefWidth="262.0" />
-            <TextField layoutX="344.0" layoutY="87.0" prefHeight="45.0" prefWidth="262.0" />
-            <TextField layoutX="642.0" layoutY="87.0" prefHeight="45.0" prefWidth="262.0" />
-            <Label layoutX="44.0" layoutY="57.0" prefHeight="23.0" prefWidth="86.0" text="ตำแหน่ง">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="356.0" layoutY="57.0" prefHeight="23.0" prefWidth="86.0" text="ชื่อ">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="650.0" layoutY="57.0" prefHeight="23.0" prefWidth="86.0" text="นามสกุล">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button layoutX="409.0" layoutY="190.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="117.0" style="-fx-background-color: #3aff3a; -fx-background-radius: 20;" text="เพิ่ม">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button layoutX="865.0" layoutY="12.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="20.0" prefWidth="63.0" style="-fx-background-color: #ff0000; -fx-background-radius: 20;" text="ปิด">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Label layoutX="110.0" layoutY="62.0" prefHeight="17.0" prefWidth="103.0" text="*โปรดใส่ตำแหน่งของคุณ" textFill="RED">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-            <Label layoutX="382.0" layoutY="60.0" prefHeight="17.0" prefWidth="80.0" text="*โปรดใส่ชื่อของคุณ" textFill="RED">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-            <Label layoutX="719.0" layoutY="61.0" prefHeight="17.0" prefWidth="103.0" text="*โปรดใส่นามสกุลของคุณ" textFill="RED">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
    </children>
 </AnchorPane>
