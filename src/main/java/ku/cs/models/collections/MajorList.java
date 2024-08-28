@@ -15,7 +15,7 @@ public class MajorList {
         name = name.trim();
         faculty = faculty.trim();
         id = id.trim();
-        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && FacultyList.isFacultyExist(name)){
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && FacultyList.isFacultyExist(faculty)){
             majors.add(new Major(name, faculty, id));
         }
     }
@@ -36,5 +36,9 @@ public class MajorList {
             }
         }
         return null;
+    }
+
+    public ArrayList<Major> getMajors(){
+        return majors;
     }
 }
