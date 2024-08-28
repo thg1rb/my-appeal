@@ -13,7 +13,7 @@ public class Appeal {
     }
 
     // Getter
-    protected String getType() {
+    public String getType() {
         return this.type;
     }
 }
