@@ -9,9 +9,9 @@ public class UserListHardCodeDatasource implements Datasource<UserList> {
     public UserList readData() {
         list = new UserList();
         list.addUser(new User("ผู้ดูแลระบบ", "admin", "admin123", "แอดมิน", "เองคับ"));
-        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "Karn", "Karnesque", "กานต์เอง", "นะคับ", "วิทยาศาสตร์"));
-        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "เศรษฐศาสตร์"));
-        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "วิศวกรรมศาสตร์"));
+        list.addUser(new User("เจ้าหน้าที่คณะ", "Karn", "Karnesque", "กานต์เอง", "นะคับ", "วิทยาศาสตร์"));
+        list.addUser(new User("เจ้าหน้าที่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "เศรษฐศาสตร์"));
+        list.addUser(new User("เจ้าหน้าที่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "วิศวกรรมศาสตร์"));
         list.addUser(new User("เจ้าหน้าที่ภาควิชา", "Ton", "tonton1678", "ต้นเอง", "จ้า", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์"));
         list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิทยาศาสตร์", "สถิติ"));
         list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิทยาศาสตร์", "เตรียมแพทย์ศาสตร์"));

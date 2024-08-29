@@ -5,6 +5,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class User extends Human {
     private String role;
 
+    private String path;
+
     private String username;
     private String password;
     private boolean ban;
@@ -18,6 +20,8 @@ public class User extends Human {
     private String email;
 
     private String id;
+
+    private String loginDate;
 
     public User(String role, String username, String password, String firstName, String lastName){
         super(firstName, lastName);
@@ -75,6 +79,9 @@ public class User extends Human {
     private void setInitPassword(String password) {
         this.initialPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
+    public void setImage(String path){
+        this.path = path;
+    }
 
     public void banUser(){
         this.ban = true;
@@ -116,5 +123,13 @@ public class User extends Human {
 
     public String getId() {
         return id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getLoginDate() {
+        return loginDate;
     }
 }

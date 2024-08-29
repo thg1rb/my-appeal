@@ -1,6 +1,7 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,7 +17,8 @@ import java.io.IOException;
 
 public class AdminUserManagementController {
 
-    @FXML private TableView<User> allRoleTableView;
+    @FXML private TabPane tabPane;
+    @FXML private TableView<User> tableView;
 
     private Datasource<UserList> usersDatasource;
     private UserList userList;
@@ -27,27 +29,85 @@ public class AdminUserManagementController {
         userList = usersDatasource.readData();
 
         showTable(userList);
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                showTable(userList);
+            } else if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
+                showTable(userList, "เจ้าหน้าที่คณะ");
+            } else if (tabPane.getSelectionModel().getSelectedIndex() == 2) {
+                showTable(userList, "เจ้าหน้าที่ภาควิชา");
+            } else if (tabPane.getSelectionModel().getSelectedIndex() == 3) {
+                showTable(userList, "อาจารย์ที่ปรึกษา");
+            } else {
+                showTable(userList, "นักศึกษา");
+            }
+        });
     }
 
     private void showTable(UserList userList){
-        TableColumn<User, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        TableColumn<User, String> imgCol = new TableColumn<>("Profile");
+        imgCol.setCellValueFactory(new PropertyValueFactory<>("path"));
 
-        TableColumn<User, String> usernameColumn = new TableColumn<>("Username");
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<User, String> roleColumn = new TableColumn<>("Role");
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        allRoleTableView.getColumns().clear();
-        allRoleTableView.getColumns().add(nameColumn);
-        allRoleTableView.getColumns().add(usernameColumn);
-        allRoleTableView.getColumns().add(roleColumn);
+        TableColumn<User, String> roleCol = new TableColumn<>("Role");
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        allRoleTableView.getItems().clear();
+        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
+        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
 
-        for (User user: userList.getUsers()) {
-            allRoleTableView.getItems().add(user);
+        tableView.getColumns().clear();
+        tableView.getColumns().add(imgCol);
+        tableView.getColumns().add(nameCol);
+        tableView.getColumns().add(usernameCol);
+        tableView.getColumns().add(roleCol);
+        tableView.getColumns().add(loginDateCol);
+
+        imgCol.setPrefWidth(220);
+        nameCol.setPrefWidth(220);
+        usernameCol.setPrefWidth(220);
+        roleCol.setPrefWidth(220);
+        loginDateCol.setPrefWidth(220);
+
+        tableView.getItems().clear();
+        for (User user : userList.getUsers()){
+            tableView.getItems().add(user);
+        }
+    }
+
+    private void showTable(UserList userList, String role){
+        TableColumn<User, String> imgCol = new TableColumn<>("Profile");
+        imgCol.setCellValueFactory(new PropertyValueFactory<>("path"));
+
+        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
+        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
+
+        tableView.getColumns().clear();
+        tableView.getColumns().add(imgCol);
+        tableView.getColumns().add(nameCol);
+        tableView.getColumns().add(usernameCol);
+        tableView.getColumns().add(loginDateCol);
+
+        imgCol.setPrefWidth(275);
+        nameCol.setPrefWidth(275);
+        usernameCol.setPrefWidth(275);
+        loginDateCol.setPrefWidth(275);
+
+        tableView.getItems().clear();
+        for (User user : userList.getUsers()){
+            if (user.getRole().equals(role)){
+                tableView.getItems().add(user);
+            }
         }
     }
 
