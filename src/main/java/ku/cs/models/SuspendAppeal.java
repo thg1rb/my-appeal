@@ -5,6 +5,14 @@ public class SuspendAppeal extends Appeal {
     private String academicTerm;    // ภาคการศึกษา
     private int year;               // ปีการศึกษา
     private String subjects;        // วิชาที่ลงทะเบียนไปในเทอมนี้
+    public SuspendAppeal(String reason, String academicTerm, int year, String subjects, String topic, String details) {
+        this.reason = reason;
+        this.academicTerm = academicTerm;
+        this.year = year;
+        this.subjects = subjects;
+        this.topic = topic;
+        this.details = details;
+    }
 
     // Setter
     public void setReason(String reason) {

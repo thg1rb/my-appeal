@@ -3,7 +3,6 @@ package ku.cs.models;
 public class RetireAppeal extends Appeal {
     private double gpa;     // เกรดเฉลี่ยสะสม
     private int tcas;       // เข้า TCAS รอบที่ (1, 2, 3, 4)
-    private String details; // รายละเอียด
 
     public RetireAppeal(double gpa, int tcas, String details) {
         super("Retire Appeal");

@@ -9,6 +9,14 @@ public class BreakAppeal extends Appeal {
     private String reason;         // เหตุผล
     private String subjects;       // วิชาที่ต้องการขอลา
 
+    public BreakAppeal(String purpose, Date startTakingBreak, Date endTakingBreak, String reason, String subjects, String details) {
+        this.purpose = purpose;
+        this.startTakingBreak = startTakingBreak;
+        this.endTakingBreak = endTakingBreak;
+        this.reason = reason;
+        this.subjects = subjects;
+        this.details = details;
+    }
     // Setter
     public void setPurpose(String purpose) {
         this.purpose = purpose;
