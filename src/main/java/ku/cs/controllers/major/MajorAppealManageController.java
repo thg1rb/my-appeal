@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 public class MajorAppealManageController {
 
-    @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Appeal> selfAppealTable;
+    @FXML private TableView<Object> allAppealTable;
+    @FXML private TableView<Object> selfAppealTable;
 
     @FXML private ScrollPane detailScrollPane;
     @FXML private VBox vbox;
@@ -63,7 +63,7 @@ public class MajorAppealManageController {
 
     private AppealList appealList;
     private Datasource<AppealList> datasource;
-    private Appeal selectedAppeal;
+    private Object selectedAppeal;
     @FXML
     public void initialize() {
         datasource = new AppealListHardCodeDatasource();
@@ -95,23 +95,54 @@ public class MajorAppealManageController {
             gpaLabel.setVisible(false);
             tcasLabel.setVisible(false);
 
-//            purposeLabel.setVisible(false);
-//            breakTimeLabel.setVisible(false);
+            purposeLabel.setVisible(false);
+            breakTimeLabel.setVisible(false);
 //
-//            reasonLabel.setVisible(false);
-//            subjectLabel.setVisible(false);
-//            academicTermLabel.setVisible(false);
-//            yearLabel.setVisible(false);
+            reasonLabel.setVisible(false);
+            subjectLabel.setVisible(false);
+            academicTermLabel.setVisible(false);
+            yearLabel.setVisible(false);
 
             if(type == "Retire Appeal"){
                 RetireAppeal currentAppeal = (RetireAppeal) appeal;
 
+                topicLabel.setText(currentAppeal.getTopic());
                 detailLabel.setText(currentAppeal.getDetails());
                 gpaLabel.setText("GPA: " + currentAppeal.getGpa());
                 tcasLabel.setText("คะแนน TCAS: " + currentAppeal.getTcas());
                 gpaLabel.setVisible(true);
                 tcasLabel.setVisible(true);
             }
+
+            else if(type == "General Appeal"){
+                GeneralAppeal currentAppeal = (GeneralAppeal) appeal;
+
+                detailLabel.setText(currentAppeal.getDetails());
+                topicLabel.setText(currentAppeal.getTopic());
+            }
+            else if(type == "Break Appeal"){
+                BreakAppeal currentAppeal = (BreakAppeal) appeal;
+
+                detailLabel.setText(currentAppeal.getDetails());
+                topicLabel.setText(currentAppeal.getTopic());
+
+                purposeLabel.setText(currentAppeal.getPurpose());
+                purposeLabel.setVisible(true);
+                purposeLabel.setLayoutY(70);
+
+                breakTimeLabel.setText("ระยะเวลา: " + currentAppeal.getStartTakingBreak() + " - " + currentAppeal.getEndTakingBreak());
+                breakTimeLabel.setLayoutY(100);
+                breakTimeLabel.setVisible(true);
+
+                reasonLabel.setText("เหตุผล:" + currentAppeal.getReason());
+                reasonLabel.setVisible(true);
+                reasonLabel.setLayoutY(130);
+
+                subjectLabel.setText("รายวิชา: " + currentAppeal.getSubjects());
+                subjectLabel.setVisible(true);
+                subjectLabel.setLayoutY(160);
+            }
+
 
 //            else if(type == "General Appeal"){
 //                GeneralAppeal currentAppeal = (GeneralAppeal) appeal;

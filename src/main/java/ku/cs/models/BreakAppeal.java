@@ -1,6 +1,8 @@
 package ku.cs.models;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class BreakAppeal extends Appeal {
     private String purpose;        // จุดประสงค์
@@ -9,14 +11,23 @@ public class BreakAppeal extends Appeal {
     private String reason;         // เหตุผล
     private String subjects;       // วิชาที่ต้องการขอลา
 
-    public BreakAppeal(String purpose, Date startTakingBreak, Date endTakingBreak, String reason, String subjects, String details) {
+
+
+    public BreakAppeal(String purpose, String startTakingBreak, String endTakingBreak, String reason, String subjects, String details) {
         this.purpose = purpose;
-        this.startTakingBreak = startTakingBreak;
-        this.endTakingBreak = endTakingBreak;
         this.reason = reason;
         this.subjects = subjects;
         this.details = details;
+
+        try {
+            this.startTakingBreak = formatter.parse(startTakingBreak);
+            this.endTakingBreak = formatter.parse(endTakingBreak);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format: " + e.getMessage());
+            this.date = null; // or handle accordingly
+        }
     }
+
     // Setter
     public void setPurpose(String purpose) {
         this.purpose = purpose;
@@ -58,4 +69,6 @@ public class BreakAppeal extends Appeal {
     public String getSubjects() {
         return subjects;
     }
+
+    public String getBreakTime(){return formatter.parse(startTakingBreak)}
 }
