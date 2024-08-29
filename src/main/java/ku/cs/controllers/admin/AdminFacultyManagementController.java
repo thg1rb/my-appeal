@@ -1,5 +1,7 @@
 package ku.cs.controllers.admin;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -31,6 +33,9 @@ public class AdminFacultyManagementController {
     private Datasource<MajorList> majorDatasource;
     private MajorList majorList;
 
+    private Faculty selectedFaculty;
+    private Major selectedMajor;
+
     @FXML
     public void initialize() {
         facultyDatasource = new FacultyListHardCodeDatasource();
@@ -42,9 +47,30 @@ public class AdminFacultyManagementController {
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
                 showFacultyTable(facultyList);
+                facultyTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Faculty>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Faculty> observableValue, Faculty oldVal, Faculty newVal) {
+                        if (newVal == null) {
+                            selectedFaculty = null;
+                        } else {
+                            selectedFaculty = newVal;
+                        }
+                    }
+                });
             }
             else {
                 showMajorTable(majorList);
+                majorTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Major>() {
+
+                    @Override
+                    public void changed(ObservableValue<? extends Major> observableValue, Major oldVal, Major newVal) {
+                        if (newVal == null) {
+                            selectedMajor = null;
+                        } else{
+                            selectedMajor = newVal;
+                        }
+                    }
+                });
             }
         });
     }

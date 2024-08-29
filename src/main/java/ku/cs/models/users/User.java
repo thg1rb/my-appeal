@@ -4,11 +4,14 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public abstract class User {
     private String role;
+
     private String username;
     private String password;
+
     private String firstName;
     private String lastName;
     private String fullName;
+
     private boolean ban;
 
     public User(String username, String password, String role) {

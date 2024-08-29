@@ -135,17 +135,17 @@
                 <Font size="40.0" />
             </font>
         </Text>
-        <TabPane layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
+        <TabPane fx:id="tabPane" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
             <tabs>
                 <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 20 0 0 0;" text="เจ้าหน้าที่คณะ">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;">
                             <children>
-                                <TableView layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+                                <TableView fx:id="facultyTableView" layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
                                     <columns>
                                         <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Name" />
-                              <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Username" />
-                              <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Initial Password" />
+                                        <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Username" />
+                                        <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Initial Password" />
                                         <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="Faculty" />
                                     </columns>
                                     <columnResizePolicy>
@@ -174,7 +174,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1100.0">
                      <children>
-                        <TableView layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+                        <TableView fx:id="majorTableView" layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
                            <columns>
                               <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Name" />
                               <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Username" />
@@ -208,7 +208,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1100.0">
                      <children>
-                        <TableView layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+                        <TableView fx:id="professorTableView" layoutY="-1.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
                            <columns>
                               <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Name" />
                               <TableColumn prefWidth="75.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="ID" />
