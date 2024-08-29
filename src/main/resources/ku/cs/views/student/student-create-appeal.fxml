@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -102,7 +101,7 @@
          </font>
       </Text>
       <ChoiceBox fx:id="appealChoiceBox" layoutX="1195.0" layoutY="114.0" prefHeight="45.0" prefWidth="212.0" stylesheets="@../../styles/button.css" />
-      <Pane fx:id="generalAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
+      <Pane fx:id="generalAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
          <children>
             <Label layoutX="59.0" layoutY="57.0" text="เรื่องร้องเรียนของคุณ">
                <font>
@@ -139,40 +138,6 @@
                   <Font size="24.0" />
                </font>
             </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="retireAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
-         <children>
-            <Label layoutX="59.0" layoutY="57.0" text="เกรดเฉลี่ยสะสม">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="59.0" layoutY="218.0" text="ความประสงค์ในการลาออก">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="purposeRetireTextArea" layoutX="48.0" layoutY="270.0" prefHeight="220.0" prefWidth="1088.0">
-               <font>
-                  <Font size="24.0" />
-               </font></TextArea>
-            <Button layoutX="952.0" layoutY="524.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="confirm-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <TextField fx:id="gpaTextField" layoutX="48.0" layoutY="98.0" prefHeight="45.0" prefWidth="410.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </TextField>
-            <Label layoutX="609.0" layoutY="57.0" text="เข้าศึกษาใน TCAS รอบที่">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ChoiceBox fx:id="tcasChoiceBox" layoutX="600.0" layoutY="99.0" prefHeight="45.0" prefWidth="300.0" stylesheets="@../../styles/button.css" />
          </children>
       </Pane>
       <Pane fx:id="suspendAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
@@ -267,36 +232,6 @@
             </Label>
             <DatePicker fx:id="startBreakDatePicker" layoutX="824.0" layoutY="99.0" prefHeight="30.0" prefWidth="312.0" />
             <DatePicker fx:id="endBreakDatePicker" layoutX="823.0" layoutY="181.0" prefHeight="30.0" prefWidth="312.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="installmentAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
-         <children>
-            <Label layoutX="59.0" layoutY="66.0" text="ภาคการศึกษาที่ขอผ่อนผันการชำระค่าธรรมเนียมการศึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="59.0" layoutY="186.0" text="ปีการศึกษาที่ขอผ่อนผันการชำระค่าธรรมเนียมการศึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button layoutX="952.0" layoutY="524.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="confirm-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <ChoiceBox fx:id="semestersInstallmentChoiceBox" layoutX="49.0" layoutY="106.0" prefHeight="45.0" prefWidth="300.0" stylesheets="@../../styles/button.css" />
-            <Label layoutX="59.0" layoutY="308.0" text="ระบุเหตุผลการขอผ่อนผันการชำระค่าธรรมเนียมการศึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="reasonInstallmentTextArea" layoutX="48.0" layoutY="350.0" prefHeight="150.0" prefWidth="1088.0">
-               <font>
-                  <Font size="24.0" />
-               </font></TextArea>
-            <ChoiceBox fx:id="yearsInstallmentChoiceBox" layoutX="49.0" layoutY="226.0" prefHeight="45.0" prefWidth="300.0" stylesheets="@../../styles/button.css" />
          </children>
       </Pane>
       <Pane fx:id="backgroundAlertPane" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
