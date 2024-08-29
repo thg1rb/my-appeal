@@ -1,28 +1,31 @@
 package ku.cs.services;
 
 import ku.cs.models.collections.UserList;
-import ku.cs.models.users.*;
+import ku.cs.models.persons.User;
 
 public class UserListHardCodeDatasource implements Datasource<UserList> {
     UserList list;
     @Override
     public UserList readData() {
         list = new UserList();
-        User majorStaffTest = new StaffMajor("majorTest", "test-password", "จนท.คณะ", "ทดลอง", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์");
-        list.addUser(new StaffAdmin("admin", "admin123", "ไชยวัตน์", "หนูวัฒนา"));
-        list.addUser(new Professor("Bright", "thgirb", "บวรัตน์", "รุ่งรัตนไชย", "Science", "Computer", "6610101010"));
-        list.addUser(new Professor("NamKang", "test-password", "อาจารย์", "1","Science", "Statistic", "6610101020"));
-        list.addUser(new StaffMajor("Ton", "tonnam1678", "เกิดสิริ", "ศรีเจริญ", "Science", "Computer"));
-        list.addUser(new StaffMajor("TonSong", "tonnam1678", "เจ้าหน้าที่ภาควิชา", "2", "Science", "Statistic"));
-        list.addUser(new StaffFaculty("Karn", "karnesque", "คมชาญ", "กานเอง", "Science"));
-        list.addUser(new StaffFaculty("KarnSong", "karnesque", "เจ้าหน้าที่คณะ", "2", "Engineering"));
-        list.addUser(new Nisit("Somsak", "test-password", "สมมุติ", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("jib", "test-password", "จิ๊บ", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("advice", "test-password", "แอดไวซ์", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("malee", "test-password", "มาลี", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("macbook", "test-password", "แม้คบุ้ค", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("windows", "test-password", "วินโดว์", "ขึ้นมา", "test@email.com", "วิทยาศาสตร์", "คอมพิวเตอร์", "6610101010"));
-        list.addUser(new Nisit("creatorCreateStudentTester", "test-password", "ทดลอง", "เชนนิ่ง", "test@email.com", "วิทยาศาสตร์", majorStaffTest));
+        list.addUser(new User("ผู้ดูแลระบบ", "admin", "admin123", "แอดมิน", "เองคับ"));
+        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "Karn", "Karnesque", "กานต์เอง", "นะคับ", "วิทยาศาสตร์"));
+        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "เศรษฐศาสตร์"));
+        list.addUser(new User("เจ้าหน้าท่ี่คณะ", "faculty", "user", "จนท.คณะ", "นะคับผม", "วิศวกรรมศาสตร์"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "Ton", "tonton1678", "ต้นเอง", "จ้า", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิทยาศาสตร์", "สถิติ"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิทยาศาสตร์", "เตรียมแพทย์ศาสตร์"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิศวกรรมศาสตร์", "วิศวกรรมไฟฟ้า"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิศวกรรมศาสตร์", "วิศวกรรมเครื่องกล"));
+        list.addUser(new User("เจ้าหน้าที่ภาควิชา", "major", "user", "จนท.คณะ", "เองงับ", "วิศวกรรมศาสตร์", "วิศวกรรมโยธา"));
+        list.addUser(new User("อาจารย์ที่ปรึกษา", "Bright", "professor", "ไบร้ง้าบ", "เป็นอาจารย์", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์", "6610402132"));
+        list.addUser(new User("อาจารย์ที่ปรึกษา", "professor", "1234", "อาจารย์", "ชอบสอน", "วิทยาศาสตร์", "สถิติ", "12345678"));
+        list.addUser(new User("อาจารย์ที่ปรึกษา", "professor", "1234", "อาจารย์", "ชอบสอน", "วิศวกรรมศาสตร์", "วิศวกรรมไฟฟ้า", "12345678"));
+        list.addUser(new User("อาจารย์ที่ปรึกษา", "professor", "1234", "อาจารย์", "ชอบสอน", "เศรษฐศาสตร์", "เศรษฐศาสตร์", "12345678"));
+        list.addUser(new User("นักศึกษา", "Bright", "student", "ไบร้", "เป็นนิสิต", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์", "6610401985", "bright@email.test"));
+        list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ1", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
+        list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ2", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
+        list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ3", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
         return list;
     }
 

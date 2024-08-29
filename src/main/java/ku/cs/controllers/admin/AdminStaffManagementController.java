@@ -7,7 +7,7 @@ import javafx.scene.control.TableView;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
-import ku.cs.models.users.User;
+import ku.cs.models.persons.User;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -52,7 +52,7 @@ public class AdminStaffManagementController {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         TableColumn<User, String> initPasswordCol = new TableColumn<>("Initial Password");
-        initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initPasswordText"));
+        initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
         TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
         facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));

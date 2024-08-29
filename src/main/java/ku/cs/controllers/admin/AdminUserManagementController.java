@@ -5,7 +5,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import ku.cs.models.users.User;
+import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.Datasource;
