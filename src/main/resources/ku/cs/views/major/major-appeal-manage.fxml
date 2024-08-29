@@ -82,7 +82,7 @@
             </Text>
          </children>
       </Pane>
-      <TabPane fx:id="appealTabPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1100.0" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0" visible="false">
+      <TabPane fx:id="appealTabPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1100.0" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
         <tabs>
           <Tab style="-fx-padding: 10; -fx-background-radius: 20 0 0; -fx-font-size: 20;" text="ทั้งหมด">
             <content>
@@ -126,7 +126,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Pane fx:id="popupAppealPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1099.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+      <Pane fx:id="popupAppealPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1099.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" visible="false">
          <children>
             <ScrollPane fx:id="detailScrollPane" layoutX="40.0" layoutY="223.0" prefHeight="335.0" prefWidth="442.0" stylesheets="@../../styles/scroll-pane.css">
               <content>

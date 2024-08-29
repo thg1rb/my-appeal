@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ku.cs.models.*;
+import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 
 import ku.cs.services.AppealListHardCodeDatasource;
@@ -21,11 +22,12 @@ import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MajorAppealManageController {
 
-    @FXML private TableView<Object> allAppealTable;
+    @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Object> selfAppealTable;
 
     @FXML private ScrollPane detailScrollPane;
@@ -60,10 +62,11 @@ public class MajorAppealManageController {
     private String[] statusList = {"----- เลือกสถานะ -----", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน", "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ"};
 
     String selectedStatus;
+    Appeal selectedAppeal;
 
     private AppealList appealList;
     private Datasource<AppealList> datasource;
-    private Object selectedAppeal;
+//    private Object selectedAppeal;
     @FXML
     public void initialize() {
         datasource = new AppealListHardCodeDatasource();
@@ -74,15 +77,13 @@ public class MajorAppealManageController {
         statusChoiceBox.setOnAction(this::getStatus);
         statusChoiceBox.setValue(statusList[0]);
 
-
         allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-            @Override
-            public void changed(ObservableValue observable, Appeal oldValue, Appeal newValue){
-                if(newValue != null){
 
-                        if(newValue.getType() == "Retire Appeal"){
-                            showPopup("Retire Appeal", newValue);
-                        }
+            @Override
+            public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
+                if (newValue != null) {
+                    selectedAppeal = newValue;
+                    showPopup(selectedAppeal.getType(), selectedAppeal);
                 }
             }
 
@@ -97,48 +98,33 @@ public class MajorAppealManageController {
 
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
-//
+
             reasonLabel.setVisible(false);
             subjectLabel.setVisible(false);
             academicTermLabel.setVisible(false);
             yearLabel.setVisible(false);
 
-            if(type == "Retire Appeal"){
-                RetireAppeal currentAppeal = (RetireAppeal) appeal;
-
-                topicLabel.setText(currentAppeal.getTopic());
-                detailLabel.setText(currentAppeal.getDetails());
-                gpaLabel.setText("GPA: " + currentAppeal.getGpa());
-                tcasLabel.setText("คะแนน TCAS: " + currentAppeal.getTcas());
-                gpaLabel.setVisible(true);
-                tcasLabel.setVisible(true);
-            }
-
-            else if(type == "General Appeal"){
-                GeneralAppeal currentAppeal = (GeneralAppeal) appeal;
-
-                detailLabel.setText(currentAppeal.getDetails());
-                topicLabel.setText(currentAppeal.getTopic());
+            if (type == "General Appeal") {
+                topicLabel.setText(appeal.getTopic());
+                detailLabel.setText(appeal.getReason());
             }
             else if(type == "Break Appeal"){
-                BreakAppeal currentAppeal = (BreakAppeal) appeal;
+                topicLabel.setText(appeal.getTopic());
+                detailLabel.setText(appeal.getReason());
 
-                detailLabel.setText(currentAppeal.getDetails());
-                topicLabel.setText(currentAppeal.getTopic());
-
-                purposeLabel.setText(currentAppeal.getPurpose());
+                purposeLabel.setText(appeal.getPurpose());
                 purposeLabel.setVisible(true);
                 purposeLabel.setLayoutY(70);
 
-                breakTimeLabel.setText("ระยะเวลา: " + currentAppeal.getStartTakingBreak() + " - " + currentAppeal.getEndTakingBreak());
+                breakTimeLabel.setText("ระยะเวลา: " + appeal.getStartDate() + " - " + appeal.getEndDate());
                 breakTimeLabel.setLayoutY(100);
                 breakTimeLabel.setVisible(true);
 
-                reasonLabel.setText("เหตุผล:" + currentAppeal.getReason());
+                reasonLabel.setText("เหตุผล:" + appeal.getReason());
                 reasonLabel.setVisible(true);
                 reasonLabel.setLayoutY(130);
 
-                subjectLabel.setText("รายวิชา: " + currentAppeal.getSubjects());
+                subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
                 subjectLabel.setVisible(true);
                 subjectLabel.setLayoutY(160);
             }
@@ -169,13 +155,11 @@ public class MajorAppealManageController {
             popupAppealPane.setVisible(true);
             appealManageLabel.setVisible(false);
             appealDetailsLabel.setVisible(true);
-
-
     }
 
     @FXML
     public void confirmOnButtonClick(){
-        selectedAppeal = allAppealTable.getSelectionModel().getSelectedItem();
+        selectedAppeal = (Appeal) allAppealTable.getSelectionModel().getSelectedItem();
         selectedAppeal.setStatus(selectedStatus);
 
         popupAppealPane.setVisible(false);
@@ -187,21 +171,21 @@ public class MajorAppealManageController {
         selectedStatus = null;
     }
     public void showTable(AppealList appealList) {
-        TableColumn<Appeal, String> gpaColumn = new TableColumn<>("GPA");
-        gpaColumn.setCellValueFactory(new PropertyValueFactory<>("gpa"));
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
 
-        TableColumn<Appeal, String> tcasColumn = new TableColumn<>("TCAS");
-        tcasColumn.setCellValueFactory(new PropertyValueFactory<>("tcas"));
+        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
+        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
 
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         allAppealTable.getColumns().clear();
-        allAppealTable.getColumns().add(gpaColumn);
-        allAppealTable.getColumns().add(tcasColumn);
+        allAppealTable.getColumns().add(dateColumn);
+        allAppealTable.getColumns().add(ownerColumn);
         allAppealTable.getColumns().add(typeColumn);
 
         allAppealTable.getItems().clear();
-        if(appealList!=null){
+        if (appealList != null) {
             for(Appeal appeal : appealList.getAppeals()){
                 allAppealTable.getItems().add(appeal);
             }
@@ -221,6 +205,7 @@ public class MajorAppealManageController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     protected void onNisitManageButtonClick() {
         try {
@@ -229,6 +214,7 @@ public class MajorAppealManageController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     protected void onAppealManageButtonClick() {
         try {
@@ -237,6 +223,7 @@ public class MajorAppealManageController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     public void onLogoutButtonClick(){
         try{

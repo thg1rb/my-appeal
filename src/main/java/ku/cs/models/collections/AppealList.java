@@ -1,5 +1,7 @@
 package ku.cs.models.collections;
 
+import ku.cs.models.appeal.Appeal;
+
 import java.util.ArrayList;
 
 public class AppealList {
