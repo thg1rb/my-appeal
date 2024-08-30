@@ -1,11 +1,141 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.User;
+
+import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
 
 public class AdminStaffManagementController {
+    @FXML private TabPane tabPane;
+
+    @FXML private TableView<User> tableView;
+    @FXML private Text totalText;
+
+    private Datasource<UserList> datasource;
+    private UserList userList;
+
+    @FXML
+    private void initialize() {
+        datasource = new UserListFileDatasource("data", "user.csv");
+        userList = datasource.readData();
+
+        showTable(userList, "เจ้าหน้าที่คณะ");
+        totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                showTable(userList, "เจ้าหน้าที่คณะ");
+                totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
+            }
+            else if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
+                showTable(userList, "เจ้าหน้าที่ภาควิชา");
+                totalText.setText("จำนวนเจ้าหน้าที่ภาควิชาทั้งหมด");
+            }
+            else{
+               showTable(userList, "อาจารย์ที่ปรึกษา");
+                totalText.setText("จำนวนอาจารย์ที่ปรึกษาทั้งหมด");
+            }
+        });
+    }
+
+    private void showTable(UserList userList, String role) {
+        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<User, String> initPasswordCol = new TableColumn<>("Initial Password");
+        initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
+
+        TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
+        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+
+        if (role.equals("เจ้าหน้าที่ภาควิชา")){
+            TableColumn<User, String> majorCol = new TableColumn<>("Major");
+            majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
+
+            tableView.getColumns().clear();
+            tableView.getColumns().add(nameCol);
+            tableView.getColumns().add(usernameCol);
+            tableView.getColumns().add(initPasswordCol);
+            tableView.getColumns().add(facultyCol);
+            tableView.getColumns().add(majorCol);
+
+            nameCol.setPrefWidth(220);
+            usernameCol.setPrefWidth(220);
+            facultyCol.setPrefWidth(220);
+            initPasswordCol.setPrefWidth(220);
+            majorCol.setPrefWidth(220);
+
+            tableView.getItems().clear();
+            for (User user : userList.getUsers()){
+                if (user.getRole().equals(role)){
+                    tableView.getItems().add(user);
+                }
+            }
+
+        }else if (role.equals("เจ้าหน้าที่คณะ")) {
+            tableView.getColumns().clear();
+            tableView.getColumns().add(nameCol);
+            tableView.getColumns().add(usernameCol);
+            tableView.getColumns().add(initPasswordCol);
+            tableView.getColumns().add(facultyCol);
+
+            nameCol.setPrefWidth(275);
+            usernameCol.setPrefWidth(275);
+            facultyCol.setPrefWidth(275);
+            initPasswordCol.setPrefWidth(275);
+
+            tableView.getItems().clear();
+            for (User user : userList.getUsers()){
+                if (user.getRole().equals(role)){
+                    tableView.getItems().add(user);
+                }
+            }
+        }else{
+            TableColumn<User, String> majorCol = new TableColumn<>("Major");
+            majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
+
+            TableColumn<User, String> idCol = new TableColumn<>("ID");
+            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+            tableView.getColumns().clear();
+            tableView.getColumns().add(nameCol);
+            tableView.getColumns().add(idCol);
+            tableView.getColumns().add(usernameCol);
+            tableView.getColumns().add(initPasswordCol);
+            tableView.getColumns().add(facultyCol);
+            tableView.getColumns().add(majorCol);
+
+            nameCol.setPrefWidth(184);
+            usernameCol.setPrefWidth(183);
+            facultyCol.setPrefWidth(183);
+            initPasswordCol.setPrefWidth(183);
+            majorCol.setPrefWidth(183);
+            idCol.setPrefWidth(183);
+
+            tableView.getItems().clear();
+            for (User user : userList.getUsers()){
+                if (user.getRole().equals(role)){
+                    tableView.getItems().add(user);
+                }
+            }
+        }
+    }
+
     @FXML
     public void onUserButtonClicked() {
         try {
