@@ -7,6 +7,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import ku.cs.models.collections.ApproverList;
+import ku.cs.models.persons.Approver;
+import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.ApproverListHardCodeDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -23,7 +26,7 @@ public class FacultyApproverManageController {
 
     @FXML
     public void initialize() {
-        approversDatasource = new ApproverListHardCodeDatasource();
+        approversDatasource = new ApproverListFileDatasource("data" , "");
         approverList = approversDatasource.readData();
 
         showApproverTable(approverList);
