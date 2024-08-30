@@ -89,19 +89,23 @@ public class Appeal {
         return subjects;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getStartDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        String startDateString = sdf.format(startDate);
+        return startDateString;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getEndDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        String endDateString = sdf.format(endDate);
+        return endDateString;
     }
 
     public String getSemester() {
         return semester;
     }
     public String getTimeStamp(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String date = sdf.format(this.createDate);
         return date;
     }

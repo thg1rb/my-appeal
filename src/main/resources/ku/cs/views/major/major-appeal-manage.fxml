@@ -133,19 +133,19 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="239.0" prefWidth="441.0">
                      <children>
                         <VBox fx:id="vbox" style="-fx-background-radius: 10; -fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
-                           <children>
-                              <Label fx:id="detailLabel" text="detailLabel">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <padding>
                               <Insets left="10.0" top="10.0" />
                            </padding>
+                           <children>
+                              <Label fx:id="reasonLabel" text="reasonLabel" wrapText="true">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
                         </VBox>
                      </children>
                   </AnchorPane>
@@ -171,7 +171,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="46.0" layoutY="192.0" text="รายละเอียด:">
+            <Label layoutX="51.0" layoutY="192.0" text="รายละเอียด:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -195,11 +195,6 @@
                </font>
             </Label>
             <Label fx:id="breakTimeLabel" layoutX="51.0" layoutY="160.0" text="breakTimeLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="reasonLabel" layoutX="51.0" layoutY="160.0" text="reasonLabel">
                <font>
                   <Font size="20.0" />
                </font>

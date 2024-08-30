@@ -104,13 +104,13 @@ public class MajorAppealManageController {
             academicTermLabel.setVisible(false);
             yearLabel.setVisible(false);
 
-            if (type == "General Appeal") {
+            if (type == "คำร้องทั่วไป") {
                 topicLabel.setText(appeal.getTopic());
-                detailLabel.setText(appeal.getReason());
+                reasonLabel.setText(appeal.getReason());
             }
-            else if(type == "Break Appeal"){
+            else if(type == "คำร้องขอลากิจหรือลาป่วย"){
                 topicLabel.setText(appeal.getTopic());
-                detailLabel.setText(appeal.getReason());
+                reasonLabel.setText(appeal.getReason());
 
                 purposeLabel.setText(appeal.getPurpose());
                 purposeLabel.setVisible(true);
@@ -130,7 +130,8 @@ public class MajorAppealManageController {
             }
 
 
-//            else if(type == "General Appeal"){
+
+//            else if(type == "คำร้องขอพักการศึกษา"){
 //                GeneralAppeal currentAppeal = (GeneralAppeal) appeal;
 //            }
 //            else if(type == "Break Appeal"){
@@ -144,7 +145,7 @@ public class MajorAppealManageController {
 //            }
 
             typeLabel.setText(type);
-            detailLabel.setVisible(true);
+            reasonLabel.setVisible(true);
             vbox.prefWidthProperty().bind(detailScrollPane.widthProperty().subtract(40));
 
             detailScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -210,15 +211,6 @@ public class MajorAppealManageController {
     protected void onNisitManageButtonClick() {
         try {
             FXRouter.goTo("major-nisit-manage");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onAppealManageButtonClick() {
-        try {
-            FXRouter.goTo("major-appeal-manage");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
