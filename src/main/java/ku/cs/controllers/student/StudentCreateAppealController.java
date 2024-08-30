@@ -20,21 +20,13 @@ public class StudentCreateAppealController {
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
-    private String[] appeals = {"ทั่วไป", "ขอลาออก", "ขอพักการศึกษา", "ลาป่วยหรือลากิจ", "ขอผ่อนผันการชำระ"};
+    private String[] appeals = {"ทั่วไป", "ขอพักการศึกษา", "ลาป่วยหรือลากิจ"};
     String selectedAppeal;
 
     // ประกาศตัวแปรคำร้องทั่วไป
     @FXML private Pane generalAppealPane;
     @FXML private TextArea topicTextArea;
     @FXML private TextArea detailsTextArea;
-
-    // ประกาศตัวแปรคำร้องขอลาออก
-    @FXML private Pane retireAppealPane;
-    @FXML private ChoiceBox<String> tcasChoiceBox;
-    private String[] tcas = {"รอบที่ 1", "รอบที่ 2", "รอบที่ 3", "รอบที่ 4", "อื่นๆ"};
-    String selectedTcas;
-    @FXML private TextField gpaTextField;
-    @FXML private TextArea purposeRetireTextArea;
 
     // ประกาศตัวแปรคำร้องขอพักการศึกษา
     @FXML private Pane suspendAppealPane;
@@ -57,12 +49,6 @@ public class StudentCreateAppealController {
     @FXML private DatePicker startBreakDatePicker;
     @FXML private DatePicker endBreakDatePicker;
 
-    // ประกาศตัวแปรคำร้องขอผ่อนชำระ
-    @FXML private Pane installmentAppealPane;
-    @FXML private TextArea reasonInstallmentTextArea;
-    @FXML private ChoiceBox<String> semestersInstallmentChoiceBox;
-    @FXML private ChoiceBox<String> yearsInstallmentChoiceBox;
-
     //  ประกาศตัวแปรคำเตือน (ใส่ข้อมูลไม่ครบถ้วน)
     @FXML private Pane backgroundAlertPane;
     @FXML private Pane alertPane;
@@ -82,44 +68,19 @@ public class StudentCreateAppealController {
 
         if (selectedAppeal.equals("ทั่วไป")) {
             generalAppealPane.setVisible(true);
-            retireAppealPane.setVisible(false);
             suspendAppealPane.setVisible(false);
             breakAppealPane.setVisible(false);
-            installmentAppealPane.setVisible(false);
-        }
-        else if (selectedAppeal.equals("ขอลาออก")) {
-            generalAppealPane.setVisible(false);
-            retireAppealPane.setVisible(true);
-            suspendAppealPane.setVisible(false);
-            breakAppealPane.setVisible(false);
-            installmentAppealPane.setVisible(false);
         }
         else if (selectedAppeal.equals("ขอพักการศึกษา")) {
             generalAppealPane.setVisible(false);
-            retireAppealPane.setVisible(false);
             suspendAppealPane.setVisible(true);
             breakAppealPane.setVisible(false);
-            installmentAppealPane.setVisible(false);
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
             generalAppealPane.setVisible(false);
-            retireAppealPane.setVisible(false);
             suspendAppealPane.setVisible(false);
             breakAppealPane.setVisible(true);
-            installmentAppealPane.setVisible(false);
         }
-        else if (selectedAppeal.equals("ขอผ่อนผันการชำระ")) {
-            generalAppealPane.setVisible(false);
-            retireAppealPane.setVisible(false);
-            suspendAppealPane.setVisible(false);
-            breakAppealPane.setVisible(false);
-            installmentAppealPane.setVisible(true);
-        }
-
-    }
-
-    private void getTcas(ActionEvent actionEvent) {
-        selectedTcas = tcasChoiceBox.getValue();
     }
 
     private void getSemesters(ActionEvent actionEvent) {
@@ -144,10 +105,6 @@ public class StudentCreateAppealController {
         appealChoiceBox.setOnAction(this::getAppealType);
         appealChoiceBox.setValue(appeals[0]);
 
-        tcasChoiceBox.getItems().addAll(tcas);
-        tcasChoiceBox.setOnAction(this::getTcas);
-        tcasChoiceBox.setValue(tcas[0]);
-
         purposesBreakChoiceBox.getItems().addAll(purposes);
         purposesBreakChoiceBox.setOnAction(this::getPurpose);
         purposesBreakChoiceBox.setValue(purposes[0]);
@@ -159,14 +116,6 @@ public class StudentCreateAppealController {
         yearsSuspendChoiceBox.getItems().addAll(years);
         yearsSuspendChoiceBox.setOnAction(this::getYears);
         yearsSuspendChoiceBox.setValue(years[0]);
-
-        semestersInstallmentChoiceBox.getItems().addAll(semesters);
-        semestersInstallmentChoiceBox.setOnAction(this::getSemesters);
-        semestersInstallmentChoiceBox.setValue(semesters[0]);
-
-        yearsInstallmentChoiceBox.getItems().addAll(years);
-        yearsInstallmentChoiceBox.setOnAction(this::getYears);
-        yearsInstallmentChoiceBox.setValue(years[0]);
     }
 
     // ยืนยันการสร้างคำร้อง (Confirm Button)
@@ -181,19 +130,6 @@ public class StudentCreateAppealController {
             }
             else {
                 System.out.println(topic + " " + details);
-                resetTheValue();
-            }
-        }
-        else if (selectedAppeal.equals("ขอลาออก")) {
-            String gpa = gpaTextField.getText();
-            String tcas = tcasChoiceBox.getValue();
-            String purpose = purposeRetireTextArea.getText();
-            if (gpa.isEmpty() || purpose.isEmpty()) {
-                backgroundAlertPane.setVisible(true);
-                alertPane.setVisible(true);
-            }
-            else {
-                System.out.println(gpaTextField.getText() + " " + tcas + " " +  purposeRetireTextArea.getText());
                 resetTheValue();
             }
         }
@@ -226,41 +162,22 @@ public class StudentCreateAppealController {
                 resetTheValue();
             }
         }
-        else if (selectedAppeal.equals("ขอผ่อนผันการชำระ")) {
-            String reason = reasonInstallmentTextArea.getText();
-            String semester = semestersInstallmentChoiceBox.getValue();
-            String year = yearsInstallmentChoiceBox.getValue();
-            if (reason.isEmpty()) {
-                backgroundAlertPane.setVisible(true);
-                alertPane.setVisible(true);
-            }
-            else {
-                System.out.println(semester + " " + year + " " + reason);
-                resetTheValue();
-            }
-        }
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox
     public void resetTheValue() {
         topicTextArea.clear();
         detailsTextArea.clear();
-        gpaTextField.clear();
-        purposeRetireTextArea.clear();
         reasonSuspendTextArea.clear();
         subjectsSuspendTextArea.clear();
         subjectsBreakTextArea.clear();
         startBreakDatePicker.getEditor().clear();
         endBreakDatePicker.getEditor().clear();
         reasonBreakTextArea.clear();
-        reasonInstallmentTextArea.clear();
 
-        tcasChoiceBox.setValue(tcas[0]);
         purposesBreakChoiceBox.setValue(purposes[0]);
         semestersSuspendChoiceBox.setValue(semesters[0]);
         yearsSuspendChoiceBox.setValue(years[0]);
-        semestersInstallmentChoiceBox.setValue(semesters[0]);
-        yearsInstallmentChoiceBox.setValue(years[0]);
     }
 
     // ปิดหน้าจอเตือน
