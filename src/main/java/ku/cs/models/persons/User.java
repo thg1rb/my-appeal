@@ -2,12 +2,14 @@ package ku.cs.models.persons;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+import java.util.HashMap;
+
 public class User extends Human {
-    private String role;
+    private final String role;
 
     private String path;
 
-    private String username;
+    private final String username;
     private String password;
     private boolean ban;
 
@@ -22,6 +24,25 @@ public class User extends Human {
     private String id;
 
     private String loginDate;
+
+    public User(HashMap<String, String> user){
+        super(user.get("firstName"), user.get("lastName"));
+        this.role = user.get("role");
+        this.path = user.get("path");
+
+        this.username = user.get("username");
+        this.password = user.get("password");
+        this.initialPassword = user.get("initialPassword");
+        this.initialPasswordText = user.get("initialPasswordText");
+
+        this.faculty = user.get("faculty");
+        this.major = user.get("major");
+
+        this.email = user.get("email");
+        this.id = user.get("id");
+
+        this.loginDate = user.get("loginDate");
+    }
 
     public User(String role, String username, String password, String firstName, String lastName){
         super(firstName, lastName);
@@ -54,6 +75,16 @@ public class User extends Human {
     public User(String role, String username, String password, String firstName, String lastName, String faculty, String major, String id, String email){
         this(role, username, password, firstName, lastName, faculty, major, id);
         this.email = email;
+    }
+
+    public User(String role, String username, String password, String initialPassword, String initialPasswordText, String firstName, String lastName, String faculty, String major, String id, String email, String loginDate, boolean ban, String imgUrl){
+        this(role, username, password, firstName, lastName, faculty, major, id);
+        this.initialPassword = initialPassword;
+        this.initialPasswordText = initialPasswordText;
+        this.email = email;
+        this.loginDate = loginDate;
+        this.ban = ban;
+        this.path = imgUrl;
     }
 
     public User(String username, String password,Student student){
@@ -131,5 +162,44 @@ public class User extends Human {
 
     public String getLoginDate() {
         return loginDate;
+    }
+
+    public HashMap<String, String> toHashMap(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("role", role);
+        map.put("firstName", this.getFirstName());
+        map.put("lastName", this.getLastName());
+//        map.put("fullName", this.getFullName());
+        map.put("username", username);
+        map.put("password", password);
+        map.put("initialPassword", initialPassword);
+        map.put("initialPasswordText", initialPasswordText);
+        map.put("faculty", faculty);
+        map.put("major", major);
+        map.put("email", email);
+        map.put("id", id);
+        map.put("loginDate", loginDate);
+        map.put("ban", Boolean.toString(ban));
+        map.put("path", path);
+        return map;
+    }
+
+    @Override
+    public String toString() {
+        return  role + "," +
+                getFirstName() + "," +
+                getLastName() + "," +
+                username + "," +
+                password + "," +
+                initialPassword + "," +
+                initialPasswordText + "," +
+                faculty + "," +
+                major + "," +
+                email + "," +
+                id + "," +
+                loginDate+ "," +
+                ban + "," +
+                path;
+
     }
 }
