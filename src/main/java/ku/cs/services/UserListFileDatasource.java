@@ -64,6 +64,21 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
+//                String role = data[0].equals("null") ? data[0] : null;
+//                String firstName = data[1].equals("null") ? data[1] : null;
+//                String lastName = data[2].equals("null") ? data[2] : null;
+//                String username = data[3].equals("null") ? data[3] : null;
+//                String password = data[4].equals("null") ? data[4] : null;
+//                String initialPassword = data[5].equals("null") ? data[5] : null;
+//                String initialPasswordText = data[6].equals("null") ? data[6] : null;
+//                String faculty = data[7].equals("null") ? data[7] : null;
+//                String major = data[8].equals("null") ? data[8] : null;
+//                String email = data[9].equals("null") ? data[9] : null;
+//                String id = data[10].equals("null") ? data[10] : null;
+//                String loginDate = data[11].equals("null") ? data[11] : null;
+//                boolean ban = Boolean.parseBoolean(data[12]);
+//                String imgUrl = data[13].equals("null") ? data[13] : null;
+
                 String role = data[0];
                 String firstName = data[1];
                 String lastName = data[2];
