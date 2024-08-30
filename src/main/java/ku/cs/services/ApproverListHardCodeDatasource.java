@@ -1,8 +1,5 @@
 package ku.cs.services;
 
-import ku.cs.models.Approver;
-import ku.cs.models.collections.ApproverList;
-import ku.cs.models.collections.UserList;
 import ku.cs.models.users.StaffFaculty;
 
 public class ApproverListHardCodeDatasource implements Datasource<ApproverList> {

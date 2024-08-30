@@ -7,8 +7,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import ku.cs.models.Approver;
-import ku.cs.models.collections.ApproverList;
 import ku.cs.services.ApproverListHardCodeDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
