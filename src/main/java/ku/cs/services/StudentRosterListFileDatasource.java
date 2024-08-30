@@ -1,16 +1,16 @@
 package ku.cs.services;
 
-import ku.cs.models.collections.UserList;
-import ku.cs.models.persons.User;
+import ku.cs.models.collections.StudentList;
+import ku.cs.models.persons.Student;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class UserListFileDatasource implements Datasource<UserList> {
+public class StudentRosterListFileDatasource implements Datasource<StudentList>{
     private String directoryName;
     private String fileName;
 
-    public UserListFileDatasource(String directoryName, String fileName) {
+    public StudentRosterListFileDatasource(String directoryName, String fileName) {
         this.directoryName = directoryName;
         this.fileName = fileName;
         checkFileIsExisted();
@@ -34,16 +34,16 @@ public class UserListFileDatasource implements Datasource<UserList> {
     }
 
     @Override
-    public UserList readData() {
-        UserList userList = new UserList();
+    public StudentList readData() {
+        StudentList studentList = new StudentList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
         FileInputStream fileInputStream = null;
 
-        try {
+        try{
             fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
+        }catch (FileNotFoundException e){
             throw new RuntimeException(e);
         }
 
@@ -54,7 +54,8 @@ public class UserListFileDatasource implements Datasource<UserList> {
         BufferedReader buffer = new BufferedReader(inputStreamReader);
 
         String line = "";
-        try {
+
+        try{
             // ใช้ while loop เพื่ออ่านข้อมูลรอบละบรรทัด
             while ( (line = buffer.readLine()) != null ){
                 // ถ้าเป็นบรรทัดว่าง ให้ข้าม
@@ -64,37 +65,29 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-                String role = data[0];
-                String firstName = data[1];
-                String lastName = data[2];
-                String username = data[3];
-                String password = data[4];
-                String initialPassword = data[5];
-                String initialPasswordText = data[6];
-                String faculty = data[7];
-                String major = data[8];
-                String email = data[9];
-                String id = data[10];
-                String loginDate = data[11];
-                boolean ban = Boolean.parseBoolean(data[12]);
-                String imgUrl = data[13];
+                String firstName = data[0];
+                String lastName = data[1];
+                String id = data[2];
+                String email = data[3];
+                String faculty = data[4];
+                String major = data[5];
+                String advisor = data[6];
 
                 // เพิ่มข้อมูลลงใน list
-                userList.addUser(new User(role, username, password, initialPassword, initialPasswordText, firstName, lastName, faculty, major, id, email, loginDate, ban, imgUrl));
+                studentList.addStudent(firstName, lastName, id, email, faculty, major, advisor);
             }
-        } catch (IOException e) {
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
 
-        return userList;
+        return studentList;
     }
 
     @Override
-    public void writeData(UserList data) {
+    public void writeData(StudentList data) {
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
-        // เตรียม object ที่ใช้ในการเขียนไฟล์
         FileOutputStream fileOutputStream = null;
 
         try {
@@ -111,8 +104,8 @@ public class UserListFileDatasource implements Datasource<UserList> {
 
         try {
             // สร้าง csv ของ Student และเขียนลงในไฟล์ทีละบรรทัด
-            for (User user : data.getUsers()) {
-                String line = user.toString();
+            for (Student student : data.getStudents()) {
+                String line = student.toString();
                 buffer.append(line);
                 buffer.append("\n");
             }
@@ -127,15 +120,5 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 throw new RuntimeException(e);
             }
         }
-    }
-
-
-    //Delete Later
-    public static void main(String[] args) {
-        UserListFileDatasource readWrite = new UserListFileDatasource("data", "user.csv");
-        UserListHardCodeDatasource data = new UserListHardCodeDatasource();
-        UserList userList = data.readData();
-
-        readWrite.writeData(userList);
     }
 }

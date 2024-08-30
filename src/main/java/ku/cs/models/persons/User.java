@@ -77,6 +77,11 @@ public class User extends Human {
         this.email = email;
     }
 
+    public User(String username, String password,Student student){
+        this("นักศึกษา", username, password,student.getFirstName(), student.getLastName());
+    }
+
+    // Constructor for Create object from file
     public User(String role, String username, String password, String initialPassword, String initialPasswordText, String firstName, String lastName, String faculty, String major, String id, String email, String loginDate, boolean ban, String imgUrl){
         this(role, username, password, firstName, lastName, faculty, major, id);
         this.password = password;
@@ -86,10 +91,6 @@ public class User extends Human {
         this.loginDate = loginDate;
         this.ban = ban;
         this.path = imgUrl;
-    }
-
-    public User(String username, String password,Student student){
-        this("นักศึกษา", username, password,student.getFirstName(), student.getLastName());
     }
 
 

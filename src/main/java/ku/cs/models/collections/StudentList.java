@@ -19,6 +19,12 @@ public class StudentList {
         }
     }
 
+    public void addStudent(String firstName, String lastName, String id, String email, String faculty, String major, String advisor) {
+        if (findStudentById(id) == null){
+            students.add(new Student(firstName, lastName, id, email, faculty, major, advisor));
+        }
+    }
+
     public void addStudent(String id, String email, String firstName, String lastName, String advisor, User adder) {
         if (findStudentById(id) == null){
             students.add(new Student(id, email, firstName, lastName, advisor, adder));

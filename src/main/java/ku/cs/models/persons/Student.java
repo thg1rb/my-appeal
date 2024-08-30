@@ -21,6 +21,16 @@ public class Student extends Human {
         this.advisor = advisor;
     }
 
+    //Constructor for create Object from file
+    public Student(String id, String email, String firstName, String lastName, String faculty, String major, String advisor) {
+        super(firstName, lastName);
+        this.id = id;
+        this.email = email;
+        this.faculty = faculty;
+        this.major = major;
+        this.advisor = advisor;
+    }
+
     public String getId() {
         return id;
     }
@@ -39,5 +49,15 @@ public class Student extends Human {
 
     public String getAdvisor() {
         return advisor;
+    }
+
+    @Override
+    public String toString() {
+        return  getFirstName() + "," +
+                getLastName() + "," +
+                id + "," +
+                email + "," +
+                faculty + "," +
+                major + "," + advisor;
     }
 }
