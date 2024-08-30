@@ -46,16 +46,11 @@ public class MajorAppealManageController {
     @FXML private ChoiceBox statusChoiceBox;
 
     @FXML private Label topicLabel;
-    @FXML private Label detailLabel;
-
-    @FXML private Label gpaLabel;
-    @FXML private Label tcasLabel;
-
+    @FXML private Label semesterLabel;
     @FXML private Label purposeLabel;
     @FXML private Label breakTimeLabel;
     @FXML private Label reasonLabel;
     @FXML private Label subjectLabel;
-
     @FXML private Label academicTermLabel;
     @FXML private Label yearLabel;
 
@@ -86,16 +81,11 @@ public class MajorAppealManageController {
                     showPopup(selectedAppeal.getType(), selectedAppeal);
                 }
             }
-
         });
     }
 
     @FXML
     public void showPopup(String type, Appeal appeal){
-
-            gpaLabel.setVisible(false);
-            tcasLabel.setVisible(false);
-
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
 
@@ -103,12 +93,12 @@ public class MajorAppealManageController {
             subjectLabel.setVisible(false);
             academicTermLabel.setVisible(false);
             yearLabel.setVisible(false);
+            semesterLabel.setVisible(false);
 
-            if (type == "คำร้องทั่วไป") {
-                topicLabel.setText(appeal.getTopic());
-                reasonLabel.setText(appeal.getReason());
-            }
-            else if(type == "คำร้องขอลากิจหรือลาป่วย"){
+            topicLabel.setText(appeal.getTopic());
+            reasonLabel.setText(appeal.getReason());
+
+            if(type == "คำร้องขอลากิจหรือลาป่วย"){
                 topicLabel.setText(appeal.getTopic());
                 reasonLabel.setText(appeal.getReason());
 
@@ -128,21 +118,20 @@ public class MajorAppealManageController {
                 subjectLabel.setVisible(true);
                 subjectLabel.setLayoutY(160);
             }
+            else if(type == "คำร้องขอพักการศึกษา"){
+                semesterLabel.setText(appeal.getSemester());
+                yearLabel.setText(appeal.getYear());
+                subjectLabel.setText(appeal.getSubjects());
 
+                semesterLabel.setVisible(true);
+                semesterLabel.setLayoutY(70);
 
+                yearLabel.setVisible(true);
+                yearLabel.setLayoutY(100);
 
-//            else if(type == "คำร้องขอพักการศึกษา"){
-//                GeneralAppeal currentAppeal = (GeneralAppeal) appeal;
-//            }
-//            else if(type == "Break Appeal"){
-//                BreakAppeal currentAppeal = (BreakAppeal) appeal;
-//            }
-//            else if(type == "Installment Appeal"){
-//                InstallmentAppeal currentAppeal = (InstallmentAppeal) appeal;
-//            }
-//            else if(type == "Suspend Appeal"){
-//                SuspendAppeal currentAppeal = (SuspendAppeal) appeal;
-//            }
+                subjectLabel.setVisible(true);
+                subjectLabel.setLayoutY(130);
+            }
 
             typeLabel.setText(type);
             reasonLabel.setVisible(true);

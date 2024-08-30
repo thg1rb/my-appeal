@@ -156,16 +156,6 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="gpaLabel" layoutX="51.0" layoutY="70.0" text="gpaLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="tcasLabel" layoutX="51.0" layoutY="100.0" text="tcasLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
             <Label fx:id="topicLabel" layoutX="51.0" layoutY="40.0" text="topicLabel">
                <font>
                   <Font size="20.0" />
@@ -210,6 +200,11 @@
                </font>
             </Label>
             <Label fx:id="yearLabel" layoutX="51.0" layoutY="160.0" text="yearLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="semesterLabel" layoutX="51.0" layoutY="140.0" text="semesterLabel">
                <font>
                   <Font size="20.0" />
                </font>
