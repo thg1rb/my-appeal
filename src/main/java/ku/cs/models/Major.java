@@ -23,4 +23,9 @@ public class Major {
     public String getFaculty() { return faculty; }
 
     public String getMajorId() { return majorId; }
+
+    @Override
+    public String toString() {
+        return majorName + "," + faculty + "," + majorId;
+    }
 }
