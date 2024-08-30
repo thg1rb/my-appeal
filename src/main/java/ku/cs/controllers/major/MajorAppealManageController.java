@@ -17,6 +17,7 @@ import ku.cs.models.*;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.AppealListHardCodeDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -59,12 +60,12 @@ public class MajorAppealManageController {
     String selectedStatus;
     Appeal selectedAppeal;
 
-    private AppealList appealList;
-    private Datasource<AppealList> datasource;
+    public AppealList appealList;
+    public Datasource<AppealList> datasource;
 //    private Object selectedAppeal;
     @FXML
     public void initialize() {
-        datasource = new AppealListHardCodeDatasource();
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
         showTable(appealList);
 
@@ -73,7 +74,6 @@ public class MajorAppealManageController {
         statusChoiceBox.setValue(statusList[0]);
 
         allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-
             @Override
             public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
                 if (newValue != null) {
@@ -160,6 +160,7 @@ public class MajorAppealManageController {
 
         selectedStatus = null;
     }
+
     public void showTable(AppealList appealList) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));

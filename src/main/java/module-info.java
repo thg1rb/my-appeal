@@ -27,6 +27,9 @@ module ku.cs {
     exports ku.cs.models;
     opens ku.cs.models to javafx.base;
 
+    exports ku.cs.models.persons;
+    opens ku.cs.models.persons to javafx.base;
+
     exports ku.cs.models.appeal;
     opens ku.cs.models.appeal to javafx.base;
 }

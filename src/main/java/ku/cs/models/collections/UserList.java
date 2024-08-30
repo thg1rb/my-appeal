@@ -1,11 +1,12 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.User;
+import ku.cs.models.persons.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserList {
-    private ArrayList<User> users;
+    private List<User> users;
 
     public UserList() {
         users = new ArrayList<>();
@@ -28,16 +29,17 @@ public class UserList {
         return null;
     }
 
-    public User findUserByRole(String role) {
+    public List<User> findUserByRole(String role) {
+        List<User> filteredUsers = new ArrayList<>();
         for (User user : users) {
             if (user.getRole().equals(role)){
-                return user;
+                return filteredUsers;
             }
         }
         return null;
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 }
