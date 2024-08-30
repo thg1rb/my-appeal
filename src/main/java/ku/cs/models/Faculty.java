@@ -18,4 +18,9 @@ public class Faculty {
     public String getFacultyName() { return facultyName; }
 
     public String getFacultyId() { return facultyId; }
+
+    @Override
+    public String toString() {
+        return facultyName + "," + facultyId;
+    }
 }

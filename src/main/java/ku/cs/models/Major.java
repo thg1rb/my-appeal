@@ -6,7 +6,11 @@ public class Major {
     private String majorId;
 
     public Major() { }
-    public Major(String majorName, String faculty, String majorId) { }
+    public Major(String majorName, String faculty, String majorId) {
+        this.majorName = majorName;
+        this.faculty = faculty;
+        this.majorId = majorId;
+    }
 
     public void setMajorName(String majorName) { this.majorName = majorName; }
 
@@ -19,4 +23,9 @@ public class Major {
     public String getFaculty() { return faculty; }
 
     public String getMajorId() { return majorId; }
+
+    @Override
+    public String toString() {
+        return majorName + "," + faculty + "," + majorId;
+    }
 }

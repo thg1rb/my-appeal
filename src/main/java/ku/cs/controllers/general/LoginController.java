@@ -4,11 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import ku.cs.models.users.User;
+import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.UserListFileDatasource;
 import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userListDatasource = new UserListHardCodeDatasource();
+//        userListDatasource = new UserListHardCodeDatasource();
+        userListDatasource = new UserListFileDatasource("data", "user.csv");
         userList = userListDatasource.readData();
         errorLabel.setText("");
     }
@@ -42,11 +44,50 @@ public class LoginController {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
-            if (user.validatePassword(password)){
-                user.login();
-            }
-            else{
-                errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
+            if (!user.isBan()){
+                if (user.validatePassword(password)) {
+                    switch (user.getRole()){
+                        case "ผู้ดูแลระบบ":
+                            try {
+                                FXRouter.goTo("admin-dashboard");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        case "เจ้าหน้าที่คณะ":
+                            try {
+                                FXRouter.goTo("faculty-appeal-manage");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        case "เจ้าหน้าที่ภาควิชา":
+                            try {
+                                FXRouter.goTo("major-appeal-manage");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        case "อาจารย์ที่ปรึกษา":
+                            try {
+                                FXRouter.goTo("professor-student-list");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        default:
+                            try {
+                                FXRouter.goTo("student-track-appeal");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                    }
+                }else{
+                    errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
+                }
+            }else{
+                errorLabel.setText("บัญชีของท่านถูกระงับการใช้งาน");
             }
         }
     }
