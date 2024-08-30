@@ -80,7 +80,7 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 String imgUrl = data[13];
 
                 // เพิ่มข้อมูลลงใน list
-                userList.addUser(new User(role, firstName, lastName, username, password, initialPassword, initialPasswordText, faculty, major, email, id, loginDate, ban, imgUrl));
+                userList.addUser(new User(role, username, password, initialPassword, initialPasswordText, firstName, lastName, faculty, major, id, email, loginDate, ban, imgUrl));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

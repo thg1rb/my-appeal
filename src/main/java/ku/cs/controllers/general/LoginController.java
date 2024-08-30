@@ -9,6 +9,7 @@ import ku.cs.models.collections.UserList;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.UserListFileDatasource;
 import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userListDatasource = new UserListHardCodeDatasource();
+//        userListDatasource = new UserListHardCodeDatasource();
+        userListDatasource = new UserListFileDatasource("data", "user.csv");
         userList = userListDatasource.readData();
         errorLabel.setText("");
     }

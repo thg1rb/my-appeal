@@ -13,6 +13,7 @@ import ku.cs.models.persons.User;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.UserListFileDatasource;
 import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class AdminStaffManagementController {
 
     @FXML
     private void initialize() {
-        datasource = new UserListHardCodeDatasource();
+        datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
 
         showTable(userList, "เจ้าหน้าที่คณะ");

@@ -11,6 +11,7 @@ import ku.cs.models.collections.UserList;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.UserListFileDatasource;
 import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class AdminUserManagementController {
 
     @FXML
     public void initialize() {
-        usersDatasource = new UserListHardCodeDatasource();
+        usersDatasource = new UserListFileDatasource("data", "user.csv");
         userList = usersDatasource.readData();
 
         showTable(userList);

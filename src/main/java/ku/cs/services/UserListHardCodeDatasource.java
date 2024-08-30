@@ -26,6 +26,9 @@ public class UserListHardCodeDatasource implements Datasource<UserList> {
         list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ1", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
         list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ2", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
         list.addUser(new User("นักศึกษา", "nisit", "test", "นิสิต", "สมมติ3", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
+        User bannedStudent = new User("นักศึกษา", "nisit", "test", "นิสิตโดนแบน", "ทดสอบ", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test");
+        bannedStudent.banUser();
+        list.addUser(bannedStudent);
         return list;
     }
 

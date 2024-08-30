@@ -79,6 +79,7 @@ public class User extends Human {
 
     public User(String role, String username, String password, String initialPassword, String initialPasswordText, String firstName, String lastName, String faculty, String major, String id, String email, String loginDate, boolean ban, String imgUrl){
         this(role, username, password, firstName, lastName, faculty, major, id);
+        this.password = password;
         this.initialPassword = initialPassword;
         this.initialPasswordText = initialPasswordText;
         this.email = email;
