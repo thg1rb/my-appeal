@@ -10,7 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import ku.cs.models.appeal.Appeal;
+import ku.cs.models.collections.AppealList;
+import ku.cs.services.AppealListFileDatasource;
+import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
+
+import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.IOException;
 
@@ -53,11 +59,30 @@ public class StudentCreateAppealController {
     @FXML private Pane backgroundAlertPane;
     @FXML private Pane alertPane;
 
+    Datasource<AppealList> datasource;
+    AppealList appealList;
+
     @FXML
     public void initialize() {
         // แสดงโปรไฟล์ผู้ใช้งาน
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
+
+        try {
+            datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+            appealList = datasource.readData();
+
+            if (appealList == null) {
+                System.out.println("Appeal list is null.");
+            } else if (appealList.getAppeals().isEmpty()) {
+                System.out.println("Appeal list is empty.");
+            } else {
+                System.out.println("Appeal list successfully read.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle error or display message to the user
+        }
 
         initializeChoiceBox();
     }
@@ -129,6 +154,8 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
+                appealList.addNewAppeal(new Appeal("คำร้องทั่วไป", "6610402132", topic, details));
+
                 System.out.println(topic + " " + details);
                 resetTheValue();
             }
@@ -143,6 +170,8 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
+                appealList.addNewAppeal(new Appeal("คำร้องขอพักการศึกษา", "6610402132", reason, semester, year, subjects));
+
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
             }
@@ -158,10 +187,14 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
+                appealList.addNewAppeal(new Appeal("คำร้องลาป่วยหรือลากิจ", "6610402132", purpose, subjects, startDate, endDate));
+
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
         }
+        datasource.writeData(appealList);
+        appealList = datasource.readData();
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox

@@ -10,13 +10,15 @@ public class AppealList {
     public AppealList(){
         appeals =  new ArrayList<>();
     }
-    public boolean addAppeal(Appeal appeal){
+
+    public boolean addNewAppeal(Appeal appeal){
         if(appeal != null){
             appeals.add(appeal);
             return true;
         }
         return false;
     }
+
     public ArrayList<Appeal> getAppeals(){
         return appeals;
     }

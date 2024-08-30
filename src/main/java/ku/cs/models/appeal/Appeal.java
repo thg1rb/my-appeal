@@ -1,5 +1,7 @@
 package ku.cs.models.appeal;
 
+import ku.cs.services.AppealListFileDatasource;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,8 +21,8 @@ public class Appeal {
     // Break Fields
     private String purpose;
     private String subjects;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
     // Suspend Fields
     private String semester;
@@ -28,7 +30,7 @@ public class Appeal {
 
     // General Constructor
     public Appeal(String type, String owner, String topic, String reason) {
-        this.status = "";
+        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = new Date().toString();
         this.type = type;
         this.owner = owner;
@@ -37,8 +39,8 @@ public class Appeal {
     }
 
     // Break Constructor
-    public Appeal(String type, String owner, String reason, String purpose, String subjects, Date startDate, Date endDate) {
-        this.status = "";
+    public Appeal(String type, String owner, String reason, String purpose, String subjects, String startDate, String endDate) {
+        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = new Date().toString();
         this.type = type;
         this.owner = owner;
@@ -51,7 +53,7 @@ public class Appeal {
 
     // Suspend Constructor
     public Appeal(String type, String owner, String reason, String semester, String year, String subjects) {
-        this.status = "";
+        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = new Date().toString();
         this.type = type;
         this.owner = owner;
@@ -140,5 +142,10 @@ public class Appeal {
             date = null; // or handle accordingly
         }
         System.out.println(date.toString());
+    }
+
+    @Override
+    public String toString() {
+        return createDate + "," + owner + "," + type + "," + status + "," + topic + "," +  reason + "," + purpose + "," + subjects + "," + startDate + "," + endDate + "," + semester + "," + year;
     }
 }
