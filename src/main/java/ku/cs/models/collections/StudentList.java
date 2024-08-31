@@ -21,7 +21,7 @@ public class StudentList {
 
     public void addStudent(String firstName, String lastName, String id, String email, String faculty, String major, String advisor) {
         if (findStudentById(id) == null){
-            students.add(new Student(firstName, lastName, id, email, faculty, major, advisor));
+            students.add(new Student(id, email, firstName, lastName, faculty, major, advisor));
         }
     }
 
@@ -38,13 +38,24 @@ public class StudentList {
     }
 
     public Student findStudentById(String id) {
-        for (Student student : this.students) {
+        for (Student student : students) {
             if (student.getId().equals(id)) {
                 return student;
             }
         }
         return null;
     }
+
+    public Student findStudentByInformation(String firstName, String lastName, String id, String email) {
+        for (Student student : students) {
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName) && student.getId().equals(id) && student.getEmail().equals(email)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+
 
     public List<Student> getStudents() {
         return students;

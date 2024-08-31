@@ -12,6 +12,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -25,6 +26,9 @@ import java.util.Date;
 public class StudentCreateAppealController {
 
     @FXML private Circle profileImageCircle;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label  roleLabel;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -64,8 +68,12 @@ public class StudentCreateAppealController {
     Datasource<AppealList> datasource;
     AppealList appealList;
 
+    User user;
+
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
         // แสดงโปรไฟล์ผู้ใช้งาน
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
@@ -156,7 +164,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", "6610402132", topic, details));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", user.getId(), topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -172,7 +180,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", "6610402132", reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -191,13 +199,11 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                Appeal appeal = new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", "6610402132", reason, purpose, subjects, startDate, endDate);
-                appealList.addNewAppeal(appeal);
-                System.out.println(appeal);
+                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), purpose, subjects, startDate, endDate));
+
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
-
         }
         datasource.writeData(appealList);
         appealList = datasource.readData();

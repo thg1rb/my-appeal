@@ -29,6 +29,15 @@ public class UserList {
         return null;
     }
 
+    public User findUserByPersonalInformation(String firstName, String lastName, String id, String email) {
+        for (User user : users) {
+            if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) && user.getEmail().equals(email)){
+                return user;
+            }
+        }
+        return null;
+    }
+
     public List<User> findUserByRole(String role) {
         List<User> filteredUsers = new ArrayList<>();
         for (User user : users) {
