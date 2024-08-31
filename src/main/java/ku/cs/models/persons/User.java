@@ -120,6 +120,10 @@ public class User extends Human {
         this.ban = true;
     }
 
+    public void unbanUser(){
+        this.ban = false;
+    }
+
     public boolean canLogin(String password){
         boolean verified = validatePassword(password);
         return verified && !isBan();
@@ -164,6 +168,10 @@ public class User extends Human {
 
     public String getLoginDate() {
         return loginDate;
+    }
+
+    public String getBan(){
+        return ban ? "ไม่มีสิทธิ์การใช้งาน" : "มีสิทธิ์การใช้งาน";
     }
 
     public HashMap<String, String> toHashMap(){

@@ -39,7 +39,7 @@ public class LoginController {
         String password = givePasswordTextField.getText();
         errorLabel.setText("");
         user = userList.findUserByUsername(username);
-
+        errorLabel.setText("");
         if(user == null) {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
