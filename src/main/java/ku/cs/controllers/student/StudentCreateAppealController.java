@@ -2,21 +2,30 @@ package ku.cs.controllers.student;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import ku.cs.models.appeal.Appeal;
+import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.User;
+import ku.cs.services.AppealListFileDatasource;
+import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
+import ku.cs.services.AppealListHardCodeDatasource;
+
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class StudentCreateAppealController {
 
     @FXML private Circle profileImageCircle;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label  roleLabel;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -53,11 +62,34 @@ public class StudentCreateAppealController {
     @FXML private Pane backgroundAlertPane;
     @FXML private Pane alertPane;
 
+    Datasource<AppealList> datasource;
+    AppealList appealList;
+
+    User user;
+
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
         // แสดงโปรไฟล์ผู้ใช้งาน
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
+
+        try {
+            datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+            appealList = datasource.readData();
+
+            if (appealList == null) {
+                System.out.println("Appeal list is null.");
+            } else if (appealList.getAppeals().isEmpty()) {
+                System.out.println("Appeal list is empty.");
+            } else {
+                System.out.println("Appeal list successfully read.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle error or display message to the user
+        }
 
         initializeChoiceBox();
     }
@@ -129,6 +161,8 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", user.getId(), topic, details));
+
                 System.out.println(topic + " " + details);
                 resetTheValue();
             }
@@ -143,25 +177,33 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
+
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
             }
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
-            String purpose = reasonBreakTextArea.getText();
+            String purpose = purposesBreakChoiceBox.getValue();
             String subjects = subjectsBreakTextArea.getText();
+            String reason = reasonSuspendTextArea.getText();
 
             // Bugs can't check empty DatePicker
-            String startDate = (startBreakDatePicker == null) ? "" : startBreakDatePicker.getValue().toString();
-            String endDate = (endBreakDatePicker == null) ? "" : endBreakDatePicker.getValue().toString();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            String startDate = (startBreakDatePicker.getValue() == null) ? "" : startBreakDatePicker.getValue().format(dateFormatter);
+            String endDate = (endBreakDatePicker.getValue() == null) ? "" : endBreakDatePicker.getValue().format(dateFormatter);
             if (purpose.isEmpty() || subjects.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
+                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), purpose, subjects, startDate, endDate));
+
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
         }
+        datasource.writeData(appealList);
+        appealList = datasource.readData();
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox

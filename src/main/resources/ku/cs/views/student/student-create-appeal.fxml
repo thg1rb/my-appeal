@@ -252,5 +252,15 @@
             </Label>
          </children>
       </Pane>
+      <Label fx:id="usernameLabel" layoutX="103.0" layoutY="193.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="roleLabel" layoutX="103.0" layoutY="231.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
