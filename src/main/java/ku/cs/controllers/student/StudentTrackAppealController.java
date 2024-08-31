@@ -20,15 +20,16 @@ import java.io.IOException;
 
 public class StudentTrackAppealController {
 
+    private Datasource<AppealList> datasource;
+    private AppealList appealList;
+    private User user;
+
     @FXML private Circle profileImageCircle;
 
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
 
     @FXML private TableView<Appeal> tableView;
-    private Datasource<AppealList> datasource;
-    private AppealList appealList;
-    private User user;
 
     @FXML
     public void initialize() {
@@ -41,11 +42,10 @@ public class StudentTrackAppealController {
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
 
+        // แสดงข้อมูลภายในตาราง
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-
         showTable(appealList, user.getId());
-//        showTable(appealList, "6610401985");
     }
 
     public void showTable(AppealList appealList, String ownerId) {

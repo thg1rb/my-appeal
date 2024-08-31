@@ -17,6 +17,7 @@ import ku.cs.models.*;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.AppealListHardCodeDatasource;
 import ku.cs.services.Datasource;
@@ -27,6 +28,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MajorAppealManageController {
+
+    private User user;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
 
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Object> selfAppealTable;
@@ -63,6 +69,11 @@ public class MajorAppealManageController {
 //    private Object selectedAppeal;
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
         showTable(appealList);
@@ -195,7 +206,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onApproverManageButtonClick() {
         try {
-            FXRouter.goTo("major-approver-manage");
+            FXRouter.goTo("major-approver-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -204,7 +215,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onNisitManageButtonClick() {
         try {
-            FXRouter.goTo("major-nisit-manage");
+            FXRouter.goTo("major-nisit-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

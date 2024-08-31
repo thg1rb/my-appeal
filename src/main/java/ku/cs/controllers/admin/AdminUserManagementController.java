@@ -1,6 +1,7 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,6 +18,10 @@ import ku.cs.services.UserListHardCodeDatasource;
 import java.io.IOException;
 
 public class AdminUserManagementController {
+    User user;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
 
     @FXML private TabPane tabPane;
     @FXML private TableView<User> tableView;
@@ -26,6 +31,11 @@ public class AdminUserManagementController {
 
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         usersDatasource = new UserListFileDatasource("data", "user.csv");
         userList = usersDatasource.readData();
 
@@ -123,7 +133,7 @@ public class AdminUserManagementController {
     @FXML
     public void onFacultyButtonClicked() {
         try {
-            FXRouter.goTo("admin-faculty-manage");
+            FXRouter.goTo("admin-faculty-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -131,7 +141,7 @@ public class AdminUserManagementController {
     @FXML
     public void onStaffButtonClicked() {
         try {
-            FXRouter.goTo("admin-staff-manage");
+            FXRouter.goTo("admin-staff-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

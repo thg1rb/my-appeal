@@ -22,6 +22,11 @@ import java.util.Date;
 
 public class StudentCreateAppealController {
 
+    private User user;
+
+    private Datasource<AppealList> datasource;
+    private AppealList appealList;
+
     @FXML private Circle profileImageCircle;
 
     @FXML private Label usernameLabel;
@@ -62,34 +67,20 @@ public class StudentCreateAppealController {
     @FXML private Pane backgroundAlertPane;
     @FXML private Pane alertPane;
 
-    Datasource<AppealList> datasource;
-    AppealList appealList;
-
-    User user;
-
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
 
         // แสดงโปรไฟล์ผู้ใช้งาน
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
 
-        try {
-            datasource = new AppealListFileDatasource("data", "appeal-list.csv");
-            appealList = datasource.readData();
-
-            if (appealList == null) {
-                System.out.println("Appeal list is null.");
-            } else if (appealList.getAppeals().isEmpty()) {
-                System.out.println("Appeal list is empty.");
-            } else {
-                System.out.println("Appeal list successfully read.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Handle error or display message to the user
-        }
+        // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์ เพิ่มข้อมูล)
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = datasource.readData();
 
         initializeChoiceBox();
     }
@@ -233,7 +224,7 @@ public class StudentCreateAppealController {
     @FXML
     private void onTrackAppealButtonClick() {
         try {
-            FXRouter.goTo("student-track-appeal");
+            FXRouter.goTo("student-track-appeal", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
