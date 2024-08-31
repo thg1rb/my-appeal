@@ -82,13 +82,13 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    appeals.addNewAppeal(new Appeal(type, ownerId, topic, reason));
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, topic, reason));
+                }
+                else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, reason, purpose, subjects, startDate, endDate));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    appeals.addNewAppeal(new Appeal(type, ownerId, reason, purpose, subjects, startDate, endDate));
-                }
-                else if (type.equals("คำร้องขอลากิจหรือลาป่วย")) {
-                    appeals.addNewAppeal(new Appeal(type, ownerId, reason, semester, year, subjects));
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, reason, semester, year, subjects));
                 }
             }
         } catch (IOException e) {
@@ -139,11 +139,11 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
     }
 
     // ทดสอบการอ่านไฟล์
-    public static void main(String[] args) {
-        AppealListHardCodeDatasource data = new AppealListHardCodeDatasource();
-        AppealList appeals = data.readData();
-
-        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
-        w.writeData(appeals);
-    }
+//    public static void main(String[] args) {
+//        AppealListHardCodeDatasource data = new AppealListHardCodeDatasource();
+//        AppealList appeals = data.readData();
+//
+//        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
+//        w.writeData(appeals);
+//    }
 }

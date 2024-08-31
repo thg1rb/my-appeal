@@ -37,8 +37,6 @@ public class MajorAppealManageController {
     @FXML private Label appealManageLabel;
     @FXML private Label appealDetailsLabel;
 
-    @FXML private TabPane appealTabPane;
-
     @FXML private Label typeLabel;
 
     @FXML private Label presentStatusLabel;
@@ -86,6 +84,8 @@ public class MajorAppealManageController {
 
     @FXML
     public void showPopup(String type, Appeal appeal){
+            System.out.println(appeal.getPurpose());
+
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
 
@@ -98,17 +98,17 @@ public class MajorAppealManageController {
             topicLabel.setText(appeal.getTopic());
             reasonLabel.setText(appeal.getReason());
 
-            if(type == "คำร้องขอลากิจหรือลาป่วย"){
-                topicLabel.setText(appeal.getTopic());
-                reasonLabel.setText(appeal.getReason());
 
+
+            if(type.equals("คำร้องขอลากิจหรือลาป่วย")) {
+                System.out.println(appeal.getPurpose());
                 purposeLabel.setText(appeal.getPurpose());
                 purposeLabel.setVisible(true);
                 purposeLabel.setLayoutY(70);
 
                 breakTimeLabel.setText("ระยะเวลา: " + appeal.getStartDate() + " - " + appeal.getEndDate());
-                breakTimeLabel.setLayoutY(100);
                 breakTimeLabel.setVisible(true);
+                breakTimeLabel.setLayoutY(100);
 
                 reasonLabel.setText("เหตุผล:" + appeal.getReason());
                 reasonLabel.setVisible(true);
@@ -118,7 +118,7 @@ public class MajorAppealManageController {
                 subjectLabel.setVisible(true);
                 subjectLabel.setLayoutY(160);
             }
-            else if(type == "คำร้องขอพักการศึกษา"){
+            else if(type.equals("คำร้องขอพักการศึกษา")) {
                 semesterLabel.setText(appeal.getSemester());
                 yearLabel.setText(appeal.getYear());
                 subjectLabel.setText(appeal.getSubjects());
@@ -159,6 +159,12 @@ public class MajorAppealManageController {
         allAppealTable.getSelectionModel().select(null);
 
         selectedStatus = null;
+    }
+    @FXML
+    public void cancleOnButtonClick(){
+        popupAppealPane.setVisible(false);
+        appealDetailsLabel.setVisible(true);
+        appealManageLabel.setVisible(false);
     }
 
     public void showTable(AppealList appealList) {

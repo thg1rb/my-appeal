@@ -19,6 +19,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class StudentCreateAppealController {
 
@@ -154,7 +155,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal("คำร้องทั่วไป", "6610402132", topic, details));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", "6610402132", topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -170,24 +171,24 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal("คำร้องขอพักการศึกษา", "6610402132", reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", "6610402132", reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
             }
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
-            String purpose = reasonBreakTextArea.getText();
+            String purpose = purposesBreakChoiceBox.getValue();
             String subjects = subjectsBreakTextArea.getText();
 
             // Bugs can't check empty DatePicker
-            String startDate = (startBreakDatePicker == null) ? "" : startBreakDatePicker.getValue().toString();
-            String endDate = (endBreakDatePicker == null) ? "" : endBreakDatePicker.getValue().toString();
+            String startDate = (startBreakDatePicker.getValue() == null) ? "" : startBreakDatePicker.getValue().toString();
+            String endDate = (endBreakDatePicker.getValue() == null) ? "" : endBreakDatePicker.getValue().toString();
             if (purpose.isEmpty() || subjects.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal("คำร้องลาป่วยหรือลากิจ", "6610402132", purpose, subjects, startDate, endDate));
+                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", "6610402132", purpose, subjects, startDate, endDate));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();

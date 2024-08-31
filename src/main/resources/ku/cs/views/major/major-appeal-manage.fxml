@@ -178,7 +178,7 @@
             </Label>
             <ChoiceBox fx:id="statusChoiceBox" layoutX="550.0" layoutY="93.0" prefHeight="51.0" prefWidth="422.0" stylesheets="@../../styles/button.css" />
             <Button layoutX="651.0" layoutY="203.0" mnemonicParsing="false" onAction="#confirmOnButtonClick" prefHeight="38.0" prefWidth="91.0" text="ยืนยัน" />
-            <Button layoutX="798.0" layoutY="203.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="91.0" text="ยกเลิก" />
+            <Button layoutX="798.0" layoutY="203.0" mnemonicParsing="false" onAction="#cancleOnButtonClick" prefHeight="38.0" prefWidth="91.0" text="ยกเลิก" />
             <Label fx:id="purposeLabel" layoutX="51.0" layoutY="130.0" text="purposeLabel">
                <font>
                   <Font size="20.0" />
@@ -199,7 +199,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="yearLabel" layoutX="51.0" layoutY="160.0" text="yearLabel">
+            <Label fx:id="yearLabel" layoutX="51.0" layoutY="173.0" text="yearLabel">
                <font>
                   <Font size="20.0" />
                </font>

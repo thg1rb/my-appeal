@@ -29,9 +29,9 @@ public class Appeal {
     private String year;
 
     // General Constructor
-    public Appeal(String type, String owner, String topic, String reason) {
+    public Appeal(String createDate, String type, String owner, String topic, String reason) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
-        this.createDate = new Date().toString();
+        this.createDate = createDate;
         this.type = type;
         this.owner = owner;
         this.topic = topic;
@@ -39,9 +39,9 @@ public class Appeal {
     }
 
     // Break Constructor
-    public Appeal(String type, String owner, String reason, String purpose, String subjects, String startDate, String endDate) {
+    public Appeal(String createDate, String type, String owner, String reason, String purpose, String subjects, String startDate, String endDate) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
-        this.createDate = new Date().toString();
+        this.createDate = createDate;
         this.type = type;
         this.owner = owner;
         this.reason = reason;
@@ -52,9 +52,9 @@ public class Appeal {
     }
 
     // Suspend Constructor
-    public Appeal(String type, String owner, String reason, String semester, String year, String subjects) {
+    public Appeal(String createDate, String type, String owner, String reason, String semester, String year, String subjects) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
-        this.createDate = new Date().toString();
+        this.createDate = createDate;
         this.type = type;
         this.owner = owner;
         this.reason = reason;
@@ -92,15 +92,18 @@ public class Appeal {
     }
 
     public String getStartDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String startDateString = sdf.format(startDate);
-        return startDateString;
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//        String startDateString = sdf.format(startDate);
+//        return startDateString;
+        return startDate;
     }
 
+
     public String getEndDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String endDateString = sdf.format(endDate);
-        return endDateString;
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//        String endDateString = sdf.format(endDate);
+//        return endDateString;
+        return endDate;
     }
 
     public String getSemester() {
