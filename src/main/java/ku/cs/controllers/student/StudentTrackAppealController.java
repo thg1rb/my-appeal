@@ -1,6 +1,7 @@
 package ku.cs.controllers.student;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,6 +22,9 @@ public class StudentTrackAppealController {
 
     @FXML private Circle profileImageCircle;
 
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
+
     @FXML private TableView<Appeal> tableView;
     private Datasource<AppealList> datasource;
     private AppealList appealList;
@@ -28,16 +32,20 @@ public class StudentTrackAppealController {
 
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
         // แสดงโปรไฟล์ผู้ใช้งาน
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
 
-//        user = (User) FXRouter.getData();
-//        showTable(appealList, user.getId());
-        showTable(appealList, "6610401985");
+        showTable(appealList, user.getId());
+//        showTable(appealList, "6610401985");
     }
 
     public void showTable(AppealList appealList, String ownerId) {
@@ -51,8 +59,6 @@ public class StudentTrackAppealController {
         tableView.getColumns().add(dateTimeCol);
         tableView.getColumns().add(typeCol);
 
-        // Width
-
         tableView.getItems().clear();
         for (Appeal appeal : appealList.getAppeals()) {
             if (appeal.getOwner().equals(ownerId)) {
@@ -65,7 +71,7 @@ public class StudentTrackAppealController {
     @FXML
     private void onCreateAppealButtonClick() {
         try {
-            FXRouter.goTo("student-create-appeal");
+            FXRouter.goTo("student-create-appeal", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
