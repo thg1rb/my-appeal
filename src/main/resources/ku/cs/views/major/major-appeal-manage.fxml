@@ -166,12 +166,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="611.0" layoutY="40.0" text="สถานะปัจจุบัน:">
+            <Label layoutX="500.0" layoutY="40.0" text="สถานะปัจจุบัน:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="presentStatusLabel" layoutX="753.0" layoutY="40.0" text="presentStatusLabel">
+            <Label fx:id="presentStatusLabel" layoutX="630.0" layoutY="40.0" text="presentStatusLabel">
                <font>
                   <Font size="20.0" />
                </font>

@@ -53,7 +53,7 @@ public class MajorAppealManageController {
     @FXML private Label academicTermLabel;
     @FXML private Label yearLabel;
 
-    private String[] statusList = {"----- เลือกสถานะ -----", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน", "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ"};
+    private String[] statusList = {"ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน", "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ"};
 
     String selectedStatus;
     Appeal selectedAppeal;
@@ -84,8 +84,6 @@ public class MajorAppealManageController {
 
     @FXML
     public void showPopup(String type, Appeal appeal){
-            System.out.println(appeal.getPurpose());
-
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
 
@@ -100,9 +98,8 @@ public class MajorAppealManageController {
 
 
 
-            if(type.equals("คำร้องขอลากิจหรือลาป่วย")) {
-                System.out.println(appeal.getPurpose());
-                purposeLabel.setText(appeal.getPurpose());
+            if(type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
+                purposeLabel.setText("จุดประสงค์: " + appeal.getPurpose());
                 purposeLabel.setVisible(true);
                 purposeLabel.setLayoutY(70);
 
@@ -110,7 +107,7 @@ public class MajorAppealManageController {
                 breakTimeLabel.setVisible(true);
                 breakTimeLabel.setLayoutY(100);
 
-                reasonLabel.setText("เหตุผล:" + appeal.getReason());
+                reasonLabel.setText(appeal.getReason());
                 reasonLabel.setVisible(true);
                 reasonLabel.setLayoutY(130);
 
@@ -119,9 +116,9 @@ public class MajorAppealManageController {
                 subjectLabel.setLayoutY(160);
             }
             else if(type.equals("คำร้องขอพักการศึกษา")) {
-                semesterLabel.setText(appeal.getSemester());
-                yearLabel.setText(appeal.getYear());
-                subjectLabel.setText(appeal.getSubjects());
+                semesterLabel.setText("ภาคการศึกษา: " + appeal.getSemester());
+                yearLabel.setText("ปีการศึกษา: " + appeal.getYear());
+                subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
 
                 semesterLabel.setVisible(true);
                 semesterLabel.setLayoutY(70);
@@ -133,7 +130,7 @@ public class MajorAppealManageController {
                 subjectLabel.setLayoutY(130);
             }
 
-            typeLabel.setText(type);
+            typeLabel.setText("ประเภทคำร้อง: " + type);
             reasonLabel.setVisible(true);
             vbox.prefWidthProperty().bind(detailScrollPane.widthProperty().subtract(40));
 
@@ -141,6 +138,8 @@ public class MajorAppealManageController {
             detailScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             detailScrollPane.setContent(vbox);
             detailScrollPane.layout();
+
+            presentStatusLabel.setText(appeal.getStatus());
 
             popupAppealPane.setVisible(true);
             appealManageLabel.setVisible(false);
@@ -191,7 +190,6 @@ public class MajorAppealManageController {
 
     public void getStatus(Event event) {
         selectedStatus = (String) statusChoiceBox.getValue();
-        System.out.println(selectedStatus);
     }
 
     @FXML

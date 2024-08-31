@@ -19,6 +19,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class StudentCreateAppealController {
@@ -180,19 +181,23 @@ public class StudentCreateAppealController {
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
             String purpose = purposesBreakChoiceBox.getValue();
             String subjects = subjectsBreakTextArea.getText();
+            String reason = reasonSuspendTextArea.getText();
 
             // Bugs can't check empty DatePicker
-            String startDate = (startBreakDatePicker.getValue() == null) ? "" : startBreakDatePicker.getValue().toString();
-            String endDate = (endBreakDatePicker.getValue() == null) ? "" : endBreakDatePicker.getValue().toString();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            String startDate = (startBreakDatePicker.getValue() == null) ? "" : startBreakDatePicker.getValue().format(dateFormatter);
+            String endDate = (endBreakDatePicker.getValue() == null) ? "" : endBreakDatePicker.getValue().format(dateFormatter);
             if (purpose.isEmpty() || subjects.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", "6610402132", purpose, subjects, startDate, endDate));
-
+                Appeal appeal = new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", "6610402132", reason, purpose, subjects, startDate, endDate);
+                appealList.addNewAppeal(appeal);
+                System.out.println(appeal);
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
+
         }
         datasource.writeData(appealList);
         appealList = datasource.readData();
