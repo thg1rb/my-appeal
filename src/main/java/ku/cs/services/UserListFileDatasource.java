@@ -144,13 +144,47 @@ public class UserListFileDatasource implements Datasource<UserList> {
         }
     }
 
+    public void addNewUser(User user) {
+        String filePath = directoryName + File.separator + fileName;
+        File file = new File(filePath);
+
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream(file, true);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                fileOutputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
+        try {
+            // สร้าง csv ของ Student และเขียนลงในไฟล์ทีละบรรทัด
+            buffer.append(user.toString());
+            buffer.append("\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                buffer.flush();
+                buffer.close();
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     //Delete Later
-    public static void main(String[] args) {
-        UserListFileDatasource readWrite = new UserListFileDatasource("data", "user.csv");
-        UserListHardCodeDatasource data = new UserListHardCodeDatasource();
-        UserList userList = data.readData();
-
-        readWrite.writeData(userList);
-    }
+//    public static void main(String[] args) {
+//        UserListFileDatasource readWrite = new UserListFileDatasource("data", "user.csv");
+//        UserListHardCodeDatasource data = new UserListHardCodeDatasource();
+//        UserList userList = data.readData();
+//
+//        readWrite.writeData(userList);
+//    }
 }
