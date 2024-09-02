@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Date;
 
 public class MajorAppealManageController {
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
 
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Appeal> selfAppealTable;
@@ -58,10 +60,16 @@ public class MajorAppealManageController {
 
     public AppealList appealList;
     public Datasource<AppealList> datasource;
+
     private User user;
 //    private Object selectedAppeal;
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
         user = (User)FXRouter.getData();
@@ -177,12 +185,11 @@ public class MajorAppealManageController {
 
         dateColumn.setComparator((date1, date2)-> {
             int result = DateTimeService.compareDate(date1, date2);
-            System.out.println("Comparing: " + date1 + " vs " + date2 + " => Result: " + result);
             return result;
         });
 
         TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
-        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
+        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
 
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");

@@ -1,6 +1,8 @@
 package ku.cs.controllers.major;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import ku.cs.models.persons.User;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,23 +15,29 @@ import ku.cs.services.UserListFileDatasource;
 import java.io.IOException;
 
 public class MajorNisitManageController {
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
+
     @FXML TableView<User> nisitTableView;
 
     private UserList userList;
     private Datasource<UserList> datasource;
+
     private User user;
 
     public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
         user = (User)FXRouter.getData();
 
         showTable(userList);
-
-
     }
-
-
 
     public void showTable(UserList userlist){
         TableColumn<User, String> idColumn = new TableColumn<>("ID");
@@ -59,14 +67,6 @@ public class MajorNisitManageController {
             }
         }
     }
-
-
-
-
-
-
-
-
 
     @FXML
     protected void onApproverManageButtonClick() {

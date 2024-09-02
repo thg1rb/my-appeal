@@ -128,5 +128,15 @@
          </graphic>
       </Button>
       <Line endX="186.86593627929688" endY="273.3656311035156" layoutY="17.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
+      <Label fx:id="usernameLabel" layoutX="103.0" layoutY="193.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="roleLabel" layoutX="103.0" layoutY="231.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

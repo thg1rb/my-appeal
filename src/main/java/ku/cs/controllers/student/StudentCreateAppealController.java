@@ -63,34 +63,25 @@ public class StudentCreateAppealController {
     @FXML private Pane backgroundAlertPane;
     @FXML private Pane alertPane;
 
-    Datasource<AppealList> datasource;
-    AppealList appealList;
+    private User user;
 
-    User user;
+    private Datasource<AppealList> datasource;
+    private AppealList appealList;
 
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
 
         // แสดงโปรไฟล์ผู้ใช้งาน
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
         profileImageCircle.setFill(new ImagePattern(profileImage));
 
-        try {
-            datasource = new AppealListFileDatasource("data", "appeal-list.csv");
-            appealList = datasource.readData();
-
-            if (appealList == null) {
-                System.out.println("Appeal list is null.");
-            } else if (appealList.getAppeals().isEmpty()) {
-                System.out.println("Appeal list is empty.");
-            } else {
-                System.out.println("Appeal list successfully read.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Handle error or display message to the user
-        }
+        // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์ เพิ่มข้อมูล)
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = datasource.readData();
 
         initializeChoiceBox();
     }
@@ -162,7 +153,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", user.getId(), topic, details));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", user.getId(), user.getFullName(), topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -179,7 +170,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", user.getId(), user.getFullName(), reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -198,7 +189,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", user.getId(),reason, purpose, subjects, startDate, endDate));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), user.getFullName(), purpose, subjects, startDate, endDate));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
@@ -235,7 +226,7 @@ public class StudentCreateAppealController {
     @FXML
     private void onTrackAppealButtonClick() {
         try {
-            FXRouter.goTo("student-track-appeal");
+            FXRouter.goTo("student-track-appeal", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

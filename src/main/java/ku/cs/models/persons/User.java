@@ -25,6 +25,8 @@ public class User extends Human {
 
     private String loginDate;
 
+    private String advisor;
+
     public User(HashMap<String, String> user){
         super(user.get("firstName"), user.get("lastName"));
         this.role = user.get("role");
@@ -42,6 +44,7 @@ public class User extends Human {
         this.id = user.get("id");
 
         this.loginDate = user.get("loginDate");
+        this.advisor = user.get("advisor");
     }
 
     public User(String role, String username, String password, String firstName, String lastName){
@@ -76,19 +79,26 @@ public class User extends Human {
         this(role, username, password, firstName, lastName, faculty, major, id);
         this.email = email;
     }
+    public User(String role, String username, String password, String firstName, String lastName, String faculty, String major, String id, String email, String advisor){
+        this(role, username, password, firstName, lastName, faculty, major, id);
+        this.email = email;
+        this.advisor = advisor;
+    }
 
     public User(String username, String password,Student student){
         this("นักศึกษา", username, password,student.getFirstName(), student.getLastName());
+        this.advisor = student.getAdvisor();
     }
 
     // Constructor for Create object from file
-    public User(String role, String username, String password, String initialPassword, String initialPasswordText, String firstName, String lastName, String faculty, String major, String id, String email, String loginDate, boolean ban, String imgUrl){
+    public User(String role, String username, String password, String initialPassword, String initialPasswordText, String firstName, String lastName, String faculty, String major, String id, String email, String loginDate, String advisor, boolean ban, String imgUrl){
         this(role, username, password, firstName, lastName, faculty, major, id);
         this.password = password;
         this.initialPassword = initialPassword;
         this.initialPasswordText = initialPasswordText;
         this.email = email;
         this.loginDate = loginDate;
+        this.advisor = advisor;
         this.ban = ban;
         this.path = imgUrl;
     }
@@ -116,8 +126,16 @@ public class User extends Human {
         this.path = path;
     }
 
+    public void setAdvisor(String advisor){
+        this.advisor = advisor;
+    }
+
     public void banUser(){
         this.ban = true;
+    }
+
+    public void unbanUser(){
+        this.ban = false;
     }
 
     public boolean canLogin(String password){
@@ -166,6 +184,14 @@ public class User extends Human {
         return loginDate;
     }
 
+    public String getBan(){
+        return ban ? "ไม่มีสิทธิ์การใช้งาน" : "มีสิทธิ์การใช้งาน";
+    }
+
+    public String getAdvisor() {
+        return advisor;
+    }
+
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> map = new HashMap<>();
         map.put("role", role);
@@ -183,6 +209,7 @@ public class User extends Human {
         map.put("loginDate", loginDate);
         map.put("ban", Boolean.toString(ban));
         map.put("path", path);
+        map.put("advisor", advisor);
         return map;
     }
 
@@ -201,7 +228,7 @@ public class User extends Human {
                 id + "," +
                 loginDate+ "," +
                 ban + "," +
-                path;
+                path + "," + advisor;
 
     }
 }

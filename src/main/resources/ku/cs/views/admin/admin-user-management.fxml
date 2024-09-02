@@ -22,7 +22,7 @@
                 <Font size="40.0" />
             </font>
         </Text>
-        <TextField alignment="CENTER_RIGHT" layoutX="1117.0" layoutY="108.0" prefHeight="38.0" prefWidth="247.0" promptText="ค้นหาชื่อ" style="-fx-background-radius: 15;">
+        <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1117.0" layoutY="108.0" prefHeight="38.0" prefWidth="247.0" promptText="ค้นหาชื่อ" style="-fx-background-radius: 15;">
             <font>
                 <Font size="18.0" />
             </font>
@@ -92,12 +92,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="roleLabel" layoutX="95.0" layoutY="193.0" text="userLabel" textFill="WHITE">
+            <Label fx:id="usernameLabel" layoutX="95.0" layoutY="193.0" text="userLabel" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="userLabel1" layoutX="95.0" layoutY="231.0" text="userLabel" textFill="WHITE">
+            <Label fx:id="roleLabel" layoutX="95.0" layoutY="231.0" text="userLabel" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -148,7 +148,7 @@
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10;" text="เจ้าหน้าที่คณะ" />
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10;" text="เจ้าหน้าที่ภาควิชา" />
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10;" text="อาจารย์ที่ปรึกษา" />
-            <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 0 20 0 0;" text="นิสิต" />
+            <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 0 20 0 0;" text="นักศึกษา" />
          </tabs>
       </TabPane>
       <TableView fx:id="tableView" layoutX="272.0" layoutY="248.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
@@ -165,12 +165,12 @@
       </TableView>
       <Pane layoutX="272.0" layoutY="702.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
-            <Button layoutX="877.0" layoutY="12.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="unban-button" stylesheets="@../../styles/ban-unban-button.css" text="คืนสิทธ์การใช้งาน">
+            <Button layoutX="877.0" layoutY="12.0" mnemonicParsing="false" onAction="#onUnBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="unban-button" stylesheets="@../../styles/ban-unban-button.css" text="คืนสิทธ์การใช้งาน">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="658.0" layoutY="12.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="ban-button" stylesheets="@../../styles/ban-unban-button.css" text="ระงับสิทธ์การใช้งาน">
+            <Button layoutX="658.0" layoutY="12.0" mnemonicParsing="false" onAction="#onBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="ban-button" stylesheets="@../../styles/ban-unban-button.css" text="ระงับสิทธ์การใช้งาน">
                <font>
                   <Font size="20.0" />
                </font>
