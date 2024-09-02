@@ -14,7 +14,6 @@ import ku.cs.models.persons.User;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.UserListFileDatasource;
-import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
 
@@ -33,20 +32,11 @@ public class AdminStaffManagementController {
         userList = datasource.readData();
 
         showTable(userList, "เจ้าหน้าที่คณะ");
-        totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
+        totalText.setText("จำนวน"+tabPane.getSelectionModel().getSelectedItem().getText()+"ทั้งหมด "+tableView.getItems().size()+" คน");
+
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
-            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(userList, "เจ้าหน้าที่คณะ");
-                totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
-            }
-            else if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
-                showTable(userList, "เจ้าหน้าที่ภาควิชา");
-                totalText.setText("จำนวนเจ้าหน้าที่ภาควิชาทั้งหมด");
-            }
-            else{
-               showTable(userList, "อาจารย์ที่ปรึกษา");
-                totalText.setText("จำนวนอาจารย์ที่ปรึกษาทั้งหมด");
-            }
+            showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
+            totalText.setText("จำนวน"+tabPane.getSelectionModel().getSelectedItem().getText()+"ทั้งหมด "+tableView.getItems().size()+" คน");
         });
     }
 
@@ -134,6 +124,11 @@ public class AdminStaffManagementController {
                 }
             }
         }
+    }
+
+    @FXML
+    public void onAddStaffButtonClicked() {
+
     }
 
     @FXML
