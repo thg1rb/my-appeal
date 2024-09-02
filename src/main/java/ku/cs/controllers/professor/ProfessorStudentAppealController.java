@@ -9,10 +9,7 @@ import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
-import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.Datasource;
-import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.*;
 
 import java.io.IOException;
 
@@ -58,6 +55,11 @@ public class ProfessorStudentAppealController {
         TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("Fullname");
         ownerFullNameCol.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
+        dateTimeCol.setComparator((date1, date2)-> {
+            int result = DateTimeService.compareDate(date1, date2);
+            return result;
+        });
+
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);
         tableView.getColumns().add(type);
@@ -73,6 +75,9 @@ public class ProfessorStudentAppealController {
                 }
             }
         }
+
+        tableView.getSortOrder().add(dateTimeCol);
+
 
     }
 
