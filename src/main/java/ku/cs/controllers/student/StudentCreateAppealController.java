@@ -152,7 +152,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", user.getId(), topic, details));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", user.getId(), user.getFullName(), topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -168,7 +168,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", user.getId(), user.getFullName(), reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -187,7 +187,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), purpose, subjects, startDate, endDate));
+                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), user.getFullName(), purpose, subjects, startDate, endDate));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();

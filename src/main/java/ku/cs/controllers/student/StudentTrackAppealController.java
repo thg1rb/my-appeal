@@ -15,7 +15,6 @@ import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 
 public class StudentTrackAppealController {
@@ -61,7 +60,7 @@ public class StudentTrackAppealController {
 
         tableView.getItems().clear();
         for (Appeal appeal : appealList.getAppeals()) {
-            if (appeal.getOwner().equals(ownerId)) {
+            if (appeal.getOwnerId().equals(ownerId)) {
                 tableView.getItems().add(appeal);
             }
         }
