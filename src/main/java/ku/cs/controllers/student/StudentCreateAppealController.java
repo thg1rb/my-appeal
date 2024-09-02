@@ -12,11 +12,12 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
+import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import ku.cs.services.AppealListHardCodeDatasource;
-
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -161,7 +162,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", user.getId(), topic, details));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(LocalDateTime.now()), "คำร้องทั่วไป", user.getId(), topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -172,12 +173,13 @@ public class StudentCreateAppealController {
             String semester = semestersSuspendChoiceBox.getValue();
             String year = yearsSuspendChoiceBox.getValue();
             String subjects = subjectsSuspendTextArea.getText();
+
             if (reason.isEmpty() || subjects.isEmpty()) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(LocalDateTime.now()), "คำร้องขอพักการศึกษา", user.getId(), reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -186,7 +188,7 @@ public class StudentCreateAppealController {
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
             String purpose = purposesBreakChoiceBox.getValue();
             String subjects = subjectsBreakTextArea.getText();
-            String reason = reasonSuspendTextArea.getText();
+            String reason = reasonBreakTextArea.getText();
 
             // Bugs can't check empty DatePicker
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -196,7 +198,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), purpose, subjects, startDate, endDate));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(LocalDateTime.now()),"คำร้องขอลาป่วยหรือลากิจ", user.getId(),reason, purpose, subjects, startDate, endDate));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();

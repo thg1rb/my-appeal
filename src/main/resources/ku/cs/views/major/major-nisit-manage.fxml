@@ -29,7 +29,15 @@
             </Text>
          </children>
       </Pane>
-      <TableView layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20;" stylesheets="@../../styles/table-view.css">
+      <Pane layoutX="281.0" layoutY="718.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
+         <children>
+            <Button layoutX="976.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+         </children>
+      </Pane>
+      <TableView fx:id="nisitTableView" layoutX="282.0" layoutY="191.0" prefHeight="528.0" prefWidth="1100.0" style="-fx-background-radius: 20 20 0 0; -fx-border-radius: 20 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="ID" />
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Name" />

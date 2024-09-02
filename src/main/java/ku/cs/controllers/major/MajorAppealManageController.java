@@ -3,33 +3,31 @@ package ku.cs.controllers.major;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import ku.cs.models.*;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.AppealListHardCodeDatasource;
 import ku.cs.services.Datasource;
+import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import java.util.Comparator;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class MajorAppealManageController {
 
     @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Object> selfAppealTable;
+    @FXML private TableView<Appeal> selfAppealTable;
 
     @FXML private ScrollPane detailScrollPane;
     @FXML private VBox vbox;
@@ -60,11 +58,14 @@ public class MajorAppealManageController {
 
     public AppealList appealList;
     public Datasource<AppealList> datasource;
+    private User user;
 //    private Object selectedAppeal;
     @FXML
     public void initialize() {
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
+        user = (User)FXRouter.getData();
+
         showTable(appealList);
 
         statusChoiceBox.getItems().addAll(statusList);
@@ -164,21 +165,35 @@ public class MajorAppealManageController {
         popupAppealPane.setVisible(false);
         appealDetailsLabel.setVisible(true);
         appealManageLabel.setVisible(false);
+
+        allAppealTable.getSelectionModel().select(null);
+
+        selectedStatus = null;
     }
 
     public void showTable(AppealList appealList) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
 
+        dateColumn.setComparator((date1, date2)-> {
+            int result = DateTimeService.compareDate(date1, date2);
+            System.out.println("Comparing: " + date1 + " vs " + date2 + " => Result: " + result);
+            return result;
+        });
+
         TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
 
+
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+
         allAppealTable.getColumns().clear();
         allAppealTable.getColumns().add(dateColumn);
         allAppealTable.getColumns().add(ownerColumn);
         allAppealTable.getColumns().add(typeColumn);
+
+        allAppealTable.getSortOrder().add(dateColumn);
 
         allAppealTable.getItems().clear();
         if (appealList != null) {
@@ -186,6 +201,13 @@ public class MajorAppealManageController {
                 allAppealTable.getItems().add(appeal);
             }
         }
+        allAppealTable.sort();
+
+        dateColumn.setSortable(false);
+        ownerColumn.setSortable(false);
+        typeColumn.setSortable(false);
+
+
     }
 
     public void getStatus(Event event) {
@@ -195,7 +217,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onApproverManageButtonClick() {
         try {
-            FXRouter.goTo("major-approver-manage");
+            FXRouter.goTo("major-approver-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -204,7 +226,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onNisitManageButtonClick() {
         try {
-            FXRouter.goTo("major-nisit-manage");
+            FXRouter.goTo("major-nisit-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -219,5 +241,6 @@ public class MajorAppealManageController {
             throw new RuntimeException(e);
         }
     }
+
 
 }

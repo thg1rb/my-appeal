@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ku.cs.services.DateTimeService;
+
 public class Appeal {
     // Shared Fields
     private String type;
@@ -115,9 +117,10 @@ public class Appeal {
         return date;
     }
 
-    public String getCreateDate() {
+    public String getCreateDate(){
         return createDate;
     }
+
 
     public String getCreateTime() {
         // return Timestamp
