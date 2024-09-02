@@ -20,8 +20,6 @@ import ku.cs.services.MajorListHardCodedatasource;
 import java.io.IOException;
 
 public class AdminFacultyManagementController {
-    User user;
-
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
 
@@ -29,6 +27,8 @@ public class AdminFacultyManagementController {
 
     @FXML private TableView<Faculty> facultyTable;
     @FXML private TableView<Major> majorTable;
+
+    private User user;
 
     private Datasource<FacultyList> facultyDatasource;
     private FacultyList facultyList;
