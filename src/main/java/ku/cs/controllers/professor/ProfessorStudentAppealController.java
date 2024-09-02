@@ -65,7 +65,6 @@ public class ProfessorStudentAppealController {
         tableView.getColumns().add(ownerFullNameCol);
 
         tableView.getItems().clear();
-        //  Add Appeal filter by Professor name in Student (Not Done Yet)
         for (Appeal appeal : appealList.getAppeals()) {
             for (User student : userList.getUsers()) {
                 if (appeal.getOwnerId().equals(student.getId())) {

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
@@ -22,6 +23,8 @@ public class ProfessorStudentListController {
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
 
+    @FXML private TextField searchTextField;
+
     @FXML private TableView<User> tableView;
     private Datasource<UserList> datasource;
     private UserList userList;
@@ -37,7 +40,16 @@ public class ProfessorStudentListController {
         datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
 
+        // ช่องค้นหา
         showTable(userList);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("^[a-zA-zก-๙]+$") && !newValue.isEmpty()) {
+                showSearchTable(userList, newValue);
+            }
+            else if (newValue.isEmpty() || newValue.isBlank()) {
+                showTable(userList);
+            }
+        });
     }
 
     public void showTable(UserList userList) {
@@ -59,17 +71,39 @@ public class ProfessorStudentListController {
         tableView.getColumns().add(fullnameCol);
         tableView.getColumns().add(idCol);
 
-        // Add Student filter by Professer name (Not Done Yet)
         tableView.getItems().clear();
         for (User student : userList.getUsers()) {
             if (student.getRole().equals("นักศึกษา") && student.getAdvisor().equals(user.getFullName())) {
                 tableView.getItems().add(student);
-//                System.out.println(user.getRole());
-//                System.out.println(user.getFullName());
             }
         }
+    }
 
+    public void showSearchTable(UserList userList, String searchText) {
+        TableColumn<User, String> pathCol = new TableColumn<>("Profile");
+        pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
 
+        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<User, String> fullnameCol = new TableColumn<>("Fullname");
+        fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<User, String> idCol = new TableColumn<>("ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+
+        tableView.getColumns().clear();
+        tableView.getColumns().add(pathCol);
+        tableView.getColumns().add(usernameCol);
+        tableView.getColumns().add(fullnameCol);
+        tableView.getColumns().add(idCol);
+
+        tableView.getItems().clear();
+        for (User student : userList.getUsers()) {
+            if ((student.getRole().equals("นักศึกษา") && student.getAdvisor().equals(user.getFullName())) && (student.getFullName().contains(searchText) || student.getId().contains(searchText))) {
+                tableView.getItems().add(student);
+            }
+        }
     }
 
     // ไปที่หน้าคำร้องของนิสิตในที่ปรึกษา
