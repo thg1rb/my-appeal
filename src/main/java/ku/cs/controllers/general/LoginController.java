@@ -26,8 +26,8 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-//        userListDatasource = new UserListHardCodeDatasource();
-        userListDatasource = new UserListFileDatasource("data", "user.csv");
+//        userListDatasource = new UserListFileDatasource("data", "user.csv");
+        userListDatasource = FXRouter.getData() == null ? new UserListFileDatasource("data", "user.csv") : (UserListFileDatasource) FXRouter.getData();
         userList = userListDatasource.readData();
         errorLabel.setText("");
     }
@@ -39,7 +39,7 @@ public class LoginController {
         String password = givePasswordTextField.getText();
         errorLabel.setText("");
         user = userList.findUserByUsername(username);
-
+        errorLabel.setText("");
         if(user == null) {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
@@ -49,35 +49,35 @@ public class LoginController {
                     switch (user.getRole()){
                         case "ผู้ดูแลระบบ":
                             try {
-                                FXRouter.goTo("admin-dashboard");
+                                FXRouter.goTo("admin-dashboard", user);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         case "เจ้าหน้าที่คณะ":
                             try {
-                                FXRouter.goTo("faculty-appeal-manage");
+                                FXRouter.goTo("faculty-appeal-manage", user);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         case "เจ้าหน้าที่ภาควิชา":
                             try {
-                                FXRouter.goTo("major-appeal-manage");
+                                FXRouter.goTo("major-appeal-manage", user);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         case "อาจารย์ที่ปรึกษา":
                             try {
-                                FXRouter.goTo("professor-student-list");
+                                FXRouter.goTo("professor-student-list", user);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         default:
                             try {
-                                FXRouter.goTo("student-track-appeal");
+                                FXRouter.goTo("student-track-appeal", user);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
