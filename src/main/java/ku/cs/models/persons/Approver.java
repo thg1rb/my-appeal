@@ -7,6 +7,8 @@ public class Approver extends Human{
 
     public Approver(String firstName, String lastName, String faculty, String major,String role) {
         super(firstName, lastName);
+        this.faculty = faculty;
+        this.major= major;
         this.role = role;
     }
 

@@ -1,16 +1,15 @@
 package ku.cs.controllers.faculty;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
 import ku.cs.services.ApproverListFileDatasource;
-import ku.cs.services.ApproverListHardCodeDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
@@ -26,7 +25,7 @@ public class FacultyApproverManageController {
 
     @FXML
     public void initialize() {
-        approversDatasource = new ApproverListFileDatasource("data" , "");
+        approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
 
         showApproverTable(approverList);
@@ -43,28 +42,56 @@ public class FacultyApproverManageController {
         approverTableView.getColumns().add(roleColumn);
         approverTableView.getColumns().add(fullNameColumn);
 
-        ObservableList<Approver> approverObservableList = FXCollections.observableArrayList(approverList.getApprovers());
-        approverTableView.setItems(approverObservableList);
+        approverTableView.getItems().clear();
+        for (Approver approver : approverList.getApprovers()) {
+            approverTableView.getItems().add(approver);
+        }
+        approverTableView.setRowFactory(tv -> {
+            TableRow<Approver> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+                    showEditApproverPane();
+                }
+            });
+            return row;
+        });
     }
 
-    @FXML private Pane backgroundAddApproverPane;
-
-    @FXML private Pane addApproverPane;
+    @FXML
+    private Pane backgroundAddApproverPane;
 
     @FXML
-    public void addApproverButton(){
+    private Pane addApproverPane;
+
+    @FXML
+    private Pane editApproverPane;
+
+    @FXML
+    public void addApproverButton() {
         backgroundAddApproverPane.setVisible(true);
         addApproverPane.setVisible(true);
     }
 
+    private void showEditApproverPane() {
+        backgroundAddApproverPane.setVisible(true);
+
+        editApproverPane.setVisible(true);
+    }
+
     @FXML
-    public void onCloseButtonClick(){
+    public void onCloseButtonClick() {
         backgroundAddApproverPane.setVisible(false);
         addApproverPane.setVisible(false);
     }
 
     @FXML
-    public void onAppealButtonClick(){
+    public void onCloseEditButtonClick() {
+        backgroundAddApproverPane.setVisible(false);
+        editApproverPane.setVisible(false);
+    }
+
+    @FXML
+    public void onAppealButtonClick() {
         try {
             FXRouter.goTo("faculty-appeal-manage");
         } catch (IOException e) {
@@ -73,7 +100,7 @@ public class FacultyApproverManageController {
     }
 
     @FXML
-    public void onLogoutButtonClick(){
+    public void onLogoutButtonClick() {
 
         try {
             FXRouter.goTo("login");
@@ -81,4 +108,6 @@ public class FacultyApproverManageController {
             throw new RuntimeException(e);
         }
     }
+
+
 }
