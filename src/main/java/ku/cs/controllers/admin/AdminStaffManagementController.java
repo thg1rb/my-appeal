@@ -18,6 +18,11 @@ import ku.cs.services.UserListFileDatasource;
 import java.io.IOException;
 
 public class AdminStaffManagementController {
+    User user;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
+
     @FXML private TabPane tabPane;
 
     @FXML private TableView<User> tableView;
@@ -28,6 +33,11 @@ public class AdminStaffManagementController {
 
     @FXML
     private void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
 
@@ -134,7 +144,7 @@ public class AdminStaffManagementController {
     @FXML
     public void onUserButtonClicked() {
         try {
-            FXRouter.goTo("admin-user-manage");
+            FXRouter.goTo("admin-user-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -151,7 +161,7 @@ public class AdminStaffManagementController {
     @FXML
     public void onFacultyButtonClicked() {
         try {
-            FXRouter.goTo("admin-faculty-manage");
+            FXRouter.goTo("admin-faculty-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

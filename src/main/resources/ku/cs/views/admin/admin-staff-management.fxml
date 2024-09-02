@@ -80,12 +80,12 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label fx:id="roleLabel" layoutX="95.0" layoutY="193.0" text="userLabel" textFill="WHITE">
+                <Label fx:id="usernameLabel" layoutX="95.0" layoutY="193.0" text="userLabel" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="userLabel1" layoutX="95.0" layoutY="231.0" text="userLabel" textFill="WHITE">
+                <Label fx:id="roleLabel" layoutX="95.0" layoutY="231.0" text="userLabel" textFill="WHITE">
                     <font>
                         <Font size="20.0" />
                     </font>

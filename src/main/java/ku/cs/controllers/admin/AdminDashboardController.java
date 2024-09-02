@@ -1,15 +1,30 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
 public class AdminDashboardController {
+
+    User user;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
+
+    public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+    }
+
     @FXML
     public void onUserButtonClicked() {
         try {
-            FXRouter.goTo("admin-user-manage");
+            FXRouter.goTo("admin-user-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -17,7 +32,7 @@ public class AdminDashboardController {
     @FXML
     public void onFacultyButtonClicked() {
         try {
-            FXRouter.goTo("admin-faculty-manage");
+            FXRouter.goTo("admin-faculty-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +40,7 @@ public class AdminDashboardController {
     @FXML
     public void onStaffButtonClicked() {
         try {
-            FXRouter.goTo("admin-staff-manage");
+            FXRouter.goTo("admin-staff-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

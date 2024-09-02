@@ -22,11 +22,11 @@ public class UserListHardCodeDatasource implements Datasource<UserList> {
         list.addUser(new User("อาจารย์ที่ปรึกษา", "professor1", "test1", "อาจารย์", "ชอบสอน", "วิทยาศาสตร์", "สถิติ", "12345678"));
         list.addUser(new User("อาจารย์ที่ปรึกษา", "professor2", "test2", "อาจารย์", "ชอบสอน", "วิศวกรรมศาสตร์", "วิศวกรรมไฟฟ้า", "12345678"));
         list.addUser(new User("อาจารย์ที่ปรึกษา", "professor3", "test3", "อาจารย์", "ชอบสอน", "เศรษฐศาสตร์", "เศรษฐศาสตร์", "12345678"));
-        list.addUser(new User("นักศึกษา", "BrightStu", "student", "ไบร้", "เป็นนิสิต", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์", "6610401985", "bright@email.test"));
-        list.addUser(new User("นักศึกษา", "nisit1", "test1", "นิสิต", "สมมติ1", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
-        list.addUser(new User("นักศึกษา", "nisit2", "test2", "นิสิต", "สมมติ2", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
-        list.addUser(new User("นักศึกษา", "nisit3", "test3", "นิสิต", "สมมติ3", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test"));
-        User bannedStudent = new User("นักศึกษา", "nisitban", "ban", "นิสิตโดนแบน", "ทดสอบ", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test");
+        list.addUser(new User("นักศึกษา", "BrightStu", "student", "ไบร้", "เป็นนิสิต", "วิทยาศาสตร์", "วิทยาการคอมพิวเตอร์", "6610401985", "bright@email.test", "ไบร้ง้าบ เป็นอาจารย์"));
+        list.addUser(new User("นักศึกษา", "nisit1", "test1", "นิสิต", "สมมติ1", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test", "ไบร้ง้าบ เป็นอาจารย์"));
+        list.addUser(new User("นักศึกษา", "nisit2", "test2", "นิสิต", "สมมติ2", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test", "ไบร้ง้าบ เป็นอาจารย์"));
+        list.addUser(new User("นักศึกษา", "nisit3", "test3", "นิสิต", "สมมติ3", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test", "ไบร้ง้าบ เป็นอาจารย์"));
+        User bannedStudent = new User("นักศึกษา", "nisitban", "ban", "นิสิตโดนแบน", "ทดสอบ", "วิทยาศาสตร์", "สถิติ", "6610401xxx", "nisit@email.test", "ไบร้ง้าบ เป็นอาจารย์");
         bannedStudent.banUser();
         list.addUser(bannedStudent);
         return list;
