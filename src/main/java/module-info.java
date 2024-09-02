@@ -2,6 +2,7 @@ module ku.cs {
     requires javafx.controls;
     requires javafx.fxml;
     requires bcrypt;
+    requires java.xml.crypto;
 
     opens ku.cs.cs211671project to javafx.fxml;
     exports ku.cs.cs211671project;
@@ -29,4 +30,7 @@ module ku.cs {
 
     exports ku.cs.models.persons;
     opens ku.cs.models.persons to javafx.base;
+
+    exports ku.cs.models.appeal;
+    opens ku.cs.models.appeal to javafx.base;
 }

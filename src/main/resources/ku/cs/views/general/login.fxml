@@ -13,9 +13,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.LoginController">
    <children>
-      <Pane layoutX="120.0" layoutY="106.0" prefHeight="625.0" prefWidth="1200.0" style="-fx-background-color: #F2F2F2;">
+      <Pane layoutX="120.0" layoutY="106.0" prefHeight="625.0" prefWidth="1200.0" style="-fx-background-color: #F2F2F2; -fx-background-radius: 40;">
          <children>
-            <Line endX="-100.0" endY="-310.0" layoutX="853.0" layoutY="310.0" startX="-100.0" startY="314.99993896484375" />
+            <Line endX="-100.0" endY="-310.0" layoutX="853.0" layoutY="310.0" startX="-100.0" startY="314.99993896484375" stroke="#00000080" />
             <TextField fx:id="giveUsernameTextField" layoutX="180.0" layoutY="192.0" prefHeight="55.0" prefWidth="410.0" promptText="ชื่อผู้ใช้งาน" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
@@ -31,7 +31,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" text="กดเพื่อลงทะเบียน" textFill="#0014ff">
+            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" text="กดเพื่อลงทะเบียน" textFill="#265252">
                <font>
                   <Font size="24.0" />
                </font>

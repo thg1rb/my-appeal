@@ -3,10 +3,7 @@ package ku.cs.controllers.admin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import ku.cs.models.Faculty;
@@ -14,6 +11,7 @@ import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 
+import ku.cs.models.persons.User;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.FacultyListHardCodeDatasource;
@@ -22,6 +20,11 @@ import ku.cs.services.MajorListHardCodedatasource;
 import java.io.IOException;
 
 public class AdminFacultyManagementController {
+    User user;
+
+    @FXML private Label usernameLabel;
+    @FXML private Label roleLabel;
+
     @FXML private TabPane tabPane;
 
     @FXML private TableView<Faculty> facultyTable;
@@ -38,6 +41,11 @@ public class AdminFacultyManagementController {
 
     @FXML
     public void initialize() {
+        user = (User) FXRouter.getData();
+
+        usernameLabel.setText(user.getUsername());
+        roleLabel.setText(user.getRole());
+
         facultyDatasource = new FacultyListHardCodeDatasource();
         facultyList = facultyDatasource.readData();
         majorDatasource = new MajorListHardCodedatasource();
@@ -121,7 +129,7 @@ public class AdminFacultyManagementController {
     @FXML
     public void onUserButtonClicked() {
         try {
-            FXRouter.goTo("admin-user-manage");
+            FXRouter.goTo("admin-user-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -138,7 +146,7 @@ public class AdminFacultyManagementController {
     @FXML
     public void onStaffButtonClicked() {
         try {
-            FXRouter.goTo("admin-staff-manage");
+            FXRouter.goTo("admin-staff-manage", user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
