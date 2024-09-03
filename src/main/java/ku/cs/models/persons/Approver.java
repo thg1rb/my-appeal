@@ -18,7 +18,7 @@ public class Approver extends Human{
         this.faculty = adder.getFaculty();
         this.major = adder.getRole().equals("เจ้าหน้าที่ภาควิชา") ? adder.getMajor() : null;
     }
-
+    public void setRole(String role) { this.role = role; }
     public String getFaculty() {
         return faculty;
     }

@@ -10,6 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
+import ku.cs.models.persons.User;
 import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -21,6 +22,7 @@ public class FacultyApproverManageController {
     @FXML
     private TableView<Approver> approverTableView;
 
+    private User user;
     private Datasource<ApproverList> approversDatasource;
     private ApproverList approverList;
 
@@ -28,7 +30,8 @@ public class FacultyApproverManageController {
     public void initialize() {
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
-
+        user = (User)FXRouter.getData();
+        System.out.println(user.toString());
         showApproverTable(approverList);
     }
 
@@ -80,6 +83,16 @@ public class FacultyApproverManageController {
     private TextField lastNameTextField;
 
     @FXML
+    private TextField editLastNameTextField;
+
+    @FXML
+    private TextField editFirstNameTextField;
+
+    @FXML
+    private TextField editRoleTextField;
+
+
+    @FXML
     public void addApproverButton() {
         roleTextField.clear();
         firstNameTextField.clear();
@@ -89,6 +102,10 @@ public class FacultyApproverManageController {
     }
 
     private void showEditApproverPane() {
+        editRoleTextField.clear();
+        editFirstNameTextField.clear();
+        editLastNameTextField.clear();
+
         backgroundAddApproverPane.setVisible(true);
 
         editApproverPane.setVisible(true);
@@ -133,8 +150,8 @@ public class FacultyApproverManageController {
         String role = roleTextField.getText();
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        String faculty = "Some Faculty";
-        String major = "Some Major";
+        String faculty = user.getFaculty();
+        String major = user.getMajor();
 
         if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
             approverList.addApprover(firstName, lastName, faculty, major, role);
@@ -146,6 +163,33 @@ public class FacultyApproverManageController {
             onCloseButtonClick();
         } else {
 
+        }
+    }
+
+    @FXML
+    public void onEditButtonClick() {
+        Approver selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedApprover != null) {
+            String newRole = editRoleTextField.getText();
+            String newFirstName = editFirstNameTextField.getText();
+            String newLastName = editLastNameTextField.getText();
+
+            selectedApprover.setRole(newRole);
+            selectedApprover.setFirstName(newFirstName);
+            selectedApprover.setLastName(newLastName);
+            selectedApprover.setFullName();
+
+            showApproverTable(approverList);
+
+            approversDatasource.writeData(approverList);
+
+
+
+            onCloseEditButtonClick();
+
+        } else {
+            System.out.println("No approver selected.");
         }
     }
 
