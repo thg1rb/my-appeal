@@ -18,6 +18,7 @@ public class Approver extends Human{
         this.faculty = adder.getFaculty();
         this.major = adder.getRole().equals("เจ้าหน้าที่ภาควิชา") ? adder.getMajor() : null;
     }
+
     public String getFaculty() {
         return faculty;
     }
@@ -32,4 +33,6 @@ public class Approver extends Human{
                 getLastName() + "," +
                 faculty + "," + major + "," + role;
     }
+
+
 }

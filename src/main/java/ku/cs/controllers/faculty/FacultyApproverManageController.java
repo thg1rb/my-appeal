@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
@@ -42,6 +43,9 @@ public class FacultyApproverManageController {
         approverTableView.getColumns().add(roleColumn);
         approverTableView.getColumns().add(fullNameColumn);
 
+        roleColumn.setPrefWidth(550);
+        fullNameColumn.setPrefWidth(550);
+
         approverTableView.getItems().clear();
         for (Approver approver : approverList.getApprovers()) {
             approverTableView.getItems().add(approver);
@@ -67,7 +71,19 @@ public class FacultyApproverManageController {
     private Pane editApproverPane;
 
     @FXML
+    private TextField roleTextField;
+
+    @FXML
+    private TextField firstNameTextField;
+
+    @FXML
+    private TextField lastNameTextField;
+
+    @FXML
     public void addApproverButton() {
+        roleTextField.clear();
+        firstNameTextField.clear();
+        lastNameTextField.clear();
         backgroundAddApproverPane.setVisible(true);
         addApproverPane.setVisible(true);
     }
@@ -90,6 +106,7 @@ public class FacultyApproverManageController {
         editApproverPane.setVisible(false);
     }
 
+
     @FXML
     public void onAppealButtonClick() {
         try {
@@ -109,5 +126,27 @@ public class FacultyApproverManageController {
         }
     }
 
+
+
+    @FXML
+    public void onAddApproverToTable() {
+        String role = roleTextField.getText();
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String faculty = "Some Faculty";
+        String major = "Some Major";
+
+        if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
+            approverList.addApprover(firstName, lastName, faculty, major, role);
+
+            approversDatasource.writeData(approverList);
+
+            showApproverTable(approverList);
+
+            onCloseButtonClick();
+        } else {
+
+        }
+    }
 
 }
