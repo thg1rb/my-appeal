@@ -1,15 +1,16 @@
 package ku.cs.models.appeal;
 
-import ku.cs.services.AppealListFileDatasource;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ku.cs.services.DateTimeService;
+
 public class Appeal {
     // Shared Fields
     private String type;
-    private String owner;
+    private String ownerId;
+    private String ownerFullName;
     private String status;
     private String createDate;
     private String createTime;
@@ -29,21 +30,23 @@ public class Appeal {
     private String year;
 
     // General Constructor
-    public Appeal(String createDate, String type, String owner, String topic, String reason) {
+    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String topic, String reason) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = createDate;
         this.type = type;
-        this.owner = owner;
+        this.ownerId = ownerId;
+        this.ownerFullName = ownerFullName;
         this.topic = topic;
         this.reason = reason;
     }
 
     // Break Constructor
-    public Appeal(String createDate, String type, String owner, String reason, String purpose, String subjects, String startDate, String endDate) {
+    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String reason, String purpose, String subjects, String startDate, String endDate) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = createDate;
         this.type = type;
-        this.owner = owner;
+        this.ownerId = ownerId;
+        this.ownerFullName = ownerFullName;
         this.reason = reason;
         this.purpose = purpose;
         this.subjects = subjects;
@@ -52,11 +55,12 @@ public class Appeal {
     }
 
     // Suspend Constructor
-    public Appeal(String createDate, String type, String owner, String reason, String semester, String year, String subjects) {
+    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String reason, String semester, String year, String subjects) {
         this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
         this.createDate = createDate;
         this.type = type;
-        this.owner = owner;
+        this.ownerId = ownerId;
+        this.ownerFullName = ownerFullName;
         this.reason = reason;
         this.semester = semester;
         this.year = year;
@@ -67,9 +71,11 @@ public class Appeal {
         return type;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnerId() {
+        return ownerId;
     }
+
+    public String getOwnerFullName() { return ownerFullName; }
 
     public String getStatus() {
         return status;
@@ -115,9 +121,10 @@ public class Appeal {
         return date;
     }
 
-    public String getCreateDate() {
+    public String getCreateDate(){
         return createDate;
     }
+
 
     public String getCreateTime() {
         // return Timestamp
@@ -149,6 +156,6 @@ public class Appeal {
 
     @Override
     public String toString() {
-        return createDate + "," + owner + "," + type + "," + status + "," + topic + "," +  reason + "," + purpose + "," + subjects + "," + startDate + "," + endDate + "," + semester + "," + year;
+        return createDate + "," + ownerId + "," + ownerFullName + "," + type + "," + status + "," + topic + "," +  reason + "," + purpose + "," + subjects + "," + startDate + "," + endDate + "," + semester + "," + year;
     }
 }

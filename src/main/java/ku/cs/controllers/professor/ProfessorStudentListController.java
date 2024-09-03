@@ -59,10 +59,15 @@ public class ProfessorStudentListController {
         tableView.getColumns().add(fullnameCol);
         tableView.getColumns().add(idCol);
 
-        // Add Student filter by Professer name
+        // Add Student filter by Professer name (Not Done Yet)
         tableView.getItems().clear();
-
-
+        for (User student : userList.getUsers()) {
+            if (student.getRole().equals("นักศึกษา") && student.getAdvisor().equals(user.getFullName())) {
+                tableView.getItems().add(student);
+//                System.out.println(user.getRole());
+//                System.out.println(user.getFullName());
+            }
+        }
 
 
     }

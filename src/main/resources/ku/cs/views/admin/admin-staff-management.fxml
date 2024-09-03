@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -142,11 +141,6 @@
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 0 20 0 0;" text="อาจารย์ที่ปรึกษา" />
             </tabs>
         </TabPane>
-        <TextField alignment="CENTER_RIGHT" layoutX="1115.0" layoutY="193.0" prefHeight="38.0" prefWidth="247.0" promptText="ค้นหาชื่อ" style="-fx-background-radius: 15;">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </TextField>
       <TableView fx:id="tableView" layoutX="272.0" layoutY="248.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Name" />
@@ -165,7 +159,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <Button layoutX="960.0" layoutY="12.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="102.0" style="-fx-border-color: #D9D9D9; -fx-border-radius: 10; -fx-background-radius: 10;" styleClass="add-button" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
+            <Button layoutX="960.0" layoutY="12.0" mnemonicParsing="false" onAction="#onAddStaffButtonClicked" prefHeight="45.0" prefWidth="102.0" style="-fx-border-color: #D9D9D9; -fx-border-radius: 10; -fx-background-radius: 10;" styleClass="add-button" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
                <font>
                   <Font size="20.0" />
                </font>

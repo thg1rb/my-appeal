@@ -5,6 +5,7 @@ import ku.cs.models.collections.AppealList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 public class AppealListFileDatasource implements Datasource<AppealList>{
     private String directoryName;
@@ -69,26 +70,27 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
                 String createDate = data[0].trim();
                 String ownerId = data[1].trim();
-                String type = data[2].trim();
-                String status = data[3].trim();
-                String topic = data[4].trim();
-                String reason = data[5].trim();
-                String purpose = data[6].trim();
-                String subjects = data[7].trim();
-                String startDate = data[8].trim();
-                String endDate = data[9].trim();
-                String semester = data[10].trim();
-                String year = data[11].trim();
+                String ownerFullName = data[2].trim();
+                String type = data[3].trim();
+                String status = data[4].trim();
+                String topic = data[5].trim();
+                String reason = data[6].trim();
+                String purpose = data[7].trim();
+                String subjects = data[8].trim();
+                String startDate = data[9].trim();
+                String endDate = data[10].trim();
+                String semester = data[11].trim();
+                String year = data[12].trim();
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, topic, reason));
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, topic, reason));
                 }
                 else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, reason, purpose, subjects, startDate, endDate));
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, reason, purpose, subjects, startDate, endDate));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, reason, semester, year, subjects));
+                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, reason, semester, year, subjects));
                 }
             }
         } catch (IOException e) {
@@ -107,7 +109,7 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream = new FileOutputStream(file, true);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -146,4 +148,5 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
 //        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
 //        w.writeData(appeals);
 //    }
+
 }

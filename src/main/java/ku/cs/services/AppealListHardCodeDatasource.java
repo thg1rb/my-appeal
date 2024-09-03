@@ -40,9 +40,9 @@ public class AppealListHardCodeDatasource implements Datasource<AppealList> {
 
     @Override
     public AppealList readData() {
-        appealList.addNewAppeal(new Appeal(new Date().toString(), "คำร้องทั่วไป", "เกิดสิริ ศรีเจริญ", "ขอเปิดหมู่รายวิชา 112 เพิ่ม", "เนื่องจากกระผมต้องการลงทะเบียนเรียนในวิชา 112 เพราะจำเป็นต้องใช้ในรายวิชาถัดไป"));
-        appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอลากิจหรือลาป่วย", "Bright Kun", "ผมติดงานแต่งพี่สาวที่จังหวัดเชียงใหม่", "ขอลากิจเป็นเวลา 2 วัน", "112,233,C PLUS PLUS", "startDate", "endDate"));
-        appealList.addNewAppeal(new Appeal(new Date().toString(),"คำร้องขอพักการศึกษา", "Aock taepun", "เกรดเฉลี่ยน้อยเกินไป", "เทอมปลาย", "2567", "112,234,A PLUS PLUS"));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", "6610401934", "เกิดสิริ ศรีเจริญ", "ขอเปิดหมู่รายวิชา 112 เพิ่ม", "เนื่องจากกระผมต้องการลงทะเบียนเรียนในวิชา 112 เพราะจำเป็นต้องใช้ในรายวิชาถัดไป"));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลากิจหรือลาป่วย", "6610402132","Bright Kun", "ผมติดงานแต่งพี่สาวที่จังหวัดเชียงใหม่", "ลากิจ", "112,233,C PLUS PLUS", "startDate", "endDate"));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอพักการศึกษา", "6610401985","Aock taepun", "เกรดเฉลี่ยน้อยเกินไป", "เทอมปลาย", "2567", "112,234,A PLUS PLUS"));
         return appealList;
     }
 
