@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FacultyList {
-    private static ArrayList<Faculty> faculties;
+    private ArrayList<Faculty> faculties;
 
-    static {
+    public FacultyList() {
         faculties = new ArrayList<>();
     }
 
-    public static boolean isFacultyExist(String facultyName) {
+    public boolean isFacultyExist(String facultyName) {
         for (Faculty faculty : faculties) {
             if (faculty.getFacultyName().equals(facultyName)) {
                 return true;
@@ -21,7 +21,7 @@ public class FacultyList {
         return false;
     }
 
-    public static void addFaculty(Faculty obj) {
+    public void addFaculty(Faculty obj) {
         for (Faculty faculty : faculties) {
             if (faculty.getFacultyName().equals(obj.getFacultyName())) {
                 return;
@@ -30,7 +30,7 @@ public class FacultyList {
         faculties.add(obj);
     }
 
-    public static ArrayList<String> getAllFacultiesName() {
+    public ArrayList<String> getAllFacultiesName() {
         ArrayList<String> facultiesName = new ArrayList<>();
         for (Faculty faculty : faculties) {
             facultiesName.add(faculty.getFacultyName());
@@ -38,7 +38,7 @@ public class FacultyList {
         return facultiesName;
     }
 
-    public static void addFaculty(String name, String id){
+    public void addFaculty(String name, String id){
         name = name.trim();
         id = id.trim();
         if ( !id.isEmpty() && !name.isEmpty() ){
@@ -49,7 +49,7 @@ public class FacultyList {
         }
     }
 
-    public static boolean removeFaculty(Faculty faculty){
+    public boolean removeFaculty(Faculty faculty){
         if (faculties.contains(faculty) && faculty != null){
             faculties.remove(faculty);
             return true;
@@ -57,7 +57,7 @@ public class FacultyList {
         return false;
     }
 
-    public static Faculty findFacultyByName(String facultyName){
+    public Faculty findFacultyByName(String facultyName){
         for (Faculty faculty : faculties){
             if (faculty.getFacultyName().equals(facultyName)){
                 return faculty;
@@ -66,7 +66,7 @@ public class FacultyList {
         return null;
     }
 
-    public static Faculty findFacultyById(String facultyId){
+    public Faculty findFacultyById(String facultyId){
         for (Faculty faculty : faculties){
             if (faculty.getFacultyId().equals(facultyId)){
                 return faculty;
@@ -75,5 +75,5 @@ public class FacultyList {
         return null;
     }
 
-    public static ArrayList<Faculty> getFaculties() { return faculties; }
+    public ArrayList<Faculty> getFaculties() { return faculties; }
 }
