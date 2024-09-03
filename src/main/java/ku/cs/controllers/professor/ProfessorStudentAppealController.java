@@ -7,8 +7,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
-import ku.cs.services.FXRouter;
+import ku.cs.services.*;
 
 import java.io.IOException;
 
@@ -20,6 +21,10 @@ public class ProfessorStudentAppealController {
     @FXML private Label roleLabel;
 
     @FXML private TableView<Appeal> tableView;
+    private Datasource<AppealList> appealDatasource;
+    private Datasource<UserList> userDatasource;
+    private AppealList appealList;
+    private UserList userList;
 
     @FXML
     public void initialize() {
@@ -27,30 +32,52 @@ public class ProfessorStudentAppealController {
 
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
+
+        appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = appealDatasource.readData();
+
+        userDatasource = new UserListFileDatasource("data", "user.csv");
+        userList = userDatasource.readData();
+
+        showTable(appealList, userList);
     }
 
-    public void showTable(AppealList appealList) {
+    public void showTable(AppealList appealList, UserList userList) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
 
         TableColumn<Appeal, String> type = new TableColumn<>("Appeal Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        TableColumn<Appeal, String> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        TableColumn<Appeal, String> ownerIdCol = new TableColumn<>("ID");
+        ownerIdCol.setCellValueFactory(new PropertyValueFactory<>("ownerId"));
 
-        TableColumn<Appeal, String> fullNameCol = new TableColumn<>("Fullname");
-        fullNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("Fullname");
+        ownerFullNameCol.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
+
+        dateTimeCol.setComparator((date1, date2)-> {
+            int result = DateTimeService.compareDate(date1, date2);
+            return result;
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);
         tableView.getColumns().add(type);
-        tableView.getColumns().add(idCol);
-        tableView.getColumns().add(fullNameCol);
+        tableView.getColumns().add(ownerIdCol);
+        tableView.getColumns().add(ownerFullNameCol);
 
         tableView.getItems().clear();
+        //  Add Appeal filter by Professor name in Student (Not Done Yet)
+        for (Appeal appeal : appealList.getAppeals()) {
+            for (User student : userList.getUsers()) {
+                if (appeal.getOwnerId().equals(student.getId())) {
+                    tableView.getItems().add(appeal);
+                }
+            }
+        }
 
-        //  Add Appeal filter by Professor name in Student
+        tableView.getSortOrder().add(dateTimeCol);
+
 
     }
 

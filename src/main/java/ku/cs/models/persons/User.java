@@ -214,6 +214,10 @@ public class User extends Human {
         return ban ? "ไม่มีสิทธิ์การใช้งาน" : "มีสิทธิ์การใช้งาน";
     }
 
+    public String getAdvisor() {
+        return advisor;
+    }
+
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> map = new HashMap<>();
         map.put("role", role);

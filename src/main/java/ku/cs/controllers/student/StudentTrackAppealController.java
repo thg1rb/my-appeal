@@ -13,9 +13,9 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
+import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 
 public class StudentTrackAppealController {
@@ -55,16 +55,23 @@ public class StudentTrackAppealController {
         TableColumn<Appeal, String> typeCol = new TableColumn<>("Appeal Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
+        dateTimeCol.setComparator((date1, date2)-> {
+            int result = DateTimeService.compareDate(date1, date2);
+            return result;
+        });
+
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);
         tableView.getColumns().add(typeCol);
 
         tableView.getItems().clear();
         for (Appeal appeal : appealList.getAppeals()) {
-            if (appeal.getOwner().equals(ownerId)) {
+            if (appeal.getOwnerId().equals(ownerId)) {
                 tableView.getItems().add(appeal);
             }
         }
+        tableView.getSortOrder().add(dateTimeCol);
+
     }
 
     // ไปที่หน้าสร้างใบคำร้อง
