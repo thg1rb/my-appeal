@@ -21,6 +21,15 @@ public class FacultyList {
         return false;
     }
 
+    public static void addFaculty(Faculty obj) {
+        for (Faculty faculty : faculties) {
+            if (faculty.getFacultyName().equals(obj.getFacultyName())) {
+                return;
+            }
+        }
+        faculties.add(obj);
+    }
+
     public static ArrayList<String> getAllFacultiesName() {
         ArrayList<String> facultiesName = new ArrayList<>();
         for (Faculty faculty : faculties) {

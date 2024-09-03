@@ -15,7 +15,7 @@ import ku.cs.models.persons.User;
 
 import java.util.ArrayList;
 
-public class StaffPopup {
+public class StaffPopupController {
     @FXML private Text optionText;
     @FXML private ChoiceBox<String> roleChoiceBox;
     @FXML private Button cancelButton;

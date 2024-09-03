@@ -20,6 +20,15 @@ public class MajorList {
         }
     }
 
+    public static void addMajor (Major obj){
+        for (Major m : majors){
+            if (m.getMajorName().equals(obj.getMajorName())){
+                return;
+            }
+        }
+        majors.add(obj);
+    }
+
     public static ArrayList<Major> findObjMajorsByFaculty(String faculty){
         ArrayList<Major> majorsInFaculty = new ArrayList<>();
         for (Major major : majors){

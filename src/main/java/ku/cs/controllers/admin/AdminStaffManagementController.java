@@ -1,8 +1,5 @@
 package ku.cs.controllers.admin;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -156,7 +153,7 @@ public class AdminStaffManagementController {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
-            StaffPopup staffPopup = fxmlLoader.getController();
+            StaffPopupController staffPopup = fxmlLoader.getController();
             staffPopup.setMainController(this);
             staffPopup.setSelectedRole(tabPane.getSelectionModel().getSelectedItem().getText());
             staffPopup.setPerson(user);
