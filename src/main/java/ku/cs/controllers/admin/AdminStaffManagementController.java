@@ -1,26 +1,26 @@
 package ku.cs.controllers.admin;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.UserListFileDatasource;
-import ku.cs.services.UserListHardCodeDatasource;
 
 import java.io.IOException;
 
 public class AdminStaffManagementController {
-    User user;
-
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
 
@@ -29,8 +29,11 @@ public class AdminStaffManagementController {
     @FXML private TableView<User> tableView;
     @FXML private Text totalText;
 
+    private User user;
     private Datasource<UserList> datasource;
     private UserList userList;
+
+    private boolean popupEditMode;
 
     @FXML
     private void initialize() {
@@ -43,19 +46,20 @@ public class AdminStaffManagementController {
         userList = datasource.readData();
 
         showTable(userList, "เจ้าหน้าที่คณะ");
-        totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
+        updateTotalText();
+
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
-            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(userList, "เจ้าหน้าที่คณะ");
-                totalText.setText("จำนวนเจ้าหน้าที่คณะทั้งหมด");
-            }
-            else if (tabPane.getSelectionModel().getSelectedIndex() == 1) {
-                showTable(userList, "เจ้าหน้าที่ภาควิชา");
-                totalText.setText("จำนวนเจ้าหน้าที่ภาควิชาทั้งหมด");
-            }
-            else{
-               showTable(userList, "อาจารย์ที่ปรึกษา");
-                totalText.setText("จำนวนอาจารย์ที่ปรึกษาทั้งหมด");
+            showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
+            updateTotalText();
+        });
+
+        tableView.getItems().addListener((ListChangeListener<? super User>)change -> updateTotalText() );
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue != null) {
+                popupEditMode = true;
+                addEditPopup(newValue);
+                tableView.getSelectionModel().select(newValue);
             }
         });
     }
@@ -73,11 +77,12 @@ public class AdminStaffManagementController {
         TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
         facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
 
+        tableView.getColumns().clear();
+
         if (role.equals("เจ้าหน้าที่ภาควิชา")){
             TableColumn<User, String> majorCol = new TableColumn<>("Major");
             majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
 
-            tableView.getColumns().clear();
             tableView.getColumns().add(nameCol);
             tableView.getColumns().add(usernameCol);
             tableView.getColumns().add(initPasswordCol);
@@ -89,16 +94,7 @@ public class AdminStaffManagementController {
             facultyCol.setPrefWidth(220);
             initPasswordCol.setPrefWidth(220);
             majorCol.setPrefWidth(220);
-
-            tableView.getItems().clear();
-            for (User user : userList.getUsers()){
-                if (user.getRole().equals(role)){
-                    tableView.getItems().add(user);
-                }
-            }
-
         }else if (role.equals("เจ้าหน้าที่คณะ")) {
-            tableView.getColumns().clear();
             tableView.getColumns().add(nameCol);
             tableView.getColumns().add(usernameCol);
             tableView.getColumns().add(initPasswordCol);
@@ -108,13 +104,6 @@ public class AdminStaffManagementController {
             usernameCol.setPrefWidth(275);
             facultyCol.setPrefWidth(275);
             initPasswordCol.setPrefWidth(275);
-
-            tableView.getItems().clear();
-            for (User user : userList.getUsers()){
-                if (user.getRole().equals(role)){
-                    tableView.getItems().add(user);
-                }
-            }
         }else{
             TableColumn<User, String> majorCol = new TableColumn<>("Major");
             majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
@@ -122,7 +111,6 @@ public class AdminStaffManagementController {
             TableColumn<User, String> idCol = new TableColumn<>("ID");
             idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-            tableView.getColumns().clear();
             tableView.getColumns().add(nameCol);
             tableView.getColumns().add(idCol);
             tableView.getColumns().add(usernameCol);
@@ -136,14 +124,55 @@ public class AdminStaffManagementController {
             initPasswordCol.setPrefWidth(183);
             majorCol.setPrefWidth(183);
             idCol.setPrefWidth(183);
+        }
 
-            tableView.getItems().clear();
-            for (User user : userList.getUsers()){
-                if (user.getRole().equals(role)){
-                    tableView.getItems().add(user);
-                }
+        tableView.getItems().clear();
+        for (User user : userList.getUsers()){
+            if (user.getRole().equals(role)){
+                tableView.getItems().add(user);
             }
         }
+    }
+
+    public void addStaff(User staff){
+        userList.addUser(staff);
+        showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
+    }
+
+    public boolean getPopupEditMode(){
+        return popupEditMode;
+    }
+
+    private void updateTotalText(){
+        totalText.setText("จำนวน"+tabPane.getSelectionModel().getSelectedItem().getText()+"ทั้งหมด "+tableView.getItems().size()+" คน");
+    }
+
+    private void addEditPopup(User user){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/admin-addEdit-staff.fxml"));
+        try{
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+
+            StaffPopupController staffPopup = fxmlLoader.getController();
+            staffPopup.setMainController(this);
+            staffPopup.setSelectedRole(tabPane.getSelectionModel().getSelectedItem().getText());
+            staffPopup.setPerson(user);
+            stage.setScene(new Scene(root));
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            datasource.writeData(userList);
+            showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void onAddStaffButtonClicked() {
+        popupEditMode = false;
+        addEditPopup(null);
     }
 
     @FXML

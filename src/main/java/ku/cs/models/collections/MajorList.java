@@ -5,13 +5,13 @@ import ku.cs.models.Major;
 import java.util.ArrayList;
 
 public class MajorList {
-    private ArrayList<Major> majors;
+    private static ArrayList<Major> majors;
 
-    public MajorList() {
-        this.majors = new ArrayList<>();
+    static {
+        majors = new ArrayList<>();
     }
 
-    public void addMajor(String name, String faculty, String id){
+    public static void addMajor(String name, String faculty, String id){
         name = name.trim();
         faculty = faculty.trim();
         id = id.trim();
@@ -20,7 +20,36 @@ public class MajorList {
         }
     }
 
-    public Major findMajorByName(String name){
+    public static void addMajor (Major obj){
+        for (Major m : majors){
+            if (m.getMajorName().equals(obj.getMajorName())){
+                return;
+            }
+        }
+        majors.add(obj);
+    }
+
+    public static ArrayList<Major> findObjMajorsByFaculty(String faculty){
+        ArrayList<Major> majorsInFaculty = new ArrayList<>();
+        for (Major major : majors){
+            if (major.getFaculty().equals(faculty)){
+                majorsInFaculty.add(major);
+            }
+        }
+        return majorsInFaculty;
+    }
+
+    public static ArrayList<String> findMajorsByFaculty(String faculty){
+        ArrayList<String> majorsInFaculty = new ArrayList<>();
+        for (Major major : majors){
+            if (major.getFaculty().equals(faculty)){
+                majorsInFaculty.add(major.getMajorName());
+            }
+        }
+        return majorsInFaculty;
+    }
+
+    public static Major findMajorByName(String name){
         for (Major major : majors){
             if (major.getMajorName().equals(name)){
                 return major;
@@ -29,7 +58,7 @@ public class MajorList {
         return null;
     }
 
-    public Major findMajorById(String id){
+    public static Major findMajorById(String id){
         for (Major major : majors){
             if (major.getMajorId().equals(id)){
                 return major;
@@ -38,7 +67,7 @@ public class MajorList {
         return null;
     }
 
-    public ArrayList<Major> getMajors(){
+    public static ArrayList<Major> getMajors(){
         return majors;
     }
 }
