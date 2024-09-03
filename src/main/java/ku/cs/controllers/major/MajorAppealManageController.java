@@ -224,7 +224,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onApproverManageButtonClick() {
         try {
-            FXRouter.goTo("major-approver-manage", user);
+            FXRouter.goTo("major-approver-manage", FXRouter.getData());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -233,7 +233,7 @@ public class MajorAppealManageController {
     @FXML
     protected void onNisitManageButtonClick() {
         try {
-            FXRouter.goTo("major-nisit-manage", user);
+            FXRouter.goTo("major-nisit-manage", FXRouter.getData());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
