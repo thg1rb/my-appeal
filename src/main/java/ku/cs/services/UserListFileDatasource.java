@@ -92,8 +92,8 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 String id = data[10];
                 String loginDate = data[11];
                 boolean ban = Boolean.parseBoolean(data[12]);
-                String imgUrl = data[13];
-                String advisor = data[14];
+                String advisor = data[13];
+                String imgUrl = data[14];
 
                 // เพิ่มข้อมูลลงใน list
                 userList.addUser(new User(role, username, password, initialPassword, initialPasswordText, firstName, lastName, faculty, major, id, email, loginDate, advisor, ban, imgUrl));

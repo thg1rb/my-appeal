@@ -203,6 +203,15 @@ public class AdminStaffManagementController {
     }
 
     @FXML
+    public void onProfileSettingButtonClicked(){
+        try {
+            FXRouter.goTo("profile-setting", user);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
     public void onLogoutButtonClick() {
         try {
             FXRouter.goTo("login");

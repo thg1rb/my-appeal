@@ -130,7 +130,7 @@
             </Label>
             <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="380.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
             <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="500.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
-            <Button layoutY="655.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการบัญชี     " textFill="WHITE">
+            <Button layoutY="655.0" mnemonicParsing="false" onAction="#onProfileSettingButtonClicked" prefHeight="55.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการบัญชี     " textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

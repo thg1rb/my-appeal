@@ -31,7 +31,6 @@ public class FacultyApproverManageController {
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
         user = (User)FXRouter.getData();
-        System.out.println(user.toString());
         showApproverTable(approverList);
     }
 
@@ -91,7 +90,6 @@ public class FacultyApproverManageController {
     @FXML
     private TextField editRoleTextField;
 
-
     @FXML
     public void addApproverButton() {
         roleTextField.clear();
@@ -123,7 +121,6 @@ public class FacultyApproverManageController {
         editApproverPane.setVisible(false);
     }
 
-
     @FXML
     public void onAppealButtonClick() {
         try {
@@ -142,8 +139,6 @@ public class FacultyApproverManageController {
             throw new RuntimeException(e);
         }
     }
-
-
 
     @FXML
     public void onAddApproverToTable() {
@@ -184,10 +179,7 @@ public class FacultyApproverManageController {
 
             approversDatasource.writeData(approverList);
 
-
-
             onCloseEditButtonClick();
-
         } else {
             System.out.println("No approver selected.");
         }

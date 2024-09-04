@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class User extends Human {
     private final String role;
 
-    private String path;
+    private String imageUrl;
 
     private String username;
     private String password;
@@ -30,7 +30,7 @@ public class User extends Human {
     public User(HashMap<String, String> user){
         super(user.get("firstName"), user.get("lastName"));
         this.role = user.get("role");
-        this.path = user.get("path");
+        this.imageUrl = user.get("path");
 
         this.username = user.get("username");
         this.password = user.get("password");
@@ -58,6 +58,8 @@ public class User extends Human {
             setInitPassword(password);
             this.initialPasswordText = password;
         }
+
+        this.imageUrl = "/images/default-profile.jpg";
     }
 
     public User(String role, String username, String password, String firstName, String lastName, String faculty){
@@ -100,7 +102,7 @@ public class User extends Human {
         this.loginDate = loginDate;
         this.advisor = advisor;
         this.ban = ban;
-        this.path = imgUrl;
+        this.imageUrl = imgUrl;
     }
 
 
@@ -116,7 +118,7 @@ public class User extends Human {
         return result.verified;
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
     private void setInitPassword(String password) {
@@ -128,7 +130,7 @@ public class User extends Human {
     }
 
     public void setImage(String path){
-        this.path = path;
+        this.imageUrl = path;
     }
 
     public void setAdvisor(String advisor){
@@ -202,8 +204,8 @@ public class User extends Human {
         return id;
     }
 
-    public String getPath() {
-        return path;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public String getLoginDate() {
@@ -234,7 +236,7 @@ public class User extends Human {
         map.put("id", id);
         map.put("loginDate", loginDate);
         map.put("ban", Boolean.toString(ban));
-        map.put("path", path);
+        map.put("path", imageUrl);
         map.put("advisor", advisor);
         return map;
     }
@@ -254,7 +256,7 @@ public class User extends Human {
                 id + "," +
                 loginDate+ "," +
                 ban + "," +
-                path + "," + advisor;
+                advisor + "," + imageUrl;
 
     }
 }
