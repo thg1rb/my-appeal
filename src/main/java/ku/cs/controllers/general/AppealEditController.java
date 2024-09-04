@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ku.cs.models.appeal.Appeal;
+import ku.cs.models.persons.User;
 
 public class AppealEditController {
     @FXML private Label typeLabel;
@@ -40,14 +41,6 @@ public class AppealEditController {
         reasonScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         reasonScrollPane.setContent(vbox);
         reasonScrollPane.layout();
-        if(role.equals("major")){
-            statusChoiceBox.getItems().addAll(majorStatusList);
-            statusChoiceBox.setOnAction(this::getStatus);
-            statusChoiceBox.setValue(majorStatusList[0]);
-        }
-//        else if(role.equals("faculty")){
-//
-//        }
 
     }
 
@@ -55,11 +48,17 @@ public class AppealEditController {
         selectedStatus = (String) statusChoiceBox.getValue();
     }
 
-    public void setType(String type, Appeal appeal){
+    public void setType(String type, Appeal appeal, User user){
+        this.role = user.getRole();
         this.appeal = appeal;
         typeLabel.setText(type);
         reasonLabel.setText(appeal.getReason());
         presentStatusLabel.setText(appeal.getStatus());
+        if(role.equals("เจ้าหน้าที่ภาควิชา")){
+            statusChoiceBox.getItems().addAll(majorStatusList);
+            statusChoiceBox.setOnAction(this::getStatus);
+            statusChoiceBox.setValue(majorStatusList[0]);
+        }
 
         if(type.equals("คำร้องทั่วไป")){
             purposeLabel.setVisible(false);

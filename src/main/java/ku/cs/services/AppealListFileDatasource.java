@@ -109,7 +109,7 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(file, true);
+            fileOutputStream = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -37,28 +37,6 @@ public class MajorAppealManageController {
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Appeal> selfAppealTable;
 
-    @FXML private ScrollPane detailScrollPane;
-    @FXML private VBox vbox;
-
-    @FXML private Label appealManageLabel;
-    @FXML private Label appealDetailsLabel;
-
-    @FXML private Label typeLabel;
-
-    @FXML private Label presentStatusLabel;
-
-    @FXML private Pane popupAppealPane;
-    @FXML private ChoiceBox statusChoiceBox;
-
-    @FXML private Label topicLabel;
-    @FXML private Label semesterLabel;
-    @FXML private Label purposeLabel;
-    @FXML private Label breakTimeLabel;
-    @FXML private Label reasonLabel;
-    @FXML private Label subjectLabel;
-    @FXML private Label academicTermLabel;
-    @FXML private Label yearLabel;
-
     Appeal selectedAppeal;
 
     public AppealList appealList;
@@ -66,6 +44,7 @@ public class MajorAppealManageController {
 
     private User user;
 //    private Object selectedAppeal;
+
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
@@ -95,8 +74,7 @@ public class MajorAppealManageController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
             AppealEditController controller = fxmlLoader.getController();
-
-            controller.setType(selectedAppeal.getType(), selectedAppeal);
+            controller.setType(selectedAppeal.getType(), selectedAppeal, user);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
