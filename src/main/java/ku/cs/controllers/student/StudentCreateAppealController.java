@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.UUID;
 
 public class StudentCreateAppealController {
 
@@ -153,7 +154,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", user.getId(), user.getFullName(), topic, details));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), topic, details, UUID.randomUUID().toString()));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -170,7 +171,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", user.getId(), user.getFullName(), reason, semester, year, subjects));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, semester, year, subjects, UUID.randomUUID().toString()));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -189,14 +190,14 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", user.getId(), user.getFullName(), purpose, subjects, startDate, endDate));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, purpose, subjects, startDate, endDate, UUID.randomUUID().toString()));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
         }
         datasource.writeData(appealList);
-        appealList = datasource.readData();
+        datasource.readData();
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox

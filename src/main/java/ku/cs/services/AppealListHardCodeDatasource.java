@@ -6,6 +6,7 @@ import ku.cs.models.collections.AppealList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class AppealListHardCodeDatasource implements Datasource<AppealList> {
     static AppealList appealList;
@@ -40,14 +41,18 @@ public class AppealListHardCodeDatasource implements Datasource<AppealList> {
 
     @Override
     public AppealList readData() {
-        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", "6610401934", "เกิดสิริ ศรีเจริญ", "ขอเปิดหมู่รายวิชา 112 เพิ่ม", "เนื่องจากกระผมต้องการลงทะเบียนเรียนในวิชา 112 เพราะจำเป็นต้องใช้ในรายวิชาถัดไป"));
-        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลากิจหรือลาป่วย", "6610402132","Bright Kun", "ผมติดงานแต่งพี่สาวที่จังหวัดเชียงใหม่", "ลากิจ", "112,233,C PLUS PLUS", "startDate", "endDate"));
-        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอพักการศึกษา", "6610401985","Aock taepun", "เกรดเฉลี่ยน้อยเกินไป", "เทอมปลาย", "2567", "112,234,A PLUS PLUS"));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", "6610401934", "เกิดสิริ ศรีเจริญ", "ขอเปิดหมู่รายวิชา 112 เพิ่ม", "เนื่องจากกระผมต้องการลงทะเบียนเรียนในวิชา 112 เพราะจำเป็นต้องใช้ในรายวิชาถัดไป", UUID.randomUUID().toString()));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลากิจหรือลาป่วย", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", "6610402132","Bright Kun", "ผมติดงานแต่งพี่สาวที่จังหวัดเชียงใหม่", "ลากิจ", "112,233,C PLUS PLUS", "startDate", "endDate", UUID.randomUUID().toString()));
+        appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", "6610401985","Aock taepun", "เกรดเฉลี่ยน้อยเกินไป", "เทอมปลาย", "2567", "112,234,A PLUS PLUS", UUID.randomUUID().toString()));
         return appealList;
     }
 
     @Override
     public void writeData(AppealList data) {
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(appealList.getAppeals().get(1).getStartDate());
     }
 }
