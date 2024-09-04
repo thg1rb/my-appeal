@@ -102,9 +102,7 @@ public class FacultyApproverManageController {
     }
 
     private void showEditApproverPane() {
-        editRoleTextField.clear();
-        editFirstNameTextField.clear();
-        editLastNameTextField.clear();
+
 
         backgroundAddApproverPane.setVisible(true);
 
