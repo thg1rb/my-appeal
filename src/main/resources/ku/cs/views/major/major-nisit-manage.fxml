@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -128,5 +129,6 @@
          </graphic>
       </Button>
       <Line endX="186.86593627929688" endY="273.3656311035156" layoutY="17.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
+      <TextField layoutX="1116.0" layoutY="98.0" prefHeight="48.0" prefWidth="228.0" promptText="ค้นหา" style="fx-background-radius: 20;" />
    </children>
 </AnchorPane>
