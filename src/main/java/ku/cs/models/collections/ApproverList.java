@@ -18,9 +18,10 @@ public class ApproverList {
         lastName = lastName.trim();
         role = role.trim();
         String fullName = firstName + " " + lastName;
-        if (findApproverByFullName(fullName) != null) {
+        if (findApproverByFullName(fullName)== null){
             approvers.add(new Approver(firstName, lastName, faculty, major, role));
         }
+
     }
 
     public void addApprover(String firstName, String lastName, String role, User adder) {
