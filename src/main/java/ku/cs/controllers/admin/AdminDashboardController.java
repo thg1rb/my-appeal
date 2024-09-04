@@ -8,11 +8,10 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class AdminDashboardController {
-
-    User user;
-
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
+
+    private User user;
 
     public void initialize() {
         user = (User) FXRouter.getData();

@@ -34,4 +34,7 @@ module ku.cs {
 
     exports ku.cs.models.appeal;
     opens ku.cs.models.appeal to javafx.base;
+
+    exports ku.cs.models.collections to javafx.fxml;
+    opens ku.cs.models.collections to javafx.base;
 }

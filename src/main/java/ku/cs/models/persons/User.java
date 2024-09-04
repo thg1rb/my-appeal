@@ -9,7 +9,7 @@ public class User extends Human {
 
     private String path;
 
-    private final String username;
+    private String username;
     private String password;
     private boolean ban;
 
@@ -122,12 +122,38 @@ public class User extends Human {
     private void setInitPassword(String password) {
         this.initialPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
     public void setImage(String path){
         this.path = path;
     }
 
     public void setAdvisor(String advisor){
         this.advisor = advisor;
+    }
+
+    public void setInitialPasswordText(String initialPasswordText) {
+        this.initialPasswordText = initialPasswordText;
+        setInitPassword(initialPasswordText);
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLoginDate(String loginDate) {
+        this.loginDate = loginDate;
     }
 
     public void banUser(){

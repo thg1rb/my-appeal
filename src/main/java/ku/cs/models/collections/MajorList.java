@@ -1,5 +1,6 @@
 package ku.cs.models.collections;
 
+import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 
 import java.util.ArrayList;
@@ -11,13 +12,51 @@ public class MajorList {
         this.majors = new ArrayList<>();
     }
 
+    public void addMajor(String name, String faculty, String id, FacultyList facultyList){
+        name = name.trim();
+        faculty = faculty.trim();
+        id = id.trim();
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && facultyList.isFacultyExist(faculty)){
+            majors.add(new Major(name, faculty, id));
+        }
+    }
+
     public void addMajor(String name, String faculty, String id){
         name = name.trim();
         faculty = faculty.trim();
         id = id.trim();
-        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && FacultyList.isFacultyExist(faculty)){
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
             majors.add(new Major(name, faculty, id));
         }
+    }
+
+    public void addMajor (Major obj){
+        for (Major m : majors){
+            if (m.getMajorName().equals(obj.getMajorName())){
+                return;
+            }
+        }
+        majors.add(obj);
+    }
+
+    public ArrayList<Major> findObjMajorsByFaculty(String faculty){
+        ArrayList<Major> majorsInFaculty = new ArrayList<>();
+        for (Major major : majors){
+            if (major.getFaculty().equals(faculty)){
+                majorsInFaculty.add(major);
+            }
+        }
+        return majorsInFaculty;
+    }
+
+    public ArrayList<String> findMajorsByFaculty(String faculty){
+        ArrayList<String> majorsInFaculty = new ArrayList<>();
+        for (Major major : majors){
+            if (major.getFaculty().equals(faculty)){
+                majorsInFaculty.add(major.getMajorName());
+            }
+        }
+        return majorsInFaculty;
     }
 
     public Major findMajorByName(String name){

@@ -12,13 +12,24 @@ public class Human {
         this.fullName = firstName + " " + lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFullName() {
+        this.fullName = firstName + " " + lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
     public String getLastName() {
         return lastName;
     }
-    public String getFullName() {
-        return fullName;
-    }
+    public String getFullName() {return fullName;}
+
 }

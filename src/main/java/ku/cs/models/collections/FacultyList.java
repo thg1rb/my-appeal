@@ -7,18 +7,35 @@ import java.util.List;
 
 public class FacultyList {
     private ArrayList<Faculty> faculties;
-    private static ArrayList<String> allFaculties;
-
-    static {
-        allFaculties = new ArrayList<>();
-    }
 
     public FacultyList() {
         faculties = new ArrayList<>();
     }
 
-    public static boolean isFacultyExist(String facultyName) {
-        return allFaculties.contains(facultyName);
+    public boolean isFacultyExist(String facultyName) {
+        for (Faculty faculty : faculties) {
+            if (faculty.getFacultyName().equals(facultyName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addFaculty(Faculty obj) {
+        for (Faculty faculty : faculties) {
+            if (faculty.getFacultyName().equals(obj.getFacultyName())) {
+                return;
+            }
+        }
+        faculties.add(obj);
+    }
+
+    public ArrayList<String> getAllFacultiesName() {
+        ArrayList<String> facultiesName = new ArrayList<>();
+        for (Faculty faculty : faculties) {
+            facultiesName.add(faculty.getFacultyName());
+        }
+        return facultiesName;
     }
 
     public void addFaculty(String name, String id){
@@ -28,7 +45,6 @@ public class FacultyList {
             Faculty exist = findFacultyById(id);
             if ( exist == null ){
                 faculties.add(new Faculty(name, id));
-                allFaculties.add(name);
             }
         }
     }

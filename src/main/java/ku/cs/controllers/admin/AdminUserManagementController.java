@@ -18,8 +18,6 @@ import ku.cs.services.UserListFileDatasource;
 import java.io.IOException;
 
 public class AdminUserManagementController {
-    User user;
-
     @FXML private Label usernameLabel;
     @FXML private Label roleLabel;
 
@@ -28,6 +26,7 @@ public class AdminUserManagementController {
 
     @FXML private TextField searchTextField;
 
+    private User user;
     private Datasource<UserList> usersDatasource;
     private UserList userList;
 
@@ -42,6 +41,7 @@ public class AdminUserManagementController {
         userList = usersDatasource.readData();
 
         showTable(userList);
+
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
                 showTable(userList);
@@ -51,7 +51,7 @@ public class AdminUserManagementController {
         });
 
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("^[a-zA-Zก-๙]+$") && !newValue.isEmpty()) {
+            if (newValue.matches("^[a-zA-Zก-๙0-9]+$") && !newValue.isEmpty()) {
                 tabPane.getSelectionModel().select(0);
                 showSearchTable(userList, newValue);
             }else if (newValue.isEmpty() || newValue.isBlank()) {
