@@ -65,8 +65,6 @@ public class ProfessorStudentAppealController {
 
                     stage.showAndWait();
 
-                    appealDatasource.writeData(appealList);
-                    appealList = appealDatasource.readData();
                     showTable(appealList, userList);
                 } catch (IOException e) {
                     e.printStackTrace();
