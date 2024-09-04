@@ -30,7 +30,6 @@ public class Human {
     public String getLastName() {
         return lastName;
     }
-    public String getFullName() {
-        return fullName;
-    }
+    public String getFullName() {return fullName;}
+
 }

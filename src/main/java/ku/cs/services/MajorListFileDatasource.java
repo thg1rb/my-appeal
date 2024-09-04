@@ -1,10 +1,7 @@
 package ku.cs.services;
 
-import ku.cs.models.Faculty;
 import ku.cs.models.Major;
-import ku.cs.models.collections.ApproverList;
 import ku.cs.models.collections.MajorList;
-import ku.cs.models.persons.Approver;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

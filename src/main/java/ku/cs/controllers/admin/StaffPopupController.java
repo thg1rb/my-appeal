@@ -11,38 +11,43 @@ import javafx.stage.Stage;
 
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 
 import java.util.ArrayList;
 
 public class StaffPopupController {
     @FXML private Text optionText;
+    @FXML private Text majorText;
+    @FXML private Text idText;
+
     @FXML private ChoiceBox<String> roleChoiceBox;
+    @FXML private ChoiceBox<String> facultyChoiceBox;
+    @FXML private ChoiceBox<String> majorChoiceBox;
+
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button editButton;
+
     @FXML private TextField firstNameTextField;
     @FXML private TextField lastNameTextField;
     @FXML private TextField usernameTextField;
     @FXML private TextField initPasswordTextField;
-    @FXML private ChoiceBox<String> facultyChoiceBox;
-    @FXML private ChoiceBox<String> majorChoiceBox;
     @FXML private TextField idTextField;
 
-    @FXML private Text majorText;
-    @FXML private Text idText;
-
+    private UserList userList;
     private User user;
-    private AdminStaffManagementController mainController;
+
     private final String[] staffChoice = {"เจ้าหน้าที่คณะ", "เจ้าหน้าที่ภาควิชา", "อาจารย์ที่ปรึกษา"};
-    private final ArrayList<String> facultyChoice = FacultyList.getAllFacultiesName();
-    private ArrayList<String> majorChoice;
+
+    private MajorList majorList;
+    private ArrayList<String> majorChoices;
 
     private String selectedRole;
 
-    @FXML private void initialize() {
+    @FXML
+    private void initialize() {
         roleChoiceBox.getItems().addAll(staffChoice);
-        facultyChoiceBox.getItems().addAll(facultyChoice);
 
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -73,17 +78,28 @@ public class StaffPopupController {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if (newValue != null){
-                    majorChoice = MajorList.findMajorsByFaculty(newValue);
-                    majorChoiceBox.getItems().clear();
-                    majorChoiceBox.getItems().addAll(majorChoice);
+                    updateMajorChoiceBox(newValue);
                 }
             }
         });
     }
 
-    public void setMainController(AdminStaffManagementController mainController) {
-        this.mainController = mainController;
-        if (mainController.getPopupEditMode()){
+    public void initPopup(boolean editMode, User user, FacultyList facultyList, MajorList majorList, String selectedRole, UserList userList) {
+        this.userList = userList;
+        roleChoiceBox.getSelectionModel().select(selectedRole);
+        this.majorList = majorList;
+        this.selectedRole = selectedRole;
+        facultyChoiceBox.getItems().addAll(facultyList.getAllFacultiesName());
+
+        if (editMode){
+            updateMajorChoiceBox(user.getFaculty());
+            setPerson(user);
+        }
+        setMode(editMode);
+    }
+
+    private void setMode(boolean editMode) {
+        if (editMode){
             optionText.setText("แก้ไขข้อมูลเจ้าหน้าที่");
             editButton.setVisible(true);
             confirmButton.setVisible(false);
@@ -99,11 +115,8 @@ public class StaffPopupController {
             roleChoiceBox.setDisable(false);
         }
     }
-    public void setSelectedRole(String selectedRole) {
-        this.selectedRole = selectedRole;
-        roleChoiceBox.getSelectionModel().select(selectedRole);
-    }
-    public void setPerson(User user) {
+
+    private void setPerson(User user) {
         this.user = user;
         if (user != null) {
             firstNameTextField.setText(user.getFirstName());
@@ -114,6 +127,12 @@ public class StaffPopupController {
             majorChoiceBox.setValue(user.getMajor());
             idTextField.setText(user.getId());
         }
+    }
+
+    private void updateMajorChoiceBox(String faculty){
+        this.majorChoices = majorList.findMajorsByFaculty(faculty);
+        majorChoiceBox.getItems().clear();
+        majorChoiceBox.getItems().addAll(majorChoices);
     }
 
     @FXML
@@ -132,7 +151,7 @@ public class StaffPopupController {
         String major = majorChoiceBox.getValue();
         String id = idTextField.getText();
 
-        mainController.addStaff(new User(selectedRole, username, password, firstName, lastName, faculty, major, id));
+        userList.addUser(new User(selectedRole, username, password, firstName, lastName, faculty, major, id));
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();
