@@ -3,6 +3,7 @@ package ku.cs.models.appeal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import ku.cs.services.DateTimeService;
 
@@ -29,22 +30,25 @@ public class Appeal {
     private String semester;
     private String year;
 
+    private String uuid;
+
     // General Constructor
-    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String topic, String reason) {
-        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
+    public Appeal(String createDate, String type, String status, String ownerId, String ownerFullName, String topic, String reason, String uuid) {
         this.createDate = createDate;
         this.type = type;
+        this.status = status;
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
         this.topic = topic;
         this.reason = reason;
+        this.uuid = uuid;
     }
 
     // Break Constructor
-    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String reason, String purpose, String subjects, String startDate, String endDate) {
-        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
+    public Appeal(String createDate, String type, String status, String ownerId, String ownerFullName, String reason, String purpose, String subjects, String startDate, String endDate, String uuid) {
         this.createDate = createDate;
         this.type = type;
+        this.status = status;
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
         this.reason = reason;
@@ -52,19 +56,21 @@ public class Appeal {
         this.subjects = subjects;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.uuid = uuid;
     }
 
     // Suspend Constructor
-    public Appeal(String createDate, String type, String ownerId, String ownerFullName, String reason, String semester, String year, String subjects) {
-        this.status = "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา";
+    public Appeal(String createDate, String type, String status, String ownerId, String ownerFullName, String reason, String semester, String year, String subjects, String uuid) {
         this.createDate = createDate;
         this.type = type;
+        this.status = status;
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
         this.reason = reason;
         this.semester = semester;
         this.year = year;
         this.subjects = subjects;
+        this.uuid = uuid;
     }
 
     public String getType() {
@@ -154,8 +160,12 @@ public class Appeal {
         System.out.println(date.toString());
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
     @Override
     public String toString() {
-        return createDate + "," + ownerId + "," + ownerFullName + "," + type + "," + status + "," + topic + "," +  reason + "," + purpose + "," + subjects + "," + startDate + "," + endDate + "," + semester + "," + year;
+        return createDate + "," + ownerId + "," + ownerFullName + "," + type + "," + status + "," + topic + "," +  reason + "," + purpose + "," + subjects + "," + startDate + "," + endDate + "," + semester + "," + year + "," + uuid;
     }
 }
