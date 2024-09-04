@@ -13,12 +13,13 @@
 อาจารย์ที่ปรึกษา,อาจารย์,ชอบสอน,professor2,$2a$12$vcyqU0tePJ3PLXilz6cUIeBRp.GnfU2ckF9LYniom0IUNSilrIn.K,$2a$12$2WKP2qrIwnyYqWSw9BCYueejYL/3IaTajV/ta0Of/iiOIhaJN4F6W,test2,วิศวกรรมศาสตร์,วิศวกรรมไฟฟ้า,null,12345678,null,false,null,null
 อาจารย์ที่ปรึกษา,อาจารย์,ชอบสอน,professor3,$2a$12$.PhN/MuoODNZG8Yg28i9i.FT5DGVA6OauEtdEok7Gd0esmGwdUQmm,$2a$12$cQ6I9w4Z.OeAUqT3wrNHuuJkhXos9vGY4k9Jg22rPVUfw0RyhGjN.,test3,เศรษฐศาสตร์,เศรษฐศาสตร์,null,12345678,null,false,null,null
 นักศึกษา,ไบร้,เป็นนิสิต,BrightStu,$2a$12$9q6oMfQIuLLWBj2U77ZTFu6z3hQAaCalpGD0B9Kof/v8vDvUyppRy,null,null,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,bright@email.test,6610401985,null,false,null,ไบร้ง้าบ เป็นอาจารย์
-นักศึกษา,นิสิต,สมมติ1,nisit1,$2a$12$ZRJqDIESJWu/d9Ck/RltUuf9X0zguCkYOYIjjwHyOVqJM8RYpJg56,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610401xxx,null,false,null,ไบร้ง้าบ เป็นอาจารย์
-นักศึกษา,นิสิต,สมมติ2,nisit2,$2a$12$zTrEqmqKkOCaVqLKmLzRiO10DeN38U.ERN2Q.WTqNuOSpCetmA8vu,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610401xxx,null,false,null,ไบร้ง้าบ เป็นอาจารย์
-นักศึกษา,นิสิต,สมมติ3,nisit3,$2a$12$NSj/Ev.XrXXYaXHR9qt8rezRMFYtk5/IJPUV0LQc2F/geZpJIJh3K,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610401xxx,null,false,null,ไบร้ง้าบ เป็นอาจารย์
-นักศึกษา,นิสิตโดนแบน,ทดสอบ,nisitban,$2a$12$nzmz.DnFgftSYBi9luMo/umdBd9uXq0zpzJxDzGFuu92aq5eT9uC6,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610401xxx,null,true,null,ไบร้ง้าบ เป็นอาจารย์
-เจ้าหน้าที่คณะ,จนท,สร้างใหม่,newFaculty,$2a$12$snia3Qyyz93ajQ51TFRfJeP.QC6EFwstBkv5FbYVGD5YxQICJcd/O,$2a$12$Vh6ogX4vaG2pnMYHg0ZPB.51O2McFLxV8LlI2WDZ2FzBF8kZOMehG,faculty,วิศวกรรมศาสตร์,null,null,,null,false,null,null
+นักศึกษา,นิสิต,สมมติ1,nisit1,$2a$12$ZRJqDIESJWu/d9Ck/RltUuf9X0zguCkYOYIjjwHyOVqJM8RYpJg56,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610400001,null,false,null,ไบร้ง้าบ เป็นอาจารย์
+นักศึกษา,นิสิต,สมมติ2,nisit2,$2a$12$zTrEqmqKkOCaVqLKmLzRiO10DeN38U.ERN2Q.WTqNuOSpCetmA8vu,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610400002,null,false,null,ไบร้ง้าบ เป็นอาจารย์
+นักศึกษา,นิสิต,สมมติ3,nisit3,$2a$12$NSj/Ev.XrXXYaXHR9qt8rezRMFYtk5/IJPUV0LQc2F/geZpJIJh3K,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,6610400003,null,false,null,ไบร้ง้าบ เป็นอาจารย์
+นักศึกษา,นิสิตโดนแบน,ทดสอบ,nisitban,$2a$12$nzmz.DnFgftSYBi9luMo/umdBd9uXq0zpzJxDzGFuu92aq5eT9uC6,null,null,วิทยาศาสตร์,สถิติ,nisit@email.test,66104010004,null,true,null,ไบร้ง้าบ เป็นอาจารย์
+เจ้าหน้าที่คณะ,จนท,สร้างใหม่,newFaculty,$2a$12$snia3Qyyz93ajQ51TFRfJeP.QC6EFwstBkv5FbYVGD5YxQICJcd/O,$2a$12$IF6/IktjEpJQW.NGBnOhaehGOBSGJQRvE0wSE0V1ggJuY/MTrLH9y,faculty,วิศวกรรมศาสตร์,null,null,,null,false,null,null
 เจ้าหน้าที่คณะ,สร้าง,ใหม่,facultytest,$2a$12$gDI9cmOnslQa00/usYE.D.3M/BEqj2P6EAgD0ipw0fltba0FPWP/S,$2a$12$4.YSmV9ZoHPQZOoUb3LmsevT9fAHmYq5vpTaQxsrnvsCkisDq4YJu,test,มนุษยศาสตร์,null,null,,null,false,null,null
 เจ้าหน้าที่ภาควิชา,น้องอุ้ม,หมูเด้ง,moodenggg,$2a$12$4cE6mCdPfC4G/PJnRe7qhO0cRcNIHSRLTxUWh86PqfzJGQdLOqIlC,$2a$12$7nf2kwbENwKk80lrY8OhNOOhXypu0o/c06DlJVQYhaZa/ZZ88Yq3u,fatfat,มนุษยศาสตร์,ภาษาอังกฤษ,null,,null,false,null,null
 อาจารย์ที่ปรึกษา,โอ้ค,อาจารย์,OlakiZ,$2a$12$xmsdxv07PCo0tPBHy0w3Du1L4SCbduRTJI9PjfrQ9DbiB.dam4Gcq,$2a$12$4av4Jguxf5TtsVadUHTOR.mfVMjQSgRqLblZThkGFSit6ojfbAMl.,2547,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,null,6610401985,null,false,null,null
 เจ้าหน้าที่ภาควิชา,จนท,ใหม่,123,$2a$12$xxdcaf3tBUy9AbPTH2kr8O1DCIaW6CWOVF.b1/xFWq0QG8YCaiq.O,$2a$12$9KiIudjrUMGz0IHwQSSDM.kym/PqBwDa/6vRXTWmg8szeWVjwzBaK,123,วิศวกรรมศาสตร์,วิศวกรรมไฟฟ้า,null,,null,false,null,null
+อาจารย์ที่ปรึกษา,อาจารย์,สอนคอม,ProCom,$2a$12$maHiVdViih//0xLlk/XSheFsN66hEgYP.iMd3boAKWmK7C.NqOSu2,$2a$12$2C4T1QJgCbvtXUFfYRjzkewybuefO0jGo9E1fasko8yLjQPHzJYc.,procomtest,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,null,123456789,null,false,null,null

@@ -81,16 +81,19 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
                 String endDate = data[10].trim();
                 String semester = data[11].trim();
                 String year = data[12].trim();
+                String uuid = data[13].trim();
+
+                System.out.println(startDate + " " + endDate);
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, topic, reason));
+                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, topic, reason, uuid));
                 }
                 else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, reason, purpose, subjects, startDate, endDate));
+                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, reason, purpose, subjects, startDate, endDate, uuid));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, ownerId, ownerFullName, reason, semester, year, subjects));
+                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, reason, semester, year, subjects, uuid));
                 }
             }
         } catch (IOException e) {
@@ -109,7 +112,7 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(file, true);
+            fileOutputStream = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -19,10 +19,7 @@ import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 
 import ku.cs.models.persons.User;
-import ku.cs.services.Datasource;
-import ku.cs.services.FXRouter;
-import ku.cs.services.FacultyListHardCodeDatasource;
-import ku.cs.services.MajorListHardCodedatasource;
+import ku.cs.services.*;
 
 import java.io.IOException;
 
@@ -46,10 +43,9 @@ public class AdminFacultyManagementController {
     private MajorList majorList;
 
     private String selectingTab;
-    private Faculty selectedFaculty;
-    private Major selectedMajor;
+    private Object selectedObject;
 
-    private boolean editPopupMode;
+    private boolean popupEditMode;
 
     @FXML
     public void initialize() {
@@ -58,9 +54,9 @@ public class AdminFacultyManagementController {
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
 
-        facultyDatasource = new FacultyListHardCodeDatasource();
+        facultyDatasource = new FacultyListFileDatasource("data", "faculties.csv");
         facultyList = facultyDatasource.readData();
-        majorDatasource = new MajorListHardCodedatasource();
+        majorDatasource = new MajorListFileDatasource("data", "majors.csv");
         majorList = majorDatasource.readData();
 
         showFacultyTable(facultyList);
@@ -70,12 +66,12 @@ public class AdminFacultyManagementController {
             @Override
             public void changed(ObservableValue<? extends Faculty> observableValue, Faculty oldVal, Faculty newVal) {
                 if (newVal == null) {
-                    selectedFaculty = null;
+                    selectedObject = null;
                 } else {
-                    editPopupMode = true;
-                    selectedFaculty = newVal;
-                    addEditPopup(selectedFaculty);
-                    facultyTableView.getSelectionModel().select(selectedFaculty);
+                    popupEditMode = true;
+                    selectedObject = newVal;
+                    addEditPopup();
+                    facultyTableView.getSelectionModel().select(newVal);
                 }
             }
         });
@@ -84,12 +80,12 @@ public class AdminFacultyManagementController {
             @Override
             public void changed(ObservableValue<? extends Major> observableValue, Major oldVal, Major newVal) {
                 if (newVal == null) {
-                    selectedMajor = null;
+                    selectedObject = null;
                 } else{
-                    editPopupMode = true;
-                    selectedMajor = newVal;
-                    addEditPopup(selectedMajor);
-                    majorTableView.getSelectionModel().select(selectedMajor);
+                    popupEditMode = true;
+                    selectedObject = newVal;
+                    addEditPopup();
+                    majorTableView.getSelectionModel().select(newVal);
                 }
             }
         });
@@ -124,7 +120,7 @@ public class AdminFacultyManagementController {
         facultyNameColumn.setPrefWidth(550);
 
         facultyTableView.getItems().clear();
-        for (Faculty faculty : FacultyList.getFaculties()){
+        for (Faculty faculty : facultyList.getFaculties()){
             facultyTableView.getItems().add(faculty);
         }
     }
@@ -148,7 +144,7 @@ public class AdminFacultyManagementController {
         majorNameColumn.setPrefWidth(550);
 
         majorTableView.getItems().clear();
-        for (Major major : MajorList.getMajors()){
+        for (Major major : majorList.getMajors()){
             majorTableView.getItems().add(major);
         }
     }
@@ -158,37 +154,20 @@ public class AdminFacultyManagementController {
         totalText.setText("จำนวน"+text+"ทั้งหมด "+ (text.equals("คณะ") ? facultyTableView.getItems().size():majorTableView.getItems().size())+" "+text);
     }
 
-    public boolean getPopupEditMode(){
-        return editPopupMode;
-    }
-
-    public String getSelectingTab(){
-        return selectingTab;
-    }
-
-    public void addMajor(String majorName, String faculty, String id){
-        MajorList.addMajor(majorName, faculty, id);
-    }
-
-    public void addFaculty(String facultyName, String id){
-        FacultyList.addFaculty(facultyName, id);
-    }
-
-    private void addEditPopup(Object o){
+    private void addEditPopup(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/admin-addEdit-MajorFaculty.fxml"));
         try{
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
             MajorFacultyPopupController majorFacultyPopup = fxmlLoader.getController();
-            majorFacultyPopup.setMainController(this);
-            majorFacultyPopup.setData(o);
+            majorFacultyPopup.initPopup(popupEditMode, selectedObject, facultyList, majorList, selectingTab);
 
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            if (getSelectingTab().equals("คณะ")){
+            if (selectingTab.equals("คณะ")){
                 showFacultyTable(facultyList);
             }else{
                 showMajorTable(majorList);
@@ -201,11 +180,11 @@ public class AdminFacultyManagementController {
         }
     }
 
-
     @FXML
     public void onAddButtonClicked(){
-        editPopupMode = false;
-        addEditPopup(null);
+        popupEditMode = false;
+        selectedObject = null;
+        addEditPopup();
     }
 
     @FXML

@@ -30,6 +30,17 @@ public class Student extends Human {
         this.major = major;
         this.advisor = advisor;
     }
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAdvisor(String advisor) {
+        this.advisor = advisor;
+    }
 
     public String getId() {
         return id;

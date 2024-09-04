@@ -11,12 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.collections.FacultyList;
+import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 
-import ku.cs.services.Datasource;
-import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.*;
 
 import java.io.IOException;
 
@@ -30,8 +30,15 @@ public class AdminStaffManagementController {
     @FXML private Text totalText;
 
     private User user;
+
     private Datasource<UserList> datasource;
     private UserList userList;
+    private Datasource<FacultyList> facultyListDatasource;
+    private FacultyList facultyList;
+    private Datasource<MajorList> majorListDatasource;
+    private MajorList majorList;
+
+    private User selectedStaff;
 
     private boolean popupEditMode;
 
@@ -44,6 +51,10 @@ public class AdminStaffManagementController {
 
         datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
+        facultyListDatasource = new FacultyListFileDatasource("data", "faculties.csv");
+        facultyList = facultyListDatasource.readData();
+        majorListDatasource = new MajorListFileDatasource("data", "majors.csv");
+        majorList = majorListDatasource.readData();
 
         showTable(userList, "เจ้าหน้าที่คณะ");
         updateTotalText();
@@ -58,7 +69,8 @@ public class AdminStaffManagementController {
         tableView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
                 popupEditMode = true;
-                addEditPopup(newValue);
+                selectedStaff = newValue;
+                addEditPopup();
                 tableView.getSelectionModel().select(newValue);
             }
         });
@@ -134,31 +146,20 @@ public class AdminStaffManagementController {
         }
     }
 
-    public void addStaff(User staff){
-        userList.addUser(staff);
-        showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
-    }
-
-    public boolean getPopupEditMode(){
-        return popupEditMode;
-    }
-
     private void updateTotalText(){
         totalText.setText("จำนวน"+tabPane.getSelectionModel().getSelectedItem().getText()+"ทั้งหมด "+tableView.getItems().size()+" คน");
     }
 
-    private void addEditPopup(User user){
+    private void addEditPopup(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/admin-addEdit-staff.fxml"));
         try{
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
             StaffPopupController staffPopup = fxmlLoader.getController();
-            staffPopup.setMainController(this);
-            staffPopup.setSelectedRole(tabPane.getSelectionModel().getSelectedItem().getText());
-            staffPopup.setPerson(user);
-            stage.setScene(new Scene(root));
+            staffPopup.initPopup(popupEditMode, selectedStaff, facultyList, majorList, tabPane.getSelectionModel().getSelectedItem().getText(), userList);
 
+            stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
@@ -172,7 +173,7 @@ public class AdminStaffManagementController {
     @FXML
     public void onAddStaffButtonClicked() {
         popupEditMode = false;
-        addEditPopup(null);
+        addEditPopup();
     }
 
     @FXML

@@ -152,6 +152,10 @@ public class User extends Human {
         this.id = id;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setLoginDate(String loginDate) {
         this.loginDate = loginDate;
     }
