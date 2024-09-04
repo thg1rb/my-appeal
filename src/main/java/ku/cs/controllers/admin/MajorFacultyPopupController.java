@@ -9,32 +9,36 @@ import javafx.stage.Stage;
 import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
+import ku.cs.models.collections.MajorList;
 
 import java.util.ArrayList;
 
 public class MajorFacultyPopupController {
+    @FXML private Text modeText;
     @FXML private Text nameText;
     @FXML private Text idText;
+    @FXML private Text belongFacultyText;
+
     @FXML private TextField nameTextField;
     @FXML private TextField idTextField;
-    @FXML private Text modeText;
+
     @FXML private ChoiceBox<String> optionChoiceBox;
-    @FXML private Text belongFacultyText;
     @FXML private ChoiceBox<String> facultyChoiceBox;
+
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button editButton;
 
-    private AdminFacultyManagementController mainController;
     private Object data;
-    private String[] choice = {"คณะ", "ภาควิชา"};
-    private ArrayList<String> facultyList;
+    private FacultyList facultyList;
+    private MajorList majorList;
+
+    private String[] optionChoice = {"คณะ", "ภาควิชา"};
+    private ArrayList<String> facultyChoice;
+
     @FXML
     private void initialize() {
-        optionChoiceBox.getItems().addAll(choice);
-
-        facultyList = FacultyList.getAllFacultiesName();
-        facultyChoiceBox.getItems().addAll(facultyList);
+        optionChoiceBox.getItems().addAll(optionChoice);
 
         optionChoiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
@@ -43,24 +47,34 @@ public class MajorFacultyPopupController {
         });
     }
 
-    public void setMainController(AdminFacultyManagementController mainController) {
-        this.mainController = mainController;
+    public void initPopup(boolean editMode, Object data, FacultyList facultyList, MajorList majorList, String tabSelected){
+        setMode(editMode, tabSelected);
 
-        String tab = mainController.getSelectingTab();
-        if (mainController.getPopupEditMode()){
-            modeText.setText("แก้ไขข้อมูล"+tab);
+        this.facultyList = facultyList;
+        this.majorList = majorList;
+        facultyChoice = facultyList.getAllFacultiesName();
+
+        facultyChoiceBox.getItems().addAll(facultyChoice);
+        if (data != null){
+            setData(data);
+        }
+    }
+
+    private void setMode(boolean editMode, String tabSelected) {
+        if (editMode){
+            modeText.setText("แก้ไขข้อมูล" + tabSelected);
             optionChoiceBox.setDisable(true);
             editButton.setDisable(false);
             confirmButton.setDisable(true);
         }else{
-            modeText.setText("เพิ่มข้อมูล"+tab);
+            modeText.setText("เพิ่มข้อมูล" + tabSelected);
             editButton.setDisable(true);
             confirmButton.setDisable(false);
         }
-        setUi(tab);
+        setUi(tabSelected);
     }
 
-    public void setData(Object data) {
+    private void setData(Object data) {
         this.data = data;
         if (data != null){
             if (data instanceof Faculty){
@@ -95,10 +109,10 @@ public class MajorFacultyPopupController {
         String id = idTextField.getText();
 
         if (optionChoiceBox.getValue().equals("คณะ")){
-            mainController.addFaculty(name, id);
+            facultyList.addFaculty(name, id);
         }else{
             String faculty = facultyChoiceBox.getValue();
-            mainController.addMajor(name, faculty, id);
+            majorList.addMajor(name, faculty, id, facultyList);
         }
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();

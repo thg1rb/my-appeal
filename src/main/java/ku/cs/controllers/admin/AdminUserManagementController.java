@@ -182,6 +182,7 @@ public class AdminUserManagementController {
                 tableView.getItems().add(user);
             }
         }
+
     }
 
     private void saveData(){

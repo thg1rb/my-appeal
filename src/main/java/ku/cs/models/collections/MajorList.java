@@ -1,26 +1,36 @@
 package ku.cs.models.collections;
 
+import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 
 import java.util.ArrayList;
 
 public class MajorList {
-    private static ArrayList<Major> majors;
+    private ArrayList<Major> majors;
 
-    static {
-        majors = new ArrayList<>();
+    public MajorList() {
+        this.majors = new ArrayList<>();
     }
 
-    public static void addMajor(String name, String faculty, String id){
+    public void addMajor(String name, String faculty, String id, FacultyList facultyList){
         name = name.trim();
         faculty = faculty.trim();
         id = id.trim();
-        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && FacultyList.isFacultyExist(faculty)){
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && facultyList.isFacultyExist(faculty)){
             majors.add(new Major(name, faculty, id));
         }
     }
 
-    public static void addMajor (Major obj){
+    public void addMajor(String name, String faculty, String id){
+        name = name.trim();
+        faculty = faculty.trim();
+        id = id.trim();
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
+            majors.add(new Major(name, faculty, id));
+        }
+    }
+
+    public void addMajor (Major obj){
         for (Major m : majors){
             if (m.getMajorName().equals(obj.getMajorName())){
                 return;
@@ -29,7 +39,7 @@ public class MajorList {
         majors.add(obj);
     }
 
-    public static ArrayList<Major> findObjMajorsByFaculty(String faculty){
+    public ArrayList<Major> findObjMajorsByFaculty(String faculty){
         ArrayList<Major> majorsInFaculty = new ArrayList<>();
         for (Major major : majors){
             if (major.getFaculty().equals(faculty)){
@@ -39,7 +49,7 @@ public class MajorList {
         return majorsInFaculty;
     }
 
-    public static ArrayList<String> findMajorsByFaculty(String faculty){
+    public ArrayList<String> findMajorsByFaculty(String faculty){
         ArrayList<String> majorsInFaculty = new ArrayList<>();
         for (Major major : majors){
             if (major.getFaculty().equals(faculty)){
@@ -49,7 +59,7 @@ public class MajorList {
         return majorsInFaculty;
     }
 
-    public static Major findMajorByName(String name){
+    public Major findMajorByName(String name){
         for (Major major : majors){
             if (major.getMajorName().equals(name)){
                 return major;
@@ -58,7 +68,7 @@ public class MajorList {
         return null;
     }
 
-    public static Major findMajorById(String id){
+    public Major findMajorById(String id){
         for (Major major : majors){
             if (major.getMajorId().equals(id)){
                 return major;
@@ -67,7 +77,7 @@ public class MajorList {
         return null;
     }
 
-    public static ArrayList<Major> getMajors(){
+    public ArrayList<Major> getMajors(){
         return majors;
     }
 }

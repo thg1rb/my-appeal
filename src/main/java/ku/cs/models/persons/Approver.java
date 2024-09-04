@@ -7,6 +7,8 @@ public class Approver extends Human{
 
     public Approver(String firstName, String lastName, String faculty, String major,String role) {
         super(firstName, lastName);
+        this.faculty = faculty;
+        this.major= major;
         this.role = role;
     }
 
@@ -16,6 +18,7 @@ public class Approver extends Human{
         this.faculty = adder.getFaculty();
         this.major = adder.getRole().equals("เจ้าหน้าที่ภาควิชา") ? adder.getMajor() : null;
     }
+    public void setRole(String role) { this.role = role; }
     public String getFaculty() {
         return faculty;
     }
@@ -30,4 +33,6 @@ public class Approver extends Human{
                 getLastName() + "," +
                 faculty + "," + major + "," + role;
     }
+
+
 }
