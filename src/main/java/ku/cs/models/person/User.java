@@ -1,0 +1,111 @@
+package ku.cs.models.person;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
+public class User {
+    private final String role;
+
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
+
+    private boolean accessibility;
+    private String loginDate;
+
+    private String profileUrl;
+
+    private boolean active;
+
+    //Constructor
+    public User(String role, String username, String password, String firstName, String lastName){
+        this.role = role;
+        this.username = username;
+        setPasswordHash(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accessibility = true;
+        this.profileUrl = "/images/default-profile.jpg";
+        this.active = true;
+    }
+    //Constructor for reading file
+    public User(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, boolean active) {
+        this(role, username, password, firstName, lastName);
+        this.password = password;
+        this.accessibility = access;
+        this.loginDate = loginDate;
+        this.profileUrl = profileUrl;
+        this.active = active;
+    }
+
+    //Authentication
+    public boolean isUsername(String username) {
+        return this.username.equals(username);
+    }
+    public boolean validatePassword(String password) {
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
+        return result.verified;
+    }
+    public void setPasswordHash(String password) {
+        this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+    }
+    protected void setPasswordText(String password) {
+        this.password = password;
+    }
+    //Setter
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    public void setLoginDate(String loginDate){
+        this.loginDate = loginDate;
+    }
+    public void unbanUser(){
+        this.accessibility = false;
+    }
+    public void banUser(){
+        this.accessibility = true;
+    }
+    public void setProfile(String path){
+        this.profileUrl = path;
+    }
+
+    //Getter
+    public String getRole(){
+        return role;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public String getProfile(){
+        return profileUrl;
+    }
+    public boolean hasAccessibility(){
+        return accessibility;
+    }
+    public String getAccesibility(){
+        return accessibility ? "มีสิทธิ์การใช้งาน" : "ไม่มีสิทธิ์การใช้งาน" ;
+    }
+    public String getFirstName(){
+        return firstName;
+    }
+    public String getLastName(){
+        return lastName;
+    }
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+    public String getLoginDate(){
+        return loginDate;
+    }
+
+    @Override
+    public String toString(){
+        return role + "," + username + "," + password + ":" + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl + "," + active;
+    }
+}
