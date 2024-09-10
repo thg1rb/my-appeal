@@ -2,7 +2,7 @@ package ku.cs.models.person;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-public class User {
+public abstract class User {
     private final String role;
 
     private String username;
@@ -15,7 +15,6 @@ public class User {
 
     private String profileUrl;
 
-    private boolean active;
 
     //Constructor
     public User(String role, String username, String password, String firstName, String lastName){
@@ -26,16 +25,23 @@ public class User {
         this.lastName = lastName;
         this.accessibility = true;
         this.profileUrl = "/images/default-profile.jpg";
-        this.active = true;
+    }
+    //Cnstructor for add student in Department responsibility
+    public User(String role, String firstName, String lastName){
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
     //Constructor for reading file
-    public User(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, boolean active) {
-        this(role, username, password, firstName, lastName);
+    public User(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
+        this.role = role;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.accessibility = access;
         this.loginDate = loginDate;
         this.profileUrl = profileUrl;
-        this.active = active;
     }
 
     //Authentication
@@ -49,11 +55,8 @@ public class User {
     public void setPasswordHash(String password) {
         this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
-    protected void setPasswordText(String password) {
-        this.password = password;
-    }
     //Setter
-    public void setUsername(String username){
+    protected void setUsername(String username){
         this.username = username;
     }
     public void setFirstName(String firstName){
@@ -106,6 +109,6 @@ public class User {
 
     @Override
     public String toString(){
-        return role + "," + username + "," + password + ":" + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl + "," + active;
+        return role + "," + username + "," + password + ":" + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 }

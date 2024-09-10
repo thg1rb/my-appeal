@@ -9,20 +9,22 @@ public class Student extends User{
 
 
     //Constructor
+    // without advisor init
     public Student(String firstName, String lastName, String studentId, String email, String faculty, String department) {
-        super("นักศึกษา", "NO-ACCOUNT", "NO-ACCOUNT", firstName, lastName);
+        super("นักศึกษา", firstName, lastName);
         this.studentId = studentId;
         this.email = email;
         this.faculty = faculty;
         this.department = department;
     }
+    // with advisor init
     public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, String advisor) {
         this(firstName, lastName, studentId, email, faculty, department);
         this.advisor = advisor;
     }
     //Constructor for reading file
-    public Student(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, boolean active, String StudentId, String email, String faculty, String department, String advisor) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileUrl, active);
+    public Student(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor) {
+        super(role, username, password, firstName, lastName, access, loginDate, profileUrl);
         this.studentId = StudentId;
         this.email = email;
         this.faculty = faculty;
