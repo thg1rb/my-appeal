@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ProfileSettingController">
    <children>
-      <Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
+      <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane layoutX="230.0" layoutY="194.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 50;">
          <children>
             <Circle fx:id="profileImageCircle" fill="DODGERBLUE" layoutX="278.0" layoutY="170.0" radius="106.0" stroke="BLACK" strokeType="INSIDE" />

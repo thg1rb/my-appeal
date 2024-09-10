@@ -220,6 +220,13 @@ public class User extends Human {
         return advisor;
     }
 
+    public String getRoleInEnglish(){
+        return  role.equals("ผู้ดูแลระบบ") ? "admin" :
+                role.equals("เจ้าหน้าที่คณะ") ? "facultyStaff" :
+                role.equals("เจ้าหน้าที่ภาควิชา") ? "majorStaff" :
+                role.equals("อาจารย์ที่ปรึกษา") ? "advisor" : "student";
+    }
+
     public HashMap<String, String> toHashMap(){
         HashMap<String, String> map = new HashMap<>();
         map.put("role", role);

@@ -1,9 +1,11 @@
 package ku.cs.controllers.general;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -11,6 +13,8 @@ import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
 public class ProfileSettingController {
+    @FXML private Pane navbarAnchorPane;
+
     @FXML private Circle profileImageCircle;
 
     @FXML private Label fullNameLabel;
@@ -26,10 +30,21 @@ public class ProfileSettingController {
     @FXML private Label successLabel;
 
     private User user;
+    private String role;
 
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
+
+        //NavBar Component
+        role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         fullNameLabel.setText(user.getFullName());
         roleLabel.setText(user.getRole());

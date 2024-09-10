@@ -132,7 +132,6 @@ public class FacultyApproverManageController {
 
     @FXML
     public void onLogoutButtonClick() {
-
         try {
             FXRouter.goTo("login");
         } catch (IOException e) {
@@ -156,8 +155,6 @@ public class FacultyApproverManageController {
             showApproverTable(approverList);
 
             onCloseButtonClick();
-        } else {
-
         }
     }
 
