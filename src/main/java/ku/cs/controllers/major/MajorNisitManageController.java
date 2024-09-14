@@ -9,17 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.StudentList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.models.collections.UserList;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.models.persons.User;
 import ku.cs.services.StudentRosterListFileDatasource;
-import ku.cs.services.UserListFileDatasource;
 
 import java.io.IOException;
 

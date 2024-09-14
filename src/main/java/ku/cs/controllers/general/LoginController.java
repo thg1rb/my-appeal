@@ -1,9 +1,12 @@
 package ku.cs.controllers.general;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
@@ -19,6 +22,7 @@ public class LoginController {
     @FXML private TextField giveUsernameTextField;
     @FXML private TextField givePasswordTextField;
     @FXML private Label errorLabel;
+    @FXML private Button loginButton;
 
     private Datasource<UserList> userListDatasource;
     private UserList userList;
@@ -30,6 +34,16 @@ public class LoginController {
         userListDatasource = FXRouter.getData() == null ? new UserListFileDatasource("data", "user.csv") : (UserListFileDatasource) FXRouter.getData();
         userList = userListDatasource.readData();
         errorLabel.setText("");
+
+        giveUsernameTextField.setOnKeyPressed(this::handleKeyPressed);
+        givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
+    }
+
+    // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            loginButton.fire();
+        }
     }
 
     // ไปที่หน้าประจำของแต่ละตำแหน่ง
