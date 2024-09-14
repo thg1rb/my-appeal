@@ -48,4 +48,9 @@ public class FacultyStaff extends User{
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + initialPasswordText + "," + initialPasswordHashed + "," + faculty;
+    }
 }

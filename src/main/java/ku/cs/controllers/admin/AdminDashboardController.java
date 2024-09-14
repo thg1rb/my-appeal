@@ -2,7 +2,7 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import ku.cs.models.persons.User;
+import ku.cs.models.person.User;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;

@@ -23,4 +23,9 @@ public class Advisor extends DepartmentStaff{
     public void setAdvisorId(String advisorId) {
         this.advisorId = advisorId;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + advisorId;
+    }
 }

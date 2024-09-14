@@ -7,6 +7,7 @@ public class Student extends User{
     private String department;
     private String advisor;
 
+    private boolean registered;
 
     //Constructor
     // without advisor init
@@ -16,6 +17,7 @@ public class Student extends User{
         this.email = email;
         this.faculty = faculty;
         this.department = department;
+        this.registered = false;
     }
     // with advisor init
     public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, String advisor) {
@@ -23,13 +25,20 @@ public class Student extends User{
         this.advisor = advisor;
     }
     //Constructor for reading file
-    public Student(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor) {
+    public Student(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor, boolean registered) {
         super(role, username, password, firstName, lastName, access, loginDate, profileUrl);
         this.studentId = StudentId;
         this.email = email;
         this.faculty = faculty;
         this.department = department;
         this.advisor = advisor;
+        this.registered = registered;
+    }
+
+    public void registration(String username, String password){
+        setUsername(username);
+        setPasswordHash(password);
+        setRegistered();
     }
 
     //Setter
@@ -48,6 +57,9 @@ public class Student extends User{
     public void setAdvisor(String advisor) {
         this.advisor = advisor;
     }
+    private void setRegistered() {
+        this.registered = true;
+    }
 
     //Getter
     public String getStudentId() {
@@ -64,5 +76,13 @@ public class Student extends User{
     }
     public String getAdvisor() {
         return advisor;
+    }
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +","+ studentId + "," + email + "," + faculty + "," + department + "," + advisor + "," + registered;
     }
 }

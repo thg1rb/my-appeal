@@ -10,4 +10,9 @@ public class AdminUser extends User {
         super(role, username, password, firstName, lastName, access, loginDate, profileUrl);
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

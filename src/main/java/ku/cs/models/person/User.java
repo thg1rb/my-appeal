@@ -31,6 +31,8 @@ public abstract class User {
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.accessibility = true;
+        this.profileUrl = "/images/default-profile.jpg";
     }
     //Constructor for reading file
     public User(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
@@ -56,7 +58,7 @@ public abstract class User {
         this.password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
     //Setter
-    protected void setUsername(String username){
+    public void setUsername(String username){
         this.username = username;
     }
     public void setFirstName(String firstName){
@@ -109,6 +111,6 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return role + "," + username + "," + password + ":" + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
+        return role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 }

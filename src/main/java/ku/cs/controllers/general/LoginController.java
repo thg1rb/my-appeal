@@ -4,13 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import ku.cs.models.persons.User;
-import ku.cs.models.collections.UserList;
+import ku.cs.models.person.User;
+import ku.cs.models.collection.UserList;
 
-import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
-import ku.cs.services.UserListHardCodeDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.IOException;
 
@@ -26,9 +25,8 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-//        userListDatasource = new UserListFileDatasource("data", "user.csv");
-        userListDatasource = FXRouter.getData() == null ? new UserListFileDatasource("data", "user.csv") : (UserListFileDatasource) FXRouter.getData();
-        userList = userListDatasource.readData();
+        userList = UserListDatasource.readAllUsers();
+
         errorLabel.setText("");
     }
 
@@ -44,8 +42,8 @@ public class LoginController {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
-            if (!user.isBan()){
-                if (user.validatePassword(password)) {
+            if (user.validatePassword(password)){
+                if (user.hasAccessibility()) {
                     switch (user.getRole()){
                         case "ผู้ดูแลระบบ":
                             try {
@@ -84,10 +82,10 @@ public class LoginController {
                             break;
                     }
                 }else{
-                    errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
+                    errorLabel.setText("บัญชีของท่านถูกระงับการใช้งาน");
                 }
             }else{
-                errorLabel.setText("บัญชีของท่านถูกระงับการใช้งาน");
+                errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
             }
         }
     }
@@ -96,7 +94,7 @@ public class LoginController {
     @FXML
     public void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("register-personal-data");
+            FXRouter.goTo("register-personal-data", userList);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

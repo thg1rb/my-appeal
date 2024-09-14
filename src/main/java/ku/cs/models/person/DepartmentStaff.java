@@ -22,4 +22,9 @@ public class DepartmentStaff extends FacultyStaff{
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + department;
+    }
 }
