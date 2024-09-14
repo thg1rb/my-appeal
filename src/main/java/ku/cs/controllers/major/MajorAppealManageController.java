@@ -3,7 +3,6 @@ package ku.cs.controllers.major;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,13 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
-import ku.cs.models.*;
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
 import ku.cs.models.persons.User;
@@ -25,10 +21,8 @@ import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
-import java.util.Comparator;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class MajorAppealManageController {
     @FXML private Label usernameLabel;
@@ -95,7 +89,7 @@ public class MajorAppealManageController {
 
     public void showTable(AppealList appealList) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         dateColumn.setComparator((date1, date2)-> {
             int result = DateTimeService.compareDate(date1, date2);

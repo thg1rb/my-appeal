@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -29,6 +30,8 @@ public class ProfessorStudentListController {
     @FXML private TextField searchTextField;
 
     @FXML private TableView<User> tableView;
+
+    @FXML private Text totalText;
 
     private User user;
 
@@ -86,7 +89,8 @@ public class ProfessorStudentListController {
         });
     }
 
-    public void showTable(UserList userList) {
+    // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (default)
+    private void showTable(UserList userList) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
         pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
 
@@ -105,10 +109,10 @@ public class ProfessorStudentListController {
         tableView.getColumns().add(fullnameCol);
         tableView.getColumns().add(idCol);
 
-        pathCol.setPrefWidth(295);
-        usernameCol.setPrefWidth(295);
-        fullnameCol.setPrefWidth(295);
-        idCol.setPrefWidth(295);
+        pathCol.setPrefWidth(275);
+        usernameCol.setPrefWidth(275);
+        fullnameCol.setPrefWidth(275);
+        idCol.setPrefWidth(275);
 
         tableView.getItems().clear();
         for (User student : userList.getUsers()) {
@@ -116,9 +120,11 @@ public class ProfessorStudentListController {
                 tableView.getItems().add(student);
             }
         }
+        updateTotalText();
     }
 
-    public void showSearchTable(UserList userList, String searchText) {
+    // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
+    private void showSearchTable(UserList userList, String searchText) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
         pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
 
@@ -137,10 +143,10 @@ public class ProfessorStudentListController {
         tableView.getColumns().add(fullnameCol);
         tableView.getColumns().add(idCol);
 
-        pathCol.setPrefWidth(295);
-        usernameCol.setPrefWidth(295);
-        fullnameCol.setPrefWidth(295);
-        idCol.setPrefWidth(295);
+        pathCol.setPrefWidth(275);
+        usernameCol.setPrefWidth(275);
+        fullnameCol.setPrefWidth(275);
+        idCol.setPrefWidth(275);
 
         tableView.getItems().clear();
         for (User student : userList.getUsers()) {
@@ -148,7 +154,12 @@ public class ProfessorStudentListController {
                 tableView.getItems().add(student);
             }
         }
+        updateTotalText();
+    }
 
+    // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด
+    private void updateTotalText() {
+        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 
     // ไปที่หน้าคำร้องของนิสิตในที่ปรึกษา

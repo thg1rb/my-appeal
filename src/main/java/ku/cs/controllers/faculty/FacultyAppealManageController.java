@@ -8,7 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
+import ku.cs.models.appeals.BreakAppeal;
+import ku.cs.models.appeals.GeneralAppeal;
+import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
@@ -21,8 +24,6 @@ import java.io.IOException;
 public class FacultyAppealManageController {
 
     private User user;
-
-
 
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Appeal> selfAppealTable;
@@ -61,11 +62,8 @@ public class FacultyAppealManageController {
     public void initialize(){
         user = (User) FXRouter.getData();
 
-
-
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        user = (User)FXRouter.getData();
 
         showTable(appealList);
 
@@ -78,13 +76,14 @@ public class FacultyAppealManageController {
             public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
                 if (newValue != null) {
                     selectedAppeal = newValue;
-                    showPopup(selectedAppeal.getType(), selectedAppeal);
+                    showPopup(selectedAppeal);
                 }
             }
         });
     }
+
     @FXML
-    public void showPopup(String type, Appeal appeal){
+    public void showPopup(Appeal appeal){
         purposeLabel.setVisible(false);
         breakTimeLabel.setVisible(false);
 
@@ -94,32 +93,16 @@ public class FacultyAppealManageController {
         yearLabel.setVisible(false);
         semesterLabel.setVisible(false);
 
-        topicLabel.setText(appeal.getTopic());
-        reasonLabel.setText(appeal.getReason());
-
-
-
-        if(type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-            purposeLabel.setText("จุดประสงค์: " + appeal.getPurpose());
-            purposeLabel.setVisible(true);
-            purposeLabel.setLayoutY(70);
-
-            breakTimeLabel.setText("ระยะเวลา: " + appeal.getStartDate() + " - " + appeal.getEndDate());
-            breakTimeLabel.setVisible(true);
-            breakTimeLabel.setLayoutY(100);
-
-            reasonLabel.setText(appeal.getReason());
-            reasonLabel.setVisible(true);
-            reasonLabel.setLayoutY(130);
-
-            subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
-            subjectLabel.setVisible(true);
-            subjectLabel.setLayoutY(160);
+        if (appeal.isGeneralAppeal()) {
+            GeneralAppeal generalAppeal = (GeneralAppeal) appeal;
+            topicLabel.setText(generalAppeal.getTopic());
+            reasonLabel.setText(generalAppeal.getReason());
         }
-        else if(type.equals("คำร้องขอพักการศึกษา")) {
-            semesterLabel.setText("ภาคการศึกษา: " + appeal.getSemester());
-            yearLabel.setText("ปีการศึกษา: " + appeal.getYear());
-            subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
+        else if (appeal.isSuspendAppeal()) {
+            SuspendAppeal suspendAppeal = (SuspendAppeal) appeal;
+            semesterLabel.setText("ภาคการศึกษา: " + suspendAppeal.getSemester());
+            yearLabel.setText("ปีการศึกษา: " + suspendAppeal.getYear());
+            subjectLabel.setText("รายวิชา: " + suspendAppeal.getSubjects());
 
             semesterLabel.setVisible(true);
             semesterLabel.setLayoutY(70);
@@ -130,8 +113,26 @@ public class FacultyAppealManageController {
             subjectLabel.setVisible(true);
             subjectLabel.setLayoutY(130);
         }
+        else if (appeal.isBreakAppeal()) {
+            BreakAppeal breakAppeal = (BreakAppeal) appeal;
+            purposeLabel.setText("จุดประสงค์: " + breakAppeal.getPurpose());
+            purposeLabel.setVisible(true);
+            purposeLabel.setLayoutY(70);
 
-        typeLabel.setText("ประเภทคำร้อง: " + type);
+            breakTimeLabel.setText("ระยะเวลา: " + breakAppeal.getStartDate() + " - " + breakAppeal.getEndDate());
+            breakTimeLabel.setVisible(true);
+            breakTimeLabel.setLayoutY(100);
+
+            reasonLabel.setText(breakAppeal.getReason());
+            reasonLabel.setVisible(true);
+            reasonLabel.setLayoutY(130);
+
+            subjectLabel.setText("รายวิชา: " + breakAppeal.getSubjects());
+            subjectLabel.setVisible(true);
+            subjectLabel.setLayoutY(160);
+        }
+
+        typeLabel.setText("ประเภทคำร้อง: " + appeal.getType());
         reasonLabel.setVisible(true);
         vbox.prefWidthProperty().bind(detailScrollPane.widthProperty().subtract(40));
 
@@ -146,6 +147,7 @@ public class FacultyAppealManageController {
         appealManageLabel.setVisible(false);
         appealDetailsLabel.setVisible(true);
     }
+
     public void showTable(AppealList appealList) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
@@ -181,8 +183,8 @@ public class FacultyAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
 
-
     }
+
     @FXML
     public void confirmOnButtonClick(){
         selectedAppeal = (Appeal) allAppealTable.getSelectionModel().getSelectedItem();
@@ -196,6 +198,7 @@ public class FacultyAppealManageController {
 
         selectedStatus = null;
     }
+
     @FXML
     public void cancleOnButtonClick(){
         popupAppealPane.setVisible(false);
@@ -222,7 +225,6 @@ public class FacultyAppealManageController {
 
     @FXML
     public void onLogoutButtonClick(){
-
         try {
             FXRouter.goTo("login");
         } catch (IOException e) {
