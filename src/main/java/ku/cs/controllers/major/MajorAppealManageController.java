@@ -54,7 +54,6 @@ public class MajorAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        user = (User)FXRouter.getData();
 
         showTable(appealList);
 
@@ -64,6 +63,7 @@ public class MajorAppealManageController {
                 if (newValue != null) {
                     selectedAppeal = newValue;
                     showAppealPopup();
+                    allAppealTable.getSelectionModel().select(selectedAppeal);
                 }
             }
         });
@@ -83,7 +83,9 @@ public class MajorAppealManageController {
 
             stage.showAndWait();
 
-            allAppealTable.getSelectionModel().select(null);
+            datasource.writeData(appealList);
+
+            showTable(appealList);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -125,8 +127,6 @@ public class MajorAppealManageController {
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
-
-
     }
 
     @FXML

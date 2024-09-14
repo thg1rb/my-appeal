@@ -39,7 +39,6 @@ public class MajorNisitManageController {
 
     public void initialize() {
         user = (User) FXRouter.getData();
-
 //        usernameLabel.setText(user.getUsername());
 //        roleLabel.setText(user.getRole());
         datasource = new StudentRosterListFileDatasource("data", "student-roster.csv");
@@ -52,15 +51,21 @@ public class MajorNisitManageController {
             public void changed(ObservableValue<? extends Student> observableValue, Student oldValue, Student newValue) {
                 if (newValue != null) {
                     selectedNisit = newValue;
+                    addMode = false;
                     showPopUp(addMode);
+                    nisitTableView.getSelectionModel().select(selectedNisit);
+                }else{
+                    selectedNisit = null;
                 }
             }
         });
     }
+
     public void onAddButtonClick(){
         addMode = true;
         showPopUp(addMode);
     }
+
     public void showTable(StudentList studentRoster){
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -118,7 +123,6 @@ public class MajorNisitManageController {
             popupStage.showAndWait();
 
             datasource.writeData(studentRoster);
-            studentRoster = datasource.readData();
 
             showTable(studentRoster);
         }
@@ -153,5 +157,4 @@ public class MajorNisitManageController {
             throw new RuntimeException(e);
         }
     }
-
 }
