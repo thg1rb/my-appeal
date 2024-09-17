@@ -1,37 +1,72 @@
 package ku.cs.models.persons;
 
-public class Approver extends Human{
+public class Approver{
+    private String firstName;
+    private String lastName;
+    private String fullName;
     private String faculty;
-    private String major;
+    private String department;
     private String role;
 
     public Approver(String firstName, String lastName, String faculty, String major,String role) {
-        super(firstName, lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.faculty = faculty;
-        this.major= major;
+        this.department= major;
         this.role = role;
     }
 
     public Approver(String firstName, String lastName, String role,User adder) {
-        super(firstName, lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
-        this.faculty = adder.getFaculty();
-        this.major = adder.getRole().equals("เจ้าหน้าที่ภาควิชา") ? adder.getMajor() : null;
+        if (adder instanceof FacultyStaff) {
+            this.faculty = ((FacultyStaff) adder).getFaculty();
+        }
+        if (adder instanceof DepartmentStaff) {
+            this.role += ((DepartmentStaff) adder).getDepartment();
+            this.department = ((DepartmentStaff) adder).getDepartment();
+        }
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
     }
     public void setRole(String role) { this.role = role; }
+    public void setFullName(){
+        this.fullName = firstName + " " + lastName;
+    }
+
     public String getFaculty() {
         return faculty;
     }
-    public String getMajor(){
-        return major;
+    public String getDepartment(){
+        return department;
     }
     public String getRole() { return role; }
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public String getFullName(){
+        return firstName+" "+lastName;
+    }
 
     @Override
     public String toString() {
-        return  getFirstName() + "," +
-                getLastName() + "," +
-                faculty + "," + major + "," + role;
+        return  firstName + "," +
+                lastName + "," +
+                faculty + "," + department + "," + role;
     }
 
 

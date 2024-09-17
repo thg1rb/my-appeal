@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class StaffPopupController {
         facultyChoiceBox.getItems().addAll(facultyList.getAllFacultiesName());
 
         if (editMode){
-            updateMajorChoiceBox(user.getFaculty());
+            updateMajorChoiceBox(((FacultyStaff)user).getFaculty());
             setPerson(user);
         }
         setMode(editMode);
@@ -122,10 +123,10 @@ public class StaffPopupController {
             firstNameTextField.setText(user.getFirstName());
             lastNameTextField.setText(user.getLastName());
             usernameTextField.setText(user.getUsername());
-            initPasswordTextField.setText(user.getInitialPasswordText());
-            facultyChoiceBox.setValue(user.getFaculty());
-            majorChoiceBox.setValue(user.getMajor());
-            idTextField.setText(user.getId());
+            initPasswordTextField.setText(((FacultyStaff) user).getInitialPasswordText());
+            facultyChoiceBox.setValue(((FacultyStaff) user).getFaculty());
+//            majorChoiceBox.setValue(user.getMajor());
+//            idTextField.setText(user.getId());
         }
     }
 
@@ -151,7 +152,7 @@ public class StaffPopupController {
         String major = majorChoiceBox.getValue();
         String id = idTextField.getText();
 
-        userList.addUser(new User(selectedRole, username, password, firstName, lastName, faculty, major, id));
+//        userList.addUser(new User(selectedRole, username, password, firstName, lastName, faculty, major, id));
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();
@@ -162,11 +163,11 @@ public class StaffPopupController {
         user.setFirstName(firstNameTextField.getText());
         user.setLastName(lastNameTextField.getText());
         user.setUsername(usernameTextField.getText());
-        user.setInitialPasswordText(initPasswordTextField.getText());
-        user.setFaculty(facultyChoiceBox.getValue());
-        user.setMajor(majorChoiceBox.getValue());
-        user.setId(idTextField.getText());
-        user.setFullName();
+//        user.setInitialPasswordText(initPasswordTextField.getText());
+//        user.setFaculty(facultyChoiceBox.getValue());
+//        user.setMajor(majorChoiceBox.getValue());
+//        user.setId(idTextField.getText());
+//        user.setFullName();
 
         Stage stage = (Stage) editButton.getScene().getWindow();
         stage.close();

@@ -5,16 +5,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import ku.cs.models.collections.StudentList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Student;
+import ku.cs.models.persons.User;
 
-import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.StudentRosterListFileDatasource;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class RegisterPersonalDataController {
     @FXML private TextField firstNameTextField;
@@ -24,19 +25,13 @@ public class RegisterPersonalDataController {
 
     @FXML private Label errorLabel;
 
-    private Datasource<UserList> userDatasource;
-    private UserList userList;
-
-    private Datasource<StudentList> studentListDatasource;
-    private StudentList studentList;
+    private Datasource<UserList> studentDatasource;
+    private UserList studentList;
 
     @FXML
     public void initialize() {
-        userDatasource = new UserListFileDatasource("data", "user.csv");
-        userList = userDatasource.readData();
-
-        studentListDatasource = new StudentRosterListFileDatasource("data", "student-roster.csv");
-        studentList = studentListDatasource.readData();
+        studentDatasource = new UserListDatasource("data"+ File.separator+"users", "students.csv");
+        studentList = studentDatasource.readData();
 
         errorLabel.setText("");
     }
@@ -48,12 +43,14 @@ public class RegisterPersonalDataController {
         String lastName = lastNameTextField.getText();
         String email = emailTextField.getText();
         String id = idTextField.getText();
-
-        Student exist = studentList.findStudentByInformation(firstName, lastName, id, email);
+        User exist = studentList.findStudentUserByInformation(firstName, lastName, id, email);
         if (exist != null) {
-            if (userList.findUserByPersonalInformation(firstName, lastName, id,email) == null){
+            if ( !((Student)exist).isRegistered() ){
+                HashMap<String, Object> data = new HashMap<>();
+                data.put("studentsList", studentList);
+                data.put("studentRegistering", exist);
                 try {
-                    FXRouter.goTo("register-username-password", exist);
+                    FXRouter.goTo("register-username-password", data);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

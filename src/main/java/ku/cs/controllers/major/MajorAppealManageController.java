@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,8 +32,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class MajorAppealManageController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Appeal> selfAppealTable;
@@ -49,8 +49,15 @@ public class MajorAppealManageController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
@@ -128,32 +135,4 @@ public class MajorAppealManageController {
 
 
     }
-
-    @FXML
-    protected void onApproverManageButtonClick() {
-        try {
-            FXRouter.goTo("major-approver-manage", FXRouter.getData());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onNisitManageButtonClick() {
-        try {
-            FXRouter.goTo("major-nisit-manage", FXRouter.getData());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-        @FXML
-        public void onLogoutButtonClick(){
-            try{
-                FXRouter.goTo("login");
-            }
-            catch(IOException e){
-                throw new RuntimeException(e);
-            }
-        }
 }

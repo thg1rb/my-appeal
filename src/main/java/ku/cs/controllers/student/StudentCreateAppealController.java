@@ -2,13 +2,12 @@ package ku.cs.controllers.student;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
@@ -16,18 +15,12 @@ import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
 public class StudentCreateAppealController {
-
-    @FXML private Circle profileImageCircle;
-
-    @FXML private Label usernameLabel;
-    @FXML private Label  roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -73,12 +66,15 @@ public class StudentCreateAppealController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        // แสดงโปรไฟล์ผู้ใช้งาน
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
-
-        Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
-        profileImageCircle.setFill(new ImagePattern(profileImage));
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์ เพิ่มข้อมูล)
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
@@ -154,7 +150,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), topic, details, UUID.randomUUID().toString()));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", ((Student)user).getStudentId(), user.getFullName(), topic, details));
 
                 System.out.println(topic + " " + details);
                 resetTheValue();
@@ -171,7 +167,7 @@ public class StudentCreateAppealController {
                 alertPane.setVisible(true);
             }
             else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, semester, year, subjects, UUID.randomUUID().toString()));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, semester, year, subjects));
 
                 System.out.println(reason + " " + semester + " " + year + " " + subjects);
                 resetTheValue();
@@ -190,14 +186,14 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             } else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, purpose, subjects, startDate, endDate, UUID.randomUUID().toString()));
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", ((Student)user).getStudentId(), user.getFullName(), purpose, subjects, startDate, endDate));
 
                 System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
                 resetTheValue();
             }
         }
         datasource.writeData(appealList);
-        datasource.readData();
+        appealList = datasource.readData();
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox

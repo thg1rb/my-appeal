@@ -4,35 +4,25 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import ku.cs.models.appeal.Appeal;
-import ku.cs.models.collections.StudentList;
+import javafx.scene.layout.Pane;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.models.persons.User;
-import ku.cs.services.StudentRosterListFileDatasource;
 import ku.cs.services.UserListFileDatasource;
 
-import java.io.IOException;
 
 public class MajorNisitManageController {
+    @FXML private Pane navbarAnchorPane;
 
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
-    @FXML private Label topicLabel;
-    @FXML private TableView<Student> nisitTableView;
+    @FXML TableView<User> nisitTableView;
 
-    private StudentList studentRoster;
-    private Datasource<StudentList> rosterDatasource;
-    private Datasource<StudentList> datasource;
+    private UserList studentRoster;
+    private Datasource<UserList> rosterDatasource;
+    private Datasource<UserList> datasource;
     private Student selectedNisit;
     private User user;
     public boolean addMode = false;
@@ -40,6 +30,18 @@ public class MajorNisitManageController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+        datasource = new UserListFileDatasource("data", "user.csv");
+        userList = datasource.readData();
 //        usernameLabel.setText(user.getUsername());
 //        roleLabel.setText(user.getRole());
         datasource = new StudentRosterListFileDatasource("data", "student-roster.csv");
@@ -85,6 +87,9 @@ public class MajorNisitManageController {
         emailColumn.setSortable(false);
 
         nisitTableView.getItems().clear();
+        if(userlist != null){
+            for(User nisit : userlist.getUsers()){
+                if(((Student)nisit).getDepartment().equals(((DepartmentStaff)user).getDepartment()) && nisit.getRole().equals("นักศึกษา")){
         if(studentRoster != null){
             for(Student nisit : studentRoster.getStudents()){
                 if(nisit.getMajor().equals(user.getMajor())){

@@ -24,6 +24,7 @@ public class MainApplication extends Application {
         FXRouter.when("login", viewPath + "general/" + "login.fxml");
         FXRouter.when("register-personal-data", viewPath + "general/" + "register-personal-data.fxml");
         FXRouter.when("register-username-password", viewPath + "general/" + "register-username-password.fxml");
+        FXRouter.when("profile-setting", viewPath + "general/" + "profile-setting.fxml");
 
         // Admin
         FXRouter.when("admin-user-manage", viewPath + "admin/" + "admin-user-management.fxml");

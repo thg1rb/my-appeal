@@ -1,15 +1,18 @@
 package ku.cs.controllers.student;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.AppealListFileDatasource;
 import ku.cs.services.Datasource;
@@ -24,10 +27,7 @@ public class StudentTrackAppealController {
     private AppealList appealList;
     private User user;
 
-    @FXML private Circle profileImageCircle;
-
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TableView<Appeal> tableView;
 
@@ -35,17 +35,20 @@ public class StudentTrackAppealController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        // แสดงโปรไฟล์ผู้ใช้งาน
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
-
-        Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
-        profileImageCircle.setFill(new ImagePattern(profileImage));
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         // แสดงข้อมูลภายในตาราง
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        showTable(appealList, user.getId());
+        showTable(appealList, ((Student)user).getStudentId());
     }
 
     public void showTable(AppealList appealList, String ownerId) {
@@ -73,25 +76,4 @@ public class StudentTrackAppealController {
         tableView.getSortOrder().add(dateTimeCol);
 
     }
-
-    // ไปที่หน้าสร้างใบคำร้อง
-    @FXML
-    private void onCreateAppealButtonClick() {
-        try {
-            FXRouter.goTo("student-create-appeal", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
