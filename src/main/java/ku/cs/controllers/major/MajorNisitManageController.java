@@ -111,7 +111,7 @@ public class MajorNisitManageController {
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
             if(!addMode){
-                controller.setNisit(selectedNisit, user);
+                controller.setNisit(selectedNisit);
                 controller.setMode(addMode);
             }
             else{

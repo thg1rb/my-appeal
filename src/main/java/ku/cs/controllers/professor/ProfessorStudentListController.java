@@ -80,7 +80,7 @@ public class ProfessorStudentListController {
 
         tableView.getItems().clear();
         for (User student : userList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && student.getAdvisor().equals(user.getFullName())) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(user.getFullName())) {
                 tableView.getItems().add(student);
             }
         }

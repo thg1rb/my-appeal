@@ -16,7 +16,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.ApproverEditController;
 import ku.cs.models.collections.ApproverList;
+import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Approver;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
@@ -27,10 +29,14 @@ import java.io.IOException;
 public class MajorApproverManageController {
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView approverTableView;
-    private User user;
+
+    private DepartmentStaff user;
+    private Datasource<ApproverList> approverDatasource;
+    private ApproverList approverList;
+    private Approver selectedApprover;
 
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (DepartmentStaff) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -42,8 +48,8 @@ public class MajorApproverManageController {
             throw new RuntimeException(e);
         }
 
-        datasource = new ApproverListFileDatasource("data", "approver.csv");
-        approverList = datasource.readData();
+        approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
+        approverList = approverDatasource.readData();
 
         showTable(approverList);
 

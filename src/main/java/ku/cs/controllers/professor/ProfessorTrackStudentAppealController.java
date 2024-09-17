@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 
 public class ProfessorTrackStudentAppealController {
@@ -35,7 +36,7 @@ public class ProfessorTrackStudentAppealController {
 
         tableView.getItems().clear();
         for (Appeal appeal : appealList.getAppeals()) {
-            if (appeal.getOwnerId().equals(user.getId())) {
+            if (appeal.getOwnerId().equals(((Student)user).getStudentId())) {
                 tableView.getItems().add(appeal);
             }
         }

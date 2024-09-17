@@ -5,8 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
@@ -161,17 +159,11 @@ public class StudentCreateAppealController {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), details, topic));
+                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), details, topic));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
-            }
-            else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", ((Student)user).getStudentId(), user.getFullName(), topic, details));
-
-                System.out.println(topic + " " + details);
-                resetTheValue();
             }
         }
         else if (selectedAppeal.equals("ขอพักการศึกษา")) {
@@ -185,17 +177,11 @@ public class StudentCreateAppealController {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, subjects, semester, year));
+                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, subjects, semester, year));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
-            }
-            else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, semester, year, subjects));
-
-                System.out.println(reason + " " + semester + " " + year + " " + subjects);
-                resetTheValue();
             }
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
@@ -212,16 +198,11 @@ public class StudentCreateAppealController {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", user.getId(), user.getFullName(), reason, subjects, purpose, startDate, endDate));
+                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, subjects, purpose, startDate, endDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
-            } else {
-                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", ((Student)user).getStudentId(), user.getFullName(), purpose, subjects, startDate, endDate));
-
-                System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
-                resetTheValue();
             }
         }
 
