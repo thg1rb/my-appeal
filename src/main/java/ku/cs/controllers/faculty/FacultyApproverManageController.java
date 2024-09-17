@@ -91,7 +91,8 @@ public class FacultyApproverManageController {
     @FXML
     private TextField editRoleTextField;
 
-
+    @FXML
+    private TextField searchTextField;
     @FXML
     public void addApproverButton() {
         roleTextField.clear();
@@ -189,6 +190,22 @@ public class FacultyApproverManageController {
         } else {
             System.out.println("No approver selected.");
         }
+    }
+    @FXML
+    public void onSearchKeyReleased() {
+        String searchText = searchTextField.getText().toLowerCase();
+        if (searchText.isEmpty()) {
+            showApproverTable(approverList);
+            ApproverList filteredApproverList = new ApproverList();
+            for (Approver approver : approverList.getApprovers()) {
+                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
+                if (fullName.contains(searchText)) {
+                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getMajor(), approver.getRole());
+                }
+            }
+            showApproverTable(filteredApproverList);
+        }
+
     }
 
 }

@@ -181,7 +181,6 @@ public class FacultyAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
 
-
     }
     @FXML
     public void confirmOnButtonClick(){
