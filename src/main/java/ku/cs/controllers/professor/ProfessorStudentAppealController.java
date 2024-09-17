@@ -1,13 +1,16 @@
 package ku.cs.controllers.professor;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
 
@@ -17,8 +20,7 @@ public class ProfessorStudentAppealController {
 
     private User user;
 
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TableView<Appeal> tableView;
     private Datasource<AppealList> appealDatasource;
@@ -30,8 +32,15 @@ public class ProfessorStudentAppealController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = appealDatasource.readData();
@@ -70,7 +79,7 @@ public class ProfessorStudentAppealController {
         //  Add Appeal filter by Professor name in Student (Not Done Yet)
         for (Appeal appeal : appealList.getAppeals()) {
             for (User student : userList.getUsers()) {
-                if (appeal.getOwnerId().equals(student.getId())) {
+                if (appeal.getOwnerId().equals(((Student)student).getStudentId())) {
                     tableView.getItems().add(appeal);
                 }
             }
@@ -80,25 +89,4 @@ public class ProfessorStudentAppealController {
 
 
     }
-
-    // ไปที่หน้านิสิตในที่ปรึกษา
-    @FXML
-    public void onStudentListButtonClick() {
-        try {
-            FXRouter.goTo("professor-student-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

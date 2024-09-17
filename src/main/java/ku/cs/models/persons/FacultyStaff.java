@@ -1,8 +1,8 @@
-package ku.cs.models.person;
+package ku.cs.models.persons;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-public class FacultyStaff extends User{
+public class FacultyStaff extends User {
     private String initialPasswordText;
     private String initialPasswordHashed;
 
@@ -52,5 +52,10 @@ public class FacultyStaff extends User{
     @Override
     public String toString() {
         return super.toString() + "," + initialPasswordText + "," + initialPasswordHashed + "," + faculty;
+    }
+
+    @Override
+    public String getRoleInEnglish() {
+        return "facultyStaff";
     }
 }

@@ -1,6 +1,6 @@
-package ku.cs.models.person;
+package ku.cs.models.persons;
 
-public class Advisor extends DepartmentStaff{
+public class Advisor extends DepartmentStaff {
     private String advisorId;
 
     //Constructor
@@ -27,5 +27,10 @@ public class Advisor extends DepartmentStaff{
     @Override
     public String toString() {
         return super.toString() + "," + advisorId;
+    }
+
+    @Override
+    public String getRoleInEnglish() {
+        return "advisor";
     }
 }

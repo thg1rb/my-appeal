@@ -2,6 +2,7 @@ package ku.cs.controllers.general;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
@@ -30,15 +31,14 @@ public class ProfileSettingController {
     @FXML private Label successLabel;
 
     private User user;
-    private String role;
 
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
 
         //NavBar Component
-        role = user.getRoleInEnglish();
-        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/" + role + "-navbar.fxml"));
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
         try {
             Pane navbarComponent = navbarComponentLoader.load();
             navbarAnchorPane.getChildren().add(navbarComponent);
@@ -49,7 +49,7 @@ public class ProfileSettingController {
         fullNameLabel.setText(user.getFullName());
         roleLabel.setText(user.getRole());
 
-        Image image = new Image(getClass().getResource(user.getImageUrl()).toString());
+        Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
         profileImageCircle.setFill(new ImagePattern(image));
 
         clearText();
@@ -85,7 +85,7 @@ public class ProfileSettingController {
         } else if (!user.validatePassword(oldPassword)) {
             oldPasswordErrorLabel.setText("รหัสผ่านเดิมไม่ถูกต้อง");
         } else {
-            user.setPassword(newPassword);
+            user.setPasswordHash(newPassword);
             clearText();
             clearTextField();
             successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");

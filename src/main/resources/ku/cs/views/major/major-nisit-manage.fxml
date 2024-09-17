@@ -4,31 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNisitManageController">
    <children>
-      <Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;">
-         <children>
-            <Pane layoutX="40.0" layoutY="54.0" prefHeight="121.0" prefWidth="121.0" style="-fx-background-color: #FCFCFC; -fx-background-radius: 100;" />
-            <Text fill="WHITE" layoutX="13.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ผู้ใช้งาน:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="11.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ตำแหน่ง:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
+      <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane layoutX="281.0" layoutY="718.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
             <Button layoutX="976.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
@@ -50,92 +32,6 @@
       <Label layoutX="280.0" layoutY="110.0" text="จัดการรายชื่อนิสิต">
          <font>
             <Font size="36.0" />
-         </font>
-      </Label>
-      <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="444.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
-      <Button layoutY="719.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="ตั้งค่าโปรแกรม" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/student-setting.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="502.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
-      <Button layoutY="776.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="55.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../../styles/button.css" text="ออกจากระบบ  " textFill="RED">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/professor-logout.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="386.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
-      <Button layoutY="661.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการบัญชี     " textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/professor-user-profile.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutY="291.0" mnemonicParsing="false" onAction="#onAppealManageButtonClick" prefHeight="49.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการคำร้อง         " textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/major-appeal-manage-icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="-2.0" layoutY="340.0" mnemonicParsing="false" onAction="#onApproverManageButtonClick" prefHeight="49.0" prefWidth="202.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการข้อมูลผู้อนุมัติ " textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/major-approver-manage-icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutY="389.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../styles/button.css" text="จัดการข้อมูลนิสิต       &#10;" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/major-nisit-manage-icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Line endX="186.86593627929688" endY="273.3656311035156" layoutY="17.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
-      <Label fx:id="usernameLabel" layoutX="103.0" layoutY="193.0" text="Label" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="roleLabel" layoutX="103.0" layoutY="231.0" text="Label" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
          </font>
       </Label>
    </children>

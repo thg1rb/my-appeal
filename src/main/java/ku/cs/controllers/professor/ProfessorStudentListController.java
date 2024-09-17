@@ -1,13 +1,14 @@
 package ku.cs.controllers.professor;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.models.collections.AppealList;
+import javafx.scene.layout.Pane;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -16,11 +17,9 @@ import ku.cs.services.UserListFileDatasource;
 import java.io.IOException;
 
 public class ProfessorStudentListController {
+    @FXML private Pane navbarAnchorPane;
 
     private User user;
-
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
 
     @FXML private TableView<User> tableView;
     private Datasource<UserList> datasource;
@@ -30,8 +29,15 @@ public class ProfessorStudentListController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         // datasource
         datasource = new UserListFileDatasource("data", "user.csv");
@@ -62,33 +68,11 @@ public class ProfessorStudentListController {
         // Add Student filter by Professer name (Not Done Yet)
         tableView.getItems().clear();
         for (User student : userList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && student.getAdvisor().equals(user.getFullName())) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(user.getFullName())) {
                 tableView.getItems().add(student);
 //                System.out.println(user.getRole());
 //                System.out.println(user.getFullName());
             }
-        }
-
-
-    }
-
-    // ไปที่หน้าคำร้องของนิสิตในที่ปรึกษา
-    @FXML
-    public void onStudentAppealButtonClick() {
-        try {
-            FXRouter.goTo("professor-student-appeal", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

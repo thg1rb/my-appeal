@@ -4,10 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import ku.cs.models.collection.UserList;
+import ku.cs.models.collections.UserList;
 
-import ku.cs.models.person.Student;
-import ku.cs.models.person.User;
+import ku.cs.models.persons.Student;
+import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;

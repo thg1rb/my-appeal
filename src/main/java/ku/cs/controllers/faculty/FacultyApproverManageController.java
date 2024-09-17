@@ -1,6 +1,7 @@
 package ku.cs.controllers.faculty;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -10,6 +11,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
@@ -18,6 +21,7 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class FacultyApproverManageController {
+    @FXML private Pane navbarAnchorPane;
 
     @FXML
     private TableView<Approver> approverTableView;
@@ -30,7 +34,19 @@ public class FacultyApproverManageController {
     public void initialize() {
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
+
         user = (User)FXRouter.getData();
+
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
         showApproverTable(approverList);
     }
 
@@ -122,30 +138,12 @@ public class FacultyApproverManageController {
     }
 
     @FXML
-    public void onAppealButtonClick() {
-        try {
-            FXRouter.goTo("faculty-appeal-manage");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
     public void onAddApproverToTable() {
         String role = roleTextField.getText();
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        String faculty = user.getFaculty();
-        String major = user.getMajor();
+        String faculty = ((FacultyStaff)user).getFaculty();
+        String major = ((DepartmentStaff)user).getDepartment();
 
         if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
             approverList.addApprover(firstName, lastName, faculty, major, role);

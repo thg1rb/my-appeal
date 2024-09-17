@@ -1,24 +1,31 @@
 package ku.cs.controllers.major;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
 public class MajorApproverManageController {
+    @FXML private Pane navbarAnchorPane;
 
     private User user;
-
-    @FXML Label usernameLabel;
-    @FXML Label roleLabel;
 
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML

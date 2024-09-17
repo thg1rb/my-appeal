@@ -1,4 +1,4 @@
-package ku.cs.models.person;
+package ku.cs.models.persons;
 
 public class AdminUser extends User {
     //Constructor
@@ -15,4 +15,8 @@ public class AdminUser extends User {
         return super.toString();
     }
 
+    @Override
+    public String getRoleInEnglish() {
+        return "admin";
+    }
 }

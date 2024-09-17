@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,8 +22,7 @@ import ku.cs.services.*;
 import java.io.IOException;
 
 public class AdminStaffManagementController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
 
@@ -46,8 +46,15 @@ public class AdminStaffManagementController {
     private void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         datasource = new UserListFileDatasource("data", "user.csv");
         userList = datasource.readData();
@@ -174,49 +181,5 @@ public class AdminStaffManagementController {
     public void onAddStaffButtonClicked() {
         popupEditMode = false;
         addEditPopup();
-    }
-
-    @FXML
-    public void onUserButtonClicked() {
-        try {
-            FXRouter.goTo("admin-user-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onDashboardButtonClicked() {
-        try {
-            FXRouter.goTo("admin-dashboard");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onFacultyButtonClicked() {
-        try {
-            FXRouter.goTo("admin-faculty-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onProfileSettingButtonClicked(){
-        try {
-            FXRouter.goTo("profile-setting", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

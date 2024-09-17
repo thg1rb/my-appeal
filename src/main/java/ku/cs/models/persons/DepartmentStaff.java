@@ -1,6 +1,6 @@
-package ku.cs.models.person;
+package ku.cs.models.persons;
 
-public class DepartmentStaff extends FacultyStaff{
+public class DepartmentStaff extends FacultyStaff {
     private String department;
 
     // Constructor
@@ -26,5 +26,10 @@ public class DepartmentStaff extends FacultyStaff{
     @Override
     public String toString() {
         return super.toString() + "," + department;
+    }
+
+    @Override
+    public String getRoleInEnglish() {
+        return "majorStaff";
     }
 }

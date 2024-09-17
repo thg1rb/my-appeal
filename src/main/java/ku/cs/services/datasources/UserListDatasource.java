@@ -1,8 +1,7 @@
 package ku.cs.services.datasources;
 
-import ku.cs.models.collection.UserList;
-import ku.cs.models.person.Student;
-import ku.cs.models.person.User;
+import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.User;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
