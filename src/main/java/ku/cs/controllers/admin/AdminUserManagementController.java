@@ -1,13 +1,14 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.layout.Pane;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
@@ -15,11 +16,9 @@ import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.UserListFileDatasource;
 
-import java.io.IOException;
 
 public class AdminUserManagementController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
     @FXML private TableView<User> tableView;
@@ -34,8 +33,15 @@ public class AdminUserManagementController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         usersDatasource = new UserListFileDatasource("data", "user.csv");
         userList = usersDatasource.readData();
@@ -178,7 +184,7 @@ public class AdminUserManagementController {
 
         tableView.getItems().clear();
         for (User user : userList.getUsers()){
-            if (user.getFullName().contains(searchText) || user.getId().contains(searchText)){
+            if (user.getFullName().contains(searchText)){
                 tableView.getItems().add(user);
             }
         }
@@ -203,38 +209,5 @@ public class AdminUserManagementController {
         user.unbanUser();
         saveData();
         userList = usersDatasource.readData();
-    }
-    @FXML
-    public void onDashboardButtonClicked() {
-        try {
-            FXRouter.goTo("admin-dashboard");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onFacultyButtonClicked() {
-        try {
-            FXRouter.goTo("admin-faculty-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onStaffButtonClicked() {
-        try {
-            FXRouter.goTo("admin-staff-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

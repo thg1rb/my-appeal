@@ -4,6 +4,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,19 +25,22 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class MajorApproverManageController {
-    @FXML Label usernameLabel;
-    @FXML Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
     @FXML private TableView approverTableView;
-
-    private Datasource<ApproverList> datasource;
-    private ApproverList approverList;
     private User user;
-    private Approver selectedApprover;
+
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         datasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = datasource.readData();
@@ -68,42 +73,6 @@ public class MajorApproverManageController {
         }
         catch(IOException e){
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void onApproverManageButtonClick() {
-        try {
-            FXRouter.goTo("major-approver-manage");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onNisitManageButtonClick() {
-        try {
-            FXRouter.goTo("major-nisit-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onAppealManageButtonClick() {
-        try {
-            FXRouter.goTo("major-appeal-manage");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onLogoutButtonClick(){
-        try{
-            FXRouter.goTo("login");
-        }
-        catch(IOException e){
-            throw new RuntimeException(e);
         }
     }
 

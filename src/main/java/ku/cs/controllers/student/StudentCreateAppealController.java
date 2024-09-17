@@ -2,17 +2,19 @@ package ku.cs.controllers.student;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.dates.ModifyDate;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
 import ku.cs.services.exceptions.EmptyInputException;
@@ -23,11 +25,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class StudentCreateAppealController {
-
-    @FXML private Circle profileImageCircle;
-
-    @FXML private Label usernameLabel;
-    @FXML private Label  roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -76,12 +74,15 @@ public class StudentCreateAppealController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
-        // แสดงโปรไฟล์ผู้ใช้งาน
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
-
-        Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
-        profileImageCircle.setFill(new ImagePattern(profileImage));
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
         appealListDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
@@ -166,6 +167,12 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
             }
+            else {
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องทั่วไป", ((Student)user).getStudentId(), user.getFullName(), topic, details));
+
+                System.out.println(topic + " " + details);
+                resetTheValue();
+            }
         }
         else if (selectedAppeal.equals("ขอพักการศึกษา")) {
             try {
@@ -183,6 +190,12 @@ public class StudentCreateAppealController {
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
+            }
+            else {
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()), "คำร้องขอพักการศึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, semester, year, subjects));
+
+                System.out.println(reason + " " + semester + " " + year + " " + subjects);
+                resetTheValue();
             }
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
@@ -204,6 +217,11 @@ public class StudentCreateAppealController {
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
                 alertPane.setVisible(true);
+            } else {
+                appealList.addNewAppeal(new Appeal(DateTimeService.detailedDateToString(new Date()),"คำร้องขอลาป่วยหรือลากิจ", ((Student)user).getStudentId(), user.getFullName(), purpose, subjects, startDate, endDate));
+
+                System.out.println(purpose + " " + subjects + " " + startDate + " " + endDate);
+                resetTheValue();
             }
         }
 

@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import ku.cs.models.appeals.Appeal;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,21 +19,20 @@ import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
 
 import java.io.IOException;
 
 public class ProfessorStudentAppealController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
-
-    @FXML private TableView<Appeal> tableView;
-
     @FXML private Text totalText;
 
     private User user;
 
+    @FXML private Pane navbarAnchorPane;
+
+    @FXML private TableView<Appeal> tableView;
     private Datasource<AppealList> appealDatasource;
     private Datasource<UserList> userDatasource;
     private AppealList appealList;
@@ -41,8 +42,15 @@ public class ProfessorStudentAppealController {
     private void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = appealDatasource.readData();
@@ -125,7 +133,6 @@ public class ProfessorStudentAppealController {
                 }
             }
         }
-
         tableView.getSortOrder().add(dateTimeCol);
         updateTotalText();
     }
@@ -134,25 +141,4 @@ public class ProfessorStudentAppealController {
     private void updateTotalText() {
         totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
-
-    // ไปที่หน้านิสิตในที่ปรึกษา
-    @FXML
-    public void onStudentListButtonClick() {
-        try {
-            FXRouter.goTo("professor-student-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
