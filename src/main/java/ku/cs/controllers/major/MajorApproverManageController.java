@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.ApproverEditController;
-import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.User;
@@ -48,6 +47,7 @@ public class MajorApproverManageController {
             public void changed(ObservableValue<? extends Approver> observableValue, Approver oldValue, Approver newValue) {
                 if(newValue != null) {
                     selectedApprover = newValue;
+                    showPopup();
                 }
             }
         });
@@ -55,7 +55,7 @@ public class MajorApproverManageController {
 
     public void showPopup(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/approver.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/approver-popup.fxml"));
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
 

@@ -23,7 +23,7 @@
             <Font size="20.0" />
          </font>
       </TextField>
-      <Label layoutX="50.0" layoutY="100.0" text="ชื่อ :">
+      <Label layoutX="50.0" layoutY="107.0" text="ชื่อ :">
          <font>
             <Font size="24.0" />
          </font>
@@ -43,12 +43,12 @@
             <Font size="20.0" />
          </font>
       </TextField>
-      <Button layoutX="44.0" layoutY="429.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="ตกลง">
+      <Button layoutX="44.0" layoutY="429.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="ตกลง">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="173.0" layoutY="429.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="ยกเลิก">
+      <Button layoutX="173.0" layoutY="429.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="ยกเลิก">
          <font>
             <Font size="20.0" />
          </font>
