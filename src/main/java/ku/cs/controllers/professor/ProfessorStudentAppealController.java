@@ -1,14 +1,23 @@
 package ku.cs.controllers.professor;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -17,6 +26,7 @@ import ku.cs.services.*;
 import java.io.IOException;
 
 public class ProfessorStudentAppealController {
+    @FXML private Text totalText;
 
     private User user;
 
@@ -29,7 +39,7 @@ public class ProfessorStudentAppealController {
     private UserList userList;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         user = (User) FXRouter.getData();
 
         //NavBar Component
@@ -49,11 +59,45 @@ public class ProfessorStudentAppealController {
         userList = userDatasource.readData();
 
         showTable(appealList, userList);
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                try {
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-approve-student-appeal.fxml"));
+                    Parent root = loader.load();
+
+                    ProfessorApproveStudentAppealController controller = loader.getController();
+                    controller.setSelectedAppeal(newValue, appealList, appealDatasource);
+
+                    Stage stage = new Stage();
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setAlwaysOnTop(true);
+                    stage.setScene(new Scene(root));
+
+                    stage.showAndWait();
+
+                    appealDatasource.writeData(appealList);
+
+                    Platform.runLater(() -> {
+                        if (!tableView.getItems().isEmpty()) {
+                            tableView.getSelectionModel().clearSelection();  // Clear the current selection safely
+                            showTable(appealList, userList);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    public void showTable(AppealList appealList, UserList userList) {
+    // ตารางแสดงคำร้องของนิสิตในที่ปรึกษาทั้งหมด
+    private void showTable(AppealList appealList, UserList userList) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
-        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> type = new TableColumn<>("Appeal Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -75,18 +119,26 @@ public class ProfessorStudentAppealController {
         tableView.getColumns().add(ownerIdCol);
         tableView.getColumns().add(ownerFullNameCol);
 
+        dateTimeCol.setPrefWidth(275);
+        type.setPrefWidth(275);
+        ownerIdCol.setPrefWidth(275);
+        ownerFullNameCol.setPrefWidth(275);
+
         tableView.getItems().clear();
-        //  Add Appeal filter by Professor name in Student (Not Done Yet)
-        for (Appeal appeal : appealList.getAppeals()) {
-            for (User student : userList.getUsers()) {
-                if (appeal.getOwnerId().equals(((Student)student).getStudentId())) {
+        for (User eachUser : userList.getUsers()) {
+            if (!eachUser.getRole().equals("นักศึกษา")) continue;
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (user.getFullName().equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
                     tableView.getItems().add(appeal);
                 }
             }
         }
-
         tableView.getSortOrder().add(dateTimeCol);
+        updateTotalText();
+    }
 
-
+    // อัพเดทข้อความแสดงจำนวนคำร้องทั้งหมด
+    private void updateTotalText() {
+        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }

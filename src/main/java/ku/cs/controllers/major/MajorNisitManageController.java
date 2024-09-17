@@ -23,7 +23,6 @@ import ku.cs.services.UserListFileDatasource;
 import java.io.File;
 import java.io.IOException;
 
-
 public class MajorNisitManageController {
     @FXML private Pane navbarAnchorPane;
 
@@ -57,15 +56,21 @@ public class MajorNisitManageController {
             public void changed(ObservableValue<? extends Student> observableValue, Student oldValue, Student newValue) {
                 if (newValue != null) {
                     selectedNisit = newValue;
+                    addMode = false;
                     showPopUp(addMode);
+                    nisitTableView.getSelectionModel().select(selectedNisit);
+                }else{
+                    selectedNisit = null;
                 }
             }
         });
     }
+
     public void onAddButtonClick(){
         addMode = true;
         showPopUp(addMode);
     }
+
     public void showTable(UserList studentRoster) {
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -106,7 +111,7 @@ public class MajorNisitManageController {
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
             if(!addMode){
-                controller.setNisit(selectedNisit, user);
+                controller.setNisit(selectedNisit);
                 controller.setMode(addMode);
             }
             else{
@@ -127,38 +132,8 @@ public class MajorNisitManageController {
 
             showTable(studentList);
         }
-        catch(IOException e){
-            e.printStackTrace();
-        } catch (IOException e) {
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-    @FXML
-    protected void onApproverManageButtonClick() {
-        try {
-            FXRouter.goTo("major-approver-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onAppealManageButtonClick() {
-        try {
-            FXRouter.goTo("major-appeal-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onLogoutButtonClick(){
-        try{
-            FXRouter.goTo("login");
-        }
-        catch(IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
 }

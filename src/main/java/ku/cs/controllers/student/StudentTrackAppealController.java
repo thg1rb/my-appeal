@@ -2,15 +2,12 @@ package ku.cs.controllers.student;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import ku.cs.models.appeal.Appeal;
+import javafx.scene.text.Text;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -19,7 +16,6 @@ import ku.cs.services.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class StudentTrackAppealController {
 
@@ -31,8 +27,10 @@ public class StudentTrackAppealController {
 
     @FXML private TableView<Appeal> tableView;
 
+//    @FXML private Text totalText;
+
     @FXML
-    public void initialize() {
+    private void initialize() {
         user = (User) FXRouter.getData();
 
         //NavBar Component
@@ -51,9 +49,10 @@ public class StudentTrackAppealController {
         showTable(appealList, ((Student)user).getStudentId());
     }
 
-    public void showTable(AppealList appealList, String ownerId) {
+    // ตารางแสดงคำร้องทั้งหมดของนิสิต
+    private void showTable(AppealList appealList, String ownerId) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
-        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> typeCol = new TableColumn<>("Appeal Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -75,5 +74,11 @@ public class StudentTrackAppealController {
         }
         tableView.getSortOrder().add(dateTimeCol);
 
+//        updateTotalText();
     }
+
+    // อัพเดตข้อความแสดงคำร้องทั้งหมด
+//    private void updateTotalText() {
+//        totalText.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+//    }
 }

@@ -30,7 +30,7 @@ public class RegisterPersonalDataController {
 
     @FXML
     public void initialize() {
-        studentDatasource = new UserListDatasource("data"+ File.separator+"users", "students.csv");
+        studentDatasource = new UserListDatasource("data"+ File.separator+"users", "student.csv");
         studentList = studentDatasource.readData();
 
         errorLabel.setText("");

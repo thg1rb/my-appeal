@@ -31,7 +31,7 @@ public class RegisterUsernamePasswordController {
 
     @FXML
     private void initialize() {
-        studentDatasource = new UserListDatasource("data"+ File.separator+"users", "students.csv");
+        studentDatasource = new UserListDatasource("data"+ File.separator+"users", "student.csv");
         data = (HashMap<String, Object>) FXRouter.getData();
         studentList = (UserList) data.get("studentsList");
         student = (User) data.get("studentRegistering");
