@@ -17,11 +17,11 @@ public class UserListDatasource implements Datasource<UserList> {
     }
 
     public static UserList readAllUsers(){
-        String adminFilePath = "data" + File.separator + "users" + File.separator +  "admins.csv";
-        String facultyFilePath = "data" + File.separator + "users" + File.separator +  "faculty-staff.csv";
-        String departmentFilePath = "data" + File.separator + "users" + File.separator +  "department-staff.csv";
+        String adminFilePath = "data" + File.separator + "users" + File.separator +  "admin.csv";
+        String facultyFilePath = "data" + File.separator + "users" + File.separator +  "facultyStaff.csv";
+        String departmentFilePath = "data" + File.separator + "users" + File.separator +  "majorStaff.csv";
         String advisorFilePath = "data" + File.separator + "users" + File.separator +  "advisor.csv";
-        String studentFilePath = "data" + File.separator + "users" + File.separator +  "students.csv";
+        String studentFilePath = "data" + File.separator + "users" + File.separator +  "student.csv";
 
         String[] paths = {adminFilePath,facultyFilePath,departmentFilePath,advisorFilePath,studentFilePath};
 
