@@ -24,7 +24,7 @@ public class MajorNisitEditPopupController {
 
     private User user;
     private Student nisit;
-    private StudentList studentRoster;
+    private UserList studentRoster;
 
     public void initialize(){
 

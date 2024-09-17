@@ -25,8 +25,6 @@ public class FacultyAppealManageController {
 
     private User user;
 
-
-
     @FXML private TableView<Appeal> allAppealTable;
     @FXML private TableView<Appeal> selfAppealTable;
 
@@ -64,7 +62,15 @@ public class FacultyAppealManageController {
     public void initialize(){
         user = (User) FXRouter.getData();
 
-
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
@@ -86,6 +92,7 @@ public class FacultyAppealManageController {
             }
         });
     }
+
     @FXML
     public void showPopup(String type, Appeal appeal){
         purposeLabel.setVisible(false);
@@ -99,8 +106,6 @@ public class FacultyAppealManageController {
 
         topicLabel.setText(appeal.getTopic());
         reasonLabel.setText(appeal.getReason());
-
-
 
         if(type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
             purposeLabel.setText("จุดประสงค์: " + appeal.getPurpose());
@@ -149,6 +154,7 @@ public class FacultyAppealManageController {
         appealManageLabel.setVisible(false);
         appealDetailsLabel.setVisible(true);
     }
+
     public void showTable(AppealList appealList) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
@@ -183,8 +189,6 @@ public class FacultyAppealManageController {
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
-
-
     }
     @FXML
     public void confirmOnButtonClick(){
@@ -199,6 +203,7 @@ public class FacultyAppealManageController {
 
         selectedStatus = null;
     }
+
     @FXML
     public void cancleOnButtonClick(){
         popupAppealPane.setVisible(false);
@@ -212,18 +217,6 @@ public class FacultyAppealManageController {
 
     public void getStatus(Event event) {
         selectedStatus = (String) statusChoiceBox.getValue();
-    }
-
-        //NavBar Component
-        String role = user.getRoleInEnglish();
-        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
-        try {
-            Pane navbarComponent = navbarComponentLoader.load();
-            navbarAnchorPane.getChildren().add(navbarComponent);
-        }catch (Exception e){
-            throw new RuntimeException(e);
-        }
-
     }
 
 }

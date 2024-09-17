@@ -4,7 +4,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -14,21 +20,23 @@ import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.UserListFileDatasource;
 
+import java.io.File;
+import java.io.IOException;
+
 
 public class MajorNisitManageController {
     @FXML private Pane navbarAnchorPane;
 
-    @FXML TableView<User> nisitTableView;
+    @FXML private TableView<Student> nisitTableView;
 
-    private UserList studentRoster;
-    private Datasource<UserList> rosterDatasource;
+    private UserList studentList;
     private Datasource<UserList> datasource;
     private Student selectedNisit;
-    private User user;
+    private DepartmentStaff user;
     public boolean addMode = false;
 
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (DepartmentStaff) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -40,15 +48,10 @@ public class MajorNisitManageController {
             throw new RuntimeException(e);
         }
 
-        datasource = new UserListFileDatasource("data", "user.csv");
-        userList = datasource.readData();
-//        usernameLabel.setText(user.getUsername());
-//        roleLabel.setText(user.getRole());
-        datasource = new StudentRosterListFileDatasource("data", "student-roster.csv");
-        studentRoster = datasource.readData();
-        user = (User)FXRouter.getData();
+        datasource = new UserListFileDatasource("data" + File.separator + "users", "student.csv");
+        studentList = datasource.readData();
 
-        showTable(studentRoster);
+        showTable(studentList);
         nisitTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
             @Override
             public void changed(ObservableValue<? extends Student> observableValue, Student oldValue, Student newValue) {
@@ -63,7 +66,7 @@ public class MajorNisitManageController {
         addMode = true;
         showPopUp(addMode);
     }
-    public void showTable(StudentList studentRoster){
+    public void showTable(UserList studentRoster) {
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -87,13 +90,10 @@ public class MajorNisitManageController {
         emailColumn.setSortable(false);
 
         nisitTableView.getItems().clear();
-        if(userlist != null){
-            for(User nisit : userlist.getUsers()){
-                if(((Student)nisit).getDepartment().equals(((DepartmentStaff)user).getDepartment()) && nisit.getRole().equals("นักศึกษา")){
-        if(studentRoster != null){
-            for(Student nisit : studentRoster.getStudents()){
-                if(nisit.getMajor().equals(user.getMajor())){
-                    nisitTableView.getItems().add(nisit);
+        if (studentList != null) {
+            for (User nisit : studentList.getUsers()) {
+                if (((Student)nisit).getDepartment().equals(user.getDepartment())) {
+                    nisitTableView.getItems().add((Student) nisit);
                 }
             }
         }
@@ -110,7 +110,7 @@ public class MajorNisitManageController {
                 controller.setMode(addMode);
             }
             else{
-                controller.setUser(user, studentRoster);
+                controller.setUser(user, studentList);
                 controller.setMode(addMode);
             }
 
@@ -122,13 +122,15 @@ public class MajorNisitManageController {
 
             popupStage.showAndWait();
 
-            datasource.writeData(studentRoster);
-            studentRoster = datasource.readData();
+            datasource.writeData(studentList);
+            studentList = datasource.readData();
 
-            showTable(studentRoster);
+            showTable(studentList);
         }
         catch(IOException e){
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
