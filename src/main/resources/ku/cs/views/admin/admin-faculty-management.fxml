@@ -17,7 +17,7 @@
                 <Font size="40.0" />
             </font>
         </Text>
-        <TabPane fx:id="tabPane" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent; -fx-background-radius: 20;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
+        <TabPane fx:id="tabPane" layoutX="272.0" layoutY="168.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent; -fx-background-radius: 20;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
             <tabs>
                 <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 20 0 0 0;" text="คณะ">
                <content>
@@ -51,7 +51,7 @@
             </font>
         </TextField>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <Pane layoutX="272.0" layoutY="703.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
+      <Pane layoutX="272.0" layoutY="697.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
             <Text fx:id="totalText" layoutX="32.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="จำนวนคณะทั้งหมด">
                <font>

@@ -11,7 +11,6 @@ import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ public class LoginController {
     @FXML private Label errorLabel;
     @FXML private Button loginButton;
 
-    private Datasource<UserList> userListDatasource;
     private UserList userList;
     private User user;
 

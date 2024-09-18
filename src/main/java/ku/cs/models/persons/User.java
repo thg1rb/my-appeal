@@ -78,10 +78,10 @@ public abstract class User {
         this.loginDate = loginDate;
     }
     public void unbanUser(){
-        this.accessibility = false;
+        this.accessibility = true;
     }
     public void banUser(){
-        this.accessibility = true;
+        this.accessibility = false;
     }
     public void setProfile(String path){
         this.profileUrl = path;
