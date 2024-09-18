@@ -137,7 +137,7 @@ public class ProfessorStudentListController {
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
     private void showSearchTable(UserList studentList, String searchText) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
 
         TableColumn<User, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -146,7 +146,7 @@ public class ProfessorStudentListController {
         fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
         TableColumn<User, String> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         tableView.getColumns().clear();
         tableView.getColumns().add(pathCol);
@@ -162,7 +162,7 @@ public class ProfessorStudentListController {
         // Add Student filter by Professer name (Not Done Yet)
         tableView.getItems().clear();
         for (User student : studentList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
                 tableView.getItems().add(student);
             }
         }
