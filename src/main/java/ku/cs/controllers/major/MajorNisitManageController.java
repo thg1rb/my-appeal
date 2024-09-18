@@ -52,7 +52,7 @@ public class MajorNisitManageController {
 
         showTable(studentList);
         nisitTableView.setOnMouseClicked(event ->{
-            User selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
+            selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
             addMode = false;
             showPopUp(addMode);
         });
@@ -104,11 +104,12 @@ public class MajorNisitManageController {
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
             if(!addMode){
-                controller.setMode(addMode, selectedNisit);
+                controller.setMode(addMode);
+                controller.setNisit(selectedNisit);
             }
             else{
                 controller.setUser(((DepartmentStaff)user) , studentList);
-                controller.setMode(addMode, selectedNisit);
+                controller.setMode(addMode);
             }
 
             Stage popupStage = new Stage();
@@ -121,7 +122,6 @@ public class MajorNisitManageController {
 
             datasource.writeData(studentList);
             studentList = datasource.readData();
-
             showTable(studentList);
         }
         catch (IOException e) {

@@ -9,8 +9,8 @@ public class DepartmentStaff extends FacultyStaff {
         this.department = department;
     }
     // Constructor for reading file
-    public DepartmentStaff(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed, String faculty, String department) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileImg, initialPasswordText, initialPasswordHashed, faculty);
+    public DepartmentStaff(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed, String faculty, String department) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileImg, initialPasswordText, initialPasswordHashed, faculty);
         this.department = department;
     }
 

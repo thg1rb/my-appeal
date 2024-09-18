@@ -6,8 +6,8 @@ public class AdminUser extends User {
         super(role, username, password, firstName, lastName);
     }
     //Constructor for reading file
-    public AdminUser(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileUrl);
+    public AdminUser(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
     }
 
     @Override

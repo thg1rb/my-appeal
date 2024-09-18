@@ -2,10 +2,15 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
 public class AdminNavbarController {
+    @FXML private Circle profileImageCircle;
+
     @FXML private Label roleLabel;
     @FXML private Label usernameLabel;
 
@@ -17,6 +22,9 @@ public class AdminNavbarController {
 
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
+
+        Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+        profileImageCircle.setFill(new ImagePattern(image));
     }
 
     @FXML

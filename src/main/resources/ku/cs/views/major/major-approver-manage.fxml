@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,7 +16,7 @@
          </font>
       </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TableView layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="approverTableView" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20;" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-background-radius: 20 0 0 0; -fx-border-radius: 20 00 00 00; -fx-font-size: 20;" text="Role" />
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-border-radius: 00 20 00 00; -fx-background-radius: 00 20 00 00; -fx-font-color: #303337;" text="Name" />
@@ -24,5 +25,14 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Pane layoutX="272.0" layoutY="718.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
+         <children>
+            <Button layoutX="976.0" layoutY="7.0" mnemonicParsing="false" onAction="#addApproverButtonClick" prefHeight="45.0" prefWidth="102.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

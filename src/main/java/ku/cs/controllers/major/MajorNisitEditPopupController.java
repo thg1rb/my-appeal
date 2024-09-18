@@ -26,9 +26,6 @@ public class MajorNisitEditPopupController {
     private User nisit;
     private UserList studentRoster;
 
-    public void initialize(){
-
-    }
     public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;
         if (nisit != null) {
@@ -39,17 +36,19 @@ public class MajorNisitEditPopupController {
             professorTextField.setText(((Student)nisit).getAdvisor());
         }
     }
-    public void setMode(boolean addMode, User selectedNisit){
+
+    public void setMode(boolean addMode){
         if(addMode){
             confirmButton.setVisible(false);
             topicLabel.setText("เพิ่มข้อมูลนิสิต");
+
         }
         else{
             confirmButton.setVisible(true);
             topicLabel.setText("แก้ไขข้อมูลนิสิต");
-            setNisit(selectedNisit);
         }
     }
+
     public void setUser(DepartmentStaff user, UserList studentRoster){
         this.user = user;
         this.studentRoster = studentRoster;
