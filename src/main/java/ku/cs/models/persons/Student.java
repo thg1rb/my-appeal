@@ -25,8 +25,8 @@ public class Student extends User {
         this.advisor = advisor;
     }
     //Constructor for reading file
-    public Student(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor, boolean registered) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileUrl);
+    public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor, boolean registered) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
         this.studentId = StudentId;
         this.email = email;
         this.faculty = faculty;

@@ -16,8 +16,8 @@ public class FacultyStaff extends User {
         setInitPassword(password);
     }
     // Constructor for reading file
-    public FacultyStaff(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed,String faculty) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileImg);
+    public FacultyStaff(String uuid,String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed,String faculty) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileImg);
         this.initialPasswordText = initialPasswordText;
         this.initialPasswordHashed = initialPasswordHashed;
         this.faculty = faculty;

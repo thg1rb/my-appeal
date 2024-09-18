@@ -2,7 +2,11 @@ package ku.cs.models.persons;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+import java.util.UUID;
+
 public abstract class User {
+    private UUID uuid;
+
     private final String role;
 
     private String username;
@@ -18,6 +22,7 @@ public abstract class User {
 
     //Constructor
     public User(String role, String username, String password, String firstName, String lastName){
+        this.uuid = UUID.randomUUID();
         this.role = role;
         this.username = username;
         setPasswordHash(password);
@@ -28,6 +33,7 @@ public abstract class User {
     }
     //Constructor for add student in Department responsibility
     public User(String role, String firstName, String lastName){
+        this.uuid = UUID.randomUUID();
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,7 +41,8 @@ public abstract class User {
         this.profileUrl = "/images/default-profile.jpg";
     }
     //Constructor for reading file
-    public User(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
+    public User(String uuid,String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
+        this.uuid = UUID.fromString(uuid);
         this.role = role;
         this.username = username;
         this.firstName = firstName;
@@ -81,6 +88,9 @@ public abstract class User {
     }
 
     //Getter
+    public UUID getUuid() {
+        return uuid;
+    }
     public String getRole(){
         return role;
     }
@@ -111,7 +121,7 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
+        return uuid + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 
     public abstract String getRoleInEnglish();

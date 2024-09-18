@@ -9,8 +9,8 @@ public class Advisor extends DepartmentStaff {
         this.advisorId = advisorId;
     }
     //Constructor for reading file
-    public Advisor(String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed, String faculty, String department, String advisorId) {
-        super(role, username, password, firstName, lastName, access, loginDate, profileImg, initialPasswordText, initialPasswordHashed, faculty, department);
+    public Advisor(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileImg, String initialPasswordText, String initialPasswordHashed, String faculty, String department, String advisorId) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileImg, initialPasswordText, initialPasswordHashed, faculty, department);
         this.advisorId = advisorId;
     }
 

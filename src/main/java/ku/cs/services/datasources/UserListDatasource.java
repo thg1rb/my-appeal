@@ -158,6 +158,30 @@ public class UserListDatasource implements Datasource<UserList> {
     }
 
 //    public static void main(String[] args) {
+//        UserList userList = UserListDatasource.readAllUsers();
+//
+//        UserList admin = userList.getAdmins();
+//        UserListDatasource adminDatasource = new UserListDatasource("data"+File.separator+"users", "admin.csv");
+//        adminDatasource.writeData(admin);
+//
+//        UserList faculty = userList.getFacultyStaffs();
+//        UserListDatasource facultyDatasource = new UserListDatasource("data"+File.separator+"users", "facultyStaff.csv");
+//        facultyDatasource.writeData(faculty);
+//
+//        UserList major = userList.getDepartmentStaffs();
+//        UserListDatasource majorDatasource = new UserListDatasource("data"+File.separator+"users", "majorStaff.csv");
+//        majorDatasource.writeData(major);
+//
+//        UserList advisor = userList.getAdvisors();
+//        UserListDatasource advisorDatasource = new UserListDatasource("data"+File.separator+"users", "advisor.csv");
+//        advisorDatasource.writeData(advisor);
+//
+//        UserList student = userList.getStudents();
+//        UserListDatasource studentDatatsource = new UserListDatasource("data"+File.separator+"users", "student.csv");
+//        studentDatatsource.writeData(student);
+//    }
+
+//    public static void main(String[] args) {
 //        UserListDatasource datasource = new UserListDatasource("data/users", "students.csv");
 //        UserList studentList = datasource.readData();
 //        UserList userList = UserListDatasource.readAllUsers();
