@@ -1,10 +1,11 @@
-package ku.cs.services;
+package ku.cs.services.datasources;
 
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

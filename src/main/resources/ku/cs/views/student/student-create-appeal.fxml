@@ -56,11 +56,6 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="952.0" layoutY="524.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="confirm-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
          </children>
       </Pane>
       <Pane fx:id="suspendAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
@@ -75,11 +70,6 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="952.0" layoutY="524.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="confirm-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
             <TextArea fx:id="reasonSuspendTextArea" layoutX="48.0" layoutY="100.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
                <font>
                   <Font size="24.0" />
@@ -119,11 +109,6 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="952.0" layoutY="524.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="confirm-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
             <TextArea fx:id="reasonBreakTextArea" layoutX="48.0" layoutY="229.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
                <font>
                   <Font size="24.0" />
@@ -175,5 +160,10 @@
             </Label>
          </children>
       </Pane>
+      <Button layoutX="1165.0" layoutY="725.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="approve-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -2,9 +2,11 @@ package ku.cs.controllers.professor;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -13,27 +15,34 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProfessorStudentListController {
-    @FXML private Pane navbarAnchorPane;
 
+    @FXML private Pane navbarAnchorPane;
     @FXML private Text totalText;
+    @FXML private TableView<User> tableView;
+
+    @FXML private TextField searchTextField;
 
     private User user;
+    private Datasource<UserList> studentDatasource;
+    private UserList studentList;
 
-    @FXML private TableView<User> tableView;
-    private Datasource<UserList> datasource;
-    private UserList userList;
+    private Datasource<AppealList> appealDatasource;
+    private AppealList appealList;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         user = (User) FXRouter.getData();
 
         //NavBar Component
@@ -46,17 +55,55 @@ public class ProfessorStudentListController {
             throw new RuntimeException(e);
         }
 
-        // datasource
-        datasource = new UserListFileDatasource("data", "user.csv");
-        userList = datasource.readData();
+        // Student Datasource
+        studentDatasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = studentDatasource.readData();
 
-        showTable(userList);
+        // Appeal Datasource
+        appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = appealDatasource.readData();
+
+        // ช่องค้นหา
+        showTable(studentList);
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("^[a-zA-zก-๙0-9]+$") && !newValue.isEmpty()) {
+                showSearchTable(studentList, newValue);
+            }
+            else if (newValue.isEmpty() || newValue.isBlank()) {
+                showTable(studentList);
+            }
+        });
+
+        // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
+        tableView.setOnMouseClicked(mouseEvent -> {
+            User selectedUser = tableView.getSelectionModel().getSelectedItem();
+            if (selectedUser != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-track-student-appeal.fxml"));
+                    Parent root = loader.load();
+
+                    ProfessorTrackStudentAppealController controller = loader.getController();
+                    controller.showTable(appealList, selectedUser);
+                    controller.ownerAppealLabel.setText("คำร้องทั้งหมดของ " + selectedUser.getFullName());
+
+                    Stage stage = new Stage();
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setAlwaysOnTop(true);
+                    stage.setScene(new Scene(root));
+
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (default)
-    private void showTable(UserList userList) {
+    private void showTable(UserList studentList) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
+        pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
 
         TableColumn<User, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -65,7 +112,7 @@ public class ProfessorStudentListController {
         fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
         TableColumn<User, String> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         tableView.getColumns().clear();
         tableView.getColumns().add(pathCol);
@@ -79,8 +126,8 @@ public class ProfessorStudentListController {
         idCol.setPrefWidth(275);
 
         tableView.getItems().clear();
-        for (User student : userList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(user.getFullName())) {
+        for (User student : studentList.getUsers()) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
                 tableView.getItems().add(student);
             }
         }
@@ -88,7 +135,7 @@ public class ProfessorStudentListController {
     }
 
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
-    private void showSearchTable(UserList userList, String searchText) {
+    private void showSearchTable(UserList studentList, String searchText) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
         pathCol.setCellValueFactory(new PropertyValueFactory<>("path"));
 
@@ -114,8 +161,8 @@ public class ProfessorStudentListController {
 
         // Add Student filter by Professer name (Not Done Yet)
         tableView.getItems().clear();
-        for (User student : userList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(user.getFullName())) {
+        for (User student : studentList.getUsers()) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
                 tableView.getItems().add(student);
             }
         }
@@ -126,5 +173,4 @@ public class ProfessorStudentListController {
     private void updateTotalText() {
         totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
-
 }

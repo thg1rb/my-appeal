@@ -12,9 +12,9 @@ import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
-import ku.cs.services.ModifyDateListFileDatasource;
+import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.util.Date;
 
@@ -99,7 +99,7 @@ public class ProfessorApproveStudentAppealController {
         breakAppealPane.setVisible(isBreakAppeal);
     }
 
-    // ปิดหน้าต่าง pop up
+    // ปิดหน้าต่าง pop-up
     @FXML
     public void onCloseButtonClick(ActionEvent event) {
         modifyDateListDatasource.writeData(modifyDateList);
