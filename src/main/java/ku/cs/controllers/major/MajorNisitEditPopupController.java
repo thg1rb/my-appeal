@@ -23,23 +23,23 @@ public class MajorNisitEditPopupController {
     @FXML Label topicLabel;
 
     private DepartmentStaff user;
-    private Student nisit;
+    private User nisit;
     private UserList studentRoster;
 
     public void initialize(){
 
     }
-    public void setNisit(Student selectedNisit){
+    public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;
         if (nisit != null) {
             nisitNameTextField.setText(nisit.getFirstName());
             nisitLastNameTextField.setText(nisit.getLastName());
-            nisitIdTextField.setText(nisit.getStudentId());
-            nisitEmailTextField.setText(nisit.getEmail());
-            professorTextField.setText(nisit.getAdvisor());
+            nisitIdTextField.setText(((Student)nisit).getStudentId());
+            nisitEmailTextField.setText(((Student)nisit).getEmail());
+            professorTextField.setText(((Student)nisit).getAdvisor());
         }
     }
-    public void setMode(boolean addMode){
+    public void setMode(boolean addMode, User selectedNisit){
         if(addMode){
             confirmButton.setVisible(false);
             topicLabel.setText("เพิ่มข้อมูลนิสิต");
@@ -47,6 +47,7 @@ public class MajorNisitEditPopupController {
         else{
             confirmButton.setVisible(true);
             topicLabel.setText("แก้ไขข้อมูลนิสิต");
+            setNisit(selectedNisit);
         }
     }
     public void setUser(DepartmentStaff user, UserList studentRoster){
@@ -57,9 +58,9 @@ public class MajorNisitEditPopupController {
     public void onConfirmButtonClick(ActionEvent event){
         nisit.setFirstName(nisitNameTextField.getText());
         nisit.setLastName(nisitLastNameTextField.getText());
-        nisit.setStudentId(nisitIdTextField.getText());
-        nisit.setEmail(nisitEmailTextField.getText());
-        nisit.setAdvisor(professorTextField.getText());
+        ((Student)nisit).setStudentId(nisitIdTextField.getText());
+        ((Student)nisit).setEmail(nisitEmailTextField.getText());
+        ((Student)nisit).setAdvisor(professorTextField.getText());
         onCancleButtonClick(event);
     }
 
