@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
-import ku.cs.models.persons.User;
 
 public class MajorNisitEditPopupController {
     @FXML TextField nisitNameTextField;

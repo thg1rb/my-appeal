@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.appeals.BreakAppeal;
@@ -21,7 +20,6 @@ import ku.cs.services.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class FacultyAppealManageController {
     @FXML private Pane navbarAnchorPane;
