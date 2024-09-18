@@ -3,7 +3,9 @@ package ku.cs.models.collections;
 import ku.cs.models.persons.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class UserList {
     private List<User> users;
@@ -52,6 +54,15 @@ public class UserList {
                 if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName) && student.getStudentId().equals(personalId) && student.getEmail().equals(email)) {
                     return student;
                 }
+            }
+        }
+        return null;
+    }
+
+    public User findUserByUUID(UUID uuid){
+        for (User user : users) {
+            if (user.getUuid().equals(uuid)) {
+                return user;
             }
         }
         return null;
