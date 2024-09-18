@@ -9,7 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
+import ku.cs.models.appeals.BreakAppeal;
+import ku.cs.models.appeals.GeneralAppeal;
+import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.persons.User;
 
 public class AppealEditController {
@@ -54,6 +57,7 @@ public class AppealEditController {
         typeLabel.setText(type);
         reasonLabel.setText(appeal.getReason());
         presentStatusLabel.setText(appeal.getStatus());
+
         if(role.equals("เจ้าหน้าที่ภาควิชา")){
             statusChoiceBox.getItems().addAll(majorStatusList);
             statusChoiceBox.setOnAction(this::getStatus);
@@ -61,6 +65,8 @@ public class AppealEditController {
         }
 
         if(type.equals("คำร้องทั่วไป")){
+            GeneralAppeal generalAppeal = (GeneralAppeal) appeal;
+
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
             yearLabel.setVisible(false);
@@ -69,35 +75,39 @@ public class AppealEditController {
             subjectLabel.setVisible(false);
 
             topicLabel.setVisible(true);
-            topicLabel.setText("เรื่อง: " + appeal.getTopic());
+            topicLabel.setText("เรื่อง: " + generalAppeal.getTopic());
         }
         else if(type.equals("คำร้องขอพักการศึกษา")){
+            SuspendAppeal suspendAppeal = (SuspendAppeal) appeal;
+
             topicLabel.setVisible(false);
             purposeLabel.setVisible(false);
             breakTimeLabel.setVisible(false);
 
             semesterLabel.setVisible(true);
-            semesterLabel.setText("ภาคการศึกษา: " + appeal.getSemester());
+            semesterLabel.setText("ภาคการศึกษา: " + suspendAppeal.getSemester());
 
             yearLabel.setVisible(true);
-            yearLabel.setText("ปีการศึกษา" + appeal.getYear());
+            yearLabel.setText("ปีการศึกษา" + suspendAppeal.getYear());
 
             subjectLabel.setVisible(true);
             subjectLabel.setText("รายวิชาที่ต้องการลา: " + appeal.getSubjects());
         }
         else if(type.equals("คำร้องขอลาป่วยหรือลากิจ")){
+            BreakAppeal breakAppeal = (BreakAppeal) appeal;
+
             topicLabel.setVisible(false);
             semesterLabel.setVisible(false);
             yearLabel.setVisible(false);
 
             purposeLabel.setVisible(true);
-            purposeLabel.setText("เหตุผล: " + appeal.getPurpose());
+            purposeLabel.setText("เหตุผล: " + breakAppeal.getPurpose());
 
             breakTimeLabel.setVisible(true);
-            breakTimeLabel.setText("ระยะเวลา: " + appeal.getStartDate()+"-"+appeal.getEndDate());
+            breakTimeLabel.setText("ระยะเวลา: " + breakAppeal.getStartDate() + " - " + breakAppeal.getEndDate());
 
             subjectLabel.setVisible(true);
-            subjectLabel.setText("รายวิชาที่ต้องการลา: " + appeal.getSubjects());
+            subjectLabel.setText("รายวิชาที่ต้องการลา: " + breakAppeal.getSubjects());
         }
     }
 

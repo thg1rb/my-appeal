@@ -1,22 +1,21 @@
 package ku.cs.controllers.student;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import ku.cs.models.appeal.Appeal;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
-import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class StudentTrackAppealController {
 
@@ -24,33 +23,36 @@ public class StudentTrackAppealController {
     private AppealList appealList;
     private User user;
 
-    @FXML private Circle profileImageCircle;
-
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TableView<Appeal> tableView;
 
+    @FXML private Text totalText;
+
     @FXML
-    public void initialize() {
+    private void initialize() {
         user = (User) FXRouter.getData();
 
-        // แสดงโปรไฟล์ผู้ใช้งาน
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
-
-        Image profileImage = new Image(getClass().getResource("/images/student-profile.jpeg").toString());
-        profileImageCircle.setFill(new ImagePattern(profileImage));
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         // แสดงข้อมูลภายในตาราง
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        showTable(appealList, user.getId());
+        showTable(appealList, ((Student)user).getStudentId());
     }
 
-    public void showTable(AppealList appealList, String ownerId) {
+    // ตารางแสดงคำร้องทั้งหมดของนิสิต
+    private void showTable(AppealList appealList, String ownerId) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
-        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> typeCol = new TableColumn<>("Appeal Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -72,26 +74,11 @@ public class StudentTrackAppealController {
         }
         tableView.getSortOrder().add(dateTimeCol);
 
+        updateTotalText();
     }
 
-    // ไปที่หน้าสร้างใบคำร้อง
-    @FXML
-    private void onCreateAppealButtonClick() {
-        try {
-            FXRouter.goTo("student-create-appeal", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    // อัพเดตข้อความแสดงคำร้องทั้งหมด
+    private void updateTotalText() {
+        totalText.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

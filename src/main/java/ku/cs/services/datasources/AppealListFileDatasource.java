@@ -1,13 +1,16 @@
-package ku.cs.services;
+package ku.cs.services.datasources;
 
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
+import ku.cs.models.appeals.BreakAppeal;
+import ku.cs.models.appeals.GeneralAppeal;
+import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
-public class AppealListFileDatasource implements Datasource<AppealList>{
+public class AppealListFileDatasource implements Datasource<AppealList> {
     private String directoryName;
     private String fileName;
 
@@ -38,7 +41,7 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
     // Read data
     @Override
     public AppealList readData() {
-        AppealList appeals = new AppealList();
+        AppealList appealList = new AppealList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -68,38 +71,50 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-                String createDate = data[0].trim();
-                String ownerId = data[1].trim();
-                String ownerFullName = data[2].trim();
-                String type = data[3].trim();
-                String status = data[4].trim();
-                String topic = data[5].trim();
+//                String createDate = data[0].trim();
+//                String ownerId = data[1].trim();
+//                String ownerFullName = data[2].trim();
+//                String type = data[3].trim();
+//                String status = data[4].trim();
+//                String topic = data[5].trim();
+//                String reason = data[6].trim();
+//                String purpose = data[7].trim();
+//                String subjects = data[8].trim();
+//                String startDate = data[9].trim();
+//                String endDate = data[10].trim();
+//                String semester = data[11].trim();
+//                String year = data[12].trim();
+//                String uuid = data[13].trim();
+                String modifyDate = data[0];
+                String uuid = data[1].trim();
+                String type = data[2].trim();
+                String status = data[3].trim();
+                String ownerId = data[4].trim();
+                String ownerFullName = data[5].trim();
                 String reason = data[6].trim();
-                String purpose = data[7].trim();
-                String subjects = data[8].trim();
-                String startDate = data[9].trim();
-                String endDate = data[10].trim();
-                String semester = data[11].trim();
-                String year = data[12].trim();
-                String uuid = data[13].trim();
-
-                System.out.println(startDate + " " + endDate);
+                String subjects = data[7].trim();
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, topic, reason, uuid));
-                }
-                else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, reason, purpose, subjects, startDate, endDate, uuid));
+                    String topic = data[8].trim();
+                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, reason, topic));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    appeals.addNewAppeal(new Appeal(createDate, type, status, ownerId, ownerFullName, reason, semester, year, subjects, uuid));
+                    String semester = data[8].trim();
+                    String year = data[9].trim();
+                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, reason, subjects, semester, year));
+                }
+                else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
+                    String purpose = data[8].trim();
+                    String startDate = data[9].trim();
+                    String endDate = data[10].trim();
+                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, reason, subjects, purpose, startDate, endDate));
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return appeals;
+        return appealList;
     }
 
     // Write data
@@ -123,9 +138,23 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
         try {
-            // สร้าง csv ของ Student และเขียนลงในไฟล์ทีละบรรทัด
+            // สร้าง csv ของ appeal และเขียนลงในไฟล์ทีละบรรทัด
             for (Appeal appeal : data.getAppeals()) {
-                String line = appeal.toString();
+                String line = "";
+                switch (appeal.getType()) {
+                    case "คำร้องทั่วไป" -> {
+                        GeneralAppeal generalAppeal = (GeneralAppeal) appeal;
+                        line = generalAppeal.toString();
+                    }
+                    case "คำร้องขอพักการศึกษา" -> {
+                        SuspendAppeal suspendAppeal = (SuspendAppeal) appeal;
+                        line = suspendAppeal.toString();
+                    }
+                    case "คำร้องขอลาป่วยหรือลากิจ" -> {
+                        BreakAppeal breakAppeal = (BreakAppeal) appeal;
+                        line = breakAppeal.toString();
+                    }
+                }
 
                 buffer.append(line);
                 buffer.append("\n");
@@ -144,12 +173,12 @@ public class AppealListFileDatasource implements Datasource<AppealList>{
     }
 
     // ทดสอบการอ่านไฟล์
-//    public static void main(String[] args) {
-//        AppealListHardCodeDatasource data = new AppealListHardCodeDatasource();
-//        AppealList appeals = data.readData();
-//
-//        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
-//        w.writeData(appeals);
-//    }
+    public static void main(String[] args) {
+        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
+        AppealListHardCodeDatasource data = new AppealListHardCodeDatasource();
+        AppealList appeals = data.readData();
+
+        w.writeData(appeals);
+    }
 
 }

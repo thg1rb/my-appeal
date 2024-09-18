@@ -19,9 +19,9 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="tableView" layoutX="53.0" layoutY="153.0" prefHeight="500.0" prefWidth="1100.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="tableView" layoutX="53.0" layoutY="153.0" prefHeight="500.0" prefWidth="1100.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #D9D9D9;" styleClass="table-view-without-tab-pane" stylesheets="@../../styles/table-view.css">
         <columns>
-          <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 20; -fx-font-size: 20;" text="Date/Time" />
+          <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Date/Time" />
           <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="Type" />
             <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="Status" />
         </columns>

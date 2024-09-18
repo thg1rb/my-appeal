@@ -1,6 +1,6 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.appeal.Appeal;
+import ku.cs.models.appeals.Appeal;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class AppealList {
         appeals =  new ArrayList<>();
     }
 
-    public boolean addNewAppeal(Appeal appeal){
+    public boolean addAppeal(Appeal appeal){
         if(appeal != null){
             appeals.add(appeal);
             return true;

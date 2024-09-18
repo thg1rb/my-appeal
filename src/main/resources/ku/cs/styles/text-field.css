@@ -1,5 +1,13 @@
 .text-field {
+    -fx-cursor: text;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: grey;
+}
+
+.search-text-field {
+    -fx-alignment: center-right;
+}
+
+.text-area .content {
+    /* Add implements here */
 }

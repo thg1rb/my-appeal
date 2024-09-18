@@ -8,12 +8,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.professor.ProfessorApproveStudentAppealController">
    <children>
-      <Label layoutX="110.0" layoutY="90.0" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต">
+      <Pane prefHeight="100.0" prefWidth="1200.0" style="-fx-background-color: #265252;" />
+      <Label layoutX="110.0" layoutY="30.0" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต" textFill="WHITE">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Pane layoutX="50.0" layoutY="180.0" prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+      <Pane layoutX="50.0" layoutY="130.0" prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
          <children>
             <Label layoutX="55.0" layoutY="22.0" text="ชื่อ-สกุลของนิสิต:">
                <font>
@@ -57,7 +58,7 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="generalAppealPane" layoutX="50.0" layoutY="340.0" prefHeight="270.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" visible="false">
+      <Pane fx:id="generalAppealPane" layoutX="50.0" layoutY="270.0" prefHeight="330.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
          <children>
             <Label layoutX="55.0" layoutY="20.0" text="เนื้อหาภายในคำร้อง:">
                <font>
@@ -71,24 +72,24 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="suspendAppealPane" layoutX="50.0" layoutY="340.0" prefHeight="270.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+      <Pane fx:id="suspendAppealPane" layoutX="50.0" layoutY="270.0" prefHeight="330.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
          <children>
             <Label layoutX="55.0" layoutY="20.0" text="ระบุเหตุผลในการขอพักการศึกษา:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="55.0" layoutY="100.0" text="ภาคการศึกษาที่ขอพัก:">
+            <Label layoutX="55.0" layoutY="137.0" text="ภาคการศึกษาที่ขอพัก:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="445.0" layoutY="100.0" text="ปีการศึกษาที่ขอพัก:">
+            <Label layoutX="445.0" layoutY="137.0" text="ปีการศึกษาที่ขอพัก:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="55.0" layoutY="190.0" text="รายวิชาที่ได้ลงทะเบียนเรียนไว้ในภาคการศึกษานี้:">
+            <Label layoutX="55.0" layoutY="210.0" text="รายวิชาที่ได้ลงทะเบียนเรียนไว้ในภาคการศึกษานี้:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -98,24 +99,24 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="semesterSuspendLabel" layoutX="253.0" layoutY="100.0" text="Label">
+            <Label fx:id="semesterSuspendLabel" layoutX="253.0" layoutY="137.0" text="Label">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="yearSuspendLabel" layoutX="623.0" layoutY="100.0" text="Label">
+            <Label fx:id="yearSuspendLabel" layoutX="623.0" layoutY="137.0" text="Label">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="subjectsSuspendLabel" layoutX="53.0" layoutY="231.0" text="Label">
+            <Label fx:id="subjectsSuspendLabel" layoutX="53.0" layoutY="251.0" text="Label">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="breakAppealPane" layoutX="50.0" layoutY="340.0" prefHeight="270.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" visible="false">
+      <Pane fx:id="breakAppealPane" layoutX="50.0" layoutY="270.0" prefHeight="330.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
          <children>
             <Label layoutX="55.0" layoutY="20.0" text="ความประสงค์:">
                <font>

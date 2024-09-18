@@ -1,61 +1,76 @@
 package ku.cs.controllers.professor;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import ku.cs.models.appeals.Appeal;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ku.cs.models.appeal.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Advisor;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
+import ku.cs.services.datasources.AppealListFileDatasource;
+import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.datasources.Datasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProfessorStudentAppealController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
 
+    @FXML private Text totalText;
+    @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
 
     private User user;
-
     private Datasource<AppealList> appealDatasource;
-    private Datasource<UserList> userDatasource;
+    private Datasource<UserList> studentDatasource;
     private AppealList appealList;
-    private UserList userList;
+    private UserList studentList;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         user = (User) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
         appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = appealDatasource.readData();
 
-        userDatasource = new UserListFileDatasource("data", "user.csv");
-        userList = userDatasource.readData();
+        studentDatasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = studentDatasource.readData();
 
-        showTable(appealList, userList);
+        showTable(appealList, studentList);
 
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+        // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
+        tableView.setOnMouseClicked(mouseEvent -> {
+            Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+            if (selectedAppeal != null) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-approve-student-appeal.fxml"));
                     Parent root = loader.load();
 
                     ProfessorApproveStudentAppealController controller = loader.getController();
-                    controller.setSelectedAppeal(newValue, appealList, appealDatasource);
-//                    System.out.println(newValue.getType());
+                    controller.setSelectedAppeal(selectedAppeal, appealList, appealDatasource);
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.UNDECORATED);
@@ -65,7 +80,11 @@ public class ProfessorStudentAppealController {
 
                     stage.showAndWait();
 
-                    showTable(appealList, userList);
+                    appealDatasource.writeData(appealList);
+
+                    tableView.getSelectionModel().clearSelection();  // Clear the current selection safely
+                    showTable(appealList, studentList);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -73,9 +92,10 @@ public class ProfessorStudentAppealController {
         });
     }
 
-    public void showTable(AppealList appealList, UserList userList) {
+    // ตารางแสดงคำร้องของนิสิตในที่ปรึกษาทั้งหมด
+    private void showTable(AppealList appealList, UserList studentList) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
-        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+        dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> type = new TableColumn<>("Appeal Type");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -85,9 +105,6 @@ public class ProfessorStudentAppealController {
 
         TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("Fullname");
         ownerFullNameCol.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
-
-        TableColumn<Appeal, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         dateTimeCol.setComparator((date1, date2)-> {
             int result = DateTimeService.compareDate(date1, date2);
@@ -99,48 +116,26 @@ public class ProfessorStudentAppealController {
         tableView.getColumns().add(type);
         tableView.getColumns().add(ownerIdCol);
         tableView.getColumns().add(ownerFullNameCol);
-        tableView.getColumns().add(statusCol);
 
-//        dateTimeCol.setPrefWidth(295);
-//        type.setPrefWidth(295);
-//        ownerIdCol.setPrefWidth(295);
-//        ownerFullNameCol.setPrefWidth(295);
-
-        dateTimeCol.setPrefWidth(236);
-        type.setPrefWidth(236);
-        ownerIdCol.setPrefWidth(236);
-        ownerFullNameCol.setPrefWidth(236);
-        statusCol.setPrefWidth(236);
+        dateTimeCol.setPrefWidth(275);
+        type.setPrefWidth(275);
+        ownerIdCol.setPrefWidth(275);
+        ownerFullNameCol.setPrefWidth(275);
 
         tableView.getItems().clear();
-        for (User student : userList.getUsers()) {
+        for (User eachUser : studentList.getUsers()) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (student.getId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
+                if ((((Advisor)user).getAdvisorId()).equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
                     tableView.getItems().add(appeal);
                 }
             }
         }
         tableView.getSortOrder().add(dateTimeCol);
+        updateTotalText();
     }
 
-    // ไปที่หน้านิสิตในที่ปรึกษา
-    @FXML
-    public void onStudentListButtonClick() {
-        try {
-            FXRouter.goTo("professor-student-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    // อัพเดทข้อความแสดงจำนวนคำร้องทั้งหมด
+    private void updateTotalText() {
+        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
-
-    // ออกจากระบบ (กลับไปที่หน้าเข้าสู่ระบบ)
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }

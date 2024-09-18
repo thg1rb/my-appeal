@@ -7,10 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ku.cs.models.collections.StudentList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
-import ku.cs.models.persons.User;
 
 public class MajorNisitEditPopupController {
     @FXML TextField nisitNameTextField;
@@ -22,19 +21,19 @@ public class MajorNisitEditPopupController {
     @FXML Button confirmButton;
     @FXML Label topicLabel;
 
-    private User user;
+    private DepartmentStaff user;
     private Student nisit;
-    private StudentList studentRoster;
+    private UserList studentRoster;
 
     public void initialize(){
 
     }
-    public void setNisit(Student selectedNisit, User user){
+    public void setNisit(Student selectedNisit){
         this.nisit = selectedNisit;
         if (nisit != null) {
             nisitNameTextField.setText(nisit.getFirstName());
             nisitLastNameTextField.setText(nisit.getLastName());
-            nisitIdTextField.setText(nisit.getId());
+            nisitIdTextField.setText(nisit.getStudentId());
             nisitEmailTextField.setText(nisit.getEmail());
             professorTextField.setText(nisit.getAdvisor());
         }
@@ -49,7 +48,7 @@ public class MajorNisitEditPopupController {
             topicLabel.setText("แก้ไขข้อมูลนิสิต");
         }
     }
-    public void setUser(User user, StudentList studentRoster){
+    public void setUser(DepartmentStaff user, UserList studentRoster){
         this.user = user;
         this.studentRoster = studentRoster;
     }
@@ -57,8 +56,7 @@ public class MajorNisitEditPopupController {
     public void onConfirmButtonClick(ActionEvent event){
         nisit.setFirstName(nisitNameTextField.getText());
         nisit.setLastName(nisitLastNameTextField.getText());
-        nisit.setFullName();
-        nisit.setID(nisitIdTextField.getText());
+        nisit.setStudentId(nisitIdTextField.getText());
         nisit.setEmail(nisitEmailTextField.getText());
         nisit.setAdvisor(professorTextField.getText());
         onCancleButtonClick(event);
@@ -66,10 +64,11 @@ public class MajorNisitEditPopupController {
 
     public void onAddButtonClick(ActionEvent event){
         if(professorTextField.getText().isEmpty()){
-            studentRoster.addStudent(nisitIdTextField.getText(), nisitEmailTextField.getText(), nisitNameTextField.getText(), nisitLastNameTextField.getText(), user);
+            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment()));
         }
         else{
-            studentRoster.addStudent(nisitIdTextField.getText(), nisitEmailTextField.getText(), nisitNameTextField.getText(), nisitLastNameTextField.getText(), professorTextField.getText(), user);
+            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment(), professorTextField.getText()));
+
         }
         onCancleButtonClick(event);
     }
