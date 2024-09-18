@@ -11,6 +11,8 @@ import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.User;
 import ku.cs.services.exceptions.EmptyInputException;
 
+import java.io.IOException;
+
 public class ApproverEditController {
     @FXML private TextField nameTextField;
     @FXML private TextField lastNameTextField;
@@ -70,15 +72,20 @@ public class ApproverEditController {
                 throw new EmptyInputException();
             }
             approverList.addApprover(nameTextField.getText(),lastNameTextField.getText(),roleTextField.getText(),user);
+            onCancleButtonClick();
         }
+        catch(EmptyInputException e){
+            System.out.println(e.getMessage());
 
-
-        onCancleButtonClick();
+        }
     }
 
     public boolean isEmptyTextField(){
+        nameErrorLabel.setVisible(false);
+        lastNameErrorLabel.setVisible(false);
+        roleErrorLabel.setVisible(false);
         if(!nameTextField.getText().isEmpty() && !lastNameTextField.getText().isEmpty() && !roleTextField.getText().isEmpty()){
-            return true;
+            return false;
         }
         else{
             if(nameTextField.getText().isEmpty()){
@@ -90,7 +97,7 @@ public class ApproverEditController {
             if(roleTextField.getText().isEmpty()){
                 roleErrorLabel.setVisible(true);
             }
-            return false;
+            return true;
         }
     }
 

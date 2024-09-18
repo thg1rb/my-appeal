@@ -63,5 +63,8 @@
             <Font size="20.0" />
          </font>
       </TextField>
+      <Label fx:id="nameErrorLabel" layoutX="209.0" layoutY="153.0" text="กรุณากรอกชื่อ" textFill="RED" visible="false" />
+      <Label fx:id="lastNameErrorLabel" layoutX="209.0" layoutY="247.0" text="กรุณากรอกนามสกุล" textFill="RED" visible="false" />
+      <Label fx:id="roleErrorLabel" layoutX="209.0" layoutY="345.0" text="กรุณากรอกตำแหน่ง" textFill="RED" visible="false" />
    </children>
 </AnchorPane>
