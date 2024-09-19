@@ -75,7 +75,7 @@ public class AdminUserManagementController {
     }
 
     private void showTable(UserList userList, String searchText){
-        basicInfoColCreater(183, false);
+        basicInfoColCreator(183, false);
         if (!searchText.isEmpty()) {
             for (User user : userList.getUsers()) {
                 if (user.getFullName().contains(searchText)) {
@@ -89,7 +89,7 @@ public class AdminUserManagementController {
         }
     }
     private void showRoleTable(UserList userList, String role){
-        basicInfoColCreater(220, true);
+        basicInfoColCreator(220, true);
         for (User user : userList.getUsers()){
             if (user.getRole().equals(role)){
                 tableView.getItems().add(user);
@@ -97,7 +97,7 @@ public class AdminUserManagementController {
         }
     }
 
-    private void basicInfoColCreater(int colWidhth, boolean roleSpecific) {
+    private void basicInfoColCreator(int colWidhth, boolean roleSpecific) {
         TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();

@@ -17,7 +17,10 @@ import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 
-import ku.cs.services.*;
+import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.FacultyListDatasource;
+import ku.cs.services.datasources.MajorListDatasource;
 
 import java.io.IOException;
 
@@ -56,12 +59,12 @@ public class AdminStaffManagementController {
             throw new RuntimeException(e);
         }
 
-        datasource = new UserListFileDatasource("data", "user.csv");
-        userList = datasource.readData();
-        facultyListDatasource = new FacultyListFileDatasource("data", "faculties.csv");
-        facultyList = facultyListDatasource.readData();
-        majorListDatasource = new MajorListFileDatasource("data", "majors.csv");
-        majorList = majorListDatasource.readData();
+//        datasource = new UserListFileDatasource("data", "user.csv");
+//        userList = datasource.readData();
+//        facultyListDatasource = new FacultyListDatasource("data", "faculties.csv");
+//        facultyList = facultyListDatasource.readData();
+//        majorListDatasource = new MajorListDatasource("data", "majors.csv");
+//        majorList = majorListDatasource.readData();
 
         showTable(userList, "เจ้าหน้าที่คณะ");
         updateTotalText();

@@ -13,7 +13,7 @@ import ku.cs.models.collections.MajorList;
 
 import java.util.ArrayList;
 
-public class MajorFacultyPopupController {
+public class AdminMajorFacultyPopupController {
     @FXML private Text modeText;
     @FXML private Text nameText;
     @FXML private Text idText;
@@ -36,6 +36,8 @@ public class MajorFacultyPopupController {
     private String[] optionChoice = {"คณะ", "ภาควิชา"};
     private ArrayList<String> facultyChoice;
 
+    private boolean editMode;
+
     @FXML
     private void initialize() {
         optionChoiceBox.getItems().addAll(optionChoice);
@@ -43,6 +45,7 @@ public class MajorFacultyPopupController {
         optionChoiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
                 setUi(newValue);
+                setMode(editMode, newValue);
             }
         });
     }
@@ -61,6 +64,7 @@ public class MajorFacultyPopupController {
     }
 
     private void setMode(boolean editMode, String tabSelected) {
+        this.editMode = editMode;
         if (editMode){
             modeText.setText("แก้ไขข้อมูล" + tabSelected);
             optionChoiceBox.setDisable(true);

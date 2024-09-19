@@ -29,6 +29,14 @@ public class MajorList {
             majors.add(new Major(name, faculty, id));
         }
     }
+    public void addMajor(String uuid, String name, String faculty, String id){
+        name = name.trim();
+        faculty = faculty.trim();
+        id = id.trim();
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
+            majors.add(new Major(uuid, name, faculty, id));
+        }
+    }
 
     public void addMajor (Major obj){
         for (Major m : majors){

@@ -121,7 +121,7 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return uuid + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
+        return uuid.toString() + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 
     public abstract String getRoleInEnglish();
