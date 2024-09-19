@@ -133,8 +133,8 @@ public class AdminStaffPopupController {
             usernameTextField.setText(user.getUsername());
             initPasswordTextField.setText(((FacultyStaff) user).getInitialPasswordText());
             facultyChoiceBox.setValue(((FacultyStaff) user).getFaculty());
-//            majorChoiceBox.setValue(user.getMajor());
-//            idTextField.setText(user.getId());
+            if (user instanceof DepartmentStaff) majorChoiceBox.setValue(((DepartmentStaff)user).getDepartment());
+            if (user instanceof Advisor) idTextField.setText(((Advisor)user).getAdvisorId());
         }
     }
 

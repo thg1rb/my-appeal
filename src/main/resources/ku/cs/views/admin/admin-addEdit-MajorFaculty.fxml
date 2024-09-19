@@ -63,5 +63,10 @@
             </font>
         </Button>
         <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="292.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+      <Text fx:id="emptyInputText" fill="RED" layoutX="166.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*กรุณากรอกข้อมูลให้ครบถ้วน">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
