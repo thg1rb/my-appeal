@@ -32,7 +32,7 @@ import java.sql.SQLOutput;
 
 public class MajorAppealManageController {
     @FXML private Pane navbarAnchorPane;
-    @FXML private TableView<Appeal> allAppealTable;
+    @FXML private TableView<Appeal> tableView;
     @FXML private TabPane tabPane;
 
     private Appeal selectedAppeal;
@@ -69,13 +69,13 @@ public class MajorAppealManageController {
         });
 
 
-        allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
             @Override
             public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
                 if (newValue != null) {
                     selectedAppeal = newValue;
                     showAppealPopup();
-                    allAppealTable.getSelectionModel().select(selectedAppeal);
+                    tableView.getSelectionModel().select(selectedAppeal);
                 }
             }
         });
@@ -98,7 +98,7 @@ public class MajorAppealManageController {
             datasource.writeData(appealList);
 
 //            showTable(appealList);
-            allAppealTable.refresh();
+            tableView.refresh();
         }
         catch(IOException e){
             e.printStackTrace();
@@ -122,31 +122,31 @@ public class MajorAppealManageController {
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        allAppealTable.getColumns().clear();
-        allAppealTable.getColumns().add(dateColumn);
-        allAppealTable.getColumns().add(ownerColumn);
-        allAppealTable.getColumns().add(typeColumn);
+        tableView.getColumns().clear();
+        tableView.getColumns().add(dateColumn);
+        tableView.getColumns().add(ownerColumn);
+        tableView.getColumns().add(typeColumn);
 
         dateColumn.setPrefWidth(367);
         ownerColumn.setPrefWidth(366);
         typeColumn.setPrefWidth(366);
 
-        allAppealTable.getSortOrder().add(dateColumn);
+        tableView.getSortOrder().add(dateColumn);
 
-        allAppealTable.getItems().clear();
+        tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
-                allAppealTable.getItems().add(appeal);
+                tableView.getItems().add(appeal);
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
                 if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
                     System.out.println(appeal.toString());
-                    allAppealTable.getItems().add(appeal);
+                    tableView.getItems().add(appeal);
                 }
             }
         }
-        allAppealTable.sort();
+        tableView.sort();
 
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
