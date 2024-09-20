@@ -115,6 +115,10 @@ public class MajorAppealManageController {
         allAppealTable.getColumns().add(ownerColumn);
         allAppealTable.getColumns().add(typeColumn);
 
+        dateColumn.setPrefWidth(367);
+        ownerColumn.setPrefWidth(366);
+        typeColumn.setPrefWidth(366);
+
         allAppealTable.getSortOrder().add(dateColumn);
 
         allAppealTable.getItems().clear();

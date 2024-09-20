@@ -16,9 +16,9 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
-import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,8 +30,8 @@ public class MajorNisitManageController {
 
     private UserList studentList;
     private Datasource<UserList> datasource;
-    private Student selectedNisit;
-    private DepartmentStaff user;
+    private User selectedNisit;
+    private User user;
     public boolean addMode = false;
 
     public void initialize() {
@@ -47,33 +47,26 @@ public class MajorNisitManageController {
             throw new RuntimeException(e);
         }
 
-        datasource = new UserListFileDatasource("data" + File.separator + "users", "student.csv");
+        datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
         studentList = datasource.readData();
 
         showTable(studentList);
-        nisitTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
-            @Override
-            public void changed(ObservableValue<? extends Student> observableValue, Student oldValue, Student newValue) {
-                if (newValue != null) {
-                    selectedNisit = newValue;
-                    addMode = false;
-                    showPopUp(addMode);
-                    nisitTableView.getSelectionModel().select(selectedNisit);
-                }else{
-                    selectedNisit = null;
-                }
-            }
+        nisitTableView.setOnMouseClicked(event ->{
+            selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
+            addMode = false;
+            showPopUp(addMode);
         });
+
     }
 
-    public void onAddButtonClick(){
+    public void addNisitOnButtonClick(){
         addMode = true;
         showPopUp(addMode);
     }
 
-    public void showTable(UserList studentRoster) {
+    public void showTable(UserList studentList) {
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -97,7 +90,7 @@ public class MajorNisitManageController {
         nisitTableView.getItems().clear();
         if (studentList != null) {
             for (User nisit : studentList.getUsers()) {
-                if (((Student)nisit).getDepartment().equals(user.getDepartment())) {
+                if (((Student)nisit).getDepartment().equals(((DepartmentStaff)user).getDepartment())) {
                     nisitTableView.getItems().add((Student) nisit);
                 }
             }
@@ -111,11 +104,11 @@ public class MajorNisitManageController {
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
             if(!addMode){
-                controller.setNisit(selectedNisit);
                 controller.setMode(addMode);
+                controller.setNisit(selectedNisit);
             }
             else{
-                controller.setUser(user, studentList);
+                controller.setUser(((DepartmentStaff)user) , studentList);
                 controller.setMode(addMode);
             }
 
@@ -129,7 +122,6 @@ public class MajorNisitManageController {
 
             datasource.writeData(studentList);
             studentList = datasource.readData();
-
             showTable(studentList);
         }
         catch (IOException e) {

@@ -1,7 +1,5 @@
 package ku.cs.controllers.major;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -14,9 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import ku.cs.controllers.general.ApproverEditController;
 import ku.cs.models.collections.ApproverList;
-import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
@@ -24,16 +22,18 @@ import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MajorApproverManageController {
     @FXML private Pane navbarAnchorPane;
-    @FXML private TableView approverTableView;
+    @FXML private TableView<Approver> approverTableView;
 
-    private DepartmentStaff user;
+    private User user;
     private Datasource<ApproverList> approverDatasource;
     private ApproverList approverList;
     private Approver selectedApprover;
+    private boolean addMode;
 
     public void initialize() {
         user = (DepartmentStaff) FXRouter.getData();
@@ -53,14 +53,10 @@ public class MajorApproverManageController {
 
         showTable(approverList);
 
-        approverTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Approver>() {
-            @Override
-            public void changed(ObservableValue<? extends Approver> observableValue, Approver oldValue, Approver newValue) {
-                if(newValue != null) {
-                    selectedApprover = newValue;
-                    showPopup();
-                }
-            }
+        approverTableView.setOnMouseClicked(event -> {
+            selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
+            addMode = false;
+            showPopup();
         });
     }
 
@@ -70,12 +66,20 @@ public class MajorApproverManageController {
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
 
+            controller.setMode(addMode, selectedApprover, user, approverList);
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
             stage.setScene(new Scene(root));
 
+            controller.setStage(stage);
+
             stage.showAndWait();
+
+            approverDatasource.writeData(approverList);
+            approverList = approverDatasource.readData();
+            showTable(approverList);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -93,6 +97,10 @@ public class MajorApproverManageController {
         approverTableView.getColumns().add(roleColumn);
         approverTableView.getColumns().add(fullNameColumn);
 
+        roleColumn.setPrefWidth(550);
+        fullNameColumn.setPrefWidth(550);
+
+        approverTableView.getItems().clear();
         if (approverList != null) {
             for(Approver approver : approverList.getApprovers()){
                 approverTableView.getItems().add(approver);
@@ -101,5 +109,10 @@ public class MajorApproverManageController {
 
         roleColumn.setSortable(false);
         fullNameColumn.setSortable(false);
+    }
+
+    public void addApproverButtonClick(){
+        addMode = true;
+        showPopup();
     }
 }
