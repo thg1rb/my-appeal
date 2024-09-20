@@ -53,11 +53,19 @@ public class ApproverEditController {
         }
     }
 
-    public void onConfirmButtonClick(){
-        approver.setFirstName(nameTextField.getText());
-        approver.setLastName(lastNameTextField.getText());
-        approver.setRole(roleTextField.getText());
-        onCancleButtonClick();
+    public void onConfirmButtonClick()throws EmptyInputException{
+        try{
+            if(isEmptyTextField()){
+                throw new EmptyInputException();
+            }
+            approver.setFirstName(nameTextField.getText());
+            approver.setLastName(lastNameTextField.getText());
+            approver.setRole(roleTextField.getText());
+            onCancleButtonClick();
+        }
+        catch(EmptyInputException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void onCancleButtonClick(){
