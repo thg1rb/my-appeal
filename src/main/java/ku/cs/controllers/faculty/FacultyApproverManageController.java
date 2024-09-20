@@ -18,7 +18,6 @@ import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class FacultyApproverManageController {
     @FXML private Pane navbarAnchorPane;
@@ -188,7 +187,7 @@ public class FacultyApproverManageController {
             for (Approver approver : approverList.getApprovers()) {
                 String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
                 if (fullName.contains(searchText)) {
-                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getMajor(), approver.getRole());
+                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getDepartment(), approver.getRole());
                 }
             }
             showApproverTable(filteredApproverList);

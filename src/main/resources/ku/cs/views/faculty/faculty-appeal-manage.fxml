@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" stylesheets="@../../styles/button.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.faculty.FacultyAppealManageController">
@@ -17,13 +22,13 @@
          </font>
       </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TabPane layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-border-radius: 00 20 20 20;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
+      <TabPane layoutX="230.0" layoutY="205.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-border-radius: 00 20 20 20;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
         <tabs>
           <Tab style="-fx-background-radius: 20 00 00 00; -fx-padding: 10; -fx-font-size: 20;" text="ทั้งหมด">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 00 20 00 00; -fx-background-color: transparent;">
                      <children>
-                        <TableView prefHeight="532.0" prefWidth="1180.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
+                        <TableView fx:id="allAppealTable" prefHeight="532.0" prefWidth="1180.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
                           <columns>
                             <TableColumn prefWidth="183.0" style="-fx-font-size: 20;" text="Date/Time" />
                             <TableColumn prefWidth="183.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
@@ -61,5 +66,90 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Pane fx:id="popupAppealPane" layoutX="232.0" layoutY="210.0" prefHeight="592.0" prefWidth="1099.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" visible="false">
+         <children>
+            <ScrollPane fx:id="detailScrollPane" layoutX="40.0" layoutY="223.0" prefHeight="335.0" prefWidth="442.0" stylesheets="@../../styles/scroll-pane.css">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="239.0" prefWidth="441.0">
+                     <children>
+                        <VBox fx:id="vbox" style="-fx-background-radius: 10; -fx-background-color: transparent;" AnchorPane.leftAnchor="0.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <Label fx:id="reasonLabel" text="reasonLabel" wrapText="true">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <Label fx:id="typeLabel" layoutX="50.0" layoutY="10.0" text="typeLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="topicLabel" layoutX="51.0" layoutY="40.0" text="topicLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="51.0" layoutY="192.0" text="รายละเอียด:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="40.0" text="สถานะปัจจุบัน:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="presentStatusLabel" layoutX="630.0" layoutY="40.0" text="presentStatusLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="statusChoiceBox" layoutX="550.0" layoutY="93.0" prefHeight="51.0" prefWidth="422.0" stylesheets="@../../styles/button.css" />
+            <Button layoutX="651.0" layoutY="203.0" mnemonicParsing="false" onAction="#confirmOnButtonClick" prefHeight="38.0" prefWidth="91.0" text="ยืนยัน" />
+            <Button layoutX="798.0" layoutY="203.0" mnemonicParsing="false" onAction="#cancleOnButtonClick" prefHeight="38.0" prefWidth="91.0" text="ยกเลิก" />
+            <Label fx:id="purposeLabel" layoutX="51.0" layoutY="130.0" text="purposeLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="breakTimeLabel" layoutX="51.0" layoutY="160.0" text="breakTimeLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="subjectLabel" layoutX="51.0" layoutY="160.0" text="subjectLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="academicTermLabel" layoutX="51.0" layoutY="160.0" text="academicTermLAbel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="yearLabel" layoutX="51.0" layoutY="173.0" text="yearLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="semesterLabel" layoutX="51.0" layoutY="140.0" text="semesterLabel">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
