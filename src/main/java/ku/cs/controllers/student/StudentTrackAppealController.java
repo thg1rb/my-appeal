@@ -33,6 +33,11 @@ public class StudentTrackAppealController {
     private void initialize() {
         user = (User) FXRouter.getData();
 
+        // แสดงข้อมูลภายในตาราง
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = datasource.readData();
+        showTable(appealList, ((Student)user).getStudentId());
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -43,10 +48,6 @@ public class StudentTrackAppealController {
             throw new RuntimeException(e);
         }
 
-        // แสดงข้อมูลภายในตาราง
-        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
-        appealList = datasource.readData();
-        showTable(appealList, ((Student)user).getStudentId());
     }
 
     // ตารางแสดงคำร้องทั้งหมดของนิสิต
