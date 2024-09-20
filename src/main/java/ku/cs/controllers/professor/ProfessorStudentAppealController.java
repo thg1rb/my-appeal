@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,28 +14,30 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
-import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
+import ku.cs.services.datasources.AppealListFileDatasource;
+import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.datasources.Datasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProfessorStudentAppealController {
+
     @FXML private Text totalText;
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TableView<Appeal> tableView;
 
     private User user;
-
-    @FXML private Pane navbarAnchorPane;
-
-    @FXML private TableView<Appeal> tableView;
     private Datasource<AppealList> appealDatasource;
-    private Datasource<UserList> userDatasource;
+    private Datasource<UserList> studentDatasource;
     private AppealList appealList;
-    private UserList userList;
+    private UserList studentList;
 
     @FXML
     private void initialize() {
@@ -55,20 +56,21 @@ public class ProfessorStudentAppealController {
         appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = appealDatasource.readData();
 
-        userDatasource = new UserListFileDatasource("data", "user.csv");
-        userList = userDatasource.readData();
+        studentDatasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = studentDatasource.readData();
 
-        showTable(appealList, userList);
+        showTable(appealList, studentList);
 
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+        // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
+        tableView.setOnMouseClicked(mouseEvent -> {
+            Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+            if (selectedAppeal != null) {
                 try {
-
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-approve-student-appeal.fxml"));
                     Parent root = loader.load();
 
                     ProfessorApproveStudentAppealController controller = loader.getController();
-                    controller.setSelectedAppeal(newValue, appealList, appealDatasource);
+                    controller.setSelectedAppeal(selectedAppeal, appealList, appealDatasource);
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.UNDECORATED);
@@ -80,12 +82,8 @@ public class ProfessorStudentAppealController {
 
                     appealDatasource.writeData(appealList);
 
-                    Platform.runLater(() -> {
-                        if (!tableView.getItems().isEmpty()) {
-                            tableView.getSelectionModel().clearSelection();  // Clear the current selection safely
-                            showTable(appealList, userList);
-                        }
-                    });
+                    tableView.getSelectionModel().clearSelection();  // Clear the current selection safely
+                    showTable(appealList, studentList);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -95,7 +93,7 @@ public class ProfessorStudentAppealController {
     }
 
     // ตารางแสดงคำร้องของนิสิตในที่ปรึกษาทั้งหมด
-    private void showTable(AppealList appealList, UserList userList) {
+    private void showTable(AppealList appealList, UserList studentList) {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
@@ -125,10 +123,9 @@ public class ProfessorStudentAppealController {
         ownerFullNameCol.setPrefWidth(275);
 
         tableView.getItems().clear();
-        for (User eachUser : userList.getUsers()) {
-            if (!eachUser.getRole().equals("นักศึกษา")) continue;
+        for (User eachUser : studentList.getUsers()) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (user.getFullName().equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
+                if ((((Advisor)user).getAdvisorId()).equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
                     tableView.getItems().add(appeal);
                 }
             }

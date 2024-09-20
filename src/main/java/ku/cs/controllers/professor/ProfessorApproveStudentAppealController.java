@@ -3,7 +3,10 @@ package ku.cs.controllers.professor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -12,9 +15,9 @@ import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
-import ku.cs.services.ModifyDateListFileDatasource;
+import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.util.Date;
 
@@ -40,6 +43,9 @@ public class ProfessorApproveStudentAppealController {
     @FXML private Label reasonBreakLabel;
     @FXML private Label subjectsBreakLabel;
 
+    @FXML private ImageView closePopUpImageView;
+    @FXML private Button closePopUpButton;
+
     private Appeal selectedAppeal;
     private Datasource<AppealList> appealListDatasource;
     private AppealList appealList;
@@ -51,6 +57,15 @@ public class ProfessorApproveStudentAppealController {
     private void initialize() {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        // ปุ่มปิดหน้าต่าง
+        Image defaultClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up.png").toString());
+        Image hoverClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up-hover.png").toString());
+
+        closePopUpImageView.setImage(defaultClosePopUpImage);
+
+        closePopUpButton.setOnMouseEntered(mouseEvent -> closePopUpImageView.setImage(hoverClosePopUpImage));
+        closePopUpButton.setOnMouseExited(mouseEvent -> closePopUpImageView.setImage(defaultClosePopUpImage));
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
@@ -99,7 +114,7 @@ public class ProfessorApproveStudentAppealController {
         breakAppealPane.setVisible(isBreakAppeal);
     }
 
-    // ปิดหน้าต่าง pop up
+    // ปิดหน้าต่าง pop-up
     @FXML
     public void onCloseButtonClick(ActionEvent event) {
         modifyDateListDatasource.writeData(modifyDateList);

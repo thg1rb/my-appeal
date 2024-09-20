@@ -1,6 +1,8 @@
+/* Button Style */
+
 Button {
     -fx-cursor: hand;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 15, 0, 0, 0);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 }
 
 /* Sidebar Button Click */
@@ -32,6 +34,42 @@ Button {
 .login-button:hover {
     -fx-background-color: #606060;
 }
+
+/* Approve & Reject Appeal Button Click */
+.approve-button {
+    -fx-background-color: #008f2f;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+} คำร้องของคุณจะถูกส่งต่อให้อาจารย์ที่ปรึกษา สามารถติดตามคำร้องได้ที่หน้าติดตามคำร้อง
+
+.approve-button:hover {
+    -fx-background-color: #007323;
+    -fx-text-fill: #d1d1d1;
+}
+
+.reject-button {
+    -fx-background-color: #cc0000;
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+}
+
+.reject-button:hover {
+    -fx-background-color: #910000;
+    -fx-text-fill: #d1d1d1;
+}
+
+/* Close Pop Up */
+.close-pop-up {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+}
+
+.close-pop-up:hover {
+    -fx-text-fill: #c8c8c8;
+}
+
+/* Choice Box Style */
 
 .choice-box {
     -fx-background-color: #303337;
@@ -79,27 +117,4 @@ Button {
 }
 .choice-box-white .menu-item:focused{
     -fx-background-color: grey;
-}
-
-/* Approve & Reject Appeal Button Click */
-.approve-button {
-    -fx-background-color: #008f2f;
-    -fx-background-radius: 10px;
-    -fx-text-fill: white;
-}
-
-.approve-button:hover {
-    -fx-background-color: #007323;
-    -fx-text-fill: #d1d1d1;
-}
-
-.reject-button {
-    -fx-background-color: #cc0000;
-    -fx-border-radius: 10px;
-    -fx-text-fill: white;
-}
-
-.reject-button:hover {
-    -fx-background-color: #910000;
-    -fx-text-fill: #d1d1d1;
 }

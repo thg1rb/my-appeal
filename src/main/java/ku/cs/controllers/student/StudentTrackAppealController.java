@@ -11,8 +11,8 @@ import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
-import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
@@ -27,7 +27,7 @@ public class StudentTrackAppealController {
 
     @FXML private TableView<Appeal> tableView;
 
-//    @FXML private Text totalText;
+    @FXML private Text totalText;
 
     @FXML
     private void initialize() {
@@ -74,11 +74,11 @@ public class StudentTrackAppealController {
         }
         tableView.getSortOrder().add(dateTimeCol);
 
-//        updateTotalText();
+        updateTotalText();
     }
 
     // อัพเดตข้อความแสดงคำร้องทั้งหมด
-//    private void updateTotalText() {
-//        totalText.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
-//    }
+    private void updateTotalText() {
+        totalText.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+    }
 }

@@ -4,6 +4,7 @@ module ku.cs {
     requires bcrypt;
     requires java.xml.crypto;
     requires java.desktop;
+    requires java.sql;
 
     opens ku.cs.cs211671project to javafx.fxml;
     exports ku.cs.cs211671project;

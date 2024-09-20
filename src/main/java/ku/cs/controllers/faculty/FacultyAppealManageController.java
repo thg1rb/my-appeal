@@ -15,8 +15,8 @@ import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.persons.User;
-import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
