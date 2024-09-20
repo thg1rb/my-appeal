@@ -3,8 +3,11 @@ package ku.cs.controllers.professor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.appeals.BreakAppeal;
@@ -20,9 +23,9 @@ import java.util.Date;
 
 public class ProfessorApproveStudentAppealController {
 
-    @FXML private Pane generalAppealPane;
-    @FXML private Pane suspendAppealPane;
-    @FXML private Pane breakAppealPane;
+    @FXML private ScrollPane generalAppealScrollPane;
+    @FXML private ScrollPane suspendAppealScrollPane;
+    @FXML private ScrollPane breakAppealScrollPane;
 
     @FXML private Label fullnameLabel;
     @FXML private Label idLabel;
@@ -40,6 +43,9 @@ public class ProfessorApproveStudentAppealController {
     @FXML private Label reasonBreakLabel;
     @FXML private Label subjectsBreakLabel;
 
+    @FXML private ImageView closePopUpImageView;
+    @FXML private Button closePopUpButton;
+
     private Appeal selectedAppeal;
     private Datasource<AppealList> appealListDatasource;
     private AppealList appealList;
@@ -51,6 +57,15 @@ public class ProfessorApproveStudentAppealController {
     private void initialize() {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        // ปุ่มปิดหน้าต่าง
+        Image defaultClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up.png").toString());
+        Image hoverClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up-hover.png").toString());
+
+        closePopUpImageView.setImage(defaultClosePopUpImage);
+
+        closePopUpButton.setOnMouseEntered(mouseEvent -> closePopUpImageView.setImage(hoverClosePopUpImage));
+        closePopUpButton.setOnMouseExited(mouseEvent -> closePopUpImageView.setImage(defaultClosePopUpImage));
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
@@ -94,9 +109,9 @@ public class ProfessorApproveStudentAppealController {
     // แสดงรายละเอียดคำร้องตามประเภทของคำร้อง
     public void showAppealPane(Boolean isGeneralAppeal, Boolean isSuspendAppeal, Boolean isBreakAppeal) {
         initializeLabel(isGeneralAppeal, isSuspendAppeal, isBreakAppeal);
-        generalAppealPane.setVisible(isGeneralAppeal);
-        suspendAppealPane.setVisible(isSuspendAppeal);
-        breakAppealPane.setVisible(isBreakAppeal);
+        generalAppealScrollPane.setVisible(isGeneralAppeal);
+        suspendAppealScrollPane.setVisible(isSuspendAppeal);
+        breakAppealScrollPane.setVisible(isBreakAppeal);
     }
 
     // ปิดหน้าต่าง pop-up

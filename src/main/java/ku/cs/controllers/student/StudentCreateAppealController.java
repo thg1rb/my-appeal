@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
@@ -20,7 +21,10 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -58,9 +62,11 @@ public class StudentCreateAppealController {
     @FXML private DatePicker startBreakDatePicker;
     @FXML private DatePicker endBreakDatePicker;
 
-    //  ประกาศตัวแปรคำเตือน (ใส่ข้อมูลไม่ครบถ้วน)
+    //  ประกาศตัวแปร Alert (สร้างคำร้องไม่สำเร็จ และสร้างคำร้องสำเร็จ)
     @FXML private Pane backgroundAlertPane;
-    @FXML private Pane alertPane;
+    @FXML private Pane noAdvisorAlertPane;
+    @FXML private Pane failAlertPane;
+    @FXML private Pane successAlertPane;
 
     private User user;
 
@@ -74,6 +80,14 @@ public class StudentCreateAppealController {
     public void initialize() {
         user = (User) FXRouter.getData();
 
+        // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
+        appealListDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = appealListDatasource.readData();
+
+        // อ่านไฟล์ modify-date.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -84,15 +98,14 @@ public class StudentCreateAppealController {
             throw new RuntimeException(e);
         }
 
-        // อ่านไฟล์ appeal-list.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
-        appealListDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
-        appealList = appealListDatasource.readData();
-
-        // อ่านไฟล์ modify-date.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
-        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
-        modifyDateList = modifyDateListDatasource.readData();
-
         initializeChoiceBox();
+        initializeDatePicker();
+
+        if (((Student)user).getAdvisor().equals("null")) {
+            noAdvisorAlertPane.setVisible(true);
+            backgroundAlertPane.setVisible(true);
+            return ;
+        }
     }
 
     // แสดงและกำหนดค่าเริ่มต้น ChoiceBox
@@ -161,11 +174,15 @@ public class StudentCreateAppealController {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), details, topic));
+                backgroundAlertPane.setVisible(true);
+                successAlertPane.setVisible(true);
+
+                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), details, topic));
+                modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
-                alertPane.setVisible(true);
+                failAlertPane.setVisible(true);
             }
         }
         else if (selectedAppeal.equals("ขอพักการศึกษา")) {
@@ -179,11 +196,15 @@ public class StudentCreateAppealController {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, subjects, semester, year));
+                backgroundAlertPane.setVisible(true);
+                successAlertPane.setVisible(true);
+
+                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, semester, year));
+                modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
-                alertPane.setVisible(true);
+                failAlertPane.setVisible(true);
             }
         }
         else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
@@ -192,23 +213,31 @@ public class StudentCreateAppealController {
                 String purpose = purposesBreakChoiceBox.getValue();
                 String subjects = subjectsBreakTextArea.getText();
 
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                String startDate = (startBreakDatePicker.getValue() == null) ? "" : startBreakDatePicker.getValue().format(dateFormatter);
-                String endDate = (endBreakDatePicker.getValue() == null) ? "" : endBreakDatePicker.getValue().format(dateFormatter);
+                LocalDate startDateValue = startBreakDatePicker.getValue();
+                LocalDate endDateValue = endBreakDatePicker.getValue();
 
-                if (purpose.isEmpty() || subjects.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
+                if (purpose.isEmpty() || subjects.isEmpty() || startBreakDatePicker.getValue() == null || startDateValue == null || endDateValue.isBefore(startDateValue)) {
                     throw new EmptyInputException();
                 }
 
-                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), reason, subjects, purpose, startDate, endDate));
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String startDate = startDateValue.format(dateFormatter);
+                String endDate = endDateValue.format(dateFormatter);
+
+                backgroundAlertPane.setVisible(true);
+                successAlertPane.setVisible(true);
+
+                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, purpose, startDate, endDate));
+                modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
                 backgroundAlertPane.setVisible(true);
-                alertPane.setVisible(true);
+                failAlertPane.setVisible(true);
+            } catch (Exception e) {
+                System.out.println("ฟอร์แมทไม่ถูกต้อง");
             }
         }
 
-        modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
         modifyDateListDatasource.writeData(modifyDateList);
         modifyDateListDatasource.readData();
 
@@ -217,7 +246,7 @@ public class StudentCreateAppealController {
     }
 
     // รีเซ็ตค่า TextField, TextArea และ, ChoiceBox
-    public void resetTheValue() {
+    private void resetTheValue() {
         topicTextArea.clear();
         detailsTextArea.clear();
         reasonSuspendTextArea.clear();
@@ -230,13 +259,57 @@ public class StudentCreateAppealController {
         purposesBreakChoiceBox.setValue(purposes[0]);
         semestersSuspendChoiceBox.setValue(semesters[0]);
         yearsSuspendChoiceBox.setValue(years[0]);
+
+        startBreakDatePicker.setValue(LocalDate.now());
+        endBreakDatePicker.setValue(LocalDate.now());
+    }
+
+    // กำหนดเริ่มต้น Date Picker
+    private void initializeDatePicker() {
+        startBreakDatePicker.setValue(LocalDate.now());
+        endBreakDatePicker.setValue(LocalDate.now());
+
+        restrictDatePickerToCurrentAndFuture(startBreakDatePicker);
+        restrictDatePickerToCurrentAndFuture(endBreakDatePicker);
+    }
+
+    // จำกัดการเลือกวันให้อยู่ในช่วงปัจจุบันและอนาคตเท่านั้น
+    private void restrictDatePickerToCurrentAndFuture(DatePicker datePicker) {
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // ปิดการเลือกวันก่อนหน้าทั้งหมด
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #666666;"); // Optional: make disabled dates stand out
+                        }
+                    }
+                };
+            }
+        };
+
+        datePicker.setDayCellFactory(dayCellFactory);
     }
 
     // ปิดหน้าจอเตือน
     @FXML
     public void onCloseButtonClick() {
         backgroundAlertPane.setVisible(false);
-        alertPane.setVisible(false);
+
+        if (noAdvisorAlertPane.isVisible()) {
+            noAdvisorAlertPane.setVisible(false);
+            onTrackAppealButtonClick();
+        } else if (successAlertPane.isVisible()) {
+            successAlertPane.setVisible(false);
+            onTrackAppealButtonClick();
+        } else if (failAlertPane.isVisible()) {
+            failAlertPane.setVisible(false);
+        }
     }
 
     // ไปที่หน้าติดตามคำร้อง

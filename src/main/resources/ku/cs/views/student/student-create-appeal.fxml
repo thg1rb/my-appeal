@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -24,7 +25,7 @@
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></ChoiceBox>
-      <Pane fx:id="generalAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
+      <Pane fx:id="generalAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
          <children>
             <Label layoutX="59.0" layoutY="57.0" text="เรื่องร้องเรียนของคุณ">
                <font>
@@ -90,7 +91,7 @@
                <font>
                   <Font size="24.0" />
                </font></TextArea>
-            <Label layoutX="60.0" layoutY="373.0" text="ถ้ามีกรอกตามตัวอย่างต่อไปนี้ รหัสวิชา (หมู่เรียน) เช่น 01418211 (1), 01418xxx (y) ถ้าไม่มีเติม - ในช่องว่าง">
+            <Label layoutX="60.0" layoutY="373.0" text="กรุณาระบุวิชาให้ตรงตามรูปแบบที่กำหนดดังต่อไปนี้ [รหัสวิชา-ชื่อวิชา-หมู่เรียน/...] 01418211-Software Construction-1/01418233-Computer Architectures-1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -123,7 +124,7 @@
                <font>
                   <Font size="24.0" />
                </font></TextArea>
-            <Label layoutX="60.0" layoutY="373.0" text="ถ้ามีกรอกตามตัวอย่างต่อไปนี้ รหัสวิชา (หมู่เรียน) เช่น 01418211 (1), 01418xxx (y)">
+            <Label layoutX="60.0" layoutY="373.0" text="กรุณาระบุวิชาให้ตรงตามรูปแบบที่กำหนดดังต่อไปนี้ [รหัสวิชา-ชื่อวิชา-หมู่เรียน/...] 01418211-Software Construction-1/01418233-Computer Architectures-1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -138,26 +139,8 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <DatePicker fx:id="startBreakDatePicker" layoutX="824.0" layoutY="99.0" prefHeight="30.0" prefWidth="312.0" />
-            <DatePicker fx:id="endBreakDatePicker" layoutX="823.0" layoutY="181.0" prefHeight="30.0" prefWidth="312.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="backgroundAlertPane" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
-      <Pane fx:id="alertPane" layoutX="400.0" layoutY="256.0" prefHeight="329.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
-         <children>
-            <Button layoutX="690.0" layoutY="30.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="close">
-               <font>
-                  <Font size="12.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <Label layoutX="128.0" layoutY="139.0" text="กรุณาใส่รายละเอียดของท่านครบถ้วน" textFill="RED">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
+            <DatePicker fx:id="startBreakDatePicker" layoutX="824.0" layoutY="99.0" prefHeight="30.0" prefWidth="312.0" styleClass="date-picker" stylesheets="@../../styles/text-field.css" />
+            <DatePicker fx:id="endBreakDatePicker" layoutX="823.0" layoutY="181.0" prefHeight="30.0" prefWidth="312.0" styleClass="date-picker" stylesheets="@../../styles/text-field.css" />
          </children>
       </Pane>
       <Button layoutX="1165.0" layoutY="725.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="approve-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
@@ -165,5 +148,78 @@
             <Font size="24.0" />
          </font>
       </Button>
+      <Pane fx:id="backgroundAlertPane" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
+      <Pane fx:id="noAdvisorAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
+         <children>
+            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="รับทราบ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label layoutX="222.0" layoutY="239.0" text="ไม่สามารถสร้างคำร้องได้" textFill="#cc0000">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="132.0" layoutY="299.0" text="โปรดใส่รายละเอียดของคำร้องให้ครบก่อนสร้างคำร้อง">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/create-appeal-fail.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="failAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
+         <children>
+            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="รับทราบ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label layoutX="222.0" layoutY="239.0" text="การสร้างคำร้องไม่สำเร็จ" textFill="#cc0000">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="132.0" layoutY="299.0" text="โปรดใส่รายละเอียดของคำร้องให้ครบก่อนสร้างคำร้อง">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/create-appeal-fail.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="successAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
+         <children>
+            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="approve-button" stylesheets="@../../styles/button.css" text="รับทราบ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Label layoutX="222.0" layoutY="239.0" text="การสร้างคำร้องเสร็จสิ้น" textFill="#008f2f">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="172.0" layoutY="299.0" text="คำร้องของคุณจะถูกส่งต่อไปให้อาจารย์ที่ปรึกษา">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/create-appeal-success.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

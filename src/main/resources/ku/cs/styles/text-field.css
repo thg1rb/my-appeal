@@ -1,3 +1,5 @@
+/* Text Field */
+
 .text-field {
     -fx-cursor: text;
     -fx-background-radius: 10px;
@@ -10,4 +12,14 @@
 
 .text-area .content {
     /* Add implements here */
+}
+
+/* Date Picker */
+.date-picker > .text-field {
+    -fx-background-radius: 0;
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-base: #303337 ;
+    -fx-mark-highlight-color: -fx-light-text-color ;
 }
