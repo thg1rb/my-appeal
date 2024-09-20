@@ -180,22 +180,18 @@ public class FacultyApproverManageController {
     }
     @FXML
     public void onSearchKeyReleased() {
-        String searchText = searchTextField.getText().toLowerCase();  // ดึงข้อความค้นหาใน searchTextField
-        ApproverList filteredApproverList = new ApproverList();  // สร้างรายการใหม่สำหรับผลลัพธ์การค้นหา
+        String searchText = searchTextField.getText().toLowerCase();
+        ApproverList filteredApproverList = new ApproverList();
 
         if (searchText.isEmpty()) {
-            // ถ้าช่องค้นหาว่าง แสดงรายชื่อทั้งหมด
             showApproverTable(approverList);
         } else {
-            // กรองรายชื่อที่ตรงกับข้อความใน searchText
             for (Approver approver : approverList.getApprovers()) {
-                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();  // แปลงชื่อเป็นตัวพิมพ์เล็ก
+                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
                 if (fullName.contains(searchText)) {
-                    // ถ้าชื่อเต็มมีข้อความที่ค้นหาอยู่ ให้เพิ่มเข้าไปใน filteredApproverList
                     filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getDepartment(), approver.getRole());
                 }
             }
-            // แสดงรายชื่อที่ผ่านการกรอง
             showApproverTable(filteredApproverList);
         }
     }
