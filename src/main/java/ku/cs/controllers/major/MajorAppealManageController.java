@@ -17,31 +17,33 @@ import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MajorAppealManageController {
     @FXML private Pane navbarAnchorPane;
-
     @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Appeal> selfAppealTable;
+    @FXML private TabPane tabPane;
 
-    Appeal selectedAppeal;
-
-    public AppealList appealList;
-    public Datasource<AppealList> datasource;
+    private Appeal selectedAppeal;
+    private AppealList appealList;
+    private Datasource<AppealList> datasource;
 
     private User user;
 //    private Object selectedAppeal;
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (DepartmentStaff) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -57,6 +59,7 @@ public class MajorAppealManageController {
         appealList = datasource.readData();
 
         showTable(appealList);
+
 
         allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
             @Override
