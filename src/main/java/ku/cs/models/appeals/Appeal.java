@@ -9,17 +9,21 @@ public class Appeal {
     protected String status;
     protected String ownerId;
     protected String ownerFullName;
+    protected String ownerDepartment;
+    protected String ownerFaculty;
     protected String reason;
     protected String subjects;
 
     // Constructor
-    public Appeal(String modifyDate, String uuid, String type, String status, String ownerId, String ownerFullName, String reason, String subjects) {
+    public Appeal(String modifyDate, String uuid, String type, String status, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects) {
         this.modifyDate = modifyDate;
         this.uuid = uuid;
         this.type = type;
         this.status = status;
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
+        this.ownerDepartment = ownerDepartment;
+        this.ownerFaculty = ownerFaculty;
         this.reason = reason;
         this.subjects = subjects;
     }
@@ -64,6 +68,14 @@ public class Appeal {
         return ownerFullName;
     }
 
+    public String getOwnerDepartment() {
+        return ownerDepartment;
+    }
+
+    public String getOwnerFaculty() {
+        return ownerFaculty;
+    }
+
     public String getReason() {
         return reason;
     }
@@ -84,6 +96,6 @@ public class Appeal {
     // Overriding Method
     @Override
     public String toString() {
-        return modifyDate + "," + uuid + "," + type + "," + status + "," + ownerId + "," + ownerFullName + "," + reason + "," + subjects;
+        return modifyDate + "," + uuid + "," + type + "," + status + "," + ownerId + "," + ownerFullName + "," + ownerDepartment + "," + ownerFaculty + "," + reason + "," + subjects;
     }
 }
