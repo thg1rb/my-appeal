@@ -5,9 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.appeals.BreakAppeal;
@@ -23,9 +23,9 @@ import java.util.Date;
 
 public class ProfessorApproveStudentAppealController {
 
-    @FXML private Pane generalAppealPane;
-    @FXML private Pane suspendAppealPane;
-    @FXML private Pane breakAppealPane;
+    @FXML private ScrollPane generalAppealScrollPane;
+    @FXML private ScrollPane suspendAppealScrollPane;
+    @FXML private ScrollPane breakAppealScrollPane;
 
     @FXML private Label fullnameLabel;
     @FXML private Label idLabel;
@@ -109,9 +109,9 @@ public class ProfessorApproveStudentAppealController {
     // แสดงรายละเอียดคำร้องตามประเภทของคำร้อง
     public void showAppealPane(Boolean isGeneralAppeal, Boolean isSuspendAppeal, Boolean isBreakAppeal) {
         initializeLabel(isGeneralAppeal, isSuspendAppeal, isBreakAppeal);
-        generalAppealPane.setVisible(isGeneralAppeal);
-        suspendAppealPane.setVisible(isSuspendAppeal);
-        breakAppealPane.setVisible(isBreakAppeal);
+        generalAppealScrollPane.setVisible(isGeneralAppeal);
+        suspendAppealScrollPane.setVisible(isSuspendAppeal);
+        breakAppealScrollPane.setVisible(isBreakAppeal);
     }
 
     // ปิดหน้าต่าง pop-up
