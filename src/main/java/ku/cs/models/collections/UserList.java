@@ -3,7 +3,6 @@ package ku.cs.models.collections;
 import ku.cs.models.persons.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +68,17 @@ public class UserList {
     }
 
     //Getter
+    public UserList getSpecificRoleUser(String role){
+        return switch (role) {
+            case "admin" -> getAdmins();
+            case "facultyStaff" -> getFacultyStaffs();
+            case "majorStaff" -> getDepartmentStaffs();
+            case "advisor" -> getAdvisors();
+            case "student" -> getStudents();
+            default -> null;
+        };
+    }
+
     public UserList getAdmins(){
         UserList admins = new UserList();
         for (User user : users) {

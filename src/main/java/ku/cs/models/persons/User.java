@@ -78,10 +78,10 @@ public abstract class User {
         this.loginDate = loginDate;
     }
     public void unbanUser(){
-        this.accessibility = false;
+        this.accessibility = true;
     }
     public void banUser(){
-        this.accessibility = true;
+        this.accessibility = false;
     }
     public void setProfile(String path){
         this.profileUrl = path;
@@ -121,7 +121,7 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return uuid + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
+        return uuid.toString() + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 
     public abstract String getRoleInEnglish();

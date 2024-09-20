@@ -12,15 +12,20 @@ import javafx.stage.Stage;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Advisor;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.exceptions.EmptyInputException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class StaffPopupController {
+public class AdminStaffPopupController {
     @FXML private Text optionText;
     @FXML private Text majorText;
     @FXML private Text idText;
+    @FXML private Text emptyInputText;
 
     @FXML private ChoiceBox<String> roleChoiceBox;
     @FXML private ChoiceBox<String> facultyChoiceBox;
@@ -36,7 +41,7 @@ public class StaffPopupController {
     @FXML private TextField initPasswordTextField;
     @FXML private TextField idTextField;
 
-    private UserList userList;
+    private HashMap<String, UserList> staffMap;
     private User user;
 
     private final String[] staffChoice = {"เจ้าหน้าที่คณะ", "เจ้าหน้าที่ภาควิชา", "อาจารย์ที่ปรึกษา"};
@@ -49,6 +54,7 @@ public class StaffPopupController {
     @FXML
     private void initialize() {
         roleChoiceBox.getItems().addAll(staffChoice);
+        emptyInputText.setVisible(false);
 
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -85,11 +91,13 @@ public class StaffPopupController {
         });
     }
 
-    public void initPopup(boolean editMode, User user, FacultyList facultyList, MajorList majorList, String selectedRole, UserList userList) {
-        this.userList = userList;
-        roleChoiceBox.getSelectionModel().select(selectedRole);
-        this.majorList = majorList;
+    public void initPopup(boolean editMode, User user, FacultyList facultyList, MajorList majorList, String selectedRole, HashMap<String, UserList> staffMap) {
+        this.staffMap = staffMap;
+
         this.selectedRole = selectedRole;
+        roleChoiceBox.getSelectionModel().select(selectedRole);
+
+        this.majorList = majorList;
         facultyChoiceBox.getItems().addAll(facultyList.getAllFacultiesName());
 
         if (editMode){
@@ -125,8 +133,8 @@ public class StaffPopupController {
             usernameTextField.setText(user.getUsername());
             initPasswordTextField.setText(((FacultyStaff) user).getInitialPasswordText());
             facultyChoiceBox.setValue(((FacultyStaff) user).getFaculty());
-//            majorChoiceBox.setValue(user.getMajor());
-//            idTextField.setText(user.getId());
+            if (user instanceof DepartmentStaff) majorChoiceBox.setValue(((DepartmentStaff)user).getDepartment());
+            if (user instanceof Advisor) idTextField.setText(((Advisor)user).getAdvisorId());
         }
     }
 
@@ -143,33 +151,98 @@ public class StaffPopupController {
     }
 
     @FXML
-    public void onConfirmButtonClicked(){
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String username = usernameTextField.getText();
-        String faculty = facultyChoiceBox.getValue();
-        String password = initPasswordTextField.getText();
-        String major = majorChoiceBox.getValue();
-        String id = idTextField.getText();
+    public void onConfirmButtonClicked() {
+        try {
+            String firstName = firstNameTextField.getText();
+            String lastName = lastNameTextField.getText();
+            String username = usernameTextField.getText();
+            String password = initPasswordTextField.getText();
+            String faculty = facultyChoiceBox.getValue();
+            String major = "";
+            String id = "";
 
-//        userList.addUser(new User(selectedRole, username, password, firstName, lastName, faculty, major, id));
+            if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
+                throw new EmptyInputException();
+            }
 
-        Stage stage = (Stage) confirmButton.getScene().getWindow();
-        stage.close();
+            if (majorChoiceBox.isVisible()) {
+                major = majorChoiceBox.getValue();
+                if (major == null || major.isEmpty()) {
+                    throw new EmptyInputException();
+                }
+            }
+
+            if (idTextField.isVisible()) {
+                id = idTextField.getText();
+                if (id.isEmpty()) {
+                    throw new EmptyInputException();
+                }
+            }
+
+            switch (selectedRole) {
+                case "เจ้าหน้าที่คณะ":
+                    staffMap.get(selectedRole).addUser(new FacultyStaff(selectedRole, username, password, firstName, lastName, faculty));
+                    break;
+                case "เจ้าหน้าที่ภาควิชา":
+                    staffMap.get(selectedRole).addUser(new DepartmentStaff(selectedRole, username, password, firstName, lastName, faculty, major));
+                    break;
+                case "อาจารย์ที่ปรึกษา":
+                    staffMap.get(selectedRole).addUser(new Advisor(selectedRole, username, password, firstName, lastName, faculty, major, id));
+                    break;
+            }
+
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.close();
+        } catch (EmptyInputException e) {
+            emptyInputText.setVisible(true);
+        }
     }
 
     @FXML
     public void onEditButtonClicked() {
-        user.setFirstName(firstNameTextField.getText());
-        user.setLastName(lastNameTextField.getText());
-        user.setUsername(usernameTextField.getText());
-//        user.setInitialPasswordText(initPasswordTextField.getText());
-//        user.setFaculty(facultyChoiceBox.getValue());
-//        user.setMajor(majorChoiceBox.getValue());
-//        user.setId(idTextField.getText());
-//        user.setFullName();
+        try {
+            String firstName = firstNameTextField.getText();
+            String lastName = lastNameTextField.getText();
+            String username = usernameTextField.getText();
+            String password = initPasswordTextField.getText();
+            String faculty = facultyChoiceBox.getValue();
+            String major = "";
+            String id = "";
 
-        Stage stage = (Stage) editButton.getScene().getWindow();
-        stage.close();
+            if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
+                throw new EmptyInputException();
+            }
+
+            if (majorChoiceBox.isVisible()) {
+                major = majorChoiceBox.getValue();
+                if (major == null || major.isEmpty()) {
+                    throw new EmptyInputException();
+                }
+            }
+
+            if (idTextField.isVisible()) {
+                id = idTextField.getText();
+                if (id.isEmpty()) {
+                    throw new EmptyInputException();
+                }
+            }
+
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setUsername(username);
+            ((FacultyStaff)user).setInitialPassword(password);
+            ((FacultyStaff)user).setFaculty(faculty);
+
+            if (user instanceof DepartmentStaff){
+                ((DepartmentStaff) user).setDepartment(major);
+            }
+            if (user instanceof Advisor){
+                ((Advisor) user).setAdvisorId(id);
+            }
+            Stage stage = (Stage) editButton.getScene().getWindow();
+            stage.close();
+        } catch (EmptyInputException e){
+            emptyInputText.setVisible(true);
+        }
     }
 }

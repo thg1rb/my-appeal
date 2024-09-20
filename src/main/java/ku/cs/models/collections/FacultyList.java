@@ -48,6 +48,16 @@ public class FacultyList {
             }
         }
     }
+    public void addFaculty(String uuid, String name, String id){
+        name = name.trim();
+        id = id.trim();
+        if ( !id.isEmpty() && !name.isEmpty() ){
+            Faculty exist = findFacultyById(id);
+            if ( exist == null ){
+                faculties.add(new Faculty(uuid, name, id));
+            }
+        }
+    }
 
     public boolean removeFaculty(Faculty faculty){
         if (faculties.contains(faculty) && faculty != null){

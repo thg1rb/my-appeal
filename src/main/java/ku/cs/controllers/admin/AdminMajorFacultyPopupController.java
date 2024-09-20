@@ -10,14 +10,16 @@ import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.services.exceptions.EmptyInputException;
 
 import java.util.ArrayList;
 
-public class MajorFacultyPopupController {
+public class AdminMajorFacultyPopupController {
     @FXML private Text modeText;
     @FXML private Text nameText;
     @FXML private Text idText;
     @FXML private Text belongFacultyText;
+    @FXML private Text emptyInputText;
 
     @FXML private TextField nameTextField;
     @FXML private TextField idTextField;
@@ -36,13 +38,17 @@ public class MajorFacultyPopupController {
     private String[] optionChoice = {"คณะ", "ภาควิชา"};
     private ArrayList<String> facultyChoice;
 
+    private boolean editMode;
+
     @FXML
     private void initialize() {
         optionChoiceBox.getItems().addAll(optionChoice);
+        emptyInputText.setVisible(false);
 
         optionChoiceBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
                 setUi(newValue);
+                setMode(editMode, newValue);
             }
         });
     }
@@ -61,6 +67,7 @@ public class MajorFacultyPopupController {
     }
 
     private void setMode(boolean editMode, String tabSelected) {
+        this.editMode = editMode;
         if (editMode){
             modeText.setText("แก้ไขข้อมูล" + tabSelected);
             optionChoiceBox.setDisable(true);
@@ -125,16 +132,29 @@ public class MajorFacultyPopupController {
     }
     @FXML
     public void onEditButtonClicked(){
-        if (optionChoiceBox.getValue().equals("คณะ")){
-            ((Faculty) data).setFacultyName(nameTextField.getText());
-            ((Faculty) data).setFacultyId(idTextField.getText());
-        }else {
-            ((Major) data).setMajorName(nameTextField.getText());
-            ((Major) data).setMajorId(idTextField.getText());
-            ((Major) data).setFaculty(facultyChoiceBox.getValue());
-        }
+        try {
+            String name = nameTextField.getText();
+            String id = idTextField.getText();
+            if (name.isEmpty() || id.isEmpty()){
+                throw new EmptyInputException();
+            }
+            if (optionChoiceBox.getValue().equals("คณะ")) {
+                ((Faculty) data).setFacultyName(nameTextField.getText());
+                ((Faculty) data).setFacultyId(idTextField.getText());
+            } else {
+                String faculty = facultyChoiceBox.getValue();
+                if (faculty == null){
+                    throw new EmptyInputException();
+                }
+                ((Major) data).setMajorName(nameTextField.getText());
+                ((Major) data).setMajorId(idTextField.getText());
+                ((Major) data).setFaculty(facultyChoiceBox.getValue());
+            }
 
-        Stage stage = (Stage) editButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) editButton.getScene().getWindow();
+            stage.close();
+        }catch (EmptyInputException e){
+            emptyInputText.setVisible(true);
+        }
     }
 }

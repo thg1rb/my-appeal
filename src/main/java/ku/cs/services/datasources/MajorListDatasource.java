@@ -1,17 +1,16 @@
-package ku.cs.services;
+package ku.cs.services.datasources;
 
-import ku.cs.models.Faculty;
-import ku.cs.models.collections.FacultyList;
-import ku.cs.models.persons.Approver;
+import ku.cs.models.Major;
+import ku.cs.models.collections.MajorList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class FacultyListFileDatasource implements Datasource<FacultyList>{
+public class MajorListDatasource implements Datasource<MajorList> {
     private String directoryName;
     private String fileName;
 
-    public FacultyListFileDatasource(String directoryName, String fileName) {
+    public MajorListDatasource(String directoryName, String fileName) {
         this.directoryName = directoryName;
         this.fileName = fileName;
         checkFileIsExisted();
@@ -34,8 +33,8 @@ public class FacultyListFileDatasource implements Datasource<FacultyList>{
     }
 
     @Override
-    public FacultyList readData() {
-        FacultyList facultyList = new FacultyList();
+    public MajorList readData() {
+        MajorList majorList = new MajorList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -64,21 +63,23 @@ public class FacultyListFileDatasource implements Datasource<FacultyList>{
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-                String facultyName = data[0];
-                String facultyId = data[1];
+                String uuid = data[0];
+                String majorName = data[1];
+                String faculty = data[2];
+                String majorId = data[3];
 
                 // เพิ่มข้อมูลลงใน list
-                facultyList.addFaculty(facultyName, facultyId);
+                majorList.addMajor(uuid, majorName, faculty, majorId);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return facultyList;
+        return majorList;
     }
 
     @Override
-    public void writeData(FacultyList data) {
+    public void writeData(MajorList data) {
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -99,8 +100,8 @@ public class FacultyListFileDatasource implements Datasource<FacultyList>{
 
         try {
             // สร้าง csv ของ Student และเขียนลงในไฟล์ทีละบรรทัด
-            for (Faculty faculty : data.getFaculties()) {
-                String line = faculty.toString();
+            for (Major major : data.getMajors()) {
+                String line = major.toString();
                 buffer.append(line);
                 buffer.append("\n");
             }

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.MajorFacultyPopupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminMajorFacultyPopupController">
     <children>
         <Pane prefHeight="74.0" prefWidth="601.0" style="-fx-background-color: #265252;" />
         <Text fx:id="modeText" fill="WHITE" layoutX="32.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="เพิ่มข้อมูลคณะ">
@@ -63,5 +63,10 @@
             </font>
         </Button>
         <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="292.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+      <Text fx:id="emptyInputText" fill="RED" layoutX="166.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*กรุณากรอกข้อมูลให้ครบถ้วน">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
