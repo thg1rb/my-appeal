@@ -18,7 +18,6 @@ import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class FacultyApproverManageController {
     @FXML private Pane navbarAnchorPane;
@@ -107,6 +106,8 @@ public class FacultyApproverManageController {
     private TextField editRoleTextField;
 
     @FXML
+    private TextField searchTextField;
+    @FXML
     public void addApproverButton() {
         roleTextField.clear();
         firstNameTextField.clear();
@@ -175,6 +176,27 @@ public class FacultyApproverManageController {
             onCloseEditButtonClick();
         } else {
             System.out.println("No approver selected.");
+        }
+    }
+    @FXML
+    public void onSearchKeyReleased() {
+        String searchText = searchTextField.getText().toLowerCase();  // ดึงข้อความค้นหาใน searchTextField
+        ApproverList filteredApproverList = new ApproverList();  // สร้างรายการใหม่สำหรับผลลัพธ์การค้นหา
+
+        if (searchText.isEmpty()) {
+            // ถ้าช่องค้นหาว่าง แสดงรายชื่อทั้งหมด
+            showApproverTable(approverList);
+        } else {
+            // กรองรายชื่อที่ตรงกับข้อความใน searchText
+            for (Approver approver : approverList.getApprovers()) {
+                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();  // แปลงชื่อเป็นตัวพิมพ์เล็ก
+                if (fullName.contains(searchText)) {
+                    // ถ้าชื่อเต็มมีข้อความที่ค้นหาอยู่ ให้เพิ่มเข้าไปใน filteredApproverList
+                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getDepartment(), approver.getRole());
+                }
+            }
+            // แสดงรายชื่อที่ผ่านการกรอง
+            showApproverTable(filteredApproverList);
         }
     }
 
