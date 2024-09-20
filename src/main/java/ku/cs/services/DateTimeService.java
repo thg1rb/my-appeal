@@ -19,7 +19,7 @@ public class DateTimeService {
     }
 
     public static String updateTime(){
-        LocalDateTime date = LocalDateTime.now();
+        Date date = new Date();
         return detailedFormatter.format(date);
     }
 

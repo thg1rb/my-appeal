@@ -27,22 +27,48 @@
          </font>
       </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TableView fx:id="allAppealTable" layoutX="272.0" layoutY="238.0" prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
-        <columns>
-          <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Date/Time" />
-          <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
-            <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Type" />
-            <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Aprrover" />
-            <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-background-radius: 00 20 00 00; -fx-border-radius: 00 20 00 00;" text="Status" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <TabPane fx:id="appealTabPane" layoutX="272.0" layoutY="168.0" prefHeight="592.0" prefWidth="1100.0" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
+      <TabPane fx:id="tabPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1100.0" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
         <tabs>
-          <Tab style="-fx-padding: 10; -fx-background-radius: 20 0 0; -fx-font-size: 20;" text="ทั้งหมด" />
-          <Tab style="-fx-padding: 10; -fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="ภาควิชาของตนเอง" />
+          <Tab style="-fx-padding: 10; -fx-background-radius: 20 0 0; -fx-font-size: 20;" text="ทั้งหมด">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent; -fx-background-radius: 00 20 20 20;">
+                     <children>
+                        <TableView fx:id="allAppealTable" prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
+                          <columns>
+                            <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Date/Time" />
+                            <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
+                              <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Type" />
+                              <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Aprrover" />
+                              <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-background-radius: 00 20 00 00; -fx-border-radius: 00 20 00 00;" text="Status" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab style="-fx-padding: 10; -fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="ภาควิชาของตนเอง">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 00 20 20 20;">
+                     <children>
+                        <TableView fx:id="selfAppealTable" prefHeight="525.0" prefWidth="1100.0" style="-fx-background-radius: 00 20 20 20;" stylesheets="@../../styles/table-view.css">
+                           <columns>
+                              <TableColumn prefWidth="183.0" style="-fx-font-size: 20;" text="Date/Time" />
+                              <TableColumn prefWidth="183.0" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />
+                              <TableColumn prefWidth="183.0" style="-fx-font-size: 20;" text="Type" />
+                              <TableColumn prefWidth="183.0" style="-fx-font-size: 20;" text="Aprrover" />
+                              <TableColumn prefWidth="183.0" style="-fx-font-size: 20; -fx-background-radius: 20;" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
         </tabs>
       </TabPane>
       <Pane fx:id="popupAppealPane" layoutX="282.0" layoutY="190.0" prefHeight="592.0" prefWidth="1099.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" visible="false">

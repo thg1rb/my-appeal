@@ -28,6 +28,7 @@ import ku.cs.services.FXRouter;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class MajorAppealManageController {
     @FXML private Pane navbarAnchorPane;
@@ -58,7 +59,14 @@ public class MajorAppealManageController {
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
 
-        showTable(appealList);
+        showTable(appealList,false);
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                showTable(appealList, false);
+            } else {
+                showTable(appealList, true);
+            }
+        });
 
 
         allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
@@ -89,7 +97,8 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList);
+//            showTable(appealList);
+            allAppealTable.refresh();
         }
         catch(IOException e){
             e.printStackTrace();
@@ -97,7 +106,7 @@ public class MajorAppealManageController {
 
     }
 
-    public void showTable(AppealList appealList) {
+    public void showTable(AppealList appealList, boolean filter) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
@@ -125,9 +134,16 @@ public class MajorAppealManageController {
         allAppealTable.getSortOrder().add(dateColumn);
 
         allAppealTable.getItems().clear();
-        if (appealList != null) {
+        if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
                 allAppealTable.getItems().add(appeal);
+            }
+        } else if (appealList != null && filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
+                    System.out.println(appeal.toString());
+                    allAppealTable.getItems().add(appeal);
+                }
             }
         }
         allAppealTable.sort();
@@ -135,14 +151,5 @@ public class MajorAppealManageController {
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
-    }
-    @FXML
-    public void confirmOnButtonClick() {
-
-    }
-
-    @FXML
-    public void cancleOnButtonClick() {
-
     }
 }
