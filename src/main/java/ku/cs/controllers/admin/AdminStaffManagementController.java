@@ -91,19 +91,34 @@ public class AdminStaffManagementController {
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
             selectingTab = tabPane.getSelectionModel().getSelectedItem().getText();
+            readData();
             showTable(staffMap.get(selectingTab), selectingTab);
             updateTotalText();
         });
 
         tableView.getItems().addListener((ListChangeListener<? super User>)change -> updateTotalText() );
-        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                 popupEditMode = true;
-                 selectedStaff = tableView.getSelectionModel().getSelectedItem();
-                 addEditPopup();
-            }
+        tableView.setRowFactory(v->{
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                popupEditMode = true;
+                selectedStaff = tableView.getSelectionModel().getSelectedItem();
+                addEditPopup();
+            });
+            return row;
         });
+    }
+
+    private void saveData(){
+        for (String key : datasourcesMap.keySet()){
+            datasourcesMap.get(key).writeData(staffMap.get(key));
+        }
+    }
+    private void readData(){
+        for (String key : datasourcesMap.keySet()){
+            staffMap.put(key, datasourcesMap.get(key).readData());
+        }
+        facultyList = facultyListDatasource.readData();
+        majorList = majorListDatasource.readData();
     }
 
     private void showTable(UserList userList, String role) {
@@ -198,12 +213,6 @@ public class AdminStaffManagementController {
         datasourcesMap.put("เจ้าหน้าที่คณะ", facultyStaffDatasource);
         datasourcesMap.put("เจ้าหน้าที่ภาควิชา", majorStaffDatasource);
         datasourcesMap.put("อาจารย์ที่ปรึกษา", advisorDatasource);
-    }
-
-    private void saveData(){
-        for (String key : datasourcesMap.keySet()){
-            datasourcesMap.get(key).writeData(staffMap.get(key));
-        }
     }
 
     @FXML

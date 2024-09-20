@@ -63,15 +63,15 @@ public class AdminFacultyManagementController {
         }
 
         facultyDatasource = new FacultyListDatasource("data", "faculties.csv");
-        facultyList = facultyDatasource.readData();
         majorDatasource = new MajorListDatasource("data", "majors.csv");
-        majorList = majorDatasource.readData();
+        readData();
 
         showFacultyTable(facultyList);
         updateTotalText();
         selectingTab = tabPane.getSelectionModel().getSelectedItem().getText();
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
+            readData();
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
                 selectingTab = tabPane.getSelectionModel().getSelectedItem().getText();
                 showFacultyTable(facultyList);
@@ -82,16 +82,26 @@ public class AdminFacultyManagementController {
             }
         });
 
-        tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        tableView.setRowFactory(v ->{
+            TableRow<Object> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
                 popupEditMode = true;
                 selectedObject = tableView.getSelectionModel().getSelectedItem();
                 addEditPopup();
-            }
+            });
+            return row;
         });
-        tableView.getItems().addListener((ListChangeListener<Object>) c -> updateTotalText());
 
+        tableView.getItems().addListener((ListChangeListener<Object>) c -> updateTotalText());
+    }
+
+    private void readData(){
+        facultyList = facultyDatasource.readData();
+        majorList = majorDatasource.readData();
+    }
+    private void writeData(){
+        facultyDatasource.writeData(facultyList);
+        majorDatasource.writeData(majorList);
     }
 
     private void showFacultyTable(FacultyList facultyList) {
@@ -154,7 +164,7 @@ public class AdminFacultyManagementController {
 
     private void updateTotalText(){
         String text = tabPane.getSelectionModel().getSelectedItem().getText();
-        totalText.setText("จำนวน"+text+"ทั้งหมด "+ tableView.getItems().size() + " " +text);
+        totalText.setText("จำนวน" + text + "ทั้งหมด " + tableView.getItems().size() + " " +text);
     }
 
     private void addEditPopup(){
@@ -170,9 +180,8 @@ public class AdminFacultyManagementController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            facultyDatasource.writeData(facultyList);
-            majorDatasource.writeData(majorList);
-
+            writeData();
+            readData();
             if (selectingTab.equals("คณะ")){
                 showFacultyTable(facultyList);
             }else{
