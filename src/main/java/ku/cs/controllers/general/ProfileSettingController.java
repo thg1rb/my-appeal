@@ -10,11 +10,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.fileuploaders.ImageFileUploader;
 
 import java.io.File;
 
@@ -54,10 +57,32 @@ public class ProfileSettingController {
         fullNameLabel.setText(user.getFullName());
         roleLabel.setText(user.getRole());
 
-        Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+        Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
         profileImageCircle.setFill(new ImagePattern(image));
 
         clearText();
+    }
+
+    private void changeProfileImage(){
+        String roleUpdated = user.getRoleInEnglish();
+        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
+
+        UserList userList = userUpdatedDatasource.readData();
+        User updateUser = userList.findUserByUUID(user.getUuid());
+
+        updateUser.setProfile(user.getProfileUrl());
+        userUpdatedDatasource.writeData(userList);
+    }
+
+    private void changePassword(User user, String password){
+        String roleUpdated = user.getRoleInEnglish();
+        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
+
+        UserList userList = userUpdatedDatasource.readData();
+        User updateUser = userList.findUserByUUID(user.getUuid());
+
+        updateUser.setPasswordHash(password);
+        userUpdatedDatasource.writeData(userList);
     }
 
     @FXML
@@ -101,17 +126,20 @@ public class ProfileSettingController {
 
     @FXML
     public void onUploadProfileButtonClicked(){
+        ImageFileUploader imageFileUploader = new ImageFileUploader(profileImageCircle, user, "data" + File.separator + "profile-images");
+        imageFileUploader.upload((Stage) profileImageCircle.getScene().getWindow());
 
-    }
+        changeProfileImage();
 
-    private void changePassword(User user, String password){
-        String roleUpdated = user.getRoleInEnglish();
-        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
-
-        UserList userList = userUpdatedDatasource.readData();
-        User updateUser = userList.findUserByUUID(user.getUuid());
-
-        updateUser.setPasswordHash(password);
-        userUpdatedDatasource.writeData(userList);
+        //refresh Navbar
+        navbarAnchorPane.getChildren().clear();
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

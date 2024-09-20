@@ -29,7 +29,7 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accessibility = true;
-        this.profileUrl = "/images/default-profile.jpg";
+        this.profileUrl = "default-profile.jpg";
     }
     //Constructor for add student in Department responsibility
     public User(String role, String firstName, String lastName){
@@ -38,7 +38,7 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accessibility = true;
-        this.profileUrl = "/images/default-profile.jpg";
+        this.profileUrl = "default-profile.jpg";
     }
     //Constructor for reading file
     public User(String uuid,String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {

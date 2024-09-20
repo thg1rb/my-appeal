@@ -1,6 +1,6 @@
-b5e79eaf-bdd2-4c04-8472-976eaacdfca0,นักศึกษา,BrightStu,$2a$12$yDFoXYJhanbsgUeOJUAUDu.9FGdXaloKn9C71yenJKo/uYnWyJViu,ไบร้,คน1,true,null,/images/default-profile.jpg,6610402032,email@test.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,D14032,true
-b1654092-b0b4-4909-8e41-b1e3a41231e6,นักศึกษา,null,null,ไบร้,คน2,true,null,/images/default-profile.jpg,6610402033,email@test.com,วิทยาศาสตร์,สถิติ,D14033,false
-bd6fedba-13f2-47f4-b6fd-aff6a54c110f,นักศึกษา,null,null,ไบร้,คน3,true,null,/images/default-profile.jpg,6610402034,email@test.com,วิศวกรรมศาสตร์,ไฟฟ้า,null,false
-89c1396f-ddeb-415e-adfe-65fd8bff2873,นักศึกษา,null,null,เนสท์,คนเท่,true,null,/images/default-profile.jpg,6610402205,nest@email.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,D14032,false
-15fe2a20-73bd-411c-9045-e66c5b21fffe,นักศึกษา,null,null,ต้น,จาวา,true,null,/images/default-profile.jpg,6610401932,ton@email.com,วิทยาศาสตร์,สถิติ,D14033,false
-19124417-6ab5-437e-832a-adae129ee718,นักศึกษา,aockStudent,$2a$12$Q.Iq3iRXGVpJWuPts7CG0em.mi77Vni0.ec6/OY1XQ3rDjtGMh2Pa,โอ้ค,นักเรียนคนเก่ง,true,null,/images/default-profile.jpg,6610401985,aock@email.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,null,true
+b5e79eaf-bdd2-4c04-8472-976eaacdfca0,นักศึกษา,BrightStu,$2a$12$yDFoXYJhanbsgUeOJUAUDu.9FGdXaloKn9C71yenJKo/uYnWyJViu,ไบร้,คน1,true,null,default-profile.jpg,6610402032,email@test.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,D14032,true
+b1654092-b0b4-4909-8e41-b1e3a41231e6,นักศึกษา,null,null,ไบร้,คน2,true,null,default-profile.jpg,6610402033,email@test.com,วิทยาศาสตร์,สถิติ,D14033,false
+bd6fedba-13f2-47f4-b6fd-aff6a54c110f,นักศึกษา,null,null,ไบร้,คน3,true,null,default-profile.jpg,6610402034,email@test.com,วิศวกรรมศาสตร์,ไฟฟ้า,null,false
+89c1396f-ddeb-415e-adfe-65fd8bff2873,นักศึกษา,null,null,เนสท์,คนเท่,true,null,default-profile.jpg,6610402205,nest@email.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,D14032,false
+15fe2a20-73bd-411c-9045-e66c5b21fffe,นักศึกษา,null,null,ต้น,จาวา,true,null,default-profile.jpg,6610401932,ton@email.com,วิทยาศาสตร์,สถิติ,D14033,false
+19124417-6ab5-437e-832a-adae129ee718,นักศึกษา,aockStudent,$2a$12$kuYGMj80MRxq66xUbR8Ahe9ikVWD3o0pvSPcP9TC3z/6UV/4E/UU2,โอ้ค,นักเรียนคนเก่ง,true,null,default-profile.jpg,6610401985,aock@email.com,วิทยาศาสตร์,วิทยาการคอมพิวเตอร์,null,true

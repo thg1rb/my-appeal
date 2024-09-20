@@ -9,6 +9,8 @@ import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
+import java.io.File;
+
 public class AdminNavbarController {
     @FXML private Circle profileImageCircle;
 
@@ -24,7 +26,7 @@ public class AdminNavbarController {
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
 
-        Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+        Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
         profileImageCircle.setFill(new ImagePattern(image));
     }
 
