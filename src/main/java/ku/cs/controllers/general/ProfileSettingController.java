@@ -10,8 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
+
+import java.io.File;
 
 public class ProfileSettingController {
     @FXML private Pane navbarAnchorPane;
@@ -85,9 +90,11 @@ public class ProfileSettingController {
         } else if (!user.validatePassword(oldPassword)) {
             oldPasswordErrorLabel.setText("รหัสผ่านเดิมไม่ถูกต้อง");
         } else {
-            user.setPasswordHash(newPassword);
+            changePassword(user, newPassword);
+
             clearText();
             clearTextField();
+
             successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");
         }
     }
@@ -95,5 +102,16 @@ public class ProfileSettingController {
     @FXML
     public void onUploadProfileButtonClicked(){
 
+    }
+
+    private void changePassword(User user, String password){
+        String roleUpdated = user.getRoleInEnglish();
+        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
+
+        UserList userList = userUpdatedDatasource.readData();
+        User updateUser = userList.findUserByUUID(user.getUuid());
+
+        updateUser.setPasswordHash(password);
+        userUpdatedDatasource.writeData(userList);
     }
 }

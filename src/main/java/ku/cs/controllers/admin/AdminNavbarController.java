@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
@@ -18,7 +19,7 @@ public class AdminNavbarController {
 
     @FXML
     private void initialize(){
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());

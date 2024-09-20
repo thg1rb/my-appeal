@@ -2,13 +2,11 @@ package ku.cs.controllers.admin;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -18,6 +16,7 @@ import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
@@ -50,7 +49,7 @@ public class AdminFacultyManagementController {
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
