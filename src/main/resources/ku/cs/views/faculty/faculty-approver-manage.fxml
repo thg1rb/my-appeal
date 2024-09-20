@@ -122,5 +122,10 @@
             </Label>
          </children>
       </Pane>
+      <TextField fx:id="searchTextField" layoutX="1043.0" layoutY="110.0" onKeyReleased="#onSearchKeyReleased" prefHeight="33.0" prefWidth="272.0" promptText="ค้นหา">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>
