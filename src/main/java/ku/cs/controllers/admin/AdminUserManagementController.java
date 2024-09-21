@@ -88,6 +88,7 @@ public class AdminUserManagementController {
                 if (!user.getLoginDate().equals("null")) tableView.getItems().add(user);
             }
         }
+
         tableView.sort();
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setSortable(false);
@@ -100,6 +101,7 @@ public class AdminUserManagementController {
                 tableView.getItems().add(user);
             }
         }
+
         tableView.sort();
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setSortable(false);
@@ -147,11 +149,11 @@ public class AdminUserManagementController {
         tableView.getColumns().add(loginDateCol);
         tableView.getColumns().add(banCol);
 
-        imgCol.setPrefWidth(colWidhth);
-        nameCol.setPrefWidth(colWidhth);
-        usernameCol.setPrefWidth(colWidhth);
+        imgCol.setPrefWidth(colWidhth-60);
+        nameCol.setPrefWidth(colWidhth+30);
+        usernameCol.setPrefWidth(colWidhth+15);
         roleCol.setPrefWidth(colWidhth);
-        loginDateCol.setPrefWidth(colWidhth);
+        loginDateCol.setPrefWidth(colWidhth+15);
         banCol.setPrefWidth(colWidhth);
 
         tableView.getSortOrder().add(loginDateCol);

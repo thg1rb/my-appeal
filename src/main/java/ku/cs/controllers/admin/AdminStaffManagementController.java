@@ -33,6 +33,7 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AdminStaffManagementController {
@@ -143,6 +144,12 @@ public class AdminStaffManagementController {
 
         TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
         facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+        facultyCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return String.CASE_INSENSITIVE_ORDER.compare(o1, o2);
+            }
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add(imgCol);
@@ -169,15 +176,37 @@ public class AdminStaffManagementController {
 
             tableView.getColumns().add(idCol);
         }
+
+        // Resize Col
         int sizeCol = tableView.getColumns().size();
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setPrefWidth((double) 1100 / sizeCol);
+        }
+        imgCol.setPrefWidth(imgCol.getPrefWidth() - 50);
+        nameCol.setPrefWidth(nameCol.getPrefWidth() + 20);
+        facultyCol.setPrefWidth(facultyCol.getPrefWidth() + 30);
+        if (!role.equals("เจ้าหน้าที่คณะ")) {
+            facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 15);
+            TableColumn<?, ?> majorCol = (tableView.getColumns()).get(5);
+            majorCol.setPrefWidth(majorCol.getPrefWidth() + 15);
+            if (role.equals("อาจารย์ที่ปรึกษา")){
+                facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 5);
+                majorCol.setPrefWidth(facultyCol.getPrefWidth() + 15);
+                TableColumn<?, ?> idCol = (tableView.getColumns()).get(6);
+                idCol.setPrefWidth(idCol.getPrefWidth() - 10);
+            }
         }
 
         tableView.getItems().clear();
         for (User user : userList.getUsers()){
             tableView.getItems().add(user);
         }
+
+        tableView.getSortOrder().add(facultyCol);
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setSortable(false);
+        }
+        tableView.sort();
     }
 
     private void updateTotalText(){
