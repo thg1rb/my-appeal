@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.controllers.general.AppealEditComtroller1;
 import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
@@ -40,7 +41,6 @@ public class MajorAppealManageController {
     private Datasource<AppealList> datasource;
 
     private User user;
-//    private Object selectedAppeal;
 
     @FXML
     public void initialize() {
@@ -68,25 +68,26 @@ public class MajorAppealManageController {
             }
         });
 
-
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-            @Override
-            public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
-                if (newValue != null) {
-                    selectedAppeal = newValue;
+        tableView.setRowFactory(v->{
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if(selectedAppeal != null) {
                     showAppealPopup();
-                    tableView.getSelectionModel().select(selectedAppeal);
                 }
-            }
+            });
+            return row;
         });
     }
 
     public void showAppealPopup(){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup1.fxml"));
             Parent root = fxmlLoader.load();
-            AppealEditController controller = fxmlLoader.getController();
-            controller.setType(selectedAppeal.getType(), selectedAppeal, user);
+            AppealEditComtroller1 controller = fxmlLoader.getController();
+
+            controller.setRole(user);
+            controller.setSelectedAppeal(selectedAppeal, appealList, datasource);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -96,8 +97,6 @@ public class MajorAppealManageController {
             stage.showAndWait();
 
             datasource.writeData(appealList);
-
-//            showTable(appealList);
             tableView.refresh();
         }
         catch(IOException e){
@@ -131,8 +130,6 @@ public class MajorAppealManageController {
         ownerColumn.setPrefWidth(366);
         typeColumn.setPrefWidth(366);
 
-        tableView.getSortOrder().add(dateColumn);
-
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
@@ -141,11 +138,11 @@ public class MajorAppealManageController {
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
                 if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
-                    System.out.println(appeal.toString());
                     tableView.getItems().add(appeal);
                 }
             }
         }
+        tableView.getSortOrder().add(dateColumn);
         tableView.sort();
 
         dateColumn.setSortable(false);
