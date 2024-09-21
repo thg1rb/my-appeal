@@ -1,6 +1,8 @@
 *
 !.gitignore
 !*.csv
+!*.png
+!*.jpg
 !users/
 !profile-images/*.png
 !profile-images/*.jpg
