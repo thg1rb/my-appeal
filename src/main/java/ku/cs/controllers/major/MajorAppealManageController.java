@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
+import ku.cs.controllers.general.SetPasswordController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
@@ -25,6 +28,7 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class MajorAppealManageController {
+    @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
     @FXML private TabPane tabPane;
@@ -74,11 +78,31 @@ public class MajorAppealManageController {
         });
     }
 
+    public void test(){
+        try{
+            FXMLLoader testLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/set-password.fxml"));
+            Parent root = testLoader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     public void showAppealPopup(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
             AppealEditController controller = fxmlLoader.getController();
+            GaussianBlur blur = new GaussianBlur(10);
+
 
             controller.setRole(user);
             controller.setSelectedAppeal(selectedAppeal);
@@ -88,7 +112,9 @@ public class MajorAppealManageController {
             stage.setAlwaysOnTop(true);
             stage.setScene(new Scene(root));
 
+            mainPane.setEffect(blur);
             stage.showAndWait();
+            mainPane.setEffect(null);
 
             datasource.writeData(appealList);
             datasource.readData();
