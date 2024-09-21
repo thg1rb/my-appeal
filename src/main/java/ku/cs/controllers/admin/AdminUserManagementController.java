@@ -114,7 +114,14 @@ public class AdminUserManagementController {
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
-        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
+        loginDateCol.setCellValueFactory(cellData ->{
+            String loginDate = cellData.getValue().getLoginDate();
+            if (loginDate == null || loginDate.isEmpty() || loginDate.equals("null")) {
+                return new SimpleStringProperty("ไม่เคยเข้าใช้งาน");
+            } else {
+                return new SimpleStringProperty(loginDate);
+            }
+        });
 
         TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
         banCol.setCellValueFactory(cellData -> {

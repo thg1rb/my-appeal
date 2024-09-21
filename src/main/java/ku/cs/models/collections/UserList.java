@@ -71,6 +71,10 @@ public class UserList {
         return null;
     }
 
+    public void deleteUser(User user) {
+        this.users.remove(user);
+    }
+
     //Getter
     public UserList getSpecificRoleUser(String role){
         return switch (role) {

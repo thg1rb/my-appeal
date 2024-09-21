@@ -68,5 +68,10 @@
             <Font size="14.0" />
          </font>
       </Text>
+      <Button fx:id="deleteButton" layoutX="27.0" layoutY="378.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="45.0" prefWidth="103.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="ลบ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

@@ -1,17 +1,24 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.controllers.general.ConfirmationDeleteAlertController;
 import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.services.exceptions.DuplicateItemsException;
 import ku.cs.services.exceptions.EmptyInputException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminMajorFacultyPopupController {
@@ -30,6 +37,7 @@ public class AdminMajorFacultyPopupController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button editButton;
+    @FXML private Button deleteButton;
 
     private Object data;
     private FacultyList facultyList;
@@ -39,6 +47,7 @@ public class AdminMajorFacultyPopupController {
     private ArrayList<String> facultyChoice;
 
     private boolean editMode;
+    private boolean deleted;
 
     @FXML
     private void initialize() {
@@ -73,10 +82,14 @@ public class AdminMajorFacultyPopupController {
             optionChoiceBox.setDisable(true);
             editButton.setDisable(false);
             confirmButton.setDisable(true);
+            deleteButton.setDisable(false);
+            deleteButton.setVisible(true);
         }else{
             modeText.setText("เพิ่มข้อมูล" + tabSelected);
             editButton.setDisable(true);
             confirmButton.setDisable(false);
+            deleteButton.setDisable(true);
+            deleteButton.setVisible(false);
         }
         setUi(tabSelected);
     }
@@ -118,9 +131,20 @@ public class AdminMajorFacultyPopupController {
             if (name.isEmpty() || id.isEmpty()){
                 throw new EmptyInputException();
             }
+
             if (optionChoiceBox.getValue().equals("คณะ")) {
+                for (String faculty : facultyChoice){
+                    if (faculty.equals(name)){
+                        throw new DuplicateItemsException("*คณะนี้มีในระบบอยู่แล้ว");
+                    }
+                }
                 facultyList.addFaculty(name, id);
             } else {
+                for (Major major : majorList.getMajors()){
+                    if (major.getMajorName().equals(name)){
+                        throw new DuplicateItemsException("*ภาควิชานี้มีในระบบอยู่แล้ว");
+                    }
+                }
                 String faculty = facultyChoiceBox.getValue();
                 majorList.addMajor(name, faculty, id, facultyList);
             }
@@ -128,6 +152,10 @@ public class AdminMajorFacultyPopupController {
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
         }catch (EmptyInputException e){
+            emptyInputText.setText("*กรุณากรอกข้อมูลให้ครบถ้วน");
+            emptyInputText.setVisible(true);
+        }catch (DuplicateItemsException e){
+            emptyInputText.setText(e.getMessage());
             emptyInputText.setVisible(true);
         }
     }
@@ -163,5 +191,36 @@ public class AdminMajorFacultyPopupController {
         }catch (EmptyInputException e){
             emptyInputText.setVisible(true);
         }
+    }
+
+    @FXML
+    private void onDeleteButtonClicked() {
+        try {
+            FXMLLoader alertLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/confirmation-delete.fxml"));
+            Parent root = alertLoader.load();
+            ConfirmationDeleteAlertController controller = alertLoader.getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("ยืนยันการลบ");
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            stage.showAndWait();
+            if (controller.isConfirmed()){
+                Stage mainstage = (Stage) deleteButton.getScene().getWindow();
+                mainstage.close();
+                this.deleted = true;
+            }else {
+                this.deleted = false;
+            }
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isDeleted(){
+        return this.deleted;
     }
 }

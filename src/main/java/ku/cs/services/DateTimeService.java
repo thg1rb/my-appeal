@@ -25,6 +25,11 @@ public class DateTimeService implements Comparator<String> {
 
     @Override
     public int compare(String o1, String o2) {
+        if (o1 == null || o1.equals("null") || o1.equals("ไม่เคยเข้าใช้งาน")) {
+            return 1;
+        }else if (o2 == null || o2.equals("null") || o2.equals("ไม่เคยเข้าใช้งาน")) {
+            return -1;
+        }
         try {
             Date date1 = detailedFormatter.parse(o1);
             Date date2 = detailedFormatter.parse(o2);

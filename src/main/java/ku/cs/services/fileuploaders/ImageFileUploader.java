@@ -54,7 +54,7 @@ public class ImageFileUploader implements FileUploader{
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             try{
-                String fileName = user.getUuid() + "_profile." + file.getName().split("\\.")[1];
+                String fileName = user.getUuid() + "_profile." + file.getName().split("\\.")[file.getName().split("\\.").length - 1];
                 Path destination = new File(directoryName + File.separator + fileName).toPath();
 
                 Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);

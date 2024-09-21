@@ -225,7 +225,12 @@ public class AdminStaffManagementController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
+            if (staffPopup.isDeleted()){
+                staffMap.get(selectedStaff.getRole()).deleteUser(selectedStaff);
+                selectedStaff = null;
+            }
             saveData();
+            readData();
             showTable(staffMap.get(selectingTab), selectingTab);
         } catch (IOException e) {
             throw new RuntimeException(e);
