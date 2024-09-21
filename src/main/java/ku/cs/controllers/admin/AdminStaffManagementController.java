@@ -125,7 +125,7 @@ public class AdminStaffManagementController {
         TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
-            Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+            Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(60);
             imageView.setFitWidth(60);

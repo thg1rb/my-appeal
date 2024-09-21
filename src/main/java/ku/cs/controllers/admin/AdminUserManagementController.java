@@ -17,6 +17,7 @@ import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
+import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
@@ -78,22 +79,30 @@ public class AdminUserManagementController {
         basicInfoColCreator(183, false);
         if (!searchText.isEmpty()) {
             for (User user : userList.getUsers()) {
-                if (user.getFullName().contains(searchText)) {
+                if (user.getFullName().contains(searchText) && !user.getLoginDate().equals("null")) {
                     tableView.getItems().add(user);
                 }
             }
         }else{
             for (User user : userList.getUsers()) {
-                tableView.getItems().add(user);
+                if (!user.getLoginDate().equals("null")) tableView.getItems().add(user);
             }
+        }
+        tableView.sort();
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setSortable(false);
         }
     }
     private void showRoleTable(UserList userList, String role){
         basicInfoColCreator(220, true);
         for (User user : userList.getUsers()){
-            if (user.getRole().equals(role)){
+            if (user.getRole().equals(role) && !user.getLoginDate().equals("null")){
                 tableView.getItems().add(user);
             }
+        }
+        tableView.sort();
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setSortable(false);
         }
     }
 
@@ -101,7 +110,7 @@ public class AdminUserManagementController {
         TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
-            Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+            Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(60);
             imageView.setFitWidth(60);
@@ -119,6 +128,7 @@ public class AdminUserManagementController {
 
         TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
         loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
+        loginDateCol.setComparator(new DateTimeService());
 
         TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
         banCol.setCellValueFactory(cellData -> {
@@ -143,6 +153,8 @@ public class AdminUserManagementController {
         roleCol.setPrefWidth(colWidhth);
         loginDateCol.setPrefWidth(colWidhth);
         banCol.setPrefWidth(colWidhth);
+
+        tableView.getSortOrder().add(loginDateCol);
 
         tableView.getItems().clear();
     }

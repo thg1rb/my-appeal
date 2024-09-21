@@ -57,10 +57,7 @@ public class StudentTrackAppealController {
         TableColumn<Appeal, String> typeCol = new TableColumn<>("Appeal Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        dateTimeCol.setComparator((date1, date2)-> {
-            int result = DateTimeService.compareDate(date1, date2);
-            return result;
-        });
+        dateTimeCol.setComparator(new DateTimeService());
 
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);

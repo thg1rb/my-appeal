@@ -10,9 +10,12 @@ import javafx.scene.input.KeyEvent;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
+import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LoginController {
@@ -56,6 +59,7 @@ public class LoginController {
         else{
             if (user.validatePassword(password)){
                 if (user.hasAccessibility()) {
+                    updateLoginTime(user);
                     switch (user.getRole()){
                         case "ผู้ดูแลระบบ":
                             try {
@@ -100,6 +104,18 @@ public class LoginController {
                 errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
             }
         }
+    }
+
+    private void updateLoginTime(User user){
+        String roleUpdated = user.getRoleInEnglish();
+        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
+
+        UserList userList = userUpdatedDatasource.readData();
+        User updateUser = userList.findUserByUUID(user.getUuid());
+
+        user.setLoginDate(DateTimeService.updateTime());
+        updateUser.setLoginDate(DateTimeService.updateTime());
+        userUpdatedDatasource.writeData(userList);
     }
 
     // ไปที่หน้าลงทะเบียน (ข้อมูลส่วนบุคคล)

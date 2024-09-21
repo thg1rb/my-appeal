@@ -106,10 +106,7 @@ public class ProfessorStudentAppealController {
         TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("Fullname");
         ownerFullNameCol.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
-        dateTimeCol.setComparator((date1, date2)-> {
-            int result = DateTimeService.compareDate(date1, date2);
-            return result;
-        });
+        dateTimeCol.setComparator(new DateTimeService());
 
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);

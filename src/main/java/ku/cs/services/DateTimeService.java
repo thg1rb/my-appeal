@@ -1,11 +1,11 @@
 package ku.cs.services;
 
-import java.time.LocalDateTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
-public class DateTimeService {
+public class DateTimeService implements Comparator<String> {
 
     public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     public static SimpleDateFormat detailedFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -19,19 +19,18 @@ public class DateTimeService {
     }
 
     public static String updateTime(){
-        LocalDateTime date = LocalDateTime.now();
+        Date date = new Date();
         return detailedFormatter.format(date);
     }
 
-    public static int compareDate(String date1, String date2) {
+    @Override
+    public int compare(String o1, String o2) {
         try {
-            Date dateTime1 = detailedFormatter.parse(date1);
-            Date dateTime2 = detailedFormatter.parse(date2);
-            return dateTime2.compareTo(dateTime1);
+            Date date1 = detailedFormatter.parse(o1);
+            Date date2 = detailedFormatter.parse(o2);
+            return date2.compareTo(date1);
         } catch (ParseException e) {
-            e.printStackTrace();
-            return 0;
+            throw new RuntimeException(e);
         }
     }
-
 }
