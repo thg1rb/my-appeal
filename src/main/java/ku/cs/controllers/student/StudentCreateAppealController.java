@@ -177,7 +177,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 successAlertPane.setVisible(true);
 
-                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), details, topic));
+                appealList.addAppeal(new GeneralAppeal(createDate, uuid, "คำร้องทั่วไป", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", null, ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), details, topic));
                 modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
@@ -199,7 +199,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 successAlertPane.setVisible(true);
 
-                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, semester, year));
+                appealList.addAppeal(new SuspendAppeal(createDate, uuid, "คำร้องขอพักการศึกษา", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", null, ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, semester, year));
                 modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
@@ -227,7 +227,7 @@ public class StudentCreateAppealController {
                 backgroundAlertPane.setVisible(true);
                 successAlertPane.setVisible(true);
 
-                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, purpose, startDate, endDate));
+                appealList.addAppeal(new BreakAppeal(createDate, uuid, "คำร้องขอลาป่วยหรือลากิจ", "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", null, ((Student)user).getStudentId(), user.getFullName(), ((Student)user).getDepartment(), ((Student)user).getFaculty(), reason, subjects, purpose, startDate, endDate));
                 modifyDateList.addModifyDate(new ModifyDate(uuid, createDate));
                 resetTheValue();
             } catch (EmptyInputException e) {
