@@ -330,7 +330,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="367.0" layoutY="364.0" mnemonicParsing="false" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ยืนยัน">
+                  <Button contentDisplay="TOP" layoutX="307.0" layoutY="364.0" mnemonicParsing="false" onAction="#onConfirmRejectReasonButton" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ยืนยันการปฏิเสธ">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -340,11 +340,16 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" wrapText="true">
+                  <TextArea fx:id="rejectReasonTextArea" layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" stylesheets="@../../styles/text-field.css" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </TextArea>
+                  <Label fx:id="rejectReasonErrorLabel" layoutX="39.0" layoutY="105.0" text="*กรุณาระบุสาเหตุในการปฏิเสธคำร้องของคุณก่อนยืนยันการปฏิเสธคำร้อง" textFill="RED" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
