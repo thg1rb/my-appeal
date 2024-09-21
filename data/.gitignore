@@ -2,4 +2,4 @@
 !.gitignore
 !*.csv
 !users/
-!profile-images/
+!profile-images/*.png
