@@ -3,6 +3,7 @@ package ku.cs.models.collections;
 import ku.cs.models.appeals.Appeal;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AppealList {
     private ArrayList<Appeal> appeals;

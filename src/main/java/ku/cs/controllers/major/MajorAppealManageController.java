@@ -17,31 +17,34 @@ import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class MajorAppealManageController {
     @FXML private Pane navbarAnchorPane;
+    @FXML private TableView<Appeal> tableView;
+    @FXML private TabPane tabPane;
 
-    @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Appeal> selfAppealTable;
-
-    Appeal selectedAppeal;
-
-    public AppealList appealList;
-    public Datasource<AppealList> datasource;
+    private Appeal selectedAppeal;
+    private AppealList appealList;
+    private Datasource<AppealList> datasource;
 
     private User user;
 //    private Object selectedAppeal;
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (DepartmentStaff) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -56,15 +59,23 @@ public class MajorAppealManageController {
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
 
-        showTable(appealList);
+        showTable(appealList,false);
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                showTable(appealList, false);
+            } else {
+                showTable(appealList, true);
+            }
+        });
 
-        allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
+
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
             @Override
             public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
                 if (newValue != null) {
                     selectedAppeal = newValue;
                     showAppealPopup();
-                    allAppealTable.getSelectionModel().select(selectedAppeal);
+                    tableView.getSelectionModel().select(selectedAppeal);
                 }
             }
         });
@@ -86,7 +97,8 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList);
+//            showTable(appealList);
+            tableView.refresh();
         }
         catch(IOException e){
             e.printStackTrace();
@@ -94,7 +106,7 @@ public class MajorAppealManageController {
 
     }
 
-    public void showTable(AppealList appealList) {
+    public void showTable(AppealList appealList, boolean filter) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
@@ -110,36 +122,34 @@ public class MajorAppealManageController {
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        allAppealTable.getColumns().clear();
-        allAppealTable.getColumns().add(dateColumn);
-        allAppealTable.getColumns().add(ownerColumn);
-        allAppealTable.getColumns().add(typeColumn);
+        tableView.getColumns().clear();
+        tableView.getColumns().add(dateColumn);
+        tableView.getColumns().add(ownerColumn);
+        tableView.getColumns().add(typeColumn);
 
         dateColumn.setPrefWidth(367);
         ownerColumn.setPrefWidth(366);
         typeColumn.setPrefWidth(366);
 
-        allAppealTable.getSortOrder().add(dateColumn);
+        tableView.getSortOrder().add(dateColumn);
 
-        allAppealTable.getItems().clear();
-        if (appealList != null) {
+        tableView.getItems().clear();
+        if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
-                allAppealTable.getItems().add(appeal);
+                tableView.getItems().add(appeal);
+            }
+        } else if (appealList != null && filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
+                    System.out.println(appeal.toString());
+                    tableView.getItems().add(appeal);
+                }
             }
         }
-        allAppealTable.sort();
+        tableView.sort();
 
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
-    }
-    @FXML
-    public void confirmOnButtonClick() {
-
-    }
-
-    @FXML
-    public void cancleOnButtonClick() {
-
     }
 }

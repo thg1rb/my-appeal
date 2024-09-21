@@ -8,9 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -25,6 +27,7 @@ import java.io.IOException;
 
 public class MajorNisitManageController {
     @FXML private Pane navbarAnchorPane;
+    @FXML private TextField searchTextField;
 
     @FXML private TableView<Student> nisitTableView;
 
@@ -47,10 +50,22 @@ public class MajorNisitManageController {
             throw new RuntimeException(e);
         }
 
+
         datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
         studentList = datasource.readData();
 
+
         showTable(studentList);
+        // ช่องค้นหา
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("^[a-zA-zก-๙0-9]+$") && !newValue.isEmpty()) {
+                showSearchTable(studentList, newValue);
+            }
+            else if (newValue.isEmpty() || newValue.isBlank()) {
+                showTable(studentList);
+            }
+        });
+
         nisitTableView.setOnMouseClicked(event ->{
             selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
             addMode = false;
@@ -93,6 +108,36 @@ public class MajorNisitManageController {
                 if (((Student)nisit).getDepartment().equals(((DepartmentStaff)user).getDepartment())) {
                     nisitTableView.getItems().add((Student) nisit);
                 }
+            }
+        }
+    }
+    public void showSearchTable(UserList studentList, String searchText) {
+        TableColumn<Student, String> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+
+        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<Student, String> emailColumn = new TableColumn<>("Email");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        nisitTableView.getColumns().clear();
+        nisitTableView.getColumns().add(idColumn);
+        nisitTableView.getColumns().add(nameColumn);
+        nisitTableView.getColumns().add(emailColumn);
+
+        idColumn.setPrefWidth(367);
+        nameColumn.setPrefWidth(366);
+        emailColumn.setPrefWidth(366);
+
+        idColumn.setSortable(false);
+        nameColumn.setSortable(false);
+        emailColumn.setSortable(false);
+
+        nisitTableView.getItems().clear();
+        for (User nisit : studentList.getUsers()) {
+            if (nisit.getRole().equals("นักศึกษา") && (nisit.getUsername().contains(searchText) || nisit.getFullName().contains(searchText) || ((Student) nisit).getStudentId().contains(searchText))) {
+                nisitTableView.getItems().add((Student)nisit);
             }
         }
     }
