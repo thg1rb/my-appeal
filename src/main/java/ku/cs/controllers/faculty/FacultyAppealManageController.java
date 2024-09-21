@@ -73,7 +73,8 @@ public class FacultyAppealManageController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
             AppealEditController controller = fxmlLoader.getController();
-            controller.setType(selectedAppeal.getType(), selectedAppeal, user);
+            controller.setRole(user);
+            controller.setSelectedAppeal(selectedAppeal);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -112,6 +113,10 @@ public class FacultyAppealManageController {
         allAppealTable.getColumns().add(dateColumn);
         allAppealTable.getColumns().add(ownerColumn);
         allAppealTable.getColumns().add(typeColumn);
+
+        dateColumn.setPrefWidth(367);
+        ownerColumn.setPrefWidth(366);
+        typeColumn.setPrefWidth(366);
 
         allAppealTable.getSortOrder().add(dateColumn);
 

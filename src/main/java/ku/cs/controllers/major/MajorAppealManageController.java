@@ -1,8 +1,6 @@
 package ku.cs.controllers.major;
 
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,23 +11,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.controllers.general.AppealEditComtroller1;
 import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
-import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.DepartmentStaff;
-import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class MajorAppealManageController {
     @FXML private Pane navbarAnchorPane;
@@ -39,6 +32,7 @@ public class MajorAppealManageController {
     private Appeal selectedAppeal;
     private AppealList appealList;
     private Datasource<AppealList> datasource;
+    private boolean filter = false;
 
     private User user;
 
@@ -62,9 +56,9 @@ public class MajorAppealManageController {
         showTable(appealList,false);
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(appealList, false);
+                showTable(appealList, filter);
             } else {
-                showTable(appealList, true);
+                showTable(appealList, filter);
             }
         });
 
@@ -82,12 +76,12 @@ public class MajorAppealManageController {
 
     public void showAppealPopup(){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup1.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
-            AppealEditComtroller1 controller = fxmlLoader.getController();
+            AppealEditController controller = fxmlLoader.getController();
 
             controller.setRole(user);
-            controller.setSelectedAppeal(selectedAppeal, appealList, datasource);
+            controller.setSelectedAppeal(selectedAppeal);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -97,7 +91,8 @@ public class MajorAppealManageController {
             stage.showAndWait();
 
             datasource.writeData(appealList);
-            tableView.refresh();
+            datasource.readData();
+            showTable(appealList, filter);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -133,11 +128,14 @@ public class MajorAppealManageController {
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
-                tableView.getItems().add(appeal);
+                if(appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")){
+                    tableView.getItems().add(appeal);
+                }
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
+                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment()) &&
+                appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
                     tableView.getItems().add(appeal);
                 }
             }
