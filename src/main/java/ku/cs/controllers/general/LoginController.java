@@ -30,7 +30,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userList = UserListDatasource.readAllUsers();
+        userList = UserListDatasource.readAllUsers().getActiveUser();
 
         errorLabel.setText("");
 
@@ -122,7 +122,7 @@ public class LoginController {
     @FXML
     public void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("register-personal-data", userList);
+            FXRouter.goTo("register-personal-data");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

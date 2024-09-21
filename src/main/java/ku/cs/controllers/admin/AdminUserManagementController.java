@@ -23,6 +23,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class AdminUserManagementController {
     @FXML private Pane navbarAnchorPane;
@@ -34,6 +35,12 @@ public class AdminUserManagementController {
 
     private User user;
     private UserList userList;
+
+    private HashMap<String, Datasource<UserList> > datasourceMap;
+    private HashMap<String, UserList> userInSystemMap;
+
+    private String selectedTab;
+    private String searchText;
 
     @FXML
     public void initialize() {
@@ -49,55 +56,33 @@ public class AdminUserManagementController {
             throw new RuntimeException(e);
         }
 
-        userList = UserListDatasource.readAllUsers();
+        initMap();
+        selectedTab = tabPane.getSelectionModel().getSelectedItem().getText();
+        searchText = searchTextField.getText();
 
-        showTable(userList, "");
+        showTable(userInSystemMap.get(selectedTab), searchTextField.getText());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
-            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(userList, "");
-            } else {
-                showRoleTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
-            }
+            selectedTab = tabPane.getSelectionModel().getSelectedItem().getText();
+            showTable(userInSystemMap.get(selectedTab), searchTextField.getText());
         });
 
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("^[a-zA-Zก-๙0-9]+$") && !newValue.isEmpty()) {
-                tabPane.getSelectionModel().select(0);
-                showTable(userList, newValue);
-            }else if (newValue.isEmpty() || newValue.isBlank()) {
-                if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                    showTable(userList, "");
-                }else {
-                    showRoleTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
-                }
-            }
+            searchText = newValue;
+            showTable(userInSystemMap.get(selectedTab), searchText);
         });
     }
 
     private void showTable(UserList userList, String searchText){
-        basicInfoColCreator(183, false);
+        basicInfoColCreator(!selectedTab.equals("ทั้งหมด"));
         if (!searchText.isEmpty()) {
             for (User user : userList.getUsers()) {
-                if (user.getFullName().contains(searchText) && !user.getLoginDate().equals("null")) {
+                if (user.getFullName().contains(searchText)) {
                     tableView.getItems().add(user);
                 }
             }
         }else{
             for (User user : userList.getUsers()) {
-                if (!user.getLoginDate().equals("null")) tableView.getItems().add(user);
-            }
-        }
-
-        tableView.sort();
-        for (TableColumn<?, ?> col : tableView.getColumns()) {
-            col.setSortable(false);
-        }
-    }
-    private void showRoleTable(UserList userList, String role){
-        basicInfoColCreator(220, true);
-        for (User user : userList.getUsers()){
-            if (user.getRole().equals(role) && !user.getLoginDate().equals("null")){
                 tableView.getItems().add(user);
             }
         }
@@ -108,7 +93,7 @@ public class AdminUserManagementController {
         }
     }
 
-    private void basicInfoColCreator(int colWidhth, boolean roleSpecific) {
+    private void basicInfoColCreator(boolean roleSpecific) {
         TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
@@ -130,7 +115,6 @@ public class AdminUserManagementController {
 
         TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
         loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
-        loginDateCol.setComparator(new DateTimeService());
 
         TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
         banCol.setCellValueFactory(cellData -> {
@@ -139,6 +123,7 @@ public class AdminUserManagementController {
             return new SimpleStringProperty(value);
         });
 
+        //Add col
         tableView.getColumns().clear();
         tableView.getColumns().add(imgCol);
         tableView.getColumns().add(nameCol);
@@ -149,23 +134,43 @@ public class AdminUserManagementController {
         tableView.getColumns().add(loginDateCol);
         tableView.getColumns().add(banCol);
 
-        imgCol.setPrefWidth(colWidhth-60);
-        nameCol.setPrefWidth(colWidhth+30);
-        usernameCol.setPrefWidth(colWidhth+15);
-        roleCol.setPrefWidth(colWidhth);
-        loginDateCol.setPrefWidth(colWidhth+15);
-        banCol.setPrefWidth(colWidhth);
+        //Resize Col
+        int colWidth = roleSpecific ? 220 : 183;
+        imgCol.setPrefWidth(colWidth-60);
+        nameCol.setPrefWidth(colWidth+30);
+        usernameCol.setPrefWidth(colWidth+15);
+        roleCol.setPrefWidth(colWidth);
+        loginDateCol.setPrefWidth(colWidth+15);
+        banCol.setPrefWidth(colWidth);
 
+        //Clear old item and set sort for table
+        loginDateCol.setComparator(new DateTimeService());
         tableView.getSortOrder().add(loginDateCol);
-
         tableView.getItems().clear();
     }
 
     private void saveData(User user){
-        String roleUpdated = user.getRoleInEnglish();
-        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
-        UserList updateList = userList.getSpecificRoleUser(roleUpdated);
-        userUpdatedDatasource.writeData(updateList);
+        datasourceMap.get(user.getRole()).writeData(userInSystemMap.get(user.getRole()));
+    }
+
+    private void initMap(){
+        userInSystemMap = new HashMap<>();
+        datasourceMap = new HashMap<>();
+
+        datasourceMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv"));
+        datasourceMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv"));
+        datasourceMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv"));
+        datasourceMap.put("นักศึกษา" , new UserListDatasource("data" + File.separator + "users", "student.csv"));
+
+        userInSystemMap.put("ทั้งหมด", new UserList());
+        for (String key : datasourceMap.keySet()) {
+            if (key.equals("นักศึกษา")){
+                userInSystemMap.put(key, datasourceMap.get(key).readData().getRegisteredStudents());
+            }else {
+                userInSystemMap.put(key, datasourceMap.get(key).readData());
+            }
+            userInSystemMap.get("ทั้งหมด").addUserLists(userInSystemMap.get(key));
+        }
     }
 
     @FXML

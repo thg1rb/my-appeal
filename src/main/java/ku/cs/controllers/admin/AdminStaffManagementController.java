@@ -3,7 +3,6 @@ package ku.cs.controllers.admin;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -47,13 +45,14 @@ public class AdminStaffManagementController {
     private User user;
 
     private HashMap<String, Datasource<UserList>> datasourcesMap;
+    private HashMap<String, UserList> staffMap;
+
     private Datasource<UserList> facultyStaffDatasource;
     private Datasource<UserList> majorStaffDatasource;
     private Datasource<UserList> advisorDatasource;
     private Datasource<FacultyList> facultyListDatasource;
     private Datasource<MajorList> majorListDatasource;
 
-    private HashMap<String, UserList> staffMap;
     private FacultyList facultyList;
     private MajorList majorList;
 
