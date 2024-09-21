@@ -71,7 +71,7 @@ public class ProfessorStudentAppealController {
                     Parent root = loader.load();
 
                     ProfessorApproveStudentAppealController controller = loader.getController();
-                    controller.setSelectedAppeal(selectedAppeal, appealList, appealDatasource);
+                    controller.setSelectedAppeal(selectedAppeal);
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.UNDECORATED);

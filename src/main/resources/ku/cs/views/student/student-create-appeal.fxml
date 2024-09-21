@@ -71,7 +71,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="reasonSuspendTextArea" layoutX="48.0" layoutY="100.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
+            <TextArea fx:id="reasonSuspendTextArea" layoutX="48.0" layoutY="100.0" prefHeight="93.0" prefWidth="1088.0" stylesheets="@../../styles/text-field.css" wrapText="true">
                <font>
                   <Font size="24.0" />
                </font></TextArea>
@@ -87,7 +87,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="subjectsSuspendTextArea" layoutX="48.0" layoutY="400.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
+            <TextArea fx:id="subjectsSuspendTextArea" layoutX="48.0" layoutY="400.0" prefHeight="93.0" prefWidth="1088.0" stylesheets="@../../styles/text-field.css" wrapText="true">
                <font>
                   <Font size="24.0" />
                </font></TextArea>
@@ -110,7 +110,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="reasonBreakTextArea" layoutX="48.0" layoutY="229.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
+            <TextArea fx:id="reasonBreakTextArea" layoutX="48.0" layoutY="229.0" prefHeight="93.0" prefWidth="1088.0" stylesheets="@../../styles/text-field.css" wrapText="true">
                <font>
                   <Font size="24.0" />
                </font></TextArea>
@@ -120,7 +120,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="subjectsBreakTextArea" layoutX="48.0" layoutY="400.0" prefHeight="93.0" prefWidth="1088.0" wrapText="true">
+            <TextArea fx:id="subjectsBreakTextArea" layoutX="48.0" layoutY="400.0" prefHeight="93.0" prefWidth="1088.0" stylesheets="@../../styles/text-field.css" wrapText="true">
                <font>
                   <Font size="24.0" />
                </font></TextArea>
@@ -139,8 +139,8 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <DatePicker fx:id="startBreakDatePicker" layoutX="824.0" layoutY="99.0" prefHeight="30.0" prefWidth="312.0" styleClass="date-picker" stylesheets="@../../styles/text-field.css" />
-            <DatePicker fx:id="endBreakDatePicker" layoutX="823.0" layoutY="181.0" prefHeight="30.0" prefWidth="312.0" styleClass="date-picker" stylesheets="@../../styles/text-field.css" />
+            <DatePicker fx:id="startBreakDatePicker" layoutX="824.0" layoutY="99.0" prefHeight="30.0" prefWidth="312.0" stylesheets="@../../styles/text-field.css" />
+            <DatePicker fx:id="endBreakDatePicker" layoutX="823.0" layoutY="181.0" prefHeight="30.0" prefWidth="312.0" stylesheets="@../../styles/text-field.css" />
          </children>
       </Pane>
       <Button layoutX="1165.0" layoutY="725.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="45.0" prefWidth="200.0" styleClass="approve-button" stylesheets="@../../styles/button.css" text="ยืนยันการสร้าง">
