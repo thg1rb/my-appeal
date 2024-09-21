@@ -16,9 +16,9 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class MajorNisitManageController {
             throw new RuntimeException(e);
         }
 
-        datasource = new UserListFileDatasource("data" + File.separator + "users", "student.csv");
+        datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
         studentList = datasource.readData();
 
         showTable(studentList);
