@@ -89,28 +89,29 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
                 String uuid = data[1].trim();
                 String type = data[2].trim();
                 String status = data[3].trim();
-                String ownerId = data[4].trim();
-                String ownerFullName = data[5].trim();
-                String ownerDepartment = data[6].trim();
-                String ownerFaculty = data[7].trim();
-                String reason = data[8].trim();
-                String subjects = data[9].trim();
+                String rejectedReason = data[4].trim();
+                String ownerId = data[5].trim();
+                String ownerFullName = data[6].trim();
+                String ownerDepartment = data[7].trim();
+                String ownerFaculty = data[8].trim();
+                String reason = data[9].trim();
+                String subjects = data[10].trim();
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    String topic = data[10].trim();
-                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, topic));
+                    String topic = data[11].trim();
+                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, topic));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    String semester = data[10].trim();
-                    String year = data[11].trim();
-                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, semester, year));
+                    String semester = data[11].trim();
+                    String year = data[12].trim();
+                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, semester, year));
                 }
                 else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-                    String purpose = data[10].trim();
-                    String startDate = data[11].trim();
-                    String endDate = data[12].trim();
-                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, purpose, startDate, endDate));
+                    String purpose = data[11].trim();
+                    String startDate = data[12].trim();
+                    String endDate = data[13].trim();
+                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, purpose, startDate, endDate));
                 }
             }
         } catch (IOException e) {
