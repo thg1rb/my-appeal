@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -34,5 +35,10 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1086.0" layoutY="114.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาจาก" styleClass="text-field" stylesheets="@../../styles/text-field.css">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

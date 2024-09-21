@@ -1,5 +1,9 @@
 package ku.cs.models.appeals;
 
+import ku.cs.models.persons.User;
+
+import java.util.UUID;
+
 public class Appeal {
 
     // Fields
@@ -7,21 +11,31 @@ public class Appeal {
     protected String uuid;
     protected String type;
     protected String status;
+    protected String rejectedReason;
     protected String ownerId;
     protected String ownerFullName;
+    protected String ownerDepartment;
+    protected String ownerFaculty;
     protected String reason;
     protected String subjects;
 
-    // Constructor
-    public Appeal(String modifyDate, String uuid, String type, String status, String ownerId, String ownerFullName, String reason, String subjects) {
+    // Constructors
+    public Appeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects) {
         this.modifyDate = modifyDate;
         this.uuid = uuid;
         this.type = type;
         this.status = status;
+        this.rejectedReason = rejectedReason;
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
+        this.ownerDepartment = ownerDepartment;
+        this.ownerFaculty = ownerFaculty;
         this.reason = reason;
         this.subjects = subjects;
+    }
+
+    public Appeal(Appeal appeal) {
+        this(appeal.modifyDate, appeal.getUuid(), appeal.getType(), appeal.getStatus(), appeal.getRejectedReason(), appeal.getOwnerId(), appeal.getOwnerFullName(), appeal.getOwnerDepartment(), appeal.getOwnerFaculty(), appeal.getReason(), appeal.getSubjects());
     }
 
     // ตรวจสอบเป็นคำร้องทั่วไปหรือไม่?
@@ -56,12 +70,24 @@ public class Appeal {
         return status;
     }
 
+    public String getRejectedReason() {
+        return rejectedReason;
+    }
+
     public String getOwnerId() {
         return ownerId;
     }
 
     public String getOwnerFullName() {
         return ownerFullName;
+    }
+
+    public String getOwnerDepartment() {
+        return ownerDepartment;
+    }
+
+    public String getOwnerFaculty() {
+        return ownerFaculty;
     }
 
     public String getReason() {
@@ -72,7 +98,7 @@ public class Appeal {
         return subjects;
     }
 
-    // A setter
+    // Setters
     public void setModifyDate(String modifyDate) {
         this.modifyDate = modifyDate;
     }
@@ -81,9 +107,11 @@ public class Appeal {
         this.status = status;
     }
 
+    public void setRejectedReason(String rejectedReason) { this.rejectedReason = rejectedReason; }
+
     // Overriding Method
     @Override
     public String toString() {
-        return modifyDate + "," + uuid + "," + type + "," + status + "," + ownerId + "," + ownerFullName + "," + reason + "," + subjects;
+        return modifyDate + "," + uuid + "," + type + "," + status + "," + rejectedReason + "," + ownerId + "," + ownerFullName + "," + ownerDepartment + "," + ownerFaculty + "," + reason + "," + subjects;
     }
 }

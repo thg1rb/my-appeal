@@ -17,6 +17,7 @@ import javafx.stage.StageStyle;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Advisor;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.*;
@@ -70,7 +71,7 @@ public class ProfessorStudentAppealController {
                     Parent root = loader.load();
 
                     ProfessorApproveStudentAppealController controller = loader.getController();
-                    controller.setSelectedAppeal(selectedAppeal, appealList, appealDatasource);
+                    controller.setSelectedAppeal(selectedAppeal);
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.UNDECORATED);

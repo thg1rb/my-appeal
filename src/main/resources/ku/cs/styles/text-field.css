@@ -10,11 +10,20 @@
     -fx-alignment: center-right;
 }
 
+/* Text Area */
+
+.text-area {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-font-size: 20;
+}
+
 .text-area .content {
-    /* Add implements here */
+    -fx-background-color: white;
 }
 
 /* Date Picker */
+
 .date-picker > .text-field {
     -fx-background-radius: 0;
 }

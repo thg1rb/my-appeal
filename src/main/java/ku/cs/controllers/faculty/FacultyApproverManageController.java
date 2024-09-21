@@ -18,7 +18,6 @@ import ku.cs.services.ApproverListFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
 
 public class FacultyApproverManageController {
     @FXML private Pane navbarAnchorPane;
@@ -107,6 +106,8 @@ public class FacultyApproverManageController {
     private TextField editRoleTextField;
 
     @FXML
+    private TextField searchTextField;
+    @FXML
     public void addApproverButton() {
         roleTextField.clear();
         firstNameTextField.clear();
@@ -175,6 +176,23 @@ public class FacultyApproverManageController {
             onCloseEditButtonClick();
         } else {
             System.out.println("No approver selected.");
+        }
+    }
+    @FXML
+    public void onSearchKeyReleased() {
+        String searchText = searchTextField.getText().toLowerCase();
+        ApproverList filteredApproverList = new ApproverList();
+
+        if (searchText.isEmpty()) {
+            showApproverTable(approverList);
+        } else {
+            for (Approver approver : approverList.getApprovers()) {
+                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
+                if (fullName.contains(searchText)) {
+                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getDepartment(), approver.getRole());
+                }
+            }
+            showApproverTable(filteredApproverList);
         }
     }
 
