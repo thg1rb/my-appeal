@@ -29,6 +29,7 @@ public class FacultyNavbarController {
         profileImageCircle.setFill(new ImagePattern(image));
     }
 
+
     @FXML
     void onAppealButtonClick(){
         try {
@@ -49,7 +50,11 @@ public class FacultyNavbarController {
 
     @FXML
     void onProgramSettingClicked(){
-
+        try {
+            FXRouter.goTo("program-setting",user);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
