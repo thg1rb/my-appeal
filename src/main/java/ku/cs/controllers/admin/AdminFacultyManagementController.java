@@ -2,13 +2,11 @@ package ku.cs.controllers.admin;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -18,6 +16,7 @@ import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
@@ -26,6 +25,7 @@ import ku.cs.services.datasources.FacultyListDatasource;
 import ku.cs.services.datasources.MajorListDatasource;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 public class AdminFacultyManagementController {
     @FXML private Pane navbarAnchorPane;
@@ -50,7 +50,7 @@ public class AdminFacultyManagementController {
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -116,6 +116,12 @@ public class AdminFacultyManagementController {
             Faculty faculty = (Faculty) cellData.getValue();
             return new SimpleStringProperty(faculty.getFacultyId());
         });
+        facultyIdColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add((facultyIdColumn));
@@ -127,6 +133,11 @@ public class AdminFacultyManagementController {
         for (Faculty faculty : facultyList.getFaculties()){
             tableView.getItems().add(faculty);
         }
+        tableView.getSortOrder().add(facultyIdColumn);
+        tableView.sort();
+
+        facultyIdColumn.setSortable(false);
+        facultyNameColumn.setSortable(false);
     }
 
     private void showMajorTable(MajorList majorList) {
@@ -147,6 +158,12 @@ public class AdminFacultyManagementController {
             Major major = (Major) cellData.getValue();
             return new SimpleStringProperty(major.getMajorId());
         });
+        majorIdColumn.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add((majorIdColumn));
@@ -160,6 +177,11 @@ public class AdminFacultyManagementController {
         for (Major major : majorList.getMajors()){
             tableView.getItems().add(major);
         }
+        tableView.getSortOrder().add(majorIdColumn);
+        tableView.sort();
+        majorIdColumn.setSortable(false);
+        majorNameColumn.setSortable(false);
+        ofFacultyColumn.setSortable(false);
     }
 
     private void updateTotalText(){
@@ -179,6 +201,16 @@ public class AdminFacultyManagementController {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+
+            if (majorFacultyPopup.isDeleted()){
+                if (selectedObject instanceof Faculty){
+                    facultyList.deleteFaculty((Faculty) selectedObject);
+                    majorList.deleteAllMajorsOfFaculty(((Faculty) selectedObject).getFacultyName());
+                }
+                else if (selectedObject instanceof Major){
+                    majorList.deleteMajor((Major) selectedObject);
+                }
+            }
 
             writeData();
             readData();

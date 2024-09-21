@@ -18,6 +18,10 @@ public class UserList {
         this.users.add(user);
     }
 
+    public void addUserLists(UserList userList) {
+        this.users.addAll(userList.users);
+    }
+
     public void addUser(String[] data){
         switch (data[1]){
             case "ผู้ดูแลระบบ":
@@ -65,6 +69,10 @@ public class UserList {
             }
         }
         return null;
+    }
+
+    public void deleteUser(User user) {
+        this.users.remove(user);
     }
 
     //Getter
@@ -127,6 +135,28 @@ public class UserList {
             }
         }
         return students;
+    }
+
+    public UserList getRegisteredStudents(){
+        UserList registeredStudents = new UserList();
+        for (User user : this.users) {
+            if (user instanceof Student && ((Student) user).isRegistered()) {
+                registeredStudents.addUser(user);
+            }
+        }
+        return registeredStudents;
+    }
+
+    public UserList getActiveUser(){
+        UserList activeUsers = new UserList();
+        for (User user : this.users) {
+            if (user instanceof Student && ((Student) user).isRegistered()) {
+                activeUsers.addUser(user);
+            } else if (!(user instanceof Student)){
+                activeUsers.addUser(user);
+            }
+        }
+        return activeUsers;
     }
 
     public List<User> getUsers() {

@@ -1,6 +1,5 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 
 import java.util.ArrayList;
@@ -83,6 +82,14 @@ public class MajorList {
             }
         }
         return null;
+    }
+
+    public void deleteAllMajorsOfFaculty(String faculty){
+        majors.removeIf(major -> major.getFaculty().equals(faculty));
+    }
+
+    public void deleteMajor(Major major){
+        majors.remove(major);
     }
 
     public ArrayList<Major> getMajors(){

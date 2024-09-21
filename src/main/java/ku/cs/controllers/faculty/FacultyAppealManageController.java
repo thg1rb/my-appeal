@@ -96,10 +96,7 @@ public class FacultyAppealManageController {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
-        dateColumn.setComparator((date1, date2)-> {
-            int result = DateTimeService.compareDate(date1, date2);
-            return result;
-        });
+        dateColumn.setComparator(new DateTimeService());
 
         TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));

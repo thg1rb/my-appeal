@@ -3,12 +3,15 @@ package ku.cs.controllers.admin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import ku.cs.controllers.general.ConfirmationDeleteAlertController;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
@@ -18,8 +21,10 @@ import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.exceptions.EmptyInputException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class AdminStaffPopupController {
     @FXML private Text optionText;
@@ -34,6 +39,7 @@ public class AdminStaffPopupController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button editButton;
+    @FXML private Button deleteButton;
 
     @FXML private TextField firstNameTextField;
     @FXML private TextField lastNameTextField;
@@ -50,11 +56,13 @@ public class AdminStaffPopupController {
     private ArrayList<String> majorChoices;
 
     private String selectedRole;
+    private boolean deleted;
 
     @FXML
     private void initialize() {
         roleChoiceBox.getItems().addAll(staffChoice);
         emptyInputText.setVisible(false);
+        this.deleted = false;
 
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -115,6 +123,8 @@ public class AdminStaffPopupController {
             confirmButton.setDisable(true);
             editButton.setDisable(false);
             roleChoiceBox.setDisable(true);
+            deleteButton.setVisible(true);
+            deleteButton.setDisable(false);
         }else{
             optionText.setText("เพิ่มข้อมูลเจ้าหน้าที่");
             editButton.setVisible(false);
@@ -122,6 +132,8 @@ public class AdminStaffPopupController {
             confirmButton.setDisable(false);
             editButton.setDisable(true);
             roleChoiceBox.setDisable(false);
+            deleteButton.setVisible(false);
+            deleteButton.setDisable(true);
         }
     }
 
@@ -244,5 +256,37 @@ public class AdminStaffPopupController {
         } catch (EmptyInputException e){
             emptyInputText.setVisible(true);
         }
+    }
+
+    @FXML
+    private void onDeleteButtonClicked() {
+        try {
+            FXMLLoader alertLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/confirmation-delete.fxml"));
+            Parent root = alertLoader.load();
+            ConfirmationDeleteAlertController controller = alertLoader.getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("ยืนยันการลบ");
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            stage.showAndWait();
+            if (controller.isConfirmed()){
+                user = null;
+                Stage mainstage = (Stage) deleteButton.getScene().getWindow();
+                mainstage.close();
+                this.deleted = true;
+            }else {
+                this.deleted = false;
+            }
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isDeleted(){
+        return this.deleted;
     }
 }

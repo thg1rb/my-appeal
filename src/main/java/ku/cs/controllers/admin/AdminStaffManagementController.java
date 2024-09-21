@@ -3,7 +3,6 @@ package ku.cs.controllers.admin;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -33,6 +31,7 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AdminStaffManagementController {
@@ -46,13 +45,14 @@ public class AdminStaffManagementController {
     private User user;
 
     private HashMap<String, Datasource<UserList>> datasourcesMap;
+    private HashMap<String, UserList> staffMap;
+
     private Datasource<UserList> facultyStaffDatasource;
     private Datasource<UserList> majorStaffDatasource;
     private Datasource<UserList> advisorDatasource;
     private Datasource<FacultyList> facultyListDatasource;
     private Datasource<MajorList> majorListDatasource;
 
-    private HashMap<String, UserList> staffMap;
     private FacultyList facultyList;
     private MajorList majorList;
 
@@ -125,7 +125,7 @@ public class AdminStaffManagementController {
         TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
-            Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+            Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(60);
             imageView.setFitWidth(60);
@@ -143,6 +143,12 @@ public class AdminStaffManagementController {
 
         TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
         facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+        facultyCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return String.CASE_INSENSITIVE_ORDER.compare(o1, o2);
+            }
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add(imgCol);
@@ -169,15 +175,37 @@ public class AdminStaffManagementController {
 
             tableView.getColumns().add(idCol);
         }
+
+        // Resize Col
         int sizeCol = tableView.getColumns().size();
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setPrefWidth((double) 1100 / sizeCol);
+        }
+        imgCol.setPrefWidth(imgCol.getPrefWidth() - 50);
+        nameCol.setPrefWidth(nameCol.getPrefWidth() + 20);
+        facultyCol.setPrefWidth(facultyCol.getPrefWidth() + 30);
+        if (!role.equals("เจ้าหน้าที่คณะ")) {
+            facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 15);
+            TableColumn<?, ?> majorCol = (tableView.getColumns()).get(5);
+            majorCol.setPrefWidth(majorCol.getPrefWidth() + 15);
+            if (role.equals("อาจารย์ที่ปรึกษา")){
+                facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 5);
+                majorCol.setPrefWidth(facultyCol.getPrefWidth() + 15);
+                TableColumn<?, ?> idCol = (tableView.getColumns()).get(6);
+                idCol.setPrefWidth(idCol.getPrefWidth() - 10);
+            }
         }
 
         tableView.getItems().clear();
         for (User user : userList.getUsers()){
             tableView.getItems().add(user);
         }
+
+        tableView.getSortOrder().add(facultyCol);
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setSortable(false);
+        }
+        tableView.sort();
     }
 
     private void updateTotalText(){
@@ -197,7 +225,12 @@ public class AdminStaffManagementController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
+            if (staffPopup.isDeleted()){
+                staffMap.get(selectedStaff.getRole()).deleteUser(selectedStaff);
+                selectedStaff = null;
+            }
             saveData();
+            readData();
             showTable(staffMap.get(selectingTab), selectingTab);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -85,5 +85,9 @@ public class FacultyList {
         return null;
     }
 
+    public void deleteFaculty(Faculty faculty){
+        faculties.remove(faculty);
+    }
+
     public ArrayList<Faculty> getFaculties() { return faculties; }
 }

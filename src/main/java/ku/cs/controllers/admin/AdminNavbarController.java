@@ -5,8 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
+
+import java.io.File;
 
 public class AdminNavbarController {
     @FXML private Circle profileImageCircle;
@@ -18,12 +21,12 @@ public class AdminNavbarController {
 
     @FXML
     private void initialize(){
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
         usernameLabel.setText(user.getUsername());
         roleLabel.setText(user.getRole());
 
-        Image image = new Image(getClass().getResource(user.getProfileUrl()).toString());
+        Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
         profileImageCircle.setFill(new ImagePattern(image));
     }
 
