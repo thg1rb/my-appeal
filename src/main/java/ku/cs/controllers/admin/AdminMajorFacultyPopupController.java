@@ -112,24 +112,31 @@ public class AdminMajorFacultyPopupController {
 
     @FXML
     public void onConfirmButtonClicked(){
-        String name = nameTextField.getText();
-        String id = idTextField.getText();
+        try{
+            String name = nameTextField.getText();
+            String id = idTextField.getText();
+            if (name.isEmpty() || id.isEmpty()){
+                throw new EmptyInputException();
+            }
+            if (optionChoiceBox.getValue().equals("คณะ")) {
+                facultyList.addFaculty(name, id);
+            } else {
+                String faculty = facultyChoiceBox.getValue();
+                majorList.addMajor(name, faculty, id, facultyList);
+            }
 
-        if (optionChoiceBox.getValue().equals("คณะ")){
-            facultyList.addFaculty(name, id);
-        }else{
-            String faculty = facultyChoiceBox.getValue();
-            majorList.addMajor(name, faculty, id, facultyList);
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.close();
+        }catch (EmptyInputException e){
+            emptyInputText.setVisible(true);
         }
-
-        Stage stage = (Stage) confirmButton.getScene().getWindow();
-        stage.close();
     }
     @FXML
     public void onCancelButtonClicked(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     public void onEditButtonClicked(){
         try {

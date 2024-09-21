@@ -17,6 +17,7 @@ import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.exceptions.EmptyInputException;
 import ku.cs.services.fileuploaders.ImageFileUploader;
 
 import java.io.File;
@@ -102,25 +103,29 @@ public class ProfileSettingController {
 
     @FXML
     public void onConfirmButtonClicked(){
-        String oldPassword = oldPasswordTextField.getText();
-        String newPassword = newPasswordTextField.getText();
-        String confirmPassword = confirmPasswordTextField.getText();
-        clearText();
-        clearTextField();
-
-        if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            confirmEditErrorLabel.setText("โปรดใส่ข้อมูลให้ครบถ้วน");
-        } else if (!newPassword.equals(confirmPassword)) {
-            confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
-        } else if (!user.validatePassword(oldPassword)) {
-            oldPasswordErrorLabel.setText("รหัสผ่านเดิมไม่ถูกต้อง");
-        } else {
-            changePassword(user, newPassword);
-
+        try{
+            String oldPassword = oldPasswordTextField.getText();
+            String newPassword = newPasswordTextField.getText();
+            String confirmPassword = confirmPasswordTextField.getText();
             clearText();
             clearTextField();
 
-            successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");
+            if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                throw new EmptyInputException();
+            } else if (!newPassword.equals(confirmPassword)) {
+                confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
+            } else if (!user.validatePassword(oldPassword)) {
+                oldPasswordErrorLabel.setText("รหัสผ่านเดิมไม่ถูกต้อง");
+            } else {
+                changePassword(user, newPassword);
+
+                clearText();
+                clearTextField();
+
+                successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");
+            }
+        }catch (EmptyInputException e){
+            confirmEditErrorLabel.setText("โปรดใส่ข้อมูลให้ครบถ้วน");
         }
     }
 
