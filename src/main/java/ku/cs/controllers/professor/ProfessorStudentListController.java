@@ -159,7 +159,7 @@ public class ProfessorStudentListController {
         fullnameCol.setPrefWidth(275);
         idCol.setPrefWidth(275);
 
-        // Add Student filter by Professer name (Not Done Yet)
+        // Add Student filter by Professer name
         tableView.getItems().clear();
         for (User student : studentList.getUsers()) {
             if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {

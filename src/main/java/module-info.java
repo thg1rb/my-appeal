@@ -38,4 +38,7 @@ module ku.cs {
 
     exports ku.cs.models.collections to javafx.fxml;
     opens ku.cs.models.collections to javafx.base;
+
+    exports ku.cs.services.exceptions to javafx.fxml;
+    opens ku.cs.services.exceptions to javafx.base;
 }

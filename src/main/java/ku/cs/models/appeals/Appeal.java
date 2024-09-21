@@ -1,5 +1,9 @@
 package ku.cs.models.appeals;
 
+import ku.cs.models.persons.User;
+
+import java.util.UUID;
+
 public class Appeal {
 
     // Fields
