@@ -31,7 +31,6 @@ public class ProfessorStudentListController {
     @FXML private Pane navbarAnchorPane;
     @FXML private Text totalText;
     @FXML private TableView<User> tableView;
-
     @FXML private TextField searchTextField;
 
     private User user;
@@ -64,14 +63,9 @@ public class ProfessorStudentListController {
         appealList = appealDatasource.readData();
 
         // ช่องค้นหา
-        showTable(studentList);
+        showTable(studentList, searchTextField.getText());
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("^[a-zA-zก-๙0-9]+$") && !newValue.isEmpty()) {
-                showSearchTable(studentList, newValue);
-            }
-            else if (newValue.isEmpty() || newValue.isBlank()) {
-                showTable(studentList);
-            }
+            showTable(studentList, newValue);
         });
 
         // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
@@ -100,7 +94,7 @@ public class ProfessorStudentListController {
         });
     }
 
-    // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (default)
+    // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (default แสดงทั้งหมด)
     private void showTable(UserList studentList) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
         pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
@@ -135,7 +129,7 @@ public class ProfessorStudentListController {
     }
 
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
-    private void showSearchTable(UserList studentList, String searchText) {
+    private void showTable(UserList studentList, String searchText) {
         TableColumn<User, String> pathCol = new TableColumn<>("Profile");
         pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
 
