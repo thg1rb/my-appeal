@@ -1,11 +1,13 @@
 package ku.cs.models.dates;
 
+import ku.cs.models.appeals.Appeal;
+
 public class ModifyDate {
     private String uuid;
     private String createDate;
     private String advisorApproveDate;
     private String departmentApproveDate;
-    private String deanApproveDate;
+    private String facultyApproveDate;
 
     // Constructors
     public ModifyDate(String uuid, String createDate) {
@@ -13,11 +15,11 @@ public class ModifyDate {
         this.createDate = createDate;
     }
 
-    public ModifyDate(String uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String deanApproveDate) {
+    public ModifyDate(String uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
         this(uuid, createDate);
         this.advisorApproveDate = advisorApproveDate;
         this.departmentApproveDate = departmentApproveDate;
-        this.deanApproveDate = deanApproveDate;
+        this.facultyApproveDate = facultyApproveDate;
     }
 
     // Getters
@@ -37,8 +39,8 @@ public class ModifyDate {
         return departmentApproveDate;
     }
 
-    public String getDeanApproveDate() {
-        return deanApproveDate;
+    public String getFacultyApproveDate() {
+        return facultyApproveDate;
     }
 
     // Setters
@@ -50,13 +52,37 @@ public class ModifyDate {
         this.departmentApproveDate = departmentApproveDate;
     }
 
-    public void setDeanApproveDate(String deanApproveDate) {
-        this.deanApproveDate = deanApproveDate;
+    public void setFacultyApproveDate(String facultyApproveDate) {
+        this.facultyApproveDate = facultyApproveDate;
+    }
+
+    public boolean isAdvisorRejected(String status) {
+        return advisorApproveDate != null && status.contains("ปฏิเสธ");
+    }
+
+    public boolean isDepartmentRejected(String status) {
+        return departmentApproveDate != null && status.contains("ปฏิเสธ");
+    }
+
+    public boolean isFacultyRejected(String status) {
+        return facultyApproveDate != null && status.contains("ปฏิเสธ");
+    }
+
+    public boolean isAdvisorPending() {
+        return advisorApproveDate.equals("null");
+    }
+
+    public boolean isDepartmentPending() {
+        return departmentApproveDate.equals("null");
+    }
+
+    public boolean isFacultyPending() {
+        return facultyApproveDate.equals("null");
     }
 
     // Overriding Method
     @Override
     public String toString() {
-        return uuid + "," + createDate + "," + advisorApproveDate + "," + departmentApproveDate + "," + deanApproveDate;
+        return uuid + "," + createDate + "," + advisorApproveDate + "," + departmentApproveDate + "," + facultyApproveDate;
     }
 }

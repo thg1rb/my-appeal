@@ -25,6 +25,7 @@ Button {
 }
 
 /* Login Button */
+
 .login-button {
     -fx-background-color: #303337;
     -fx-text-fill: #FFFFFF;

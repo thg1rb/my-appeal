@@ -25,7 +25,7 @@ public class ModifyDateList {
         return false;
     }
 
-    // Find modify date by UUID
+    // Find Modify Date by UUID
     public ModifyDate findModifyDateByUuid(String uuid) {
         for (ModifyDate modifyDate : modifyDates) {
             if (modifyDate.getUuid().equals(uuid)) {
