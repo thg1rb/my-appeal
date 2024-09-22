@@ -10,8 +10,10 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.exceptions.DuplicateItemsException;
 import ku.cs.services.exceptions.EmptyInputException;
 
 import java.io.File;
@@ -47,9 +49,17 @@ public class RegisterUsernamePasswordController {
         String confirmPassword = this.confirmPasswordTextField.getText();
 
         try{
+            ValidationService validationService = new ValidationService();
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 throw new EmptyInputException();
-            } else {
+            }else if (studentList.findUserByUsername(username) != null){
+                throw new DuplicateItemsException("ชื่อผู้ใช้งานระบบนี้ถูกใช้ไปแล้ว กรุณาใช้ชื่ออื่น");
+            }else if (!validationService.validateUsername(username)){
+                errorLabel.setText("ชื่อผู้ใช้งานต้องมีความยาวอย่างน้อย 6 ตัวอักษร และ ไม่เป็นภาษาไทย");
+            } else if (!validationService.validatePassword(password)){
+                errorLabel.setText("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
+            }
+            else {
                 if (password.equals(confirmPassword)) {
                     ((Student) student).registration(username, password);
                     studentDatasource.writeData(studentList);
@@ -62,8 +72,10 @@ public class RegisterUsernamePasswordController {
                     errorLabel.setText("กรุณาใส่รหัสผ่านให้ตรงกัน");
                 }
             }
-        }catch (EmptyInputException e){
+        } catch (EmptyInputException e){
             errorLabel.setText("กรุณาใส่ข้อมูลให้ครบถ้วน");
+        } catch (DuplicateItemsException e) {
+            errorLabel.setText(e.getMessage());
         }
     }
 }

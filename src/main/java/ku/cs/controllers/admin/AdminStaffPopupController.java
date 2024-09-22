@@ -19,18 +19,21 @@ import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ValidationService;
 import ku.cs.services.exceptions.EmptyInputException;
+import ku.cs.services.exceptions.IllegalValidationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class AdminStaffPopupController {
     @FXML private Text optionText;
     @FXML private Text majorText;
     @FXML private Text idText;
     @FXML private Text emptyInputText;
+    @FXML private Text usernameValidationText;
+    @FXML private Text passwordValidationText;
 
     @FXML private ChoiceBox<String> roleChoiceBox;
     @FXML private ChoiceBox<String> facultyChoiceBox;
@@ -61,7 +64,10 @@ public class AdminStaffPopupController {
     @FXML
     private void initialize() {
         roleChoiceBox.getItems().addAll(staffChoice);
+
         emptyInputText.setVisible(false);
+        usernameValidationText.setVisible(false);
+        passwordValidationText.setVisible(false);
         this.deleted = false;
 
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -165,6 +171,9 @@ public class AdminStaffPopupController {
     @FXML
     public void onConfirmButtonClicked() {
         try {
+            usernameValidationText.setVisible(false);
+            passwordValidationText.setVisible(false);
+
             String firstName = firstNameTextField.getText();
             String lastName = lastNameTextField.getText();
             String username = usernameTextField.getText();
@@ -175,6 +184,14 @@ public class AdminStaffPopupController {
 
             if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
                 throw new EmptyInputException();
+            }
+            
+            if (!validateUsername(username)){
+                usernameValidationText.setVisible(true);
+                throw new IllegalValidationException();
+            }else if (!validatePassword(password)){
+                passwordValidationText.setVisible(true);
+                throw new IllegalValidationException();
             }
 
             if (majorChoiceBox.isVisible()) {
@@ -206,8 +223,9 @@ public class AdminStaffPopupController {
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
         } catch (EmptyInputException e) {
+            emptyInputText.setText("กรุณากรอกข้อมูลให้ครบถ้วน");
             emptyInputText.setVisible(true);
-        }
+        } catch (IllegalValidationException ignored){}
     }
 
     @FXML
@@ -284,6 +302,16 @@ public class AdminStaffPopupController {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean validatePassword(String password) {
+        ValidationService validationService = new ValidationService();
+        return validationService.validatePassword(password);
+    }
+
+    private boolean validateUsername(String username) {
+        ValidationService validationService = new ValidationService();
+        return validationService.validateUsername(username);
     }
 
     public boolean isDeleted(){
