@@ -12,6 +12,7 @@ import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.exceptions.EmptyInputException;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class RegisterUsernamePasswordController {
     @FXML
     private void initialize() {
         studentDatasource = new UserListDatasource("data"+ File.separator+"users", "student.csv");
-        data = (HashMap<String, Object>) FXRouter.getData();
+        data = FXRouter.getData() instanceof HashMap<?, ?> ? (HashMap<String, Object>) FXRouter.getData() : null;
         studentList = (UserList) data.get("studentsList");
         student = (User) data.get("studentRegistering");
 
@@ -45,20 +46,24 @@ public class RegisterUsernamePasswordController {
         String password = this.passwordTextField.getText();
         String confirmPassword = this.confirmPasswordTextField.getText();
 
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            errorLabel.setText("กรุณาใส่ข้อมูลให้ครบถ้วน");
-        }else {
-            if (password.equals(confirmPassword)) {
-                ((Student) student).registration(username, password);
-                studentDatasource.writeData(studentList);
-                try{
-                    FXRouter.goTo("login");
-                }catch (IOException e){
-                    throw new RuntimeException(e);
+        try{
+            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                throw new EmptyInputException();
+            } else {
+                if (password.equals(confirmPassword)) {
+                    ((Student) student).registration(username, password);
+                    studentDatasource.writeData(studentList);
+                    try {
+                        FXRouter.goTo("login");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    errorLabel.setText("กรุณาใส่รหัสผ่านให้ตรงกัน");
                 }
-            }else {
-                errorLabel.setText("กรุณาใส่รหัสผ่านให้ตรงกัน");
             }
+        }catch (EmptyInputException e){
+            errorLabel.setText("กรุณาใส่ข้อมูลให้ครบถ้วน");
         }
     }
 }

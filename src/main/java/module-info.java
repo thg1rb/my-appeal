@@ -41,4 +41,10 @@ module ku.cs {
 
     exports ku.cs.services.exceptions to javafx.fxml;
     opens ku.cs.services.exceptions to javafx.base;
+
+    exports ku.cs.services to javafx.fxml;
+    opens ku.cs.services to javafx.base;
+
+    exports ku.cs.services.fileuploaders to javafx.fxml;
+    opens ku.cs.services.fileuploaders to javafx.base;
 }

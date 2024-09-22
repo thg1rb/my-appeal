@@ -1,12 +1,28 @@
 package ku.cs.models;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 public class Faculty {
+    private UUID uuid;
+
     private String facultyName;
     private String facultyId;
+    private ArrayList<Major> majors;
 
-    public Faculty() { }
+    //Constructor
+    public Faculty() {
+        this.uuid = UUID.randomUUID();
+        majors = new ArrayList<>();
+    }
     public Faculty(String facultyName, String facultyId) {
         this();
+        this.facultyName = facultyName;
+        this.facultyId = facultyId;
+    }
+    //Constructor for read file
+    public Faculty(String uuid, String facultyName, String facultyId) {
+        this.uuid = UUID.fromString(uuid);
         this.facultyName = facultyName;
         this.facultyId = facultyId;
     }
@@ -15,12 +31,22 @@ public class Faculty {
 
     public void setFacultyId(String facultyId) { this.facultyId = facultyId; }
 
+    public void setMajors(ArrayList<Major> majors) {
+        this.majors = majors;
+    }
+
     public String getFacultyName() { return facultyName; }
 
     public String getFacultyId() { return facultyId; }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public ArrayList<Major> getMajors() { return majors; }
+
     @Override
     public String toString() {
-        return facultyName + "," + facultyId;
+        return uuid.toString() + "," + facultyName + "," + facultyId;
     }
 }
