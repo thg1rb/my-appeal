@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
@@ -39,7 +40,7 @@ public class FacultyAppealManageController {
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (FacultyStaff) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
