@@ -10,6 +10,8 @@ import ku.cs.cs211671project.MainApplication;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
+import java.io.IOException;
+
 public class ProgramSettingController {
     @FXML private ChoiceBox<String> themeChoiceBox;
 
@@ -45,4 +47,15 @@ public class ProgramSettingController {
     }
 
 
+
+    @FXML
+    public void onAboutUsButtonClick() {
+        try {
+            FXRouter.goTo("about-us", user);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+

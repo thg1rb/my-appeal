@@ -10,6 +10,7 @@ import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
+import java.io.IOException;
 
 public class AdminNavbarController {
     @FXML private Circle profileImageCircle;
@@ -77,7 +78,11 @@ public class AdminNavbarController {
 
     @FXML
     void onProgramSettingButtonClicked() {
-
+        try{
+            FXRouter.goTo("program-setting", user);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

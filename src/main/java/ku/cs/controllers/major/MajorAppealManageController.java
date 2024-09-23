@@ -69,6 +69,7 @@ public class MajorAppealManageController {
         });
 
 
+
         tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
             @Override
             public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {

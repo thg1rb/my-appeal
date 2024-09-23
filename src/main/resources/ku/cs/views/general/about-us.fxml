@@ -7,12 +7,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.faculty.FacultyApproverManageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AboutUsController">
    <children>
-      <Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
+      <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane fx:id="backgroundAddApproverPane" layoutX="1.0" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
       <Pane layoutX="322.0" layoutY="205.0" prefHeight="600.0" prefWidth="980.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 50;">
          <children>
+
             <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="123.0" layoutY="37.0">
                <image>
                   <Image url="@../../../../images/bright-profile.png" />
