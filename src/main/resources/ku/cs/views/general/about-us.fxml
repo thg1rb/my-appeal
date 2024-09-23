@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.faculty.FacultyApproverManageController">
+   <children>
+      <Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
+      <Pane fx:id="backgroundAddApproverPane" layoutX="1.0" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
+      <Pane layoutX="322.0" layoutY="205.0" prefHeight="600.0" prefWidth="980.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 50;">
+         <children>
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="123.0" layoutY="37.0">
+               <image>
+                  <Image url="@../../../../images/bright-profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="678.0" layoutY="37.0">
+               <image>
+                  <Image url="@../../../../images/ton-profile.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="145.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610402132">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="89.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายบวรรัตน์ ตั้งนรารัชชกิจ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="699.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610401934">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="671.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายเกิดสิริ ศรีเจริญ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="123.0" layoutY="298.0">
+               <image>
+                  <Image url="@../../../../images/karn-profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="678.0" layoutY="298.0">
+               <image>
+                  <Image url="@../../../../images/aock-profile.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="145.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610405824">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="89.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายคมชาญ วงศ์ศิรสมพงษ์​">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="699.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610401985">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="671.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายไชยวัตน์ หนูวัฒนา">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text layoutX="270.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="เกี่ยวกับพวกเรา">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
