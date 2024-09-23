@@ -270,42 +270,42 @@
       </ScrollPane>
       <Pane layoutX="939.0" layoutY="100.0" prefHeight="510.0" prefWidth="235.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
          <children>
-            <Label layoutX="19.0" layoutY="39.0" text="วันที่สร้างคำร้อง:">
+            <Label alignment="CENTER" layoutY="39.0" prefWidth="235.0" text="วันที่สร้างคำร้อง:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="createDateLabel" layoutX="19.0" layoutY="69.0" text="createDateLabel">
+            <Label fx:id="createDateLabel" alignment="CENTER" layoutY="69.0" prefWidth="235.0" text="createDateLabel">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="19.0" layoutY="159.0" text="วันที่อาจารย์อนุมัติ">
+            <Label alignment="CENTER" layoutY="159.0" prefWidth="235.0" text="วันที่อาจารย์ดำเนินการ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="advisorApproveDateLabel" layoutX="19.0" layoutY="189.0" text="advisorDateLabel">
+            <Label fx:id="advisorApproveDateLabel" alignment="CENTER" layoutY="189.0" prefWidth="235.0" text="advisorDateLabel">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="19.0" layoutY="289.0" text="วันที่หัวหน้าภาคอนุมัติ">
+            <Label alignment="CENTER" layoutY="289.0" prefWidth="235.0" text="วันที่หัวหน้าภาคดำเนินการ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="departmentApproveDateLabel" layoutX="19.0" layoutY="319.0" text="departmentDateLabel">
+            <Label fx:id="departmentApproveDateLabel" alignment="CENTER" layoutY="319.0" prefWidth="235.0" text="departmentDateLabel">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="19.0" layoutY="409.0" text="วันที่หัวหน้าคณะอนุมัติ">
+            <Label alignment="CENTER" layoutY="409.0" prefWidth="235.0" text="วันที่หัวหน้าคณะดำเนินการ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="facultyApproveDateLabel" layoutX="19.0" layoutY="439.0" text="facultyDateLabel">
+            <Label fx:id="facultyApproveDateLabel" alignment="CENTER" layoutY="439.0" prefWidth="235.0" text="facultyDateLabel">
                <font>
                   <Font size="20.0" />
                </font>

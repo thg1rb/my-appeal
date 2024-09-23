@@ -1,10 +1,10 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.persons.Approver;
-import ku.cs.models.persons.User;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ku.cs.models.persons.User;
+import ku.cs.models.persons.Approver;
 
 public class ApproverList {
     private List<Approver> approvers;
@@ -13,31 +13,43 @@ public class ApproverList {
         approvers = new ArrayList<>();
     }
 
-    public void addApprover(String firstName, String lastName, String faculty, String major,String role) {
+    //Add approver from file reading
+    public void addApprover(String tier, String firstName, String lastName, String role) {
+        approvers.add(new Approver(tier, firstName, lastName, role));
+    }
+
+    //Add approver from Staff
+    public void addApprover(String firstName, String lastName, String role, User adder){
         firstName = firstName.trim();
         lastName = lastName.trim();
         role = role.trim();
-        String fullName = firstName + " " + lastName;
-        if (findApproverByFullName(fullName)== null){
-            approvers.add(new Approver(firstName, lastName, faculty, major, role));
-        }
-
-    }
-
-    public void addApprover(String firstName, String lastName, String role, User adder) {
         approvers.add(new Approver(firstName, lastName, role, adder));
     }
 
-    public Approver findApproverByFullName(String fullName) {
-        for (Approver approver : approvers) {
-            if (approver.getFullName().equals(fullName)) {
-                return approver;
-            }
-        }
-        return null;
+    public void addApprover(Approver approver){
+        approvers.add(approver);
     }
 
+    //Getter
     public List<Approver> getApprovers() {
         return approvers;
+    }
+    public ApproverList getFacultyTierApprovers() {
+        ApproverList approverList = new ApproverList();
+        for(Approver approver : approvers) {
+            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับคณะ")){
+                approverList.addApprover(approver);
+            }
+        }
+        return approverList;
+    }
+    public ApproverList getDepartmentTierApprovers() {
+        ApproverList approverList = new ApproverList();
+        for(Approver approver : approvers) {
+            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับภาควิชา")){
+                approverList.addApprover(approver);
+            }
+        }
+        return approverList;
     }
 }

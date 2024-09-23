@@ -3,7 +3,6 @@ package ku.cs.models.collections;
 import ku.cs.models.persons.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +16,10 @@ public class UserList {
 
     public void addUser(User user) {
         this.users.add(user);
+    }
+
+    public void addUserLists(UserList userList) {
+        this.users.addAll(userList.users);
     }
 
     public void addUser(String[] data){
@@ -68,7 +71,22 @@ public class UserList {
         return null;
     }
 
+    public void deleteUser(User user) {
+        this.users.remove(user);
+    }
+
     //Getter
+    public UserList getSpecificRoleUser(String role){
+        return switch (role) {
+            case "admin" -> getAdmins();
+            case "facultyStaff" -> getFacultyStaffs();
+            case "majorStaff" -> getDepartmentStaffs();
+            case "advisor" -> getAdvisors();
+            case "student" -> getStudents();
+            default -> null;
+        };
+    }
+
     public UserList getAdmins(){
         UserList admins = new UserList();
         for (User user : users) {
@@ -117,6 +135,28 @@ public class UserList {
             }
         }
         return students;
+    }
+
+    public UserList getRegisteredStudents(){
+        UserList registeredStudents = new UserList();
+        for (User user : this.users) {
+            if (user instanceof Student && ((Student) user).isRegistered()) {
+                registeredStudents.addUser(user);
+            }
+        }
+        return registeredStudents;
+    }
+
+    public UserList getActiveUser(){
+        UserList activeUsers = new UserList();
+        for (User user : this.users) {
+            if (user instanceof Student && ((Student) user).isRegistered()) {
+                activeUsers.addUser(user);
+            } else if (!(user instanceof Student)){
+                activeUsers.addUser(user);
+            }
+        }
+        return activeUsers;
     }
 
     public List<User> getUsers() {

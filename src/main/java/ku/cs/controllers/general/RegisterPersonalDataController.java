@@ -12,6 +12,7 @@ import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
+import ku.cs.services.exceptions.EmptyInputException;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,26 +40,33 @@ public class RegisterPersonalDataController {
     // ไปที่หน้าลงทะเบียนถัดไป
     @FXML
     public void onNextButtonClick() {
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String email = emailTextField.getText();
-        String id = idTextField.getText();
-        User exist = studentList.findStudentUserByInformation(firstName, lastName, id, email);
-        if (exist != null) {
-            if ( !((Student)exist).isRegistered() ){
-                HashMap<String, Object> data = new HashMap<>();
-                data.put("studentsList", studentList);
-                data.put("studentRegistering", exist);
-                try {
-                    FXRouter.goTo("register-username-password", data);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }else{
-                errorLabel.setText("ท่านได้ทำการลงทะเบียนไปแล้ว");
+        try{
+            String firstName = firstNameTextField.getText();
+            String lastName = lastNameTextField.getText();
+            String email = emailTextField.getText();
+            String id = idTextField.getText();
+            User exist = studentList.findStudentUserByInformation(firstName, lastName, id, email);
+            if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || id.isEmpty()){
+                throw new EmptyInputException();
             }
-        }else {
-            errorLabel.setText("*ข้อมูลของท่านไม่อยู่ในระบบ กรุณาติดต่อเจ้าหน้าที่");
+            if (exist != null) {
+                if (!((Student) exist).isRegistered()) {
+                    HashMap<String, Object> data = new HashMap<>();
+                    data.put("studentsList", studentList);
+                    data.put("studentRegistering", exist);
+                    try {
+                        FXRouter.goTo("register-username-password", data);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    errorLabel.setText("*ท่านได้ทำการลงทะเบียนไปแล้ว");
+                }
+            } else {
+                errorLabel.setText("*ข้อมูลของท่านไม่อยู่ในระบบ กรุณาติดต่อเจ้าหน้าที่");
+            }
+        }catch (EmptyInputException e){
+            errorLabel.setText("*กรุณกรอกข้อมูลให้ครบถ้วน");
         }
     }
 

@@ -1,73 +1,65 @@
 package ku.cs.models.persons;
 
-public class Approver{
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
+import ku.cs.models.persons.User;
+
+public class Approver {
+    private String tier;
     private String firstName;
     private String lastName;
-    private String fullName;
-    private String faculty;
-    private String department;
     private String role;
 
-    public Approver(String firstName, String lastName, String faculty, String major,String role) {
+    //Constructor
+    public Approver(String firstName, String lastName, String role, User adder) {
+        this.tier = adder.getRole().equals("เจ้าหน้าที่คณะ") ? "ผู้อนุมัติคำร้องระดับคณะ" : "ผู้อนุมัติคำร้องระดับภาควิชา";
         this.firstName = firstName;
         this.lastName = lastName;
-        this.faculty = faculty;
-        this.department= major;
+        setRole(role, adder);
+    }
+    //Constructor for reading file
+    public Approver(String tier, String firstName, String lastName, String role) {
+        this.tier = tier;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
-    public Approver(String firstName, String lastName, String role,User adder) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        if (adder instanceof FacultyStaff) {
-            this.faculty = ((FacultyStaff) adder).getFaculty();
-        }
-        if (adder instanceof DepartmentStaff) {
-            this.role += ((DepartmentStaff) adder).getDepartment();
-            this.department = ((DepartmentStaff) adder).getDepartment();
-        }
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-    public void setRole(String role) { this.role = role; }
-    public void setFullName(){
-        this.fullName = firstName + " " + lastName;
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-    public String getDepartment(){
-        return department;
-    }
-    public String getRole() { return role; }
+    //Getter
     public String getFirstName() {
         return firstName;
     }
     public String getLastName() {
         return lastName;
     }
-    public String getFullName(){
-        return firstName+" "+lastName;
+    public String getFullName(){return firstName + " " + lastName;}
+    public String getTier(){
+        return tier;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    //Setter
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    private void setRole(String role, User adder){
+        this.role = role;
+        if (adder instanceof DepartmentStaff){
+            this.role += ((DepartmentStaff) adder).getDepartment();
+        }else if (adder instanceof FacultyStaff){
+            this.role += "คณะ" + ((FacultyStaff) adder).getFaculty();
+        }
     }
 
     @Override
     public String toString() {
-        return  firstName + "," +
-                lastName + "," +
-                faculty + "," + department + "," + role;
+        return tier + "," + firstName + "," + lastName + "," + role;
     }
-
 
 }

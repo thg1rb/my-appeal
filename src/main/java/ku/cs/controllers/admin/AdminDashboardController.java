@@ -2,12 +2,12 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import ku.cs.models.persons.User;
-import ku.cs.services.FXRouter;
 
-import java.io.IOException;
+import ku.cs.models.persons.AdminUser;
+import ku.cs.models.persons.User;
+
+import ku.cs.services.FXRouter;
 
 public class AdminDashboardController {
     @FXML private Pane navbarAnchorPane;
@@ -15,7 +15,7 @@ public class AdminDashboardController {
     private User user;
 
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();

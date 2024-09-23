@@ -91,13 +91,19 @@ public class ProfessorApproveStudentAppealController {
         String[] status = selectedAppeal.getStatus().split("\\|");
         statusLabel.setText(String.format("%30s\n%30s", status[0], status[1]));
 
-        showAppealPane(selectedAppeal.isGeneralAppeal(), selectedAppeal.isSuspendAppeal(), selectedAppeal.isBreakAppeal());
+        showAppealScrollPane(selectedAppeal.isGeneralAppeal(), selectedAppeal.isSuspendAppeal(), selectedAppeal.isBreakAppeal());
         initializeImageButton();
     }
 
     // แสดงรายละเอียดคำร้องตามประเภทของคำร้อง
-    public void showAppealPane(Boolean isGeneralAppeal, Boolean isSuspendAppeal, Boolean isBreakAppeal) {
+    public void showAppealScrollPane(Boolean isGeneralAppeal, Boolean isSuspendAppeal, Boolean isBreakAppeal) {
         initializeLabel(isGeneralAppeal, isSuspendAppeal, isBreakAppeal);
+
+        ScrollPane.ScrollBarPolicy never = ScrollPane.ScrollBarPolicy.NEVER;
+        generalAppealScrollPane.setHbarPolicy(never);
+        suspendAppealScrollPane.setHbarPolicy(never);
+        breakAppealScrollPane.setHbarPolicy(never);
+
         generalAppealScrollPane.setVisible(isGeneralAppeal);
         suspendAppealScrollPane.setVisible(isSuspendAppeal);
         breakAppealScrollPane.setVisible(isBreakAppeal);
@@ -161,7 +167,7 @@ public class ProfessorApproveStudentAppealController {
     public void onCloseButtonClick(ActionEvent event) {
         modifyDateListDatasource.writeData(modifyDateList);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
 

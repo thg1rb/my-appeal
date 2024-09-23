@@ -53,17 +53,16 @@ public class ApproverEditController {
         }
     }
 
-    public void onConfirmButtonClick()throws EmptyInputException{
+    public void onConfirmButtonClick() {
         try{
             if(isEmptyTextField()){
                 throw new EmptyInputException();
             }
             approver.setFirstName(nameTextField.getText());
             approver.setLastName(lastNameTextField.getText());
-            approver.setRole(roleTextField.getText());
+//            approver.setRole(roleTextField.getText());
             onCancleButtonClick();
-        }
-        catch(EmptyInputException e){
+        } catch(EmptyInputException e){
             System.out.println(e.getMessage());
         }
     }
@@ -74,17 +73,15 @@ public class ApproverEditController {
         }
     }
 
-    public void onAddButtonClick()throws EmptyInputException{
+    public void onAddButtonClick(){
         try{
             if(isEmptyTextField()){
                 throw new EmptyInputException();
             }
             approverList.addApprover(nameTextField.getText(),lastNameTextField.getText(),roleTextField.getText(),user);
             onCancleButtonClick();
-        }
-        catch(EmptyInputException e){
+        } catch(EmptyInputException e){
             System.out.println(e.getMessage());
-
         }
     }
 
