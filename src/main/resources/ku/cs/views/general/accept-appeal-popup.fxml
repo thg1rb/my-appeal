@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,9 +22,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="statusChoiceBox" layoutX="340.0" layoutY="54.0" prefHeight="39.0" prefWidth="269.0" stylesheets="@../../styles/button.css" />
       <Button layoutX="375.0" layoutY="289.0" mnemonicParsing="false" stylesheets="@../../styles/add-button.css" text="Button" />
       <Button layoutX="521.0" layoutY="288.0" mnemonicParsing="false" stylesheets="@../../styles/add-button.css" text="Button" />
-      <ComboBox fx:id="statusComboBox" layoutX="356.0" layoutY="132.0" prefWidth="150.0" />
+      <ComboBox fx:id="statusComboBox" layoutX="356.0" layoutY="132.0" prefWidth="150.0" promptText="---เลือกสถานะ---" />
    </children>
 </AnchorPane>

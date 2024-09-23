@@ -32,6 +32,7 @@ public class MajorApproverManageController {
     private User user;
     private Datasource<ApproverList> approverDatasource;
     private ApproverList approverList;
+    private ApproverList departmentTierApproverList;
     private Approver selectedApprover;
     private boolean addMode;
 
@@ -51,7 +52,9 @@ public class MajorApproverManageController {
         approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approverDatasource.readData();
 
-        showTable(approverList);
+        departmentTierApproverList = approverList.getDepartmentTierApprovers();
+
+        showTable(departmentTierApproverList);
 
         approverTableView.setOnMouseClicked(event -> {
             selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
@@ -66,6 +69,7 @@ public class MajorApproverManageController {
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
 
+            controller.setRole(user);
             controller.setMode(addMode, selectedApprover, user, approverList);
 
             Stage stage = new Stage();
@@ -79,7 +83,7 @@ public class MajorApproverManageController {
 
             approverDatasource.writeData(approverList);
             approverList = approverDatasource.readData();
-            showTable(approverList);
+            approverTableView.refresh();
         }
         catch(IOException e){
             e.printStackTrace();

@@ -75,8 +75,6 @@ public class AppealEditController {
 
     private Appeal selectedAppeal;
     private String role;
-    private String[] majorStatusList = {"อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี", "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน", "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ"};
-    private String[] facultyStatusList = {"อนุมัติโดยคณบดี | คำร้องดำเนินการครบถ้วน" , "ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ"};
     private String selectedStatus;
 
     private Datasource<ModifyDateList> modifyDateListDatasource;
@@ -103,16 +101,6 @@ public class AppealEditController {
     // set ตำแหน่งของผู้ใช้
     public void setRole(User user){
         role = user.getRole();
-        if (role.equals("เจ้าหน้าที่ภาควิชา")) {
-            statusChoiceBox.getItems().addAll(majorStatusList);
-            statusChoiceBox.setOnAction(this::getStatus);
-            statusChoiceBox.setValue(majorStatusList[0]);
-        }
-        else if(role.equals("เจ้าหน้าที่คณะ")){
-            statusChoiceBox.getItems().addAll(facultyStatusList);
-            statusChoiceBox.setOnAction(this::getStatus);
-            statusChoiceBox.setValue(facultyStatusList[0]);
-        }
     }
 
     public void setMode (boolean mode) {
@@ -215,8 +203,8 @@ public class AppealEditController {
             departmentApproveDateLabel.setStyle(pendingColor);
         }
 
-        if (!modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDeanApproveDate().equals("null")){
-            facultyApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDeanApproveDate());
+        if (!modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate().equals("null")){
+            facultyApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate());
             facultyApproveDateLabel.setStyle(createColor);
         }
         else {
@@ -298,7 +286,7 @@ public class AppealEditController {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             }
             else if (role.equals("เจ้าหน้าาที่คณะ")){
-                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDeanApproveDate(modifyDate);
+                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setFacultyApproveDate(modifyDate);
             }
 
             rejectReasonAlertPane.setVisible(false);
