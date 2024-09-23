@@ -3,11 +3,17 @@ package ku.cs.controllers.general;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.appeals.BreakAppeal;
@@ -20,14 +26,17 @@ import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class AppealEditController {
+    @FXML private AnchorPane mainPane;
 
     @FXML private ScrollPane generalAppealScrollPane;
     @FXML private ScrollPane suspendAppealScrollPane;
     @FXML private ScrollPane breakAppealScrollPane;
 
+    @FXML private Label topicLabel;
     @FXML private Label fullnameLabel;
     @FXML private Label idLabel;
     @FXML private Label typeLabel;
@@ -58,7 +67,11 @@ public class AppealEditController {
     @FXML private Pane rejectReasonAlertPane;
     @FXML private TextArea rejectReasonTextArea;
     @FXML private Label rejectReasonErrorLabel;
+
     @FXML private ChoiceBox<String> statusChoiceBox;
+    @FXML private Button confirmButton;
+    @FXML private Button rejectButton;
+
 
     private Appeal selectedAppeal;
     private String role;
@@ -100,6 +113,47 @@ public class AppealEditController {
             statusChoiceBox.setOnAction(this::getStatus);
             statusChoiceBox.setValue(facultyStatusList[0]);
         }
+    }
+
+    public void setMode (boolean mode) {
+        if(mode) {
+            topicLabel.setText("รายละเอียดคำร้อง");
+            statusChoiceBox.setVisible(false);
+            confirmButton.setVisible(false);
+            rejectButton.setVisible(false);
+        }
+        else {
+            topicLabel.setText("อนุมัติหรือปฏิเสธคำร้องของนิสิต");
+            statusChoiceBox.setVisible(true);
+            confirmButton.setVisible(true);
+            rejectButton.setVisible(true);
+        }
+    }
+
+    // show accept popup
+    void showAcceptPopup() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/accept-appeal-popup.fxml"));
+            Parent root = fxmlLoader.load();
+            AcceptAppealController controller = fxmlLoader.getController();
+            GaussianBlur blur = new GaussianBlur(10);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            mainPane.setEffect(blur);
+            stage.showAndWait();
+            mainPane.setEffect(null);
+
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+
     }
 
     // เอา status มาจาก choice box
@@ -204,23 +258,24 @@ public class AppealEditController {
     // อนุมัติคำร้องเพื่อส่งต่อให้หัวหน้าภาควิชา
     @FXML
     public void onConfirmButtonClick(ActionEvent event) {
-        String modifyDate = DateTimeService.detailedDateToString(new Date());
-
-        selectedAppeal.setModifyDate(modifyDate);
-        if(selectedStatus.equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") || selectedStatus.equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")){
-            rejectReasonAlertPane.setVisible(true);
-        }
-        else{
-            selectedAppeal.setStatus(selectedStatus);
-            if (role.equals("เจ้าหน้าที่ภาควิชา")){
-                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
-            }
-            else if (role.equals("เจ้าหน้าที่คณะ")){
-                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDeanApproveDate(modifyDate);
-            }
-        }
-
-        onCloseButtonClick(event);
+        showAcceptPopup();
+//        String modifyDate = DateTimeService.detailedDateToString(new Date());
+//
+//        selectedAppeal.setModifyDate(modifyDate);
+//        if(selectedStatus.equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") || selectedStatus.equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")){
+//            rejectReasonAlertPane.setVisible(true);
+//        }
+//        else{
+//            selectedAppeal.setStatus(selectedStatus);
+//            if (role.equals("เจ้าหน้าที่ภาควิชา")){
+//                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
+//            }
+//            else if (role.equals("เจ้าหน้าที่คณะ")){
+//                modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDeanApproveDate(modifyDate);
+//            }
+//        }
+//
+//        onCloseButtonClick(event);
     }
 
     // ปิด pop-up (ของหน้าระบุเหตุผลปฏิเสธคำร้อง)

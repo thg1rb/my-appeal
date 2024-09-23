@@ -15,16 +15,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealEditController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealEditController">
    <children>
       <Pane prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #265252;">
          <children>
-            <Label layoutX="110.0" layoutY="16.0" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต" textFill="WHITE">
+            <Label fx:id="topicLabel" layoutX="47.0" layoutY="16.0" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1065.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="close-pop-up" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
+            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1103.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="close-pop-up" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
                <font>
                   <Font size="14.0" />
                </font>
@@ -81,12 +81,12 @@
             </Label>
          </children>
       </Pane>
-      <Button layoutX="950.0" layoutY="631.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" styleClass="approve-button" stylesheets="@../../styles/button.css" text="ตกลง">
+      <Button fx:id="confirmButton" layoutX="950.0" layoutY="631.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" styleClass="approve-button" stylesheets="@../../styles/button.css" text="ตกลง">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="1067.0" layoutY="632.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ยกเลิก">
+      <Button fx:id="rejectButton" layoutX="1067.0" layoutY="632.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ยกเลิก">
          <font>
             <Font size="24.0" />
          </font>
@@ -355,7 +355,7 @@
             </Pane>
          </children>
       </Pane>
-      <ChoiceBox fx:id="statusChoiceBox" layoutX="346.0" layoutY="629.0" prefHeight="51.0" prefWidth="536.0" stylesheets="@../../styles/button.css" />
+      <ChoiceBox fx:id="statusChoiceBox" layoutX="650.0" layoutY="629.0" prefHeight="51.0" prefWidth="232.0" stylesheets="@../../styles/button.css" />
    </children>
    <effect>
       <DropShadow />

@@ -35,8 +35,9 @@ public class MajorAppealManageController {
 
     private Appeal selectedAppeal;
     private AppealList appealList;
+    private AppealList departmentAppealList;
     private Datasource<AppealList> datasource;
-    private boolean filter = false;
+    private boolean preview = true;
 
     private User user;
 
@@ -56,13 +57,16 @@ public class MajorAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff)user).getDepartment());
 
-        showTable(appealList,false);
+        showTable(departmentAppealList,false);
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(appealList, filter);
+                preview = true;
+                showTable(departmentAppealList, false);
             } else {
-                showTable(appealList, filter);
+                preview = false;
+                showTable(departmentAppealList, true);
             }
         });
 
@@ -71,7 +75,7 @@ public class MajorAppealManageController {
             row.setOnMouseClicked(event -> {
                 selectedAppeal = tableView.getSelectionModel().getSelectedItem();
                 if(selectedAppeal != null) {
-                    showAppealPopup();
+                    showAppealPopup(preview);
                 }
             });
             return row;
@@ -96,7 +100,7 @@ public class MajorAppealManageController {
 
     }
 
-    public void showAppealPopup(){
+    public void showAppealPopup(boolean preview){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
@@ -105,7 +109,9 @@ public class MajorAppealManageController {
 
 
             controller.setRole(user);
+            controller.setMode(preview);
             controller.setSelectedAppeal(selectedAppeal);
+
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -118,7 +124,7 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
             datasource.readData();
-            showTable(appealList, filter);
+            tableView.refresh();
         }
         catch(IOException e){
             e.printStackTrace();
@@ -154,14 +160,13 @@ public class MajorAppealManageController {
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
-                if(appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")){
+                if((!appeal.getStatus().equals("null")) && appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())){
                     tableView.getItems().add(appeal);
                 }
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment()) &&
-                appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
+                if (appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
                     tableView.getItems().add(appeal);
                 }
             }
