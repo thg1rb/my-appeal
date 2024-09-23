@@ -16,7 +16,7 @@
          </font>
       </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TableView fx:id="approverTableView" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="approverTableView" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-radius: 20;" styleClass="table-view-without-tab-pane" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-background-radius: 20 0 0 0; -fx-border-radius: 20 00 00 00; -fx-font-size: 20;" text="Role" />
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-border-radius: 00 20 00 00; -fx-background-radius: 00 20 00 00; -fx-font-color: #303337;" text="Name" />

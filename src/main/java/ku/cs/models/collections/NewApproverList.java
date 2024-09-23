@@ -6,10 +6,10 @@ import java.util.List;
 import ku.cs.models.persons.User;
 import ku.cs.models.persons.Approver;
 
-public class ApproverList {
+public class NewApproverList {
     private List<Approver> approvers;
 
-    public ApproverList() {
+    public NewApproverList() {
         approvers = new ArrayList<>();
     }
 
