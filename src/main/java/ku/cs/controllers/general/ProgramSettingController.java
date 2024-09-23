@@ -35,7 +35,6 @@ public class ProgramSettingController {
             throw new RuntimeException(e);
         }
 
-        // ตั้งค่าตัวเลือกใน ChoiceBox
         themeChoiceBox.getItems().addAll("Dark", "Light");
 
         fontChoiceBox.getItems().addAll();
