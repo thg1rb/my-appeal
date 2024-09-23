@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.StaffPopupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminStaffPopupController">
    <children>
       <Pane prefHeight="74.0" prefWidth="601.0" style="-fx-background-color: #265252;" />
       <Text fx:id="optionText" fill="WHITE" layoutX="32.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="เพิ่มข้อมูลเจ้าหน้าที่">
@@ -57,27 +57,27 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="firstNameTextField" layoutX="242.0" layoutY="156.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="firstNameTextField" layoutX="242.0" layoutY="156.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" styleClass="text-field" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="lastNameTextField" layoutX="242.0" layoutY="215.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="lastNameTextField" layoutX="242.0" layoutY="215.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="usernameTextField" layoutX="242.0" layoutY="268.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="usernameTextField" layoutX="242.0" layoutY="268.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="initPasswordTextField" layoutX="242.0" layoutY="324.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="initPasswordTextField" layoutX="242.0" layoutY="324.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="idTextField" layoutX="242.0" layoutY="507.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="idTextField" layoutX="242.0" layoutY="507.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
@@ -99,5 +99,15 @@
       </Button>
       <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="376.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
       <ChoiceBox fx:id="majorChoiceBox" layoutX="242.0" layoutY="435.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+      <Text fx:id="emptyInputText" fill="RED" layoutX="170.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*กรุณากรอกข้อมูลให้ครบถ้วน">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="deleteButton" layoutX="23.0" layoutY="581.0" mnemonicParsing="false" onAction="#onDeleteButtonClicked" prefHeight="45.0" prefWidth="103.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="ลบ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

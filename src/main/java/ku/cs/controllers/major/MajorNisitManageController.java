@@ -18,8 +18,8 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
-import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
+import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;

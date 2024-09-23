@@ -26,7 +26,7 @@
         </TextField>
       <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="444.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TabPane fx:id="tabPane" layoutX="272.0" layoutY="180.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
+      <TabPane fx:id="tabPane" layoutX="272.0" layoutY="168.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
          <tabs>
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 20 0 0 0;" text="ทั้งหมด" />
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10;" text="เจ้าหน้าที่คณะ" />
@@ -35,7 +35,7 @@
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 0 20 0 0;" text="นักศึกษา" />
          </tabs>
       </TabPane>
-      <TableView fx:id="tableView" layoutX="272.0" layoutY="248.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="tableView" layoutX="272.0" layoutY="243.0" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0; -fx-border-radius: 0 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Profile" />
             <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Name" />
@@ -47,7 +47,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Pane layoutX="272.0" layoutY="702.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
+      <Pane layoutX="272.0" layoutY="697.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
             <Button layoutX="877.0" layoutY="12.0" mnemonicParsing="false" onAction="#onUnBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="unban-button" stylesheets="@../../styles/ban-unban-button.css" text="คืนสิทธ์การใช้งาน">
                <font>

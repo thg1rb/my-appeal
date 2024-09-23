@@ -14,6 +14,7 @@
     -fx-border-color: transparent transparent lightgrey transparent;
     -fx-background-radius: 0 20px 0 0;
     -fx-border-radius: 0 20px 0 0;
+    -fx-pref-height: 50;
 }
 
 /* table-view without tab-pane */
@@ -35,10 +36,11 @@
     -fx-background-color: #f2f2f2;
     -fx-border-width: 0 1px 1px 0;
     -fx-border-color: grey;
+    -fx-pref-height: 80;
 }
 
 .table-row-cell:hover{
-    -fx-background-color: grey;
+    -fx-background-color: lightgrey;
 }
 
 .table-row-cell:selected {

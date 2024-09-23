@@ -1,6 +1,5 @@
 package ku.cs.models.collections;
 
-import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 
 import java.util.ArrayList;
@@ -27,6 +26,14 @@ public class MajorList {
         id = id.trim();
         if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
             majors.add(new Major(name, faculty, id));
+        }
+    }
+    public void addMajor(String uuid, String name, String faculty, String id){
+        name = name.trim();
+        faculty = faculty.trim();
+        id = id.trim();
+        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
+            majors.add(new Major(uuid, name, faculty, id));
         }
     }
 
@@ -75,6 +82,14 @@ public class MajorList {
             }
         }
         return null;
+    }
+
+    public void deleteAllMajorsOfFaculty(String faculty){
+        majors.removeIf(major -> major.getFaculty().equals(faculty));
+    }
+
+    public void deleteMajor(Major major){
+        majors.remove(major);
     }
 
     public ArrayList<Major> getMajors(){

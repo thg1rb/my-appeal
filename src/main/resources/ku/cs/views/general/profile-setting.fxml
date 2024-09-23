@@ -74,7 +74,7 @@
                </font>
             </PasswordField>
             <Label fx:id="confirmEditErrorLabel" layoutX="760.0" layoutY="417.0" text="*รหัสผ่านไม่ตรงกัน" textFill="RED" />
-            <Label fx:id="successLabel" layoutX="772.0" layoutY="417.0" text="*รหัสผ่านไม่ตรงกัน" textFill="#265252" />
+            <Label fx:id="successLabel" layoutX="772.0" layoutY="417.0" text="*รหัสผ่านไม่ตรงกัน" textFill="#3e8d73" />
          </children>
       </Pane>
       <Text layoutX="270.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="จัดการบัญชี">

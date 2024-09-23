@@ -29,7 +29,7 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accessibility = true;
-        this.profileUrl = "/images/default-profile.jpg";
+        this.profileUrl = "default-profile.jpg";
     }
     //Constructor for add student in Department responsibility
     public User(String role, String firstName, String lastName){
@@ -38,7 +38,7 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.accessibility = true;
-        this.profileUrl = "/images/default-profile.jpg";
+        this.profileUrl = "default-profile.jpg";
     }
     //Constructor for reading file
     public User(String uuid,String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl) {
@@ -78,10 +78,10 @@ public abstract class User {
         this.loginDate = loginDate;
     }
     public void unbanUser(){
-        this.accessibility = false;
+        this.accessibility = true;
     }
     public void banUser(){
-        this.accessibility = true;
+        this.accessibility = false;
     }
     public void setProfile(String path){
         this.profileUrl = path;
@@ -121,7 +121,7 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return uuid + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
+        return uuid.toString() + "," + role + "," + username + "," + password + "," + firstName + "," + lastName + "," + accessibility + "," + loginDate + "," + profileUrl;
     }
 
     public abstract String getRoleInEnglish();
