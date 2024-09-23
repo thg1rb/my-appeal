@@ -154,6 +154,8 @@ public class MajorAppealManageController {
         ownerColumn.setPrefWidth(366);
         typeColumn.setPrefWidth(366);
 
+        tableView.getSortOrder().add(dateColumn);
+
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
