@@ -1,8 +1,6 @@
 package ku.cs.controllers.major;
 
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,37 +8,38 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
+import ku.cs.controllers.general.SetPasswordController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
-import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.DepartmentStaff;
-import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class MajorAppealManageController {
+    @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
     @FXML private TabPane tabPane;
 
     private Appeal selectedAppeal;
     private AppealList appealList;
+    private AppealList departmentAppealList;
     private Datasource<AppealList> datasource;
+    private boolean preview = true;
 
     private User user;
-//    private Object selectedAppeal;
 
     @FXML
     public void initialize() {
@@ -58,35 +57,35 @@ public class MajorAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff)user).getDepartment());
 
-        showTable(appealList,false);
+        showTable(departmentAppealList,false);
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(appealList, false);
+                preview = true;
+                showTable(departmentAppealList, false);
             } else {
-                showTable(appealList, true);
+                preview = false;
+                showTable(departmentAppealList, true);
             }
         });
 
-
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-            @Override
-            public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
-                if (newValue != null) {
-                    selectedAppeal = newValue;
-                    showAppealPopup();
-                    tableView.getSelectionModel().select(selectedAppeal);
+        tableView.setRowFactory(v->{
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if(selectedAppeal != null) {
+                    showAppealPopup(preview);
                 }
-            }
+            });
+            return row;
         });
     }
 
-    public void showAppealPopup(){
+    public void test(){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
-            Parent root = fxmlLoader.load();
-            AppealEditController controller = fxmlLoader.getController();
-            controller.setType(selectedAppeal.getType(), selectedAppeal, user);
+            FXMLLoader testLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/set-password.fxml"));
+            Parent root = testLoader.load();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -94,10 +93,37 @@ public class MajorAppealManageController {
             stage.setScene(new Scene(root));
 
             stage.showAndWait();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showAppealPopup(boolean preview){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
+            Parent root = fxmlLoader.load();
+            AppealEditController controller = fxmlLoader.getController();
+            GaussianBlur blur = new GaussianBlur(10);
+
+
+            controller.setRole(user);
+            controller.setMode(preview);
+            controller.setSelectedAppeal(selectedAppeal);
+
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            mainPane.setEffect(blur);
+            stage.showAndWait();
+            mainPane.setEffect(null);
 
             datasource.writeData(appealList);
-
-//            showTable(appealList);
+            datasource.readData();
             tableView.refresh();
         }
         catch(IOException e){
@@ -128,21 +154,21 @@ public class MajorAppealManageController {
         ownerColumn.setPrefWidth(366);
         typeColumn.setPrefWidth(366);
 
-        tableView.getSortOrder().add(dateColumn);
-
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for(Appeal appeal : appealList.getAppeals()){
-                tableView.getItems().add(appeal);
+                if((!appeal.getStatus().equals("null")) && appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())){
+                    tableView.getItems().add(appeal);
+                }
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())) {
-                    System.out.println(appeal.toString());
+                if (appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
                     tableView.getItems().add(appeal);
                 }
             }
         }
+        tableView.getSortOrder().add(dateColumn);
         tableView.sort();
 
         dateColumn.setSortable(false);
