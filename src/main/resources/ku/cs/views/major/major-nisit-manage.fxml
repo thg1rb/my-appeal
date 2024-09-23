@@ -20,7 +20,7 @@
                </font></Button>
          </children>
       </Pane>
-      <TableView fx:id="nisitTableView" layoutX="282.0" layoutY="191.0" prefHeight="528.0" prefWidth="1100.0" style="-fx-background-radius: 20 20 0 0; -fx-border-radius: 20 20 0 0; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/table-view.css">
+      <TableView fx:id="nisitTableView" layoutX="282.0" layoutY="191.0" prefHeight="528.0" prefWidth="1100.0" style="-fx-background-radius: 20 20 0 0; -fx-border-radius: 20 20 0 0; -fx-border-color: #D9D9D9;" styleClass="table-view-without-tab-pane" stylesheets="@../../styles/table-view.css">
          <columns>
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="ID" />
             <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Name" />

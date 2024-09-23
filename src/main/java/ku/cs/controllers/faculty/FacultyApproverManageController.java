@@ -34,7 +34,7 @@ public class FacultyApproverManageController {
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
 
-        user = (User)FXRouter.getData();
+        user = (FacultyStaff)FXRouter.getData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -141,11 +141,9 @@ public class FacultyApproverManageController {
         String role = roleTextField.getText();
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        String faculty = ((FacultyStaff)user).getFaculty();
-        String major = ((DepartmentStaff)user).getDepartment();
 
         if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-            approverList.addApprover(firstName, lastName, faculty, major, role);
+            approverList.addApprover(firstName, lastName, role, user);
 
             approversDatasource.writeData(approverList);
 
@@ -160,14 +158,11 @@ public class FacultyApproverManageController {
         Approver selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
 
         if (selectedApprover != null) {
-            String newRole = editRoleTextField.getText();
             String newFirstName = editFirstNameTextField.getText();
             String newLastName = editLastNameTextField.getText();
 
-            selectedApprover.setRole(newRole);
             selectedApprover.setFirstName(newFirstName);
             selectedApprover.setLastName(newLastName);
-            selectedApprover.setFullName();
 
             showApproverTable(approverList);
 
@@ -189,7 +184,7 @@ public class FacultyApproverManageController {
             for (Approver approver : approverList.getApprovers()) {
                 String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
                 if (fullName.contains(searchText)) {
-                    filteredApproverList.addApprover(approver.getFirstName(), approver.getLastName(), approver.getFaculty(), approver.getDepartment(), approver.getRole());
+                    filteredApproverList.addApprover(approver);
                 }
             }
             showApproverTable(filteredApproverList);

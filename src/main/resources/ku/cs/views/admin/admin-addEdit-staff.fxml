@@ -27,32 +27,32 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="48.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="สกุล :">
+      <Text layoutX="48.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="สกุล :">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="48.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อผู้ใช้ :">
+      <Text layoutX="48.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อผู้ใช้ :">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="48.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสผ่านเริ่มต้น :">
+      <Text layoutX="48.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสผ่านเริ่มต้น :">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="48.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="คณะที่สังกัด :">
+      <Text layoutX="48.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="คณะที่สังกัด :">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text fx:id="majorText" layoutX="48.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ภาควิชาที่สังกัด :">
+      <Text fx:id="majorText" layoutX="48.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ภาควิชาที่สังกัด :">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text fx:id="idText" layoutX="48.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสประจำตัว&#10;อาจารย์ที่ปรึกษา :">
+      <Text fx:id="idText" layoutX="48.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสประจำตัว&#10;อาจารย์ที่ปรึกษา :">
          <font>
             <Font size="24.0" />
          </font>
@@ -62,22 +62,22 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="lastNameTextField" layoutX="242.0" layoutY="215.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="lastNameTextField" layoutX="242.0" layoutY="209.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="usernameTextField" layoutX="242.0" layoutY="268.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="usernameTextField" layoutX="242.0" layoutY="264.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="initPasswordTextField" layoutX="242.0" layoutY="324.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="initPasswordTextField" layoutX="242.0" layoutY="334.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="idTextField" layoutX="242.0" layoutY="507.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="idTextField" layoutX="242.0" layoutY="521.0" prefHeight="42.0" prefWidth="307.0" style="-fx-border-color: grey;" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="18.0" />
          </font>
@@ -97,8 +97,8 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="376.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
-      <ChoiceBox fx:id="majorChoiceBox" layoutX="242.0" layoutY="435.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+      <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="402.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+      <ChoiceBox fx:id="majorChoiceBox" layoutX="242.0" layoutY="461.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
       <Text fx:id="emptyInputText" fill="RED" layoutX="170.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*กรุณากรอกข้อมูลให้ครบถ้วน">
          <font>
             <Font size="14.0" />
@@ -109,5 +109,7 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Text fx:id="usernameValidationText" fill="RED" layoutX="49.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อผู้ใช้งานต้องมีความยาวอย่างน้อย 6 ตัวอักษร และไม่เป็นภาษาไทย" />
+      <Text fx:id="passwordValidationText" fill="RED" layoutX="49.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และไม่เป็นภาษาไทย" />
    </children>
 </AnchorPane>

@@ -64,14 +64,13 @@ public class ApproverListFileDatasource implements Datasource<ApproverList>{
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-                String firstName = data[0];
-                String lastName = data[1];
-                String faculty = data[2];
-                String major = data[3];
-                String role = data[4];
+                String tier = data[0];
+                String firstName = data[1];
+                String lastName = data[2];
+                String role = data[3];
 
                 // เพิ่มข้อมูลลงใน list
-                approverList.addApprover(firstName, lastName, faculty, major, role);
+                approverList.addApprover(tier, firstName, lastName, role);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
