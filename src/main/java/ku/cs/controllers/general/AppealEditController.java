@@ -137,6 +137,7 @@ public class AppealEditController {
             Parent root = fxmlLoader.load();
             AcceptAppealController controller = fxmlLoader.getController();
             GaussianBlur blur = new GaussianBlur(10);
+            controller.setRole(role);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -151,9 +152,6 @@ public class AppealEditController {
         catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
-
     }
 
     // เอา status มาจาก choice box
