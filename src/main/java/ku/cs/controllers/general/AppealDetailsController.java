@@ -1,4 +1,4 @@
-package ku.cs.controllers.student;
+package ku.cs.controllers.general;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ import ku.cs.models.dates.ModifyDate;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
-public class StudentShowAppealController {
+public class AppealDetailsController {
 
     @FXML private ScrollPane generalScrollPane;
     @FXML private ScrollPane suspendScrollPane;
