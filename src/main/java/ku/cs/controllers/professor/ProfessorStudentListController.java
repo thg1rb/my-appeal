@@ -1,5 +1,6 @@
 package ku.cs.controllers.professor;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -77,8 +80,7 @@ public class ProfessorStudentListController {
                     Parent root = loader.load();
 
                     ProfessorTrackStudentAppealController controller = loader.getController();
-                    controller.showTable(appealList, selectedUser);
-                    controller.ownerAppealLabel.setText("คำร้องทั้งหมดของ " + selectedUser.getFullName());
+                    controller.setSelectedStudent(appealList, (Student) selectedUser);
 
                     Stage stage = new Stage();
                     stage.initStyle(StageStyle.UNDECORATED);
@@ -94,70 +96,51 @@ public class ProfessorStudentListController {
         });
     }
 
-    // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (default แสดงทั้งหมด)
-    private void showTable(UserList studentList) {
-        TableColumn<User, String> pathCol = new TableColumn<>("Profile");
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
-
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User, String> fullnameCol = new TableColumn<>("Fullname");
-        fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        TableColumn<User, String> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("studentId"));
-
-        tableView.getColumns().clear();
-        tableView.getColumns().add(pathCol);
-        tableView.getColumns().add(usernameCol);
-        tableView.getColumns().add(fullnameCol);
-        tableView.getColumns().add(idCol);
-
-        pathCol.setPrefWidth(275);
-        usernameCol.setPrefWidth(275);
-        fullnameCol.setPrefWidth(275);
-        idCol.setPrefWidth(275);
-
-        tableView.getItems().clear();
-        for (User student : studentList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
-                tableView.getItems().add(student);
-            }
-        }
-        updateTotalText();
-    }
-
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
     private void showTable(UserList studentList, String searchText) {
-        TableColumn<User, String> pathCol = new TableColumn<>("Profile");
-        pathCol.setCellValueFactory(new PropertyValueFactory<>("profileUrl"));
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("โปรไฟล์");
+        imgCol.setCellValueFactory(cellData ->{
+            User user = cellData.getValue();
+            Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(60);
+            return new SimpleObjectProperty<>(imageView);
+        });
 
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        TableColumn<User, String> usernameCol = new TableColumn<>("ชื่อผู้ใช้");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User, String> fullnameCol = new TableColumn<>("Fullname");
+        TableColumn<User, String> fullnameCol = new TableColumn<>("ชื่อ-สกุล");
         fullnameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<User, String> idCol = new TableColumn<>("ID");
+        TableColumn<User, String> idCol = new TableColumn<>("รหัสนิสิต");
         idCol.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         tableView.getColumns().clear();
-        tableView.getColumns().add(pathCol);
+        tableView.getColumns().add(imgCol);
         tableView.getColumns().add(usernameCol);
         tableView.getColumns().add(fullnameCol);
         tableView.getColumns().add(idCol);
 
-        pathCol.setPrefWidth(275);
+        imgCol.setPrefWidth(275);
         usernameCol.setPrefWidth(275);
         fullnameCol.setPrefWidth(275);
         idCol.setPrefWidth(275);
 
         // Add Student filter by Professer name
         tableView.getItems().clear();
-        for (User student : studentList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
-                tableView.getItems().add(student);
+        if (searchText.isEmpty()) {
+            for (User student : studentList.getUsers()) {
+                if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
+                    tableView.getItems().add(student);
+                }
+            }
+        } else {
+            for (User student : studentList.getUsers()) {
+                if (student.getRole().equals("นักศึกษา") && ((Student) student).getAdvisor().equals(((Advisor) user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
+                    tableView.getItems().add(student);
+                }
             }
         }
         updateTotalText();
