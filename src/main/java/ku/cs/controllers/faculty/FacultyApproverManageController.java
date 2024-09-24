@@ -16,11 +16,11 @@ import javafx.stage.Stage;
 import ku.cs.controllers.general.ApproverEditController;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
-import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
-import ku.cs.services.ApproverListFileDatasource;
-import ku.cs.services.Datasource;
+
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;

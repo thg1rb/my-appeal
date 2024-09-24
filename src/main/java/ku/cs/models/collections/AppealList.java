@@ -47,4 +47,13 @@ public class AppealList {
     public ArrayList<Appeal> getAppeals(){
         return appeals;
     }
+    public AppealList getAppealByDepartment(String department){
+        AppealList appealList = new AppealList();
+        for (Appeal appeal : appeals) {
+            if (appeal.getOwnerDepartment().equals(department)) {
+                appealList.addAppeal(appeal);
+            }
+        }
+        return appealList;
+    }
 }
