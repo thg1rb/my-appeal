@@ -1,7 +1,5 @@
 package ku.cs.controllers.major;
 
-
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,12 +17,14 @@ import ku.cs.controllers.general.SetPasswordController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
+import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
@@ -44,11 +44,18 @@ public class MajorAppealManageController {
     private Datasource<AppealList> datasource;
     private boolean preview = true;
 
+    private Datasource<ModifyDateList> modifyDateListDatasource;
+    private ModifyDateList modifyDateList;
+
     private User user;
 
     @FXML
     public void initialize() {
+
         user = (DepartmentStaff) FXRouter.getData();
+
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -85,23 +92,6 @@ public class MajorAppealManageController {
             });
             return row;
         });
-    }
-
-    public void test() {
-        try {
-            FXMLLoader testLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/set-password.fxml"));
-            Parent root = testLoader.load();
-
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setAlwaysOnTop(true);
-            stage.setScene(new Scene(root));
-
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void showAppealPopup(boolean preview) {
@@ -149,6 +139,37 @@ public class MajorAppealManageController {
         TableColumn<Appeal, String> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+
+
+        tableView.getColumns().clear();
+        tableView.getColumns().add(dateColumn);
+        tableView.getColumns().add(ownerColumn);
+        tableView.getColumns().add(typeColumn);
+        tableView.getColumns().add(statusColumn);
+
+        int size = tableView.getColumns().size();
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setPrefWidth((double) 1100 / size);
+        }
+
+        tableView.getSortOrder().add(dateColumn);
+        tableView.getItems().clear();
+
+        if (appealList != null && !filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerDepartment().equals(((DepartmentStaff) user).getDepartment())
+                        && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null")){
+                    tableView.getItems().add(appeal);
+                }
+            }
+        } else if (appealList != null && filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
+                    tableView.getItems().add(appeal);
+                }
+            }
+        }
+
         // Custom cell factory for the status column
         statusColumn.setCellFactory(column -> new TableCell<Appeal, String>() {
             @Override
@@ -182,34 +203,6 @@ public class MajorAppealManageController {
                 }
             }
         });
-
-        tableView.getColumns().clear();
-        tableView.getColumns().add(dateColumn);
-        tableView.getColumns().add(ownerColumn);
-        tableView.getColumns().add(typeColumn);
-        tableView.getColumns().add(statusColumn);
-
-        int size = tableView.getColumns().size();
-        for (TableColumn<?, ?> col : tableView.getColumns()) {
-            col.setPrefWidth((double) 1100 / size);
-        }
-
-        tableView.getSortOrder().add(dateColumn);
-        tableView.getItems().clear();
-
-        if (appealList != null && !filter) {
-            for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerDepartment().equals(((DepartmentStaff) user).getDepartment())) {
-                    tableView.getItems().add(appeal);
-                }
-            }
-        } else if (appealList != null && filter) {
-            for (Appeal appeal : appealList.getAppeals()) {
-                if (appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
-                    tableView.getItems().add(appeal);
-                }
-            }
-        }
 
         tableView.getSortOrder().add(dateColumn);
         tableView.sort();
