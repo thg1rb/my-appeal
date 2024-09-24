@@ -31,7 +31,8 @@ public class FacultyApproverManageController {
 
     @FXML
     private TableView<Approver> approverTableView;
-
+    @FXML
+    private TextField searchTextField;
     private User user;
 
     private Datasource<ApproverList> approversDatasource;
@@ -66,6 +67,7 @@ public class FacultyApproverManageController {
         TableColumn<Approver, String> roleColumn = new TableColumn<>("Role");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
+
         TableColumn<Approver, String> fullNameColumn = new TableColumn<>("Name");
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
@@ -84,6 +86,7 @@ public class FacultyApproverManageController {
             TableRow<Approver> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+                    selectedApprover = row.getItem();
                     addMode = false;
                     showPopup();
                 }
@@ -97,6 +100,10 @@ public class FacultyApproverManageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/approver-popup.fxml"));
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
+
+
+
+            controller.setRole(user);
 
             controller.setMode(addMode, selectedApprover, user, approverList);
 
@@ -121,90 +128,16 @@ public class FacultyApproverManageController {
         }
     }
 
-    @FXML
-    private Pane backgroundAddApproverPane;
 
-    @FXML
-    private Pane addApproverPane;
-
-    @FXML
-    private Pane editApproverPane;
-
-    @FXML
-    private TextField roleTextField;
-
-    @FXML
-    private TextField firstNameTextField;
-
-    @FXML
-    private TextField lastNameTextField;
-
-    @FXML
-    private TextField editLastNameTextField;
-
-    @FXML
-    private TextField editFirstNameTextField;
-
-    @FXML
-    private TextField editRoleTextField;
-
-    @FXML
-    private TextField searchTextField;
     @FXML
     public void addApproverButton() {
         addMode = true;
         showPopup();
     }
 
-    @FXML
-    public void onCloseButtonClick() {
-        backgroundAddApproverPane.setVisible(false);
-        addApproverPane.setVisible(false);
-    }
 
-    @FXML
-    public void onCloseEditButtonClick() {
-        backgroundAddApproverPane.setVisible(false);
-        editApproverPane.setVisible(false);
-    }
 
-    @FXML
-    public void onAddApproverToTable() {
-        String role = roleTextField.getText();
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
 
-        if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-            approverList.addApprover(firstName, lastName, role, user);
-
-            approversDatasource.writeData(approverList);
-
-            showApproverTable(approverList);
-
-            onCloseButtonClick();
-        }
-    }
-
-    @FXML
-    public void onEditButtonClick() {
-        Approver selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
-
-        if (selectedApprover != null) {
-            String newFirstName = editFirstNameTextField.getText();
-            String newLastName = editLastNameTextField.getText();
-
-            selectedApprover.setFirstName(newFirstName);
-            selectedApprover.setLastName(newLastName);
-
-            showApproverTable(approverList);
-
-            approversDatasource.writeData(approverList);
-
-            onCloseEditButtonClick();
-        } else {
-            System.out.println("No approver selected.");
-        }
-    }
     @FXML
     public void onSearchKeyReleased() {
         String searchText = searchTextField.getText().toLowerCase();

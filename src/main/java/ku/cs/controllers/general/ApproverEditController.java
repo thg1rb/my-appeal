@@ -35,9 +35,12 @@ public class ApproverEditController {
         roleComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 selectedRole = newValue;
-                if(selectedRole.equals("รองคณะบดี")) {
-                    subRoleTextField.setDisable(true);
+                if (selectedRole.equals("รองคณบดี")) {
+                    subRoleTextField.setVisible(true);  // แสดงช่องให้ใส่ฝ่าย
+                } else {
+                    subRoleTextField.setVisible(false);
                 }
+
             }
         });
     }
@@ -52,15 +55,17 @@ public class ApproverEditController {
         lastNameTextField.setText(approver.getLastName());
     }
 
+
     public void setRole(User user) {
         role = user.getRole();
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
             roleComboBox.getItems().addAll("หัวหน้าภาควิชา", "รองหัวหน้าภาควิชา", "รักษาการณ์แทนหัวหน้าภาควิชา");
         }
-        else if (role.equals("เจ้าหน้าท่ี่คณะ")) {
+        else if (role.equals("เจ้าหน้าที่คณะ")) {
             roleComboBox.getItems().addAll("คณบดี", "รองคณบดี", "รักษาการณ์แทนคณบดี");
         }
     }
+
 
     public void setMode(boolean addMode, Approver approver, User user, ApproverList approvers) {
         this.user = user;
@@ -83,7 +88,12 @@ public class ApproverEditController {
             }
             approver.setFirstName(nameTextField.getText());
             approver.setLastName(lastNameTextField.getText());
-            approver.setRole(roleComboBox.getValue(), user);
+            String role = roleComboBox.getValue();
+            if (role.equals("รองคณบดี") && subRoleTextField.getText() != null && !subRoleTextField.getText().isEmpty()) {
+                approver.setRole(role + "ฝ่าย" + subRoleTextField.getText(), user);
+            } else {
+                approver.setRole(role, user);
+            }
             onCancleButtonClick();
         } catch(EmptyInputException e){
             System.out.println(e.getMessage());
@@ -101,7 +111,13 @@ public class ApproverEditController {
             if(isEmptyTextField()){
                 throw new EmptyInputException();
             }
+            if (selectedRole.equals("รองคณบดี") && !subRoleTextField.getText().isEmpty()) {
+
+                selectedRole += "ฝ่าย" + subRoleTextField.getText();
+            }
+
             approverList.addApprover(nameTextField.getText(),lastNameTextField.getText(),selectedRole,user);
+
             onCancleButtonClick();
         } catch(EmptyInputException e){
             System.out.println(e.getMessage());
