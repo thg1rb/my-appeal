@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ku.cs.controllers.general.AppealDetailsController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
@@ -65,10 +66,10 @@ public class StudentTrackAppealController {
             Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
             if (selectedAppeal != null) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/student/student-show-appeal.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-details.fxml"));
                     Parent root = loader.load();
 
-                    StudentShowAppealController controller = loader.getController();
+                    AppealDetailsController controller = loader.getController();
                     controller.setSelectedAppeal(selectedAppeal, modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()));
 
                     Stage stage = new Stage();
@@ -101,14 +102,14 @@ public class StudentTrackAppealController {
 
     // ตารางแสดงคำร้องทั้งหมดของนิสิต (default แสดงทั้งหมด)
     private void showTable(AppealList appealList, String ownerId, String searchText) {
-        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
+        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
-        TableColumn<Appeal, String> typeCol = new TableColumn<>("Appeal Type");
+        TableColumn<Appeal, String> typeCol = new TableColumn<>("ประเภทของคำร้อง");
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         dateTimeCol.setComparator(new DateTimeService());
-        TableColumn<Appeal, String> statusCol = new TableColumn<>("Status");
+        TableColumn<Appeal, String> statusCol = new TableColumn<>("สถานะของคำร้อง");
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         dateTimeCol.setComparator(new DateTimeService());

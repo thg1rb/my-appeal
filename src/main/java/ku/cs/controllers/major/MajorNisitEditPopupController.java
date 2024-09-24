@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import ku.cs.services.exceptions.EmptyInputException;
 
 public class MajorNisitEditPopupController {
     @FXML TextField nisitNameTextField;
@@ -36,6 +37,11 @@ public class MajorNisitEditPopupController {
     private Datasource<UserList> advisorDatasource;
     private UserList advisorList;
     private HashMap<String, UUID> advisorMap;
+
+    @FXML Label nameErrorLabel;
+    @FXML Label lastNameErrorLabel;
+    @FXML Label idErrorLabel;
+    @FXML Label emailErrorLabel;
 
     private DepartmentStaff user;
     private User nisit;
@@ -95,13 +101,43 @@ public class MajorNisitEditPopupController {
         }
     }
 
+    // Valid the input
+    public boolean isEmptyTextField() {
+        boolean error = false;
+        nameErrorLabel.setVisible(false);
+        lastNameErrorLabel.setVisible(false);
+        idErrorLabel.setVisible(false);
+        emailErrorLabel.setVisible(false);
+
+        TextField[] textFields = {nisitNameTextField, nisitLastNameTextField, nisitIdTextField, nisitEmailTextField};
+        Label[] errorLabels = {nameErrorLabel, lastNameErrorLabel, idErrorLabel, emailErrorLabel};
+
+        for (int i = 0; i < textFields.length; i++) {
+            if (textFields[i].getText().isEmpty()) {
+                errorLabels[i].setVisible(true);
+                error = true;
+            } else {
+                errorLabels[i].setVisible(false);
+            }
+        }
+        return error;
+    }
+
     public void onConfirmButtonClick(ActionEvent event){
-        nisit.setFirstName(nisitNameTextField.getText());
-        nisit.setLastName(nisitLastNameTextField.getText());
-        ((Student)nisit).setStudentId(nisitIdTextField.getText());
-        ((Student)nisit).setEmail(nisitEmailTextField.getText());
-        ((Student)nisit).setAdvisor(advisorMap.get(professorComboBox.getValue()));
-        onCancleButtonClick(event);
+        try {
+            if (isEmptyTextField()) {
+                throw new EmptyInputException();
+            }
+            nisit.setFirstName(nisitNameTextField.getText());
+            nisit.setLastName(nisitLastNameTextField.getText());
+            ((Student)nisit).setStudentId(nisitIdTextField.getText());
+            ((Student)nisit).setEmail(nisitEmailTextField.getText());
+            ((Student)nisit).setAdvisor(advisorMap.get(professorComboBox.getValue()));
+            onCancleButtonClick(event);
+        }
+        catch (EmptyInputException e) {
+            System.out.println("Empty text field.");
+        }
     }
 
     public void onAddButtonClick(ActionEvent event){

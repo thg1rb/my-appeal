@@ -243,6 +243,7 @@ public class AppealEditController {
             selectedStatus = "อนุมัติโดยคณบดี";
         }
         showAcceptPopup();
+        onCloseButtonClick(event);
 //        String modifyDate = DateTimeService.detailedDateToString(new Date());
 //
 //        selectedAppeal.setModifyDate(modifyDate);

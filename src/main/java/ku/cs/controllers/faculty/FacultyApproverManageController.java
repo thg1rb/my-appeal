@@ -2,6 +2,8 @@ package ku.cs.controllers.faculty;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -9,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import ku.cs.controllers.general.ApproverEditController;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.FacultyStaff;
@@ -18,21 +23,30 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
 
+import java.io.IOException;
+
 
 public class FacultyApproverManageController {
     @FXML private Pane navbarAnchorPane;
 
     @FXML
     private TableView<Approver> approverTableView;
-
+    @FXML
+    private TextField searchTextField;
     private User user;
+
     private Datasource<ApproverList> approversDatasource;
     private ApproverList approverList;
+    private ApproverList facultyTierApproverList;
+    private Approver selectedApprover;
+    private boolean addMode;
+
 
     @FXML
     public void initialize() {
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
+        facultyTierApproverList = approverList.getFacultyTierApprovers();
 
         user = (FacultyStaff)FXRouter.getData();
 
@@ -46,12 +60,13 @@ public class FacultyApproverManageController {
             throw new RuntimeException(e);
         }
 
-        showApproverTable(approverList);
+        showApproverTable(facultyTierApproverList);
     }
 
     private void showApproverTable(ApproverList approverList) {
         TableColumn<Approver, String> roleColumn = new TableColumn<>("Role");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+
 
         TableColumn<Approver, String> fullNameColumn = new TableColumn<>("Name");
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -71,117 +86,67 @@ public class FacultyApproverManageController {
             TableRow<Approver> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
-                    showEditApproverPane();
+                    selectedApprover = row.getItem();
+                    addMode = false;
+                    showPopup();
                 }
             });
             return row;
         });
     }
 
-    @FXML
-    private Pane backgroundAddApproverPane;
+    public void showPopup(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/approver-popup.fxml"));
+            Parent root = loader.load();
+            ApproverEditController controller = loader.getController();
 
-    @FXML
-    private Pane addApproverPane;
 
-    @FXML
-    private Pane editApproverPane;
 
-    @FXML
-    private TextField roleTextField;
+            controller.setRole(user);
 
-    @FXML
-    private TextField firstNameTextField;
+            controller.setMode(addMode, selectedApprover, user, approverList);
 
-    @FXML
-    private TextField lastNameTextField;
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
 
-    @FXML
-    private TextField editLastNameTextField;
+            controller.setStage(stage);
 
-    @FXML
-    private TextField editFirstNameTextField;
+            stage.showAndWait();
 
-    @FXML
-    private TextField editRoleTextField;
+            approversDatasource.writeData(approverList);
 
-    @FXML
-    private TextField searchTextField;
+            approverList = approversDatasource.readData();
+            facultyTierApproverList = approverList.getFacultyTierApprovers();
+
+            showApproverTable(facultyTierApproverList);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
     @FXML
     public void addApproverButton() {
-        roleTextField.clear();
-        firstNameTextField.clear();
-        lastNameTextField.clear();
-        backgroundAddApproverPane.setVisible(true);
-        addApproverPane.setVisible(true);
+        addMode = true;
+        showPopup();
     }
 
-    private void showEditApproverPane() {
 
 
-        backgroundAddApproverPane.setVisible(true);
 
-        editApproverPane.setVisible(true);
-    }
-
-    @FXML
-    public void onCloseButtonClick() {
-        backgroundAddApproverPane.setVisible(false);
-        addApproverPane.setVisible(false);
-    }
-
-    @FXML
-    public void onCloseEditButtonClick() {
-        backgroundAddApproverPane.setVisible(false);
-        editApproverPane.setVisible(false);
-    }
-
-    @FXML
-    public void onAddApproverToTable() {
-        String role = roleTextField.getText();
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-
-        if (!role.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-            approverList.addApprover(firstName, lastName, role, user);
-
-            approversDatasource.writeData(approverList);
-
-            showApproverTable(approverList);
-
-            onCloseButtonClick();
-        }
-    }
-
-    @FXML
-    public void onEditButtonClick() {
-        Approver selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
-
-        if (selectedApprover != null) {
-            String newFirstName = editFirstNameTextField.getText();
-            String newLastName = editLastNameTextField.getText();
-
-            selectedApprover.setFirstName(newFirstName);
-            selectedApprover.setLastName(newLastName);
-
-            showApproverTable(approverList);
-
-            approversDatasource.writeData(approverList);
-
-            onCloseEditButtonClick();
-        } else {
-            System.out.println("No approver selected.");
-        }
-    }
     @FXML
     public void onSearchKeyReleased() {
         String searchText = searchTextField.getText().toLowerCase();
         ApproverList filteredApproverList = new ApproverList();
 
         if (searchText.isEmpty()) {
-            showApproverTable(approverList);
+            showApproverTable(facultyTierApproverList);
         } else {
-            for (Approver approver : approverList.getApprovers()) {
+            for (Approver approver : facultyTierApproverList.getApprovers()) {
                 String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
                 if (fullName.contains(searchText)) {
                     filteredApproverList.addApprover(approver);

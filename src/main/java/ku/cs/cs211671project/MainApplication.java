@@ -1,6 +1,7 @@
 package ku.cs.cs211671project;
 
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
 
@@ -11,6 +12,14 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        String fontPath = "/fonts/";
+        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Thin"), 20);
+        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Regular.ttf"), 20);
+        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Medium.ttf"), 20);
+        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Bold.ttf"), 20);
+        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Italic.ttf"), 20);
+
+
         FXRouter.bind(this, stage, "CS211 Project", 1440, 832);
         configRoutes();
         FXRouter.goTo("login");
