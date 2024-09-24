@@ -5,6 +5,8 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -21,15 +23,24 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="375.0" layoutY="289.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" stylesheets="@../../styles/add-button.css" text="ตกลง" />
-      <Button layoutX="521.0" layoutY="288.0" mnemonicParsing="false" onAction="#onCloseButtonClick" stylesheets="@../../styles/add-button.css" text="ยกเลิก" />
-      <RadioButton fx:id="radioButton1" layoutX="372.0" layoutY="75.0" mnemonicParsing="false" text="ดำเนินการครบถ้วน" />
-      <RadioButton fx:id="radioButton2" layoutX="536.0" layoutY="75.0" mnemonicParsing="false" text="ส่งต่อให้คณบดี" />
+      <Button layoutX="472.0" layoutY="332.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" stylesheets="@../../styles/add-button.css" text="ตกลง" />
+      <Button layoutX="543.0" layoutY="332.0" mnemonicParsing="false" onAction="#onCloseButtonClick" stylesheets="@../../styles/add-button.css" text="ยกเลิก" />
+      <RadioButton fx:id="radioButton1" layoutX="380.0" layoutY="75.0" mnemonicParsing="false" text="ดำเนินการครบถ้วน" />
+      <RadioButton fx:id="radioButton2" layoutX="554.0" layoutY="75.0" mnemonicParsing="false" text="ส่งต่อให้คณบดี" />
       <Label layoutX="426.0" layoutY="15.0" text="เลือกขั้นตอนต่อไป">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <Label fx:id="approverErrorLabel" layoutX="119.0" layoutY="385.0" text="*กรุณาเลือกผู้อนุมัติ" textFill="RED" visible="false" />
+      <Button contentDisplay="TOP" layoutX="367.0" layoutY="107.0" mnemonicParsing="false" prefHeight="218.0" prefWidth="310.0" text="อัพโหลดลายเซ็นต์ของท่าน">
+         <graphic>
+            <ImageView fitHeight="100.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../Downloads/upload-icon-22.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

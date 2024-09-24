@@ -27,9 +27,8 @@ public class AcceptAppealController {
     RadioButton radioButton2;
     @FXML Label approverErrorLabel;
 
-    private String[] majorStatusList = {"คำร้องส่งต่อให้คณบดี", "คำร้องดำเนินการครบถ้วน"};
-    private String[] facultyStatusList = {"คำร้องดำเนินการครบถ้วน"};
     private String selectedStatus;
+    private String subStatus;
     private String role;
 
 
@@ -48,6 +47,8 @@ public class AcceptAppealController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+
+        radioButton1.setSelected(true);
         toggleGroup = new ToggleGroup();
         radioButton1.setToggleGroup(toggleGroup);
         radioButton2.setToggleGroup(toggleGroup);
@@ -55,7 +56,8 @@ public class AcceptAppealController {
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 RadioButton selectedRadioButton = (RadioButton) newValue;
-                selectedStatus = selectedStatus + " | คำร้อง" + selectedRadioButton.getText();
+                System.out.println(selectedRadioButton.getText());
+                 subStatus = " | คำร้อง" + selectedRadioButton.getText();
             }
         });
         showTable(approverList);
@@ -117,7 +119,8 @@ public class AcceptAppealController {
         else {
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
-            selectedAppeal.setStatus(selectedStatus);
+            System.out.println(selectedStatus);
+            selectedAppeal.setStatus(selectedStatus+subStatus);
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {
