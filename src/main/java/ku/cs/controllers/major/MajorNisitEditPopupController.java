@@ -41,19 +41,6 @@ public class MajorNisitEditPopupController {
     private User nisit;
     private UserList studentRoster;
 
-    @FXML
-    private void initialize() {
-
-//        for (User advisor : advisorList.getUsers()){
-//            System.out.println(advisor);
-//            advisorMap.put(advisor.getUuid(), )
-//            advisorsName.add(((Advisor)user).getAdvisorDetail());
-//        }
-//        professorComboBox.setPromptText("กรุณาเลือกอาจารย์ที่ปรึกษา");
-//        professorComboBox.getItems().add("ไม่มีอาจารย์ที่ปรึกษา");
-//        professorComboBox.getItems().addAll(advisorsName);
-    }
-
     public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;
         if (nisit != null) {
