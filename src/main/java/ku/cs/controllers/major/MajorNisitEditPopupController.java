@@ -1,30 +1,58 @@
 package ku.cs.controllers.major;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
+import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class MajorNisitEditPopupController {
     @FXML TextField nisitNameTextField;
     @FXML TextField nisitLastNameTextField;
     @FXML TextField nisitIdTextField;
     @FXML TextField nisitEmailTextField;
-    @FXML TextField professorTextField;
+    @FXML ComboBox<String> professorComboBox;
     @FXML Button addButton;
     @FXML Button confirmButton;
     @FXML Label topicLabel;
 
+    private Datasource<UserList> advisorDatasource;
+    private UserList advisorList;
+    private HashMap<String, UUID> advisorMap;
+
     private DepartmentStaff user;
     private User nisit;
     private UserList studentRoster;
+
+    @FXML
+    private void initialize() {
+
+//        for (User advisor : advisorList.getUsers()){
+//            System.out.println(advisor);
+//            advisorMap.put(advisor.getUuid(), )
+//            advisorsName.add(((Advisor)user).getAdvisorDetail());
+//        }
+//        professorComboBox.setPromptText("กรุณาเลือกอาจารย์ที่ปรึกษา");
+//        professorComboBox.getItems().add("ไม่มีอาจารย์ที่ปรึกษา");
+//        professorComboBox.getItems().addAll(advisorsName);
+    }
 
     public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;
@@ -33,7 +61,17 @@ public class MajorNisitEditPopupController {
             nisitLastNameTextField.setText(nisit.getLastName());
             nisitIdTextField.setText(((Student)nisit).getStudentId());
             nisitEmailTextField.setText(((Student)nisit).getEmail());
-            professorTextField.setText(((Student)nisit).getAdvisor());
+            UUID advisorUUID = ((Student) nisit).getAdvisorUUID();
+            if (advisorUUID != null && !advisorUUID.equals("null")){
+                User advisor = advisorList.findUserByUUID(advisorUUID);
+                if (advisor != null){
+                    professorComboBox.setValue(advisor.getFullName());
+                } else {
+                    professorComboBox.getSelectionModel().selectFirst();
+                }
+            }else{
+                professorComboBox.getSelectionModel().clearSelection();
+            }
         }
     }
 
@@ -52,6 +90,22 @@ public class MajorNisitEditPopupController {
     public void setUser(DepartmentStaff user, UserList studentRoster){
         this.user = user;
         this.studentRoster = studentRoster;
+
+        initMapAndComboBox();
+    }
+
+    private void initMapAndComboBox(){
+        advisorDatasource = new UserListDatasource("data" + File.separator + "users", "advisor.csv");
+        advisorMap = new HashMap<>();
+
+        professorComboBox.getItems().clear();
+        advisorMap.put("ไม่มีอาจารย์ที่ปรึกษา", null);
+        professorComboBox.getItems().add("ไม่มีอาจารย์ที่ปรึกษา");
+        advisorList = advisorDatasource.readData().getUsersByDepartment(user.getDepartment());
+        for (User advisor : advisorList.getUsers()){
+            advisorMap.put(advisor.getFullName(), advisor.getUuid());
+            professorComboBox.getItems().add(advisor.getFullName());
+        }
     }
 
     public void onConfirmButtonClick(ActionEvent event){
@@ -59,16 +113,16 @@ public class MajorNisitEditPopupController {
         nisit.setLastName(nisitLastNameTextField.getText());
         ((Student)nisit).setStudentId(nisitIdTextField.getText());
         ((Student)nisit).setEmail(nisitEmailTextField.getText());
-        ((Student)nisit).setAdvisor(professorTextField.getText());
+        ((Student)nisit).setAdvisor(advisorMap.get(professorComboBox.getValue()));
         onCancleButtonClick(event);
     }
 
     public void onAddButtonClick(ActionEvent event){
-        if(professorTextField.getText().isEmpty()){
+        if(professorComboBox.getValue() == null){
             studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment()));
         }
         else{
-            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment(), professorTextField.getText()));
+            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment(), advisorMap.get(professorComboBox.getValue())));
 
         }
         onCancleButtonClick(event);

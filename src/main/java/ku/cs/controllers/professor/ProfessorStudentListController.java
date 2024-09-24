@@ -25,6 +25,7 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class ProfessorStudentListController {
 
@@ -121,7 +122,7 @@ public class ProfessorStudentListController {
 
         tableView.getItems().clear();
         for (User student : studentList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
+            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisorUUID().equals(user.getUuid())) {
                 tableView.getItems().add(student);
             }
         }
@@ -153,10 +154,11 @@ public class ProfessorStudentListController {
         fullnameCol.setPrefWidth(275);
         idCol.setPrefWidth(275);
 
-        // Add Student filter by Professer name
+        // Add Student filter by ProfesserUUID
         tableView.getItems().clear();
         for (User student : studentList.getUsers()) {
-            if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
+            UUID studentAdvisorUUID = ((Student) student).getAdvisorUUID();
+            if (studentAdvisorUUID != null && studentAdvisorUUID.equals(user.getUuid()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
                 tableView.getItems().add(student);
             }
         }
