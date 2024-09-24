@@ -11,6 +11,7 @@ import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.exceptions.EmptyInputException;
 
 public class MajorNisitEditPopupController {
     @FXML TextField nisitNameTextField;
@@ -22,6 +23,11 @@ public class MajorNisitEditPopupController {
     @FXML Button confirmButton;
     @FXML Label topicLabel;
 
+    @FXML Label nameErrorLabel;
+    @FXML Label lastNameErrorLabel;
+    @FXML Label idErrorLabel;
+    @FXML Label emailErrorLabel;
+
     private DepartmentStaff user;
     private User nisit;
     private UserList studentRoster;
@@ -29,11 +35,17 @@ public class MajorNisitEditPopupController {
     public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;
         if (nisit != null) {
-            nisitNameTextField.setText(nisit.getFirstName());
-            nisitLastNameTextField.setText(nisit.getLastName());
-            nisitIdTextField.setText(((Student)nisit).getStudentId());
-            nisitEmailTextField.setText(((Student)nisit).getEmail());
-            professorTextField.setText(((Student)nisit).getAdvisor());
+            String firstName = nisit.getFirstName();
+            String lastName = nisit.getLastName();
+            String id = ((Student)nisit).getStudentId();
+            String email = ((Student)nisit).getEmail();
+            String professor = ((Student)nisit).getAdvisor();
+
+            nisitNameTextField.setText(firstName);
+            nisitLastNameTextField.setText(lastName);
+            nisitIdTextField.setText(id);
+            nisitEmailTextField.setText(email);
+            professorTextField.setText(professor);
         }
     }
 
@@ -54,13 +66,43 @@ public class MajorNisitEditPopupController {
         this.studentRoster = studentRoster;
     }
 
+    // Valid the input
+    public boolean isEmptyTextField() {
+        boolean error = false;
+        nameErrorLabel.setVisible(false);
+        lastNameErrorLabel.setVisible(false);
+        idErrorLabel.setVisible(false);
+        emailErrorLabel.setVisible(false);
+
+        TextField[] textFields = {nisitNameTextField, nisitLastNameTextField, nisitIdTextField, nisitEmailTextField};
+        Label[] errorLabels = {nameErrorLabel, lastNameErrorLabel, idErrorLabel, emailErrorLabel};
+
+        for (int i = 0; i < textFields.length; i++) {
+            if (textFields[i].getText().isEmpty()) {
+                errorLabels[i].setVisible(true);
+                error = true;
+            } else {
+                errorLabels[i].setVisible(false);
+            }
+        }
+        return error;
+    }
+
     public void onConfirmButtonClick(ActionEvent event){
-        nisit.setFirstName(nisitNameTextField.getText());
-        nisit.setLastName(nisitLastNameTextField.getText());
-        ((Student)nisit).setStudentId(nisitIdTextField.getText());
-        ((Student)nisit).setEmail(nisitEmailTextField.getText());
-        ((Student)nisit).setAdvisor(professorTextField.getText());
-        onCancleButtonClick(event);
+        try {
+            if (isEmptyTextField()) {
+                throw new EmptyInputException();
+            }
+            nisit.setFirstName(nisitNameTextField.getText());
+            nisit.setLastName(nisitLastNameTextField.getText());
+            ((Student)nisit).setStudentId(nisitIdTextField.getText());
+            ((Student)nisit).setEmail(nisitEmailTextField.getText());
+            ((Student)nisit).setAdvisor(professorTextField.getText());
+            onCancleButtonClick(event);
+        }
+        catch (EmptyInputException e) {
+            System.out.println("Empty text field.");
+        }
     }
 
     public void onAddButtonClick(ActionEvent event){

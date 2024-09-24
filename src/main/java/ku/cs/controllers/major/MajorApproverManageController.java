@@ -3,10 +3,8 @@ package ku.cs.controllers.major;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,11 +16,11 @@ import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
-import ku.cs.services.ApproverListFileDatasource;
-import ku.cs.services.Datasource;
+
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MajorApproverManageController {
@@ -32,6 +30,7 @@ public class MajorApproverManageController {
     private User user;
     private Datasource<ApproverList> approverDatasource;
     private ApproverList approverList;
+    private ApproverList departmentTierApproverList;
     private Approver selectedApprover;
     private boolean addMode;
 
@@ -51,7 +50,9 @@ public class MajorApproverManageController {
         approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approverDatasource.readData();
 
-        showTable(approverList);
+        departmentTierApproverList = approverList.getDepartmentTierApprovers();
+
+        showTable(departmentTierApproverList);
 
         approverTableView.setOnMouseClicked(event -> {
             selectedApprover = approverTableView.getSelectionModel().getSelectedItem();
@@ -66,6 +67,7 @@ public class MajorApproverManageController {
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
 
+            controller.setRole(user);
             controller.setMode(addMode, selectedApprover, user, approverList);
 
             Stage stage = new Stage();
@@ -79,7 +81,8 @@ public class MajorApproverManageController {
 
             approverDatasource.writeData(approverList);
             approverList = approverDatasource.readData();
-            showTable(approverList);
+            departmentTierApproverList = approverList.getDepartmentTierApprovers();
+            showTable(departmentTierApproverList);
         }
         catch(IOException e){
             e.printStackTrace();
