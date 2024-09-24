@@ -63,10 +63,10 @@ public class ApproverEditController {
     }
 
     public void setMode(boolean addMode, Approver approver, User user, ApproverList approvers) {
+        this.user = user;
         if(addMode){
             confirmButton.setVisible(false);
             topicLabel.setText("เพิ่มผู้อนุมัติ");
-            this.user = user;
             this.approverList = approvers;
         }
         else{
@@ -83,7 +83,7 @@ public class ApproverEditController {
             }
             approver.setFirstName(nameTextField.getText());
             approver.setLastName(lastNameTextField.getText());
-//            approver.setRole(roleTextField.getText());
+            approver.setRole(roleComboBox.getValue(), user);
             onCancleButtonClick();
         } catch(EmptyInputException e){
             System.out.println(e.getMessage());

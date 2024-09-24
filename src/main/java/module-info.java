@@ -48,4 +48,6 @@ module ku.cs {
 
     exports ku.cs.services.fileuploaders to javafx.fxml;
     opens ku.cs.services.fileuploaders to javafx.base;
+    exports ku.cs.services.datasources to javafx.fxml;
+    opens ku.cs.services.datasources to javafx.base;
 }

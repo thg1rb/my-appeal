@@ -48,7 +48,7 @@ public class Approver {
     public void setLastName(String lastName){
         this.lastName = lastName;
     }
-    private void setRole(String role, User adder){
+    public void setRole(String role, User adder){
         this.role = role;
         if (adder instanceof DepartmentStaff){
             this.role += ((DepartmentStaff) adder).getDepartment();

@@ -1,6 +1,7 @@
 package ku.cs.controllers.major;
 
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,10 +29,14 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class MajorAppealManageController {
-    @FXML private AnchorPane mainPane;
-    @FXML private Pane navbarAnchorPane;
-    @FXML private TableView<Appeal> tableView;
-    @FXML private TabPane tabPane;
+    @FXML
+    private AnchorPane mainPane;
+    @FXML
+    private Pane navbarAnchorPane;
+    @FXML
+    private TableView<Appeal> tableView;
+    @FXML
+    private TabPane tabPane;
 
     private Appeal selectedAppeal;
     private AppealList appealList;
@@ -51,16 +56,16 @@ public class MajorAppealManageController {
         try {
             Pane navbarComponent = navbarComponentLoader.load();
             navbarAnchorPane.getChildren().add(navbarComponent);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff)user).getDepartment());
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartment());
 
-        showTable(departmentAppealList,false);
-        tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
+        showTable(departmentAppealList, false);
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
             if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
                 preview = true;
                 showTable(departmentAppealList, false);
@@ -70,11 +75,11 @@ public class MajorAppealManageController {
             }
         });
 
-        tableView.setRowFactory(v->{
+        tableView.setRowFactory(v -> {
             TableRow<Appeal> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 selectedAppeal = tableView.getSelectionModel().getSelectedItem();
-                if(selectedAppeal != null) {
+                if (selectedAppeal != null) {
                     showAppealPopup(preview);
                 }
             });
@@ -82,8 +87,8 @@ public class MajorAppealManageController {
         });
     }
 
-    public void test(){
-        try{
+    public void test() {
+        try {
             FXMLLoader testLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/set-password.fxml"));
             Parent root = testLoader.load();
 
@@ -93,15 +98,14 @@ public class MajorAppealManageController {
             stage.setScene(new Scene(root));
 
             stage.showAndWait();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void showAppealPopup(boolean preview){
-        try{
+    public void showAppealPopup(boolean preview) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
             AppealEditController controller = fxmlLoader.getController();
@@ -125,8 +129,7 @@ public class MajorAppealManageController {
             datasource.writeData(appealList);
             datasource.readData();
             tableView.refresh();
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -135,31 +138,68 @@ public class MajorAppealManageController {
     public void showTable(AppealList appealList, boolean filter) {
         TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
-
         dateColumn.setComparator(new DateTimeService());
 
         TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
-
         TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        TableColumn<Appeal, String> statusColumn = new TableColumn<>("Status");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        // Custom cell factory for the status column
+        statusColumn.setCellFactory(column -> new TableCell<Appeal, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    // Simplify status text based on specific conditions
+                    switch (status) {
+                        case "อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา":
+                            setText("รอดำเนินการ");
+                            setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
+                            break;
+                        case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน":
+                        case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี":
+                            setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                            setText("ดำเนินการแล้ว");
+                            break;
+                        case "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ":
+                        case "ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ":
+                            setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                            setText("ถูกปฏิเสธ");
+                            break;
+                        default:
+                            setText(status);
+                            setStyle("");
+                            break;
+                    }
+                }
+            }
+        });
 
         tableView.getColumns().clear();
         tableView.getColumns().add(dateColumn);
         tableView.getColumns().add(ownerColumn);
         tableView.getColumns().add(typeColumn);
+        tableView.getColumns().add(statusColumn);
 
-        dateColumn.setPrefWidth(367);
-        ownerColumn.setPrefWidth(366);
-        typeColumn.setPrefWidth(366);
+        int size = tableView.getColumns().size();
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setPrefWidth((double) 1100 / size);
+        }
 
         tableView.getSortOrder().add(dateColumn);
-
         tableView.getItems().clear();
+
         if (appealList != null && !filter) {
-            for(Appeal appeal : appealList.getAppeals()){
-                if((!appeal.getStatus().equals("null")) && appeal.getOwnerDepartment().equals(((DepartmentStaff)user).getDepartment())){
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerDepartment().equals(((DepartmentStaff) user).getDepartment())) {
                     tableView.getItems().add(appeal);
                 }
             }
@@ -170,11 +210,13 @@ public class MajorAppealManageController {
                 }
             }
         }
+
         tableView.getSortOrder().add(dateColumn);
         tableView.sort();
 
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
+        statusColumn.setSortable(false);
     }
 }

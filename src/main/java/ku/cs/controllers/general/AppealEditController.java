@@ -68,7 +68,6 @@ public class AppealEditController {
     @FXML private TextArea rejectReasonTextArea;
     @FXML private Label rejectReasonErrorLabel;
 
-    @FXML private ChoiceBox<String> statusChoiceBox;
     @FXML private Button confirmButton;
     @FXML private Button rejectButton;
 
@@ -106,13 +105,11 @@ public class AppealEditController {
     public void setMode (boolean mode) {
         if(mode) {
             topicLabel.setText("รายละเอียดคำร้อง");
-            statusChoiceBox.setVisible(false);
             confirmButton.setVisible(false);
             rejectButton.setVisible(false);
         }
         else {
             topicLabel.setText("อนุมัติหรือปฏิเสธคำร้องของนิสิต");
-            statusChoiceBox.setVisible(true);
             confirmButton.setVisible(true);
             rejectButton.setVisible(true);
         }
@@ -125,7 +122,7 @@ public class AppealEditController {
             Parent root = fxmlLoader.load();
             AcceptAppealController controller = fxmlLoader.getController();
             GaussianBlur blur = new GaussianBlur(10);
-            controller.setRole(role);
+            controller.setVar(role, selectedStatus, selectedAppeal);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -140,11 +137,6 @@ public class AppealEditController {
         catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    // เอา status มาจาก choice box
-    public void getStatus(Event event) {
-        selectedStatus = (String) statusChoiceBox.getValue();
     }
 
     // กำหนดข้อมูลส่วนตัวของเจ้าของคำร้อง
@@ -244,13 +236,19 @@ public class AppealEditController {
     // อนุมัติคำร้องเพื่อส่งต่อให้หัวหน้าภาควิชา
     @FXML
     public void onConfirmButtonClick(ActionEvent event) {
+        if (role.equals("เจ้าหน้าที่ภาควิชา")) {
+            selectedStatus = "อนุมัติโดยหัวหน้าภาควิชา";
+        }
+        else if (role.equals("เจ้าหน้าที่คณะ")) {
+            selectedStatus = "อนุมัติโดยคณบดี";
+        }
         showAcceptPopup();
 //        String modifyDate = DateTimeService.detailedDateToString(new Date());
 //
 //        selectedAppeal.setModifyDate(modifyDate);
 //        if(selectedStatus.equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") || selectedStatus.equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")){
 //            rejectReasonAlertPane.setVisible(true);
-//        }
+//        }cf
 //        else{
 //            selectedAppeal.setStatus(selectedStatus);
 //            if (role.equals("เจ้าหน้าที่ภาควิชา")){
@@ -272,6 +270,12 @@ public class AppealEditController {
 
     // ยืนยันการปฏิเสธ (หลังจากระบุเหตุผลเรียบร้อย)
     public void onConfirmRejectReasonButton(ActionEvent event) {
+        if (role.equals("เจ้าหน้าที่ภาควิชา")) {
+            selectedStatus = "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ";
+        }
+        else if (role.equals("เจ้าหน้าที่คณะ")) {
+            selectedStatus = "ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ";
+        }
         try {
             String rejectReason = rejectReasonTextArea.getText();
             if (rejectReason.isEmpty())
