@@ -47,6 +47,8 @@ public class AcceptAppealController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+
+        radioButton1.setSelected(true);
         toggleGroup = new ToggleGroup();
         radioButton1.setToggleGroup(toggleGroup);
         radioButton2.setToggleGroup(toggleGroup);

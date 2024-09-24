@@ -46,7 +46,6 @@ public class MajorAppealManageController {
 
     private Datasource<ModifyDateList> modifyDateListDatasource;
     private ModifyDateList modifyDateList;
-
     private User user;
 
     @FXML
@@ -117,8 +116,9 @@ public class MajorAppealManageController {
             mainPane.setEffect(null);
 
             datasource.writeData(appealList);
-            datasource.readData();
+            appealList = datasource.readData();
             tableView.refresh();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
