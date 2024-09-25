@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ProfileSettingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ProfileSettingController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <Pane layoutX="230.0" layoutY="194.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 50;">
+      <Pane layoutX="230.0" layoutY="174.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 50;">
          <children>
-            <Circle fx:id="profileImageCircle" fill="DODGERBLUE" layoutX="278.0" layoutY="170.0" radius="106.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button layoutX="738.0" layoutY="440.0" mnemonicParsing="false" onAction="#onConfirmButtonClicked" styleClass="login-button" stylesheets="@../../styles/button.css" text="ยืนยันการแก้ไข">
+            <Circle fx:id="profileImageCircle" fill="DODGERBLUE" layoutX="278.0" layoutY="170.0" radius="106.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.30000001192092896" />
+                     </color>
+                  </DropShadow>
+               </effect></Circle>
+            <Button layoutX="738.0" layoutY="440.0" mnemonicParsing="false" onAction="#onConfirmButtonClicked" stylesheets="@../../styles/button.css" text="ยืนยันการแก้ไข">
                <font>
                   <Font size="24.0" />
                </font>
+               <styleClass>
+                  <String fx:value="login-button" />
+                  <String fx:value="label-medium" />
+               </styleClass>
             </Button>
             <Button contentDisplay="TOP" layoutX="249.0" layoutY="240.0" mnemonicParsing="false" onAction="#onUploadProfileButtonClicked" prefHeight="54.0" prefWidth="54.0" style="-fx-background-radius: 100; -fx-background-color: lightgrey;">
                <graphic>
@@ -31,12 +45,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label layoutX="138.0" layoutY="332.0" text="ชื่อ-สกุล:">
+            <Label layoutX="138.0" layoutY="332.0" styleClass="label-medium" text="ชื่อ-สกุล:">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="138.0" layoutY="383.0" text="บทบาท:">
+            <Label layoutX="138.0" layoutY="383.0" styleClass="label-medium" text="บทบาท:">
                <font>
                   <Font size="24.0" />
                </font>
@@ -46,7 +60,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="706.0" layoutY="68.0" text="จัดการรหัสผ่าน">
+            <Label layoutX="706.0" layoutY="68.0" styleClass="label-bold" text="จัดการรหัสผ่าน">
                <font>
                   <Font size="36.0" />
                </font>
@@ -58,28 +72,29 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <PasswordField fx:id="oldPasswordTextField" layoutX="604.0" layoutY="138.0" prefHeight="55.0" prefWidth="440.0" promptText="รหัสผ่านเดิม" styleClass="text-field" stylesheets="@../../styles/text-field.css">
+            <PasswordField fx:id="oldPasswordTextField" layoutX="604.0" layoutY="138.0" prefHeight="55.0" prefWidth="440.0" promptText="รหัสผ่านเดิม" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="newPasswordTextField" layoutX="604.0" layoutY="229.0" prefHeight="55.0" prefWidth="440.0" promptText="รหัสผ่านใหม่" styleClass="text-field" stylesheets="@../../styles/text-field.css">
+            <PasswordField fx:id="newPasswordTextField" layoutX="604.0" layoutY="229.0" prefHeight="55.0" prefWidth="440.0" promptText="รหัสผ่านใหม่" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="confirmPasswordTextField" layoutX="604.0" layoutY="315.0" prefHeight="55.0" prefWidth="440.0" promptText="ยืนยันรหัสผ่านใหม่" styleClass="text-field" stylesheets="@../../styles/text-field.css">
+            <PasswordField fx:id="confirmPasswordTextField" layoutX="604.0" layoutY="315.0" prefHeight="55.0" prefWidth="440.0" promptText="ยืนยันรหัสผ่านใหม่" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
                </font>
             </PasswordField>
-            <Label fx:id="confirmEditErrorLabel" layoutX="760.0" layoutY="417.0" text="*รหัสผ่านไม่ตรงกัน" textFill="RED" />
-            <Label fx:id="successLabel" layoutX="772.0" layoutY="417.0" text="*รหัสผ่านไม่ตรงกัน" textFill="#3e8d73" />
+            <Label fx:id="confirmEditErrorLabel" layoutX="760.0" layoutY="417.0" styleClass="label-thin" text="*รหัสผ่านไม่ตรงกัน" textFill="RED" />
+            <Label fx:id="successLabel" layoutX="772.0" layoutY="417.0" styleClass="label-thin" text="*รหัสผ่านไม่ตรงกัน" textFill="#3e8d73" />
+            <Label fx:id="validationErrorLabel" layoutX="608.0" layoutY="290.0" styleClass="label-thin" text="*รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย" textFill="RED" />
          </children>
       </Pane>
-      <Text layoutX="270.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="จัดการบัญชี">
+      <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="จัดการบัญชี">
          <font>
-            <Font size="36.0" />
+            <Font size="40.0" />
          </font>
       </Text>
    </children>

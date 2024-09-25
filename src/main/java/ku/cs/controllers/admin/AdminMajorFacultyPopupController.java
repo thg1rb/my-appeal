@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,13 +24,19 @@ import java.util.ArrayList;
 
 public class AdminMajorFacultyPopupController {
     @FXML private Text modeText;
-    @FXML private Text nameText;
-    @FXML private Text idText;
+
     @FXML private Text belongFacultyText;
+    @FXML private Text majorIdText;
+    @FXML private TextField majorIdTextField;
+    @FXML private Text majorNameText;
+    @FXML private TextField majorNameTextField;
+
     @FXML private Text emptyInputText;
 
-    @FXML private TextField nameTextField;
-    @FXML private TextField idTextField;
+    @FXML private Text facultyNameText;
+    @FXML private Text facultyIdText;
+    @FXML private TextField facultyNameTextField;
+    @FXML private TextField facultyIdTextField;
 
     @FXML private ChoiceBox<String> optionChoiceBox;
     @FXML private ChoiceBox<String> facultyChoiceBox;
@@ -59,6 +66,10 @@ public class AdminMajorFacultyPopupController {
                 setUi(newValue);
                 setMode(editMode, newValue);
             }
+        });
+
+        facultyChoiceBox.setOnAction(e->{
+            majorIdTextField.setPromptText(facultyList.findFacultyByName(facultyChoiceBox.getValue()).getFacultyId() + "...");
         });
     }
 
@@ -98,11 +109,11 @@ public class AdminMajorFacultyPopupController {
         this.data = data;
         if (data != null){
             if (data instanceof Faculty){
-                nameTextField.setText(((Faculty) data).getFacultyName());
-                idTextField.setText(((Faculty) data).getFacultyId());
+                facultyNameTextField.setText(((Faculty) data).getFacultyName());
+                facultyIdTextField.setText(((Faculty) data).getFacultyId());
             }else if (data instanceof Major){
-                nameTextField.setText(((Major) data).getMajorName());
-                idTextField.setText(((Major) data).getMajorId());
+                majorNameTextField.setText(((Major) data).getMajorName());
+                majorIdTextField.setText(((Major) data).getMajorId());
                 facultyChoiceBox.getSelectionModel().select(((Major) data).getFaculty());
             }
         }
@@ -113,39 +124,65 @@ public class AdminMajorFacultyPopupController {
         if (option.equals("คณะ")) {
             belongFacultyText.setVisible(false);
             facultyChoiceBox.setVisible(false);
-            nameText.setText("ชื่อคณะ :");
-            idText.setText("รหัสคณะ :");
+            majorNameText.setVisible(false);
+            majorNameTextField.setVisible(false);
+            majorIdText.setVisible(false);
+            majorIdTextField.setVisible(false);
+
+            facultyNameText.setVisible(true);
+            facultyNameTextField.setVisible(true);
+            facultyIdText.setVisible(true);
+            facultyIdTextField.setVisible(true);
         }else{
             belongFacultyText.setVisible(true);
             facultyChoiceBox.setVisible(true);
-            nameText.setText("ชื่อภาควิชา :");
-            idText.setText("รหัสภาควิชา :");
+            majorNameText.setVisible(true);
+            majorNameTextField.setVisible(true);
+            majorIdText.setVisible(true);
+            majorIdTextField.setVisible(true);
+
+            facultyNameText.setVisible(false);
+            facultyNameTextField.setVisible(false);
+            facultyIdText.setVisible(false);
+            facultyIdTextField.setVisible(false);
         }
     }
 
     @FXML
     public void onConfirmButtonClicked(){
         try{
-            String name = nameTextField.getText();
-            String id = idTextField.getText();
-            if (name.isEmpty() || id.isEmpty()){
-                throw new EmptyInputException();
-            }
+            String name;
+            String id;
 
-            if (optionChoiceBox.getValue().equals("คณะ")) {
+            if (optionChoiceBox.getValue().equals("คณะ")){
+                name = facultyNameTextField.getText();
+                id = facultyIdTextField.getText();
+
+                if (name.isEmpty() || id.isEmpty()){
+                    throw new EmptyInputException();
+                }
+
                 for (String faculty : facultyChoice){
                     if (faculty.equals(name)){
                         throw new DuplicateItemsException("*คณะนี้มีในระบบอยู่แล้ว");
                     }
                 }
                 facultyList.addFaculty(name, id);
-            } else {
+
+            }else{
+                name = majorNameTextField.getText();
+                id = majorIdTextField.getText();
+                String faculty = facultyChoiceBox.getValue();
+
+                if (name.isEmpty() || id.isEmpty() || faculty.isEmpty()){
+                    throw new EmptyInputException();
+                }
+
                 for (Major major : majorList.getMajors()){
                     if (major.getMajorName().equals(name)){
                         throw new DuplicateItemsException("*ภาควิชานี้มีในระบบอยู่แล้ว");
                     }
                 }
-                String faculty = facultyChoiceBox.getValue();
                 majorList.addMajor(name, faculty, id, facultyList);
             }
 
@@ -168,21 +205,26 @@ public class AdminMajorFacultyPopupController {
     @FXML
     public void onEditButtonClicked(){
         try {
-            String name = nameTextField.getText();
-            String id = idTextField.getText();
-            if (name.isEmpty() || id.isEmpty()){
-                throw new EmptyInputException();
-            }
+            String name;
+            String id;
+
             if (optionChoiceBox.getValue().equals("คณะ")) {
-                ((Faculty) data).setFacultyName(nameTextField.getText());
-                ((Faculty) data).setFacultyId(idTextField.getText());
-            } else {
-                String faculty = facultyChoiceBox.getValue();
-                if (faculty == null){
+                name = facultyNameTextField.getText();
+                id = facultyIdTextField.getText();
+                if (name.isEmpty() || id.isEmpty()){
                     throw new EmptyInputException();
                 }
-                ((Major) data).setMajorName(nameTextField.getText());
-                ((Major) data).setMajorId(idTextField.getText());
+                ((Faculty) data).setFacultyName(name);
+                ((Faculty) data).setFacultyId(id);
+            } else {
+                name = majorNameTextField.getText();
+                id = majorIdTextField.getText();
+                String faculty = facultyChoiceBox.getValue();
+                if (name.isEmpty() || id.isEmpty() || faculty.isEmpty()){
+                    throw new EmptyInputException();
+                }
+                ((Major) data).setMajorName(name);
+                ((Major) data).setMajorId(id);
                 ((Major) data).setFaculty(facultyChoiceBox.getValue());
             }
 

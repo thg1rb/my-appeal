@@ -1,7 +1,5 @@
 package ku.cs.controllers.faculty;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,33 +12,48 @@ import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
 
 public class FacultyAppealManageController {
-    @FXML private Pane navbarAnchorPane;
+    @FXML
+    private Pane navbarAnchorPane;
 
-    @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Appeal> selfAppealTable;
+    @FXML
+    private TabPane tabPane;
 
-    Appeal selectedAppeal;
+    @FXML
+    private TableView<Appeal> tableView;
 
-    public AppealList appealList;
-    public Datasource<AppealList> datasource;
-
+    private Appeal selectedAppeal;
+    private AppealList appealList;
+    private Datasource<AppealList> datasource;
+    private AppealList facultyAppealList;
+    private boolean preview = true;
+    private ModifyDateList modifyDateList;
     private User user;
-//    private Object selectedAppeal;
+    private Datasource<ModifyDateList> modifyDateListDatasource;
+    //    private Object selectedAppeal;
 
     @FXML
     public void initialize() {
         user = (FacultyStaff) FXRouter.getData();
+
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = datasource.readData();
+        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFaculty());
+
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -48,34 +61,42 @@ public class FacultyAppealManageController {
         try {
             Pane navbarComponent = navbarComponentLoader.load();
             navbarAnchorPane.getChildren().add(navbarComponent);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
-        appealList = datasource.readData();
+        showTable(facultyAppealList, false);
 
-        showTable(appealList);
-
-        allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-            @Override
-            public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
-                if (newValue != null) {
-                    selectedAppeal = newValue;
-                    showAppealPopup();
-                    allAppealTable.getSelectionModel().select(selectedAppeal);
-                }
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                preview = true;
+                showTable(facultyAppealList, false);
+            } else {
+                preview = false;
+                showTable(facultyAppealList, true);
             }
+        });
+
+        tableView.setRowFactory(v -> {
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if (selectedAppeal != null) {
+                    showAppealPopup(preview);
+                }
+            });
+            return row;
         });
     }
 
-    public void showAppealPopup(){
-        try{
+    public void showAppealPopup(boolean preview) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
             Parent root = fxmlLoader.load();
             AppealEditController controller = fxmlLoader.getController();
             controller.setRole(user);
             controller.setSelectedAppeal(selectedAppeal);
+            controller.setMode(preview);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -86,57 +107,92 @@ public class FacultyAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList);
-        }
-        catch(IOException e){
+            showTable(appealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void showTable(AppealList appealList) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
+    public void showTable(AppealList appealList, boolean filter) {
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         dateColumn.setComparator(new DateTimeService());
 
-        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
+        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("ชื่อ-สกุล");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
 
-        TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Appeal, String> typeColumn = new TableColumn<>("ประเภทของคำร้อง");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        allAppealTable.getColumns().clear();
-        allAppealTable.getColumns().add(dateColumn);
-        allAppealTable.getColumns().add(ownerColumn);
-        allAppealTable.getColumns().add(typeColumn);
+        TableColumn<Appeal, String> statusColumn = new TableColumn<>("สถานะของคำร้อง");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        dateColumn.setPrefWidth(367);
-        ownerColumn.setPrefWidth(366);
-        typeColumn.setPrefWidth(366);
+        statusColumn.setCellFactory(column -> new TableCell<Appeal, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    if (status.contains("อนุมัติโดยคณบดี") && status.contains("คำร้องดำเนินการครบถ้วน")) {
+                        setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                        setText("ดำเนินการแล้ว");
+                    } else if (status.contains("อนุมัติโดยหัวหน้าภาควิชา") && status.contains("คำร้องส่งต่อให้คณบดี")) {
+                        setText("รอดำเนินการ");
+                        setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
+                    } else if (status.contains("ปฏิเสธโดยคณบดี")) {
+                        setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                        setText("ถูกปฏิเสธ");
+                    } else {
+                        setText(status);
+                        setStyle("");
+                    }
+                }
+            }
+        });
+        tableView.getColumns().clear();
+        tableView.getColumns().add(dateColumn);
+        tableView.getColumns().add(ownerColumn);
+        tableView.getColumns().add(typeColumn);
+        tableView.getColumns().add(statusColumn);
+        dateColumn.setPrefWidth(275);
+        ownerColumn.setPrefWidth(275);
+        typeColumn.setPrefWidth(275);
+        statusColumn.setPrefWidth(275);
+        tableView.getSortOrder().add(dateColumn);
 
-        allAppealTable.getSortOrder().add(dateColumn);
+        tableView.getItems().clear();
 
-        allAppealTable.getItems().clear();
-        if (appealList != null) {
-            for(Appeal appeal : appealList.getAppeals()){
-                allAppealTable.getItems().add(appeal);
+
+        if (appealList != null && !filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate().equals("null")
+                        && !appeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") && !appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน")) {
+                    tableView.getItems().add(appeal);
+                }
+            }
+        } else if (appealList != null && filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
+                    tableView.getItems().add(appeal);
+                }
             }
         }
-        allAppealTable.sort();
+
+
+        tableView.getSortOrder().add(dateColumn);
+
+        tableView.sort();
 
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
-    }
-    @FXML
-    public void confirmOnButtonClick() {
+        statusColumn.setSortable(false);
 
     }
 
-    @FXML
-    public void cancleOnButtonClick() {
-
-    }
 }

@@ -7,7 +7,7 @@ public class GeneralAppeal extends Appeal {
 
     // Constructor
     public GeneralAppeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String topic) {
-        super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, null);
+        super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, null, null, null);
         this.topic = topic;
     }
 

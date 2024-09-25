@@ -23,12 +23,12 @@
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text fx:id="nameText" layoutX="48.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="ชื่อ :">
+        <Text fx:id="facultyNameText" layoutX="48.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="ชื่อคณะ :">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text fx:id="idText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="รหัส :">
+        <Text fx:id="facultyIdText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="รหัสคณะ :">
             <font>
                 <Font size="24.0" />
             </font>
@@ -38,12 +38,12 @@
                 <Font size="24.0" />
             </font>
         </Text>
-        <TextField fx:id="nameTextField" layoutX="242.0" layoutY="173.0" prefHeight="42.0" prefWidth="307.0" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
+        <TextField fx:id="facultyNameTextField" layoutX="242.0" layoutY="173.0" prefHeight="42.0" prefWidth="307.0" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
             <font>
                 <Font size="18.0" />
             </font>
         </TextField>
-        <TextField fx:id="idTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
+        <TextField fx:id="facultyIdTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
             <font>
                 <Font size="18.0" />
             </font>
@@ -78,5 +78,25 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Text fx:id="majorNameText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="majorNameTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Text fx:id="majorIdText" layoutX="48.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="majorIdTextField" layoutX="242.0" layoutY="291.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
     </children>
 </AnchorPane>

@@ -10,14 +10,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
+import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
+import ku.cs.services.exceptions.IllegalValidationException;
 import ku.cs.services.fileuploaders.ImageFileUploader;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class ProfileSettingController {
     @FXML private Label confirmPasswordErrorLabel;
     @FXML private Label confirmEditErrorLabel;
     @FXML private Label successLabel;
+    @FXML private Label validationErrorLabel;
 
     private User user;
 
@@ -92,6 +94,7 @@ public class ProfileSettingController {
         confirmPasswordErrorLabel.setText("");
         confirmEditErrorLabel.setText("");
         successLabel.setText("");
+        validationErrorLabel.setText("");
     }
 
     @FXML
@@ -104,6 +107,8 @@ public class ProfileSettingController {
     @FXML
     public void onConfirmButtonClicked(){
         try{
+            ValidationService validationService = new ValidationService();
+
             String oldPassword = oldPasswordTextField.getText();
             String newPassword = newPasswordTextField.getText();
             String confirmPassword = confirmPasswordTextField.getText();
@@ -112,6 +117,8 @@ public class ProfileSettingController {
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 throw new EmptyInputException();
+            } else if (!validationService.validatePassword(newPassword)) {
+                throw new IllegalValidationException();
             } else if (!newPassword.equals(confirmPassword)) {
                 confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
             } else if (!user.validatePassword(oldPassword)) {
@@ -126,6 +133,8 @@ public class ProfileSettingController {
             }
         }catch (EmptyInputException e){
             confirmEditErrorLabel.setText("โปรดใส่ข้อมูลให้ครบถ้วน");
+        } catch (IllegalValidationException e){
+            validationErrorLabel.setText("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
         }
     }
 

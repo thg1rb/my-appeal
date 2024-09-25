@@ -28,6 +28,7 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class ProfessorStudentListController {
 
@@ -133,13 +134,15 @@ public class ProfessorStudentListController {
         tableView.getItems().clear();
         if (searchText.isEmpty()) {
             for (User student : studentList.getUsers()) {
-                if (student.getRole().equals("นักศึกษา") && ((Student)student).getAdvisor().equals(((Advisor)user).getAdvisorId())) {
+                UUID studentAdvisorUUID = ((Student) student).getAdvisorUUID();
+                if (studentAdvisorUUID != null && studentAdvisorUUID.equals(user.getUuid())){
                     tableView.getItems().add(student);
                 }
             }
         } else {
             for (User student : studentList.getUsers()) {
-                if (student.getRole().equals("นักศึกษา") && ((Student) student).getAdvisor().equals(((Advisor) user).getAdvisorId()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
+                UUID studentAdvisorUUID = ((Student) student).getAdvisorUUID();
+                if (studentAdvisorUUID != null && studentAdvisorUUID.equals(user.getUuid()) && (student.getUsername().contains(searchText) || student.getFullName().contains(searchText) || ((Student) student).getStudentId().contains(searchText))) {
                     tableView.getItems().add(student);
                 }
             }

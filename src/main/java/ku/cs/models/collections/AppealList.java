@@ -56,4 +56,13 @@ public class AppealList {
         }
         return appealList;
     }
+    public AppealList getAppealByFaculty(String faculty){
+        AppealList appealList = new AppealList();
+        for (Appeal appeal : appeals) {
+            if (appeal.getOwnerFaculty().equals(faculty)) {
+                appealList.addAppeal(appeal);
+            }
+        }
+        return appealList;
+    }
 }

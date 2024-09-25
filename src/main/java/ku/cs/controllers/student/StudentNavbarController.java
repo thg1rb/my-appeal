@@ -51,18 +51,9 @@ public class StudentNavbarController {
 
     @FXML
     void onProgramSettingButtonClicked(){
-        try{
-            FXRouter.goTo("program-setting", user);
+        try {
+            FXRouter.goTo("program-setting",user);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    void onProfileSettingButtonClicked(){
-        try{
-            FXRouter.goTo("profile-setting",user);
-        }catch(Exception e){
             throw new RuntimeException(e);
         }
     }
@@ -76,4 +67,12 @@ public class StudentNavbarController {
         }
     }
 
+    @FXML
+    void onProfileSettingButtonClicked(){
+        try{
+            FXRouter.goTo("profile-setting",user);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 }

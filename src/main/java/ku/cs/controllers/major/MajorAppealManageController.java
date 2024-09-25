@@ -13,7 +13,6 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
-import ku.cs.controllers.general.SetPasswordController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
@@ -50,7 +49,6 @@ public class MajorAppealManageController {
 
     @FXML
     public void initialize() {
-
         user = (DepartmentStaff) FXRouter.getData();
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
@@ -117,7 +115,8 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
             appealList = datasource.readData();
-            tableView.refresh();
+            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartment());
+            showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,8 +138,6 @@ public class MajorAppealManageController {
         TableColumn<Appeal, String> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-
-
         tableView.getColumns().clear();
         tableView.getColumns().add(dateColumn);
         tableView.getColumns().add(ownerColumn);
@@ -157,8 +154,7 @@ public class MajorAppealManageController {
 
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerDepartment().equals(((DepartmentStaff) user).getDepartment())
-                        && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null")){
+                if (!modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null") && !appeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")){
                     tableView.getItems().add(appeal);
                 }
             }
