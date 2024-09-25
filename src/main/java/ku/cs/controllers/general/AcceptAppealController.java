@@ -35,6 +35,7 @@ public class AcceptAppealController {
     @FXML Rectangle imageRectangle;
     @FXML TextField searchTextField;
     @FXML ImageView imageViewButtonImageView;
+    @FXML Label errorUploadLabel;
 
     private User staff;
     private String selectedStatus;
@@ -167,6 +168,8 @@ public class AcceptAppealController {
         if (signFileUploader.uploadSuccess()) {
             uploadButton.setText("");
             imageViewButtonImageView.setImage(null);
+        } else {
+            errorUploadLabel.setVisible(true);
         }
     }
 
