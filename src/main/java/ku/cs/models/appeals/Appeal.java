@@ -18,9 +18,10 @@ public class Appeal {
     protected String ownerFaculty;
     protected String reason;
     protected String subjects;
-
+    protected String DepartmentSignature;
+    protected String FacultySignature;
     // Constructors
-    public Appeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects) {
+    public Appeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects, String departmentSignature, String facultySignature) {
         this.modifyDate = modifyDate;
         this.uuid = uuid;
         this.type = type;
@@ -32,10 +33,12 @@ public class Appeal {
         this.ownerFaculty = ownerFaculty;
         this.reason = reason;
         this.subjects = subjects;
+        this.DepartmentSignature = departmentSignature;
+        this.FacultySignature = facultySignature;
     }
 
     public Appeal(Appeal appeal) {
-        this(appeal.modifyDate, appeal.getUuid(), appeal.getType(), appeal.getStatus(), appeal.getRejectedReason(), appeal.getOwnerId(), appeal.getOwnerFullName(), appeal.getOwnerDepartment(), appeal.getOwnerFaculty(), appeal.getReason(), appeal.getSubjects());
+        this(appeal.modifyDate, appeal.getUuid(), appeal.getType(), appeal.getStatus(), appeal.getRejectedReason(), appeal.getOwnerId(), appeal.getOwnerFullName(), appeal.getOwnerDepartment(), appeal.getOwnerFaculty(), appeal.getReason(), appeal.getSubjects(), appeal.getDepartmentSignature(), appeal.getFacultySignature());
     }
 
     // ตรวจสอบเป็นคำร้องทั่วไปหรือไม่?
@@ -96,6 +99,14 @@ public class Appeal {
 
     public String getSubjects() {
         return subjects;
+    }
+
+    public String getDepartmentSignature() {
+        return DepartmentSignature;
+    }
+
+    public String getFacultySignature() {
+        return FacultySignature;
     }
 
     // Setters
