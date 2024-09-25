@@ -1,11 +1,13 @@
 package ku.cs.models.persons;
 
+import java.util.UUID;
+
 public class Student extends User {
     private String studentId;
     private String email;
     private String faculty;
     private String department;
-    private String advisor;
+    private UUID advisorUUID;
 
     private boolean registered;
 
@@ -20,18 +22,22 @@ public class Student extends User {
         this.registered = false;
     }
     // with advisor init
-    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, String advisor) {
+    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, UUID advisorUUID) {
         this(firstName, lastName, studentId, email, faculty, department);
-        this.advisor = advisor;
+        this.advisorUUID = advisorUUID;
     }
     //Constructor for reading file
-    public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisor, boolean registered) {
+    public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisorUUID, boolean registered) {
         super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
         this.studentId = StudentId;
         this.email = email;
         this.faculty = faculty;
         this.department = department;
-        this.advisor = advisor;
+        if (advisorUUID == null || advisorUUID.equals("null")){
+            this.advisorUUID = null;
+        }else {
+            this.advisorUUID = UUID.fromString(advisorUUID);
+        }
         this.registered = registered;
     }
 
@@ -54,8 +60,8 @@ public class Student extends User {
     public void setDepartment(String department) {
         this.department = department;
     }
-    public void setAdvisor(String advisor) {
-        this.advisor = advisor;
+    public void setAdvisor(UUID advisor) {
+        this.advisorUUID = advisor;
     }
     private void setRegistered() {
         this.registered = true;
@@ -74,8 +80,8 @@ public class Student extends User {
     public String getDepartment() {
         return department;
     }
-    public String getAdvisor() {
-        return advisor;
+    public UUID getAdvisorUUID() {
+        return advisorUUID;
     }
     public boolean isRegistered() {
         return registered;
@@ -83,7 +89,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return super.toString() +","+ studentId + "," + email + "," + faculty + "," + department + "," + advisor + "," + registered;
+        return super.toString() +","+ studentId + "," + email + "," + faculty + "," + department + "," + advisorUUID + "," + registered;
     }
 
     @Override

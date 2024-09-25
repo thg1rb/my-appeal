@@ -4,43 +4,52 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.Approver;
 
+import ku.cs.models.persons.User;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
+import ku.cs.services.fileuploaders.SignFileUploader;
 
+import java.io.File;
 import java.util.Date;
 
 public class AcceptAppealController {
-    @FXML
-    TableView<Approver> approverTableView;
-    @FXML
-    RadioButton radioButton1;
-    @FXML
-    RadioButton radioButton2;
+    @FXML TableView<Approver> approverTableView;
+    @FXML RadioButton finishHereRadioButton;
+    @FXML RadioButton moreOperationRadioButton;
     @FXML Label approverErrorLabel;
+    @FXML Button uploadButton;
+    @FXML Rectangle imageRectangle;
+    @FXML TextField searchTextField;
+    @FXML ImageView imageViewButtonImageView;
 
-    private String[] majorStatusList = {"คำร้องส่งต่อให้คณบดี", "คำร้องดำเนินการครบถ้วน"};
-    private String[] facultyStatusList = {"คำร้องดำเนินการครบถ้วน"};
+    private User staff;
     private String selectedStatus;
+    private String subStatus;
     private String role;
-
 
     private Datasource<ApproverList> approverDatasource;
     private ApproverList approverList;
+    private ApproverList specificTierApproverList;
     private Approver selectedApprover;
     private Appeal selectedAppeal;
     private ToggleGroup toggleGroup;
     private Datasource<ModifyDateList> modifyDateListDatasource;
     private ModifyDateList modifyDateList;
 
+    @FXML
     public void initialize() {
         approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approverDatasource.readData();
@@ -48,17 +57,18 @@ public class AcceptAppealController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+        finishHereRadioButton.setSelected(true);
         toggleGroup = new ToggleGroup();
-        radioButton1.setToggleGroup(toggleGroup);
-        radioButton2.setToggleGroup(toggleGroup);
+        finishHereRadioButton.setToggleGroup(toggleGroup);
+        moreOperationRadioButton.setToggleGroup(toggleGroup);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 RadioButton selectedRadioButton = (RadioButton) newValue;
-                selectedStatus = selectedStatus + " | คำร้อง" + selectedRadioButton.getText();
+                System.out.println(selectedRadioButton.getText());
+                subStatus = " | " + selectedRadioButton.getText();
             }
         });
-        showTable(approverList);
         approverTableView.setRowFactory(v -> {
             TableRow<Approver> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -66,23 +76,34 @@ public class AcceptAppealController {
             });
             return row;
         });
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String search = searchTextField.getText();
+            showTable(specificTierApproverList, search);
+        });
 
+        uploadButton.setOnAction(e ->{
+            uploadSign();
+        });
     }
 
-    public void setVar(String r, String status, Appeal appeal) {
-        role = r;
+    public void setVar(User staff, String role, String status, Appeal appeal) {
+        this.staff = staff;
+        this.role = role;
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
-            radioButton2.setSelected(true);
+            finishHereRadioButton.setSelected(true);
+            specificTierApproverList = approverList.getDepartmentTierApprovers();
         } else if (role.equals("เจ้าหน้าที่คณะ")) {
-            radioButton2.setSelected(false);
+            finishHereRadioButton.setSelected(true);
+            moreOperationRadioButton.setVisible(false);
+            moreOperationRadioButton.setDisable(true);
+            specificTierApproverList = approverList.getFacultyTierApprovers();
         }
+        showTable(specificTierApproverList, null);
         selectedStatus = status;
         selectedAppeal = appeal;
-
-
     }
 
-    public void showTable(ApproverList approverList) {
+    public void showTable(ApproverList approverList, String searchText) {
         TableColumn<Approver, String> roleColumn = new TableColumn<>("Role");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
@@ -95,13 +116,23 @@ public class AcceptAppealController {
 
         int size = approverTableView.getColumns().size();
         for (TableColumn<?, ?> col : approverTableView.getColumns()) {
-            col.setPrefWidth((double) 311 / size);
+            col.setPrefWidth((double) 448 / size);
         }
+        roleColumn.setPrefWidth(roleColumn.getPrefWidth() - 50);
+        fullNameColumn.setPrefWidth(fullNameColumn.getPrefWidth() + 50);
 
         approverTableView.getItems().clear();
         if (approverList != null) {
-            for(Approver approver : approverList.getApprovers()){
-                approverTableView.getItems().add(approver);
+            if (searchText != null) {
+                for (Approver approver : approverList.getApprovers()) {
+                    if (approver.getFullName().contains(searchText)) {
+                        approverTableView.getItems().add(approver);
+                    }
+                }
+            }else {
+                for (Approver approver : approverList.getApprovers()) {
+                    approverTableView.getItems().add(approver);
+                }
             }
         }
 
@@ -117,7 +148,8 @@ public class AcceptAppealController {
         else {
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
-            selectedAppeal.setStatus(selectedStatus);
+            System.out.println(selectedStatus);
+            selectedAppeal.setStatus(selectedStatus+subStatus);
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {
@@ -126,6 +158,15 @@ public class AcceptAppealController {
             onCloseButtonClick(event);
         }
 
+    }
+
+    private void uploadSign(){
+        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, "data" + File.separator + "approves-signs");
+        signFileUploader.upload((Stage) imageRectangle.getScene().getWindow());
+        if (signFileUploader.uploadSuccess()) {
+            uploadButton.setText("");
+            imageViewButtonImageView.setImage(null);
+        }
     }
 
     @FXML

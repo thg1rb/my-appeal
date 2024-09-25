@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.util.Callback;
 import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
@@ -30,6 +31,8 @@ import java.util.UUID;
 
 public class StudentCreateAppealController {
     @FXML private Pane navbarAnchorPane;
+
+    @FXML private Label createAppealTitle;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -101,11 +104,12 @@ public class StudentCreateAppealController {
         initializeChoiceBox();
         initializeDatePicker();
 
-        if (((Student)user).getAdvisor().equals("null")) {
+        if (((Student)user).getAdvisorUUID().equals("null")) {
             noAdvisorAlertPane.setVisible(true);
             backgroundAlertPane.setVisible(true);
             return ;
         }
+
     }
 
     // แสดงและกำหนดค่าเริ่มต้น ChoiceBox
