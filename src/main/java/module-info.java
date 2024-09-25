@@ -6,7 +6,6 @@ module ku.cs {
     requires java.desktop;
     requires java.sql;
     requires java.management;
-    requires org.apache.pdfbox;
 
     opens ku.cs.cs211671project to javafx.fxml;
     exports ku.cs.cs211671project;
