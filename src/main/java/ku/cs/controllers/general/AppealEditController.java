@@ -269,6 +269,10 @@ public class AppealEditController {
     public void onCloseRejectReasonButtonClick(ActionEvent event) {
         rejectReasonAlertPane.setVisible(false);
     }
+    @FXML
+    public void onRejectButtonClick(ActionEvent event) {
+        rejectReasonAlertPane.setVisible(true); // Ensure this is executed
+    }
 
     // ยืนยันการปฏิเสธ (หลังจากระบุเหตุผลเรียบร้อย)
     public void onConfirmRejectReasonButton(ActionEvent event) {
@@ -303,4 +307,9 @@ public class AppealEditController {
             rejectReasonErrorLabel.setVisible(true);
         }
     }
+
+
+
+
+
 }
