@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -7,10 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ConfirmationDeleteAlertController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="505.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ConfirmationDeleteAlertController">
    <children>
-      <Text layoutX="106.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ข้อมูลนี้จะไม่สามารถกู้คืนได้&#10;คุณต้องการที่จะลบใช่หรือไม่ ?">
+      <Text layoutX="106.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text=" ข้อมูลนี้จะไม่สามารถกู้คืนได้&#10;คุณต้องการที่จะลบใช่หรือไม่ ?">
          <font>
             <Font size="24.0" />
          </font>
@@ -20,10 +20,14 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="confirmButton" layoutX="277.0" layoutY="243.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" styleClass="ban-button" stylesheets="@../../styles/ban-unban-button.css" text="ยืนยัน" textFill="RED">
+      <Button fx:id="confirmButton" layoutX="277.0" layoutY="243.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" stylesheets="@../../styles/ban-unban-button.css" text="ยืนยัน" textFill="RED">
          <font>
             <Font size="24.0" />
          </font>
+         <styleClass>
+            <String fx:value="ban-button" />
+            <String fx:value="re" />
+         </styleClass>
       </Button>
       <ImageView fitHeight="115.0" fitWidth="115.0" layoutX="195.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>

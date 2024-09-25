@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AboutUsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AboutUsController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane fx:id="backgroundAddApproverPane" layoutX="1.0" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
@@ -24,22 +24,22 @@
                   <Image url="@../../../../images/ton-profile.png" />
                </image>
             </ImageView>
-            <Text layoutX="232.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610402132">
+            <Text layoutX="232.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="6610402132">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="176.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายบวรรัตน์ ตั้งนรารัชชกิจ">
+            <Text layoutX="176.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="นายบวรรัตน์ ตั้งนรารัชชกิจ">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="700.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610401934">
+            <Text layoutX="704.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="6610401934">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="672.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายเกิดสิริ ศรีเจริญ">
+            <Text layoutX="681.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="นายเกิดสิริ ศรีเจริญ">
                <font>
                   <Font size="24.0" />
                </font>
@@ -54,29 +54,29 @@
                   <Image url="@../../../../images/aock-profile.png" />
                </image>
             </ImageView>
-            <Text layoutX="223.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610405824">
+            <Text layoutX="229.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="6610405824">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="167.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายคมชาญ วงศ์ศิรสมพงษ์​">
+            <Text layoutX="167.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="นายคมชาญ วงศ์ศิรสมพงษ์​">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="699.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6610401985">
+            <Text layoutX="709.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="6610401985">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="671.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นายไชยวัตน์ หนูวัฒนา">
+            <Text layoutX="671.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text="นายไชยวัตน์ หนูวัฒนา">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
          </children>
       </Pane>
-      <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="เกี่ยวกับพวกเรา">
+      <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="เกี่ยวกับพวกเรา">
          <font>
             <Font size="40.0" />
          </font>

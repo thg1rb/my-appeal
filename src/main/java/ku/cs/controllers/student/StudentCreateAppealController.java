@@ -36,8 +36,6 @@ public class StudentCreateAppealController {
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
-    private String[] appeals = {"ทั่วไป", "ขอพักการศึกษา", "ลาป่วยหรือลากิจ"};
-    String selectedAppeal;
 
     // ประกาศตัวแปรคำร้องทั่วไป
     @FXML private Pane generalAppealPane;
@@ -49,17 +47,11 @@ public class StudentCreateAppealController {
     @FXML private TextArea reasonSuspendTextArea;
     @FXML private TextArea subjectsSuspendTextArea;
     @FXML private ChoiceBox<String> semestersSuspendChoiceBox;
-    private String[] semesters = {"ภาคต้น", "ภาคปลาย", "ภาคฤดูร้อน"};
-    String selectedSemester;
     @FXML private ChoiceBox<String> yearsSuspendChoiceBox;
-    private String[] years = {"2565", "2566", "2567", "2568", "2569", "2570", "อื่นๆ"};
-    String selectedYear;
 
     // ประกาศตัวแปรคำร้องขอลาป่วยหรือลากิจ
     @FXML private Pane breakAppealPane;
     @FXML private ChoiceBox<String> purposesBreakChoiceBox;
-    private String[] purposes = {"ลาป่วย", "ลากิจ"};
-    String selectedPurpose;
     @FXML private TextArea reasonBreakTextArea;
     @FXML private TextArea subjectsBreakTextArea;
     @FXML private DatePicker startBreakDatePicker;
@@ -70,6 +62,18 @@ public class StudentCreateAppealController {
     @FXML private Pane noAdvisorAlertPane;
     @FXML private Pane failAlertPane;
     @FXML private Pane successAlertPane;
+
+    private String[] appeals = {"ทั่วไป", "ขอพักการศึกษา", "ลาป่วยหรือลากิจ"};
+    private String selectedAppeal;
+
+    private String[] semesters = {"ภาคต้น", "ภาคปลาย", "ภาคฤดูร้อน"};
+    private String selectedSemester;
+
+    private String[] years = {"2565", "2566", "2567", "2568", "2569", "2570", "อื่นๆ"};
+    private String selectedYear;
+
+    private String[] purposes = {"ลาป่วย", "ลากิจ"};
+    String selectedPurpose;
 
     private User user;
 

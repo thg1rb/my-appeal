@@ -35,12 +35,12 @@ public class ProfessorStudentAppealController {
     @FXML private TableView<Appeal> tableView;
 
     private User user;
-    private Datasource<AppealList> appealDatasource;
-    private Datasource<UserList> studentDatasource;
-    private AppealList appealList;
-    private UserList studentList;
 
-    private Student selectedStudent;
+    private Datasource<AppealList> appealDatasource;
+    private AppealList appealList;
+
+    private Datasource<UserList> studentDatasource;
+    private UserList studentList;
 
     @FXML
     private void initialize() {

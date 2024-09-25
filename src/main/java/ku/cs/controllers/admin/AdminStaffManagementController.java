@@ -122,7 +122,7 @@ public class AdminStaffManagementController {
     }
 
     private void showTable(UserList userList, String role) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("โปรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -132,16 +132,16 @@ public class AdminStaffManagementController {
             return new SimpleObjectProperty<>(imageView);
         });
 
-        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        TableColumn<User, String> nameCol = new TableColumn<>("ชื่อ-สกุล");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        TableColumn<User, String> usernameCol = new TableColumn<>("ชื่อผู้ใช้งาน");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User, String> initPasswordCol = new TableColumn<>("Initial Password");
+        TableColumn<User, String> initPasswordCol = new TableColumn<>("รหัสผ่านเริ่มต้น");
         initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
-        TableColumn<User, String> facultyCol = new TableColumn<>("Faculty");
+        TableColumn<User, String> facultyCol = new TableColumn<>("คณะ");
         facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
         facultyCol.setComparator(new Comparator<String>() {
             @Override
@@ -158,7 +158,7 @@ public class AdminStaffManagementController {
         tableView.getColumns().add(facultyCol);
 
         if (role.equals("เจ้าหน้าที่ภาควิชา") || role.equals("อาจารย์ที่ปรึกษา")){
-            TableColumn<User, String> majorCol = new TableColumn<>("Major");
+            TableColumn<User, String> majorCol = new TableColumn<>("สาขา");
             majorCol.setCellValueFactory(cellData ->{
                 DepartmentStaff user = (DepartmentStaff) cellData.getValue();
                 return new SimpleStringProperty(user.getDepartment());
@@ -167,7 +167,7 @@ public class AdminStaffManagementController {
             tableView.getColumns().add(majorCol);
         }
         if (role.equals("อาจารย์ที่ปรึกษา")){
-            TableColumn<User, String> idCol = new TableColumn<>("ID");
+            TableColumn<User, String> idCol = new TableColumn<>("รหัสประจำตัว");
             idCol.setCellValueFactory(cellData ->{
                 Advisor user = (Advisor) cellData.getValue();
                 return new SimpleStringProperty(user.getAdvisorId());

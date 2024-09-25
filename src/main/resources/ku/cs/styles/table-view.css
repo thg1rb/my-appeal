@@ -9,6 +9,10 @@
     -fx-background-color: transparent;
 }
 
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
 .table-view .column-header{
     -fx-background-color: white;
     -fx-border-color: transparent transparent lightgrey transparent;
@@ -17,18 +21,31 @@
     -fx-pref-height: 50;
 }
 
-.table-view .column-header .label {
-    -fx-text-fill: grey;
-    -fx-font-weight: bold;
-    -fx-font-size: 25px;
-}
-
 /* table-view without tab-pane */
 .table-view-without-tab-pane .column-header {
     -fx-background-color: white;
     -fx-border-color: transparent transparent lightgrey transparent;
     -fx-background-radius: 20px 20px 0 0;
     -fx-border-radius: 20px 20px 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: grey;
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #265252;
+    -fx-background-radius: 100;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
 }
 
 /* สไตล์สำหรับแถวใน TableView */

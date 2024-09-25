@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNisitManageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNisitManageController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane layoutX="281.0" layoutY="718.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
-            <Button layoutX="976.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: #D9D9D9;" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
+            <Button layoutX="986.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: #D9D9D9;" styleClass="label-medium" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
                <font>
                   <Font size="20.0" />
                </font></Button>
@@ -30,12 +30,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="280.0" layoutY="110.0" text="จัดการรายชื่อนิสิต">
+      <Label layoutX="280.0" layoutY="110.0" styleClass="label-bold" text="จัดการรายชื่อนิสิต">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1086.0" layoutY="114.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาจาก" styleClass="text-field" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1086.0" layoutY="114.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาจาก" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="24.0" />
          </font>

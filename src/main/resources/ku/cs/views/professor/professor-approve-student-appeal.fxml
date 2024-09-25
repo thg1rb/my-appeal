@@ -336,54 +336,6 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Pane fx:id="rejectReasonAlertPane" prefHeight="700.0" prefWidth="1200.0" styleClass="background-alert-pane" stylesheets="@../../styles/pane.css" visible="false">
-         <children>
-            <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
-               <children>
-                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fx:id="closePopUpDarkImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <effect>
-                              <ColorAdjust />
-                           </effect>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="close-pop-up-dark" />
-                        <String fx:value="label-extra-light" />
-                     </styleClass>
-                  </Button>
-                  <Button contentDisplay="TOP" layoutX="307.0" layoutY="364.0" mnemonicParsing="false" onAction="#onConfirmRejectReasonButton" stylesheets="@../../styles/button.css" text="ยืนยันการปฏิเสธ">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="reject-button" />
-                        <String fx:value="label-medium" />
-                     </styleClass>
-                  </Button>
-                  <Label layoutX="33.0" layoutY="59.0" styleClass="label-bold" text="โปรดระบุเหตุผลในการปฏิเสธคำร้อง:" textFill="#cc0000">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="rejectReasonTextArea" layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" styleClass="label-regular" stylesheets="@../../styles/text-field.css" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextArea>
-                  <Label fx:id="rejectReasonErrorLabel" layoutX="39.0" layoutY="105.0" text="*กรุณาระบุสาเหตุในการปฏิเสธคำร้องของคุณก่อนยืนยันการปฏิเสธคำร้อง" textFill="RED" visible="false">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-         </children>
-      </Pane>
       <VBox layoutX="920.0" layoutY="100.0" prefHeight="510.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 20;">
          <children>
             <VBox alignment="CENTER">
@@ -487,6 +439,54 @@
             </DropShadow>
          </effect>
       </VBox>
+      <Pane fx:id="rejectReasonAlertPane" prefHeight="700.0" prefWidth="1200.0" styleClass="background-alert-pane" stylesheets="@../../styles/pane.css" visible="false">
+         <children>
+            <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
+               <children>
+                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fx:id="closePopUpDarkImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <effect>
+                              <ColorAdjust />
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="close-pop-up-dark" />
+                        <String fx:value="label-extra-light" />
+                     </styleClass>
+                  </Button>
+                  <Button contentDisplay="TOP" layoutX="307.0" layoutY="364.0" mnemonicParsing="false" onAction="#onConfirmRejectReasonButton" stylesheets="@../../styles/button.css" text="ยืนยันการปฏิเสธ">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="reject-button" />
+                        <String fx:value="label-medium" />
+                     </styleClass>
+                  </Button>
+                  <Label layoutX="33.0" layoutY="59.0" styleClass="label-bold" text="โปรดระบุเหตุผลในการปฏิเสธคำร้อง:" textFill="#cc0000">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="rejectReasonTextArea" layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" styleClass="label-regular" stylesheets="@../../styles/text-field.css" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextArea>
+                  <Label fx:id="rejectReasonErrorLabel" layoutX="39.0" layoutY="105.0" text="*กรุณาระบุสาเหตุในการปฏิเสธคำร้องของคุณก่อนยืนยันการปฏิเสธคำร้อง" textFill="RED" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
    </children>
    <effect>
       <DropShadow />
