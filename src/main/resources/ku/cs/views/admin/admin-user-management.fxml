@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,21 +13,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #F1F1F1;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminUserManagementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #F1F1F1;" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminUserManagementController">
     <children>
-        <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="จัดการข้อมูลผู้ใช้">
+        <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="จัดการข้อมูลผู้ใช้">
             <font>
                 <Font size="40.0" />
             </font>
         </Text>
-        <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1117.0" layoutY="108.0" prefHeight="38.0" prefWidth="247.0" promptText="ค้นหาชื่อ" style="-fx-background-radius: 15;">
+        <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1087.0" layoutY="108.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาชื่อ" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
             <font>
                 <Font size="18.0" />
             </font>
         </TextField>
       <Line endX="186.86593627929688" endY="273.3656311035156" layoutX="-4.0" layoutY="444.0" startX="16.733203887939453" startY="273.3656311035156" stroke="#e1e4df" />
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TabPane fx:id="tabPane" layoutX="272.0" layoutY="168.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
+      <TabPane fx:id="tabPane" layoutX="272.0" layoutY="168.0" prefHeight="592.0" prefWidth="1100.0" style="-fx-background-color: transparent;" styleClass="label-medium" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="176.0">
          <tabs>
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10; -fx-background-radius: 20 0 0 0;" text="ทั้งหมด" />
             <Tab closable="false" style="-fx-font-size: 20; -fx-padding: 10;" text="เจ้าหน้าที่คณะ" />
@@ -49,15 +50,23 @@
       </TableView>
       <Pane layoutX="272.0" layoutY="697.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
-            <Button layoutX="877.0" layoutY="12.0" mnemonicParsing="false" onAction="#onUnBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="unban-button" stylesheets="@../../styles/ban-unban-button.css" text="คืนสิทธ์การใช้งาน">
+            <Button layoutX="877.0" layoutY="12.0" mnemonicParsing="false" onAction="#onUnBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" stylesheets="@../../styles/ban-unban-button.css" text="คืนสิทธ์การใช้งาน">
                <font>
                   <Font size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="unban-button" />
+                  <String fx:value="label-regular" />
+               </styleClass>
             </Button>
-            <Button layoutX="658.0" layoutY="12.0" mnemonicParsing="false" onAction="#onBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" styleClass="ban-button" stylesheets="@../../styles/ban-unban-button.css" text="ระงับสิทธ์การใช้งาน">
+            <Button layoutX="658.0" layoutY="12.0" mnemonicParsing="false" onAction="#onBanButtonClicked" prefHeight="45.0" prefWidth="202.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" stylesheets="@../../styles/ban-unban-button.css" text="ระงับสิทธ์การใช้งาน">
                <font>
                   <Font size="20.0" />
                </font>
+               <styleClass>
+                  <String fx:value="ban-button" />
+                  <String fx:value="label-regular" />
+               </styleClass>
             </Button>
          </children>
       </Pane>

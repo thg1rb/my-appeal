@@ -37,6 +37,7 @@ public class ProfessorStudentListController {
     @FXML private TextField searchTextField;
 
     private User user;
+
     private Datasource<UserList> studentDatasource;
     private UserList studentList;
 

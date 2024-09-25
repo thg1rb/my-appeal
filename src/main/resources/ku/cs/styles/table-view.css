@@ -9,6 +9,10 @@
     -fx-background-color: transparent;
 }
 
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
 .table-view .column-header{
     -fx-background-color: white;
     -fx-border-color: transparent transparent lightgrey transparent;
@@ -29,6 +33,19 @@
     -fx-text-fill: grey;
     -fx-font-weight: bold;
     -fx-font-size: 25px;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #265252;
+    -fx-background-radius: 100;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
 }
 
 /* สไตล์สำหรับแถวใน TableView */

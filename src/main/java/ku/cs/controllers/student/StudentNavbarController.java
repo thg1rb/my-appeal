@@ -50,15 +50,10 @@ public class StudentNavbarController {
     }
 
     @FXML
-    void onProgramSettingClicked(){
-
-    }
-
-    @FXML
-    void onLogoutButtonClicked(){
+    void onProgramSettingButtonClicked(){
         try{
-            FXRouter.goTo("login");
-        }catch(Exception e){
+            FXRouter.goTo("program-setting", user);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -71,4 +66,14 @@ public class StudentNavbarController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    void onLogoutButtonClicked(){
+        try{
+            FXRouter.goTo("login");
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
 }

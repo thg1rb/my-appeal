@@ -104,16 +104,16 @@ public class AdminUserManagementController {
             return new SimpleObjectProperty<>(imageView);
         });
 
-        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        TableColumn<User, String> nameCol = new TableColumn<>("ชื่อ-สกุล");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
+        TableColumn<User, String> usernameCol = new TableColumn<>("ชื่อผู้ใช้");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User, String> roleCol = new TableColumn<>("Role");
+        TableColumn<User, String> roleCol = new TableColumn<>("ตำแหน่ง");
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
+        TableColumn<User, String> loginDateCol = new TableColumn<>("ล็อคอินล่าสุด");
         loginDateCol.setCellValueFactory(cellData ->{
             String loginDate = cellData.getValue().getLoginDate();
             if (loginDate == null || loginDate.isEmpty() || loginDate.equals("null")) {
@@ -123,7 +123,7 @@ public class AdminUserManagementController {
             }
         });
 
-        TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
+        TableColumn<User, String> banCol = new TableColumn<>("สิทธิ์ในการใช้งาน");
         banCol.setCellValueFactory(cellData -> {
             User item = cellData.getValue();
             String value = item.getAccesibility();

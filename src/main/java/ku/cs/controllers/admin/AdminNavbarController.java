@@ -86,7 +86,7 @@ public class AdminNavbarController {
     }
 
     @FXML
-    void onLogoutButtonClick() {
+    void onLogoutButtonClicked() {
         try{
             FXRouter.goTo("login");
         }catch(Exception e){

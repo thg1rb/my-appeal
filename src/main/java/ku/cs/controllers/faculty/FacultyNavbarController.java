@@ -51,7 +51,7 @@ public class FacultyNavbarController {
     }
 
     @FXML
-    void onProgramSettingClicked(){
+    void onProgramSettingButtonClicked(){
         try {
             FXRouter.goTo("program-setting",user);
         } catch (IOException e) {
