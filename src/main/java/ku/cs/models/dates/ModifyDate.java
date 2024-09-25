@@ -57,15 +57,15 @@ public class ModifyDate {
     }
 
     public boolean isAdvisorRejected(String status) {
-        return advisorApproveDate != null && status.contains("ปฏิเสธ");
+        return advisorApproveDate != null && status.contains("ปฏิเสธโดยอาจารย์ที่ปรึกษา");
     }
 
     public boolean isDepartmentRejected(String status) {
-        return departmentApproveDate != null && status.contains("ปฏิเสธ");
+        return departmentApproveDate != null && status.contains("ปฏิเสธโดยหัวหน้าภาควิชา");
     }
 
     public boolean isFacultyRejected(String status) {
-        return facultyApproveDate != null && status.contains("ปฏิเสธ");
+        return facultyApproveDate != null && status.contains("ปฏิเสธโดยคณบดี");
     }
 
     public boolean isAdvisorPending() {

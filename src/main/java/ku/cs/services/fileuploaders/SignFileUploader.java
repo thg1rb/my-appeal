@@ -63,7 +63,7 @@ public class SignFileUploader implements FileUploader {
                 } else if (staff instanceof FacultyStaff) {
                     fileName += "_faculty-sign";
                 }
-                fileName += file.getName().split("\\.")[file.getName().split("\\.").length - 1];
+                fileName += "." +file.getName().split("\\.")[file.getName().split("\\.").length - 1];
                 Path destination = new File(directoryName + File.separator + fileName).toPath();
 
                 Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);

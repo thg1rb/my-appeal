@@ -110,6 +110,8 @@ public class AppealDetailsController {
         departmentApproveDateLabel.setOnMouseClicked(null);
         facultyApproveDateLabel.setOnMouseClicked(null);
 
+        System.out.println(selectedAppealDate.isDepartmentRejected(selectedAppeal.getStatus()));
+
         if (selectedAppealDate.isAdvisorRejected(selectedAppeal.getStatus())) {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(rejectColor);

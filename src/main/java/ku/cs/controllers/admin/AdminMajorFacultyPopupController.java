@@ -133,7 +133,7 @@ public class AdminMajorFacultyPopupController {
             facultyNameTextField.setVisible(true);
             facultyIdText.setVisible(true);
             facultyIdTextField.setVisible(true);
-        }else{
+        } else {
             belongFacultyText.setVisible(true);
             facultyChoiceBox.setVisible(true);
             majorNameText.setVisible(true);

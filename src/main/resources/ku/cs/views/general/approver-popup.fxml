@@ -23,12 +23,12 @@
             </Label>
          </children>
       </Pane>
-      <Button layoutX="324.0" layoutY="394.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" styleClass="approve-button" stylesheets="@../../styles/button.css" text="เพิ่ม">
+      <Button layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" styleClass="approve-button" stylesheets="@../../styles/button.css" text="เพิ่ม">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="confirmButton" layoutX="324.0" layoutY="394.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ตกลง">
+      <Button fx:id="confirmButton" layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ตกลง">
          <font>
             <Font size="20.0" />
          </font>
@@ -37,7 +37,7 @@
             <String fx:value="approve-button" />
          </styleClass>
       </Button>
-      <Button layoutX="194.0" layoutY="394.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ยกเลิก">
+      <Button layoutX="194.0" layoutY="414.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ยกเลิก">
          <font>
             <Font size="20.0" />
          </font>
@@ -46,13 +46,13 @@
             <String fx:value="reject-button" />
          </styleClass>
       </Button>
-      <TextField fx:id="subRoleTextField" layoutX="238.0" layoutY="304.0" prefHeight="47.0" prefWidth="267.0" promptText="ฝ่าย..." style="-fx-background-radius: 10;" visible="false">
+      <TextField fx:id="subRoleTextField" layoutX="238.0" layoutY="340.0" prefHeight="47.0" prefWidth="267.0" promptText="ฝ่าย..." style="-fx-background-radius: 10;" visible="false">
          <font>
             <Font size="20.0" />
          </font>
       </TextField>
       <Label fx:id="subRoleErrorLabel" layoutX="241.0" layoutY="351.0" text="*กรุณากรอกฝ่าย" textFill="RED" visible="false" />
-      <VBox layoutX="140.0" layoutY="117.0">
+      <VBox layoutX="140.0" layoutY="100.0">
          <children>
             <HBox>
                <children>
