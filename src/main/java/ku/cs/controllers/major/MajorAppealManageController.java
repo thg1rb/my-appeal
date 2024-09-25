@@ -50,7 +50,6 @@ public class MajorAppealManageController {
 
     @FXML
     public void initialize() {
-
         user = (DepartmentStaff) FXRouter.getData();
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
@@ -157,8 +156,7 @@ public class MajorAppealManageController {
 
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerDepartment().equals(((DepartmentStaff) user).getDepartment())
-                        && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null")){
+                if (!modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null") && !appeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")){
                     tableView.getItems().add(appeal);
                 }
             }

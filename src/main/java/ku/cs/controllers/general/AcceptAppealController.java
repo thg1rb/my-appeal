@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.collections.ModifyDateList;
+import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.Approver;
 
 import ku.cs.services.datasources.ApproverListFileDatasource;
@@ -30,7 +31,6 @@ public class AcceptAppealController {
     private String selectedStatus;
     private String subStatus;
     private String role;
-
 
     private Datasource<ApproverList> approverDatasource;
     private ApproverList approverList;
@@ -76,12 +76,10 @@ public class AcceptAppealController {
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
             radioButton2.setSelected(true);
         } else if (role.equals("เจ้าหน้าที่คณะ")) {
-            radioButton2.setSelected(false);
+            radioButton2.setVisible(false);
         }
         selectedStatus = status;
         selectedAppeal = appeal;
-
-
     }
 
     public void showTable(ApproverList approverList) {
@@ -111,7 +109,6 @@ public class AcceptAppealController {
         fullNameColumn.setSortable(false);
     }
 
-
     public void onConfirmButtonClick(ActionEvent event){
         if (selectedApprover == null) {
             approverErrorLabel.setVisible(true);
@@ -122,19 +119,19 @@ public class AcceptAppealController {
             System.out.println(selectedStatus);
             selectedAppeal.setStatus(selectedStatus+subStatus);
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
+                System.out.println(modifyDate);
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
+                System.out.println(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).toString());
             } else if (role.equals("เจ้าหน้าที่คณะ")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setFacultyApproveDate(modifyDate);
             }
+            modifyDateListDatasource.writeData(modifyDateList);
             onCloseButtonClick(event);
         }
-
     }
 
     @FXML
     public void onCloseButtonClick(ActionEvent event) {
-        modifyDateListDatasource.writeData(modifyDateList);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
