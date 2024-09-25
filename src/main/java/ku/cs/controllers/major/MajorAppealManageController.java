@@ -15,7 +15,6 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.AppealEditController;
-import ku.cs.controllers.general.SetPasswordController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 
@@ -43,7 +42,6 @@ public class MajorAppealManageController {
     private AppealList departmentAppealList;
     private Datasource<AppealList> datasource;
     private boolean preview = true;
-
     private User user;
 
     @FXML

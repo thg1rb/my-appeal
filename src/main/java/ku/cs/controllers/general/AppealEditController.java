@@ -96,7 +96,6 @@ public class AppealEditController {
 
         updateAppealDetails();
     }
-
     // set ตำแหน่งของผู้ใช้
     public void setRole(User user){
         role = user.getRole();
