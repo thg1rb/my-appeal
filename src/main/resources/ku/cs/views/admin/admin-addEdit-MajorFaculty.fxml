@@ -22,27 +22,27 @@
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text fx:id="nameText" layoutX="48.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ :">
+        <Text fx:id="facultyNameText" layoutX="48.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อคณะ :">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text fx:id="idText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัส :">
+        <Text fx:id="facultyIdText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสคณะ :">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <Text fx:id="belongFacultyText" layoutX="48.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="คณะที่สังกัด :">
+        <Text fx:id="belongFacultyText" layoutX="48.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="คณะที่สังกัด :">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
-        <TextField fx:id="nameTextField" layoutX="242.0" layoutY="173.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
+        <TextField fx:id="facultyNameTextField" layoutX="242.0" layoutY="173.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
             <font>
                 <Font size="18.0" />
             </font>
         </TextField>
-        <TextField fx:id="idTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+        <TextField fx:id="facultyIdTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
             <font>
                 <Font size="18.0" />
             </font>
@@ -62,7 +62,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="292.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
+        <ChoiceBox fx:id="facultyChoiceBox" layoutX="242.0" layoutY="173.0" prefHeight="42.0" prefWidth="307.0" styleClass="choice-box-white" stylesheets="@../../styles/button.css" />
       <Text fx:id="emptyInputText" fill="RED" layoutX="166.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*กรุณากรอกข้อมูลให้ครบถ้วน">
          <font>
             <Font size="14.0" />
@@ -73,5 +73,25 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <Text fx:id="majorNameText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="majorNameTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Text fx:id="majorIdText" layoutX="48.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="majorIdTextField" layoutX="242.0" layoutY="291.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
     </children>
 </AnchorPane>

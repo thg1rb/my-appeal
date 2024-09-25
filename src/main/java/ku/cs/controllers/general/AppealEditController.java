@@ -73,6 +73,7 @@ public class AppealEditController {
 
 
     private Appeal selectedAppeal;
+    private User staff;
     private String role;
     private String selectedStatus;
 
@@ -99,6 +100,7 @@ public class AppealEditController {
 
     // set ตำแหน่งของผู้ใช้
     public void setRole(User user){
+        this.staff = user;
         role = user.getRole();
     }
 
@@ -122,7 +124,7 @@ public class AppealEditController {
             Parent root = fxmlLoader.load();
             AcceptAppealController controller = fxmlLoader.getController();
             GaussianBlur blur = new GaussianBlur(10);
-            controller.setVar(role, selectedStatus, selectedAppeal);
+            controller.setVar(staff, role, selectedStatus, selectedAppeal);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

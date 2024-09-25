@@ -159,6 +159,34 @@ public class UserList {
         return activeUsers;
     }
 
+    public UserList getUsersByFaculty(String faculty){
+        UserList users = new UserList();
+        for (User user : this.users) {
+            if (user instanceof FacultyStaff && ((FacultyStaff) user).getFaculty().equals(faculty)) {
+                users.addUser(user);
+            }else if (user instanceof Student && ((Student) user).getFaculty().equals(faculty)) {
+                users.addUser(user);
+            }
+        }
+        return users;
+    }
+
+    public UserList getUsersByDepartment(String department){
+        UserList users = new UserList();
+        for (User user : this.users) {
+            if (user instanceof DepartmentStaff) {
+                if (((DepartmentStaff) user).getDepartment().equals(department)) {
+                    users.addUser(user);
+                }
+            }else if ((user instanceof Student)) {
+                if (((Student) user).getDepartment().equals(department)) {
+                    users.addUser(user);
+                }
+            }
+        }
+        return users;
+    }
+
     public List<User> getUsers() {
         return users;
     }

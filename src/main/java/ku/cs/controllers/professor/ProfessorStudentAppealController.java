@@ -125,7 +125,7 @@ public class ProfessorStudentAppealController {
         tableView.getItems().clear();
         for (User eachUser : studentList.getUsers()) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if ((((Advisor)user).getAdvisorId()).equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
+                if ((user.getUuid()).equals(((Student)eachUser).getAdvisorUUID()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
                     tableView.getItems().add(appeal);
                 }
             }
