@@ -59,17 +59,18 @@ public class AcceptAppealController {
         modifyDateList = modifyDateListDatasource.readData();
 
         finishHereRadioButton.setSelected(true);
+        subStatus = " | " + finishHereRadioButton.getText();
         toggleGroup = new ToggleGroup();
         finishHereRadioButton.setToggleGroup(toggleGroup);
         moreOperationRadioButton.setToggleGroup(toggleGroup);
 
-        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                RadioButton selectedRadioButton = (RadioButton) newValue;
-                System.out.println(selectedRadioButton.getText());
-                subStatus = " | " + selectedRadioButton.getText();
-            }
-        });
+//        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                RadioButton selectedRadioButton = (RadioButton) newValue;
+//                System.out.println(selectedRadioButton.getText());
+//                subStatus = " | " + selectedRadioButton.getText();
+//            }
+//        });
         approverTableView.setRowFactory(v -> {
             TableRow<Approver> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -146,10 +147,10 @@ public class AcceptAppealController {
             approverErrorLabel.setVisible(true);
         }
         else {
+            subStatus = ((RadioButton)toggleGroup.getSelectedToggle()).getText();
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
-            System.out.println(selectedStatus);
-            selectedAppeal.setStatus(selectedStatus+subStatus);
+            selectedAppeal.setStatus(selectedStatus + " | "+subStatus);
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {

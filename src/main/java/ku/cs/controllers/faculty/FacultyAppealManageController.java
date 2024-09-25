@@ -107,7 +107,7 @@ public class FacultyAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList, false);
+            showTable(appealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
