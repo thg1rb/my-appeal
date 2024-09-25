@@ -108,7 +108,7 @@ public class StudentCreateAppealController {
         initializeChoiceBox();
         initializeDatePicker();
 
-        if (((Student)user).getAdvisorUUID().equals("null")) {
+        if (((Student)user).getAdvisorUUID() == null) {
             noAdvisorAlertPane.setVisible(true);
             backgroundAlertPane.setVisible(true);
             return ;
