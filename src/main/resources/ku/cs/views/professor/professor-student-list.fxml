@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -8,10 +9,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.professor.ProfessorStudentListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.professor.ProfessorStudentListController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <Text layoutX="270.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="นิสิตในที่ปรึกษาของท่าน">
+      <Text layoutX="270.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="นิสิตในที่ปรึกษาของท่าน">
          <font>
             <Font size="36.0" />
          </font>
@@ -27,13 +28,17 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="searchTextField" layoutX="1086.0" layoutY="114.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาจาก" styleClass="search-text-field" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="searchTextField" layoutX="1086.0" layoutY="114.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาจาก" stylesheets="@../../styles/text-field.css">
          <font>
             <Font size="20.0" />
-         </font></TextField>
+         </font>
+         <styleClass>
+            <String fx:value="search-text-field" />
+            <String fx:value="label-regular" />
+         </styleClass></TextField>
       <Pane layoutX="272.0" layoutY="662.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0 0 20 20; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20;">
          <children>
-            <Text fx:id="totalText" layoutX="32.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="จำนวนคำร้องของนิสิตในที่ปรึกษาทั้งหมด">
+            <Text fx:id="totalText" layoutX="32.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-regular" text="จำนวนคำร้องของนิสิตในที่ปรึกษาทั้งหมด">
                <font>
                   <Font size="20.0" />
                </font>

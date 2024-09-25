@@ -73,6 +73,7 @@ public class AppealEditController {
 
 
     private Appeal selectedAppeal;
+    private User staff;
     private String role;
     private String selectedStatus;
 
@@ -95,10 +96,10 @@ public class AppealEditController {
         this.selectedAppeal = selectedAppeal;
         updateAppealDetails();
     }
-
     // set ตำแหน่งของผู้ใช้
     public void setRole(User user){
-        this.role = user.getRole();
+        this.staff = user;
+        role = user.getRole();
     }
 
     public void setMode (boolean mode) {
@@ -121,7 +122,7 @@ public class AppealEditController {
             Parent root = fxmlLoader.load();
             AcceptAppealController controller = fxmlLoader.getController();
             GaussianBlur blur = new GaussianBlur(10);
-            controller.setVar(role, selectedStatus, selectedAppeal);
+            controller.setVar(staff, role, selectedStatus, selectedAppeal);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -244,7 +245,6 @@ public class AppealEditController {
         stage.close();
     }
 
-    // อนุมัติคำร้องเพื่อส่งต่อให้หัวหน้าภาควิชา
     @FXML
     public void onConfirmButtonClick(ActionEvent event) {
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
@@ -261,7 +261,11 @@ public class AppealEditController {
     // ปิด pop-up (ของหน้าระบุเหตุผลปฏิเสธคำร้อง)
     @FXML
     public void onCloseRejectReasonButtonClick(ActionEvent event) {
-        rejectReasonAlertPane.setVisible(true);
+        rejectReasonAlertPane.setVisible(false);
+    }
+    @FXML
+    public void onRejectButtonClick(ActionEvent event) {
+        rejectReasonAlertPane.setVisible(true); // Ensure this is executed
     }
 
     // ยืนยันการปฏิเสธ (หลังจากระบุเหตุผลเรียบร้อย)
@@ -285,7 +289,6 @@ public class AppealEditController {
             selectedAppeal.setRejectedReason(rejectReason);
             if (role.equals("เจ้าหน้าที่ภาควิชา")){
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
-                System.out.println(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).toString());
             }
             else if (role.equals("เจ้าหน้าาที่คณะ")){
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setFacultyApproveDate(modifyDate);

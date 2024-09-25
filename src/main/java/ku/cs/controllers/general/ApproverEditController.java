@@ -55,7 +55,6 @@ public class ApproverEditController {
         lastNameTextField.setText(approver.getLastName());
     }
 
-
     public void setRole(User user) {
         role = user.getRole();
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
@@ -65,7 +64,6 @@ public class ApproverEditController {
             roleComboBox.getItems().addAll("คณบดี", "รองคณบดี", "รักษาการณ์แทนคณบดี");
         }
     }
-
 
     public void setMode(boolean addMode, Approver approver, User user, ApproverList approvers) {
         this.user = user;

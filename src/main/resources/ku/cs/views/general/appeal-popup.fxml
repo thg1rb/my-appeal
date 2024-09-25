@@ -85,7 +85,7 @@
             <Font size="24.0" />
          </font>
       </Button>
-      <Button fx:id="rejectButton" layoutX="1065.0" layoutY="635.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ปฏิเสธ">
+      <Button fx:id="rejectButton" layoutX="1065.0" layoutY="635.0" mnemonicParsing="false" onAction="#onRejectButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ปฏิเสธ">
          <font>
             <Font size="24.0" />
          </font>

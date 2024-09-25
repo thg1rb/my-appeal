@@ -148,12 +148,12 @@ public class MajorNisitManageController {
             Parent popuproot = fxmlLoader.load();
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
+            controller.setUser(((DepartmentStaff)user) , studentList);
             if(!addMode){
                 controller.setMode(addMode);
                 controller.setNisit(selectedNisit);
             }
             else{
-                controller.setUser(((DepartmentStaff)user) , studentList);
                 controller.setMode(addMode);
             }
 

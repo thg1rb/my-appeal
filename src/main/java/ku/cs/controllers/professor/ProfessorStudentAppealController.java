@@ -40,6 +40,8 @@ public class ProfessorStudentAppealController {
     private AppealList appealList;
     private UserList studentList;
 
+    private Student selectedStudent;
+
     @FXML
     private void initialize() {
         user = (User) FXRouter.getData();
@@ -95,16 +97,16 @@ public class ProfessorStudentAppealController {
 
     // ตารางแสดงคำร้องของนิสิตในที่ปรึกษาทั้งหมด
     private void showTable(AppealList appealList, UserList studentList) {
-        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("Date/Time");
+        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันที่สร้างคำร้อง");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
-        TableColumn<Appeal, String> type = new TableColumn<>("Appeal Type");
+        TableColumn<Appeal, String> type = new TableColumn<>("ประเภทของคำร้อง");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        TableColumn<Appeal, String> ownerIdCol = new TableColumn<>("ID");
+        TableColumn<Appeal, String> ownerIdCol = new TableColumn<>("รหัสนิสิต");
         ownerIdCol.setCellValueFactory(new PropertyValueFactory<>("ownerId"));
 
-        TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("Fullname");
+        TableColumn<Appeal, String> ownerFullNameCol = new TableColumn<>("ชื่อ-สกุล");
         ownerFullNameCol.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
         dateTimeCol.setComparator(new DateTimeService());
@@ -123,7 +125,7 @@ public class ProfessorStudentAppealController {
         tableView.getItems().clear();
         for (User eachUser : studentList.getUsers()) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if ((((Advisor)user).getAdvisorId()).equals(((Student)eachUser).getAdvisor()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
+                if ((user.getUuid()).equals(((Student)eachUser).getAdvisorUUID()) && ((Student)eachUser).getStudentId().equals(appeal.getOwnerId()) && appeal.getStatus().equals("ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา")) {
                     tableView.getItems().add(appeal);
                 }
             }
