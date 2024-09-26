@@ -188,16 +188,17 @@ public class AppealEditController {
         advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
         advisorApproveDateLabel.setStyle(createColor);
 
-        if (selectedAppeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ")) {
+        if (selectedAppeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ"))  {
             departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(rejectColor);
 
             facultyApproveDateLabel.setText("คำร้องถูกปฏิเสธ");
             facultyApproveDateLabel.setStyle(rejectColor);
-        }
-        else {
+        } else if (selectedAppeal.getStatus().equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")) {
+            facultyApproveDateLabel.setText("คำร้องถูกปฏิเสธ");
+            facultyApproveDateLabel.setStyle(rejectColor);
+        } else {
             if (!modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate().equals("null")){
-                System.out.println("เอ้า");
                 departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
                 departmentApproveDateLabel.setStyle(createColor);
             }
