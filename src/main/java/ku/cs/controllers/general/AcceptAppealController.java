@@ -65,13 +65,6 @@ public class AcceptAppealController {
         finishHereRadioButton.setToggleGroup(toggleGroup);
         moreOperationRadioButton.setToggleGroup(toggleGroup);
 
-//        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                RadioButton selectedRadioButton = (RadioButton) newValue;
-//                System.out.println(selectedRadioButton.getText());
-//                subStatus = " | " + selectedRadioButton.getText();
-//            }
-//        });
         approverTableView.setRowFactory(v -> {
             TableRow<Approver> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
