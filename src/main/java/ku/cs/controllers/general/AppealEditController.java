@@ -197,9 +197,9 @@ public class AppealEditController {
         }
         else if (selectedAppeal.getStatus().equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")) {
             departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
-            departmentApproveDateLabel.setStyle(rejectColor);
+            departmentApproveDateLabel.setStyle(createColor);
 
-            facultyApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate());
+            facultyApproveDateLabel.setText("คำร้องถูกปฏิเสธ");
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else {
