@@ -1,17 +1,21 @@
 package ku.cs.controllers.general;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
-import ku.cs.services.Datasource;
+import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
-import ku.cs.services.UserListHardCodeDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.UserListDatasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LoginController {
@@ -19,17 +23,26 @@ public class LoginController {
     @FXML private TextField giveUsernameTextField;
     @FXML private TextField givePasswordTextField;
     @FXML private Label errorLabel;
+    @FXML private Button loginButton;
 
-    private Datasource<UserList> userListDatasource;
     private UserList userList;
     private User user;
 
     @FXML
     public void initialize() {
-//        userListDatasource = new UserListFileDatasource("data", "user.csv");
-        userListDatasource = FXRouter.getData() == null ? new UserListFileDatasource("data", "user.csv") : (UserListFileDatasource) FXRouter.getData();
-        userList = userListDatasource.readData();
+        userList = UserListDatasource.readAllUsers().getActiveUser();
+
         errorLabel.setText("");
+
+        giveUsernameTextField.setOnKeyPressed(this::handleKeyPressed);
+        givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
+    }
+
+    // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            loginButton.fire();
+        }
     }
 
     // ไปที่หน้าประจำของแต่ละตำแหน่ง
@@ -44,8 +57,9 @@ public class LoginController {
             errorLabel.setText("ชื่อผู้ใช้งานไม่ถูกต้อง");
         }
         else{
-            if (!user.isBan()){
-                if (user.validatePassword(password)) {
+            if (user.validatePassword(password)){
+                if (user.hasAccessibility()) {
+                    updateLoginTime(user);
                     switch (user.getRole()){
                         case "ผู้ดูแลระบบ":
                             try {
@@ -84,12 +98,24 @@ public class LoginController {
                             break;
                     }
                 }else{
-                    errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
+                    errorLabel.setText("บัญชีของท่านถูกระงับการใช้งาน");
                 }
             }else{
-                errorLabel.setText("บัญชีของท่านถูกระงับการใช้งาน");
+                errorLabel.setText("รหัสผ่านไม่ถูกต้อง");
             }
         }
+    }
+
+    private void updateLoginTime(User user){
+        String roleUpdated = user.getRoleInEnglish();
+        Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
+
+        UserList userList = userUpdatedDatasource.readData();
+        User updateUser = userList.findUserByUUID(user.getUuid());
+
+        user.setLoginDate(DateTimeService.updateTime());
+        updateUser.setLoginDate(DateTimeService.updateTime());
+        userUpdatedDatasource.writeData(userList);
     }
 
     // ไปที่หน้าลงทะเบียน (ข้อมูลส่วนบุคคล)

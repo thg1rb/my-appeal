@@ -1,55 +1,29 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
+
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
+
 import ku.cs.services.FXRouter;
 
-import java.io.IOException;
-
 public class AdminDashboardController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     private User user;
 
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
-    }
-
-    @FXML
-    public void onUserButtonClicked() {
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
         try {
-            FXRouter.goTo("admin-user-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onFacultyButtonClicked() {
-        try {
-            FXRouter.goTo("admin-faculty-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onStaffButtonClicked() {
-        try {
-            FXRouter.goTo("admin-staff-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
             throw new RuntimeException(e);
         }
     }

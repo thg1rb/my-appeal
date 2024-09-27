@@ -1,5 +1,34 @@
+/* Text Field */
+
 .text-field {
+    -fx-cursor: text;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
-    -fx-border-color: grey;
+}
+
+.search-text-field {
+    -fx-alignment: center-right;
+}
+
+/* Text Area */
+
+.text-area {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-font-size: 20;
+}
+
+.text-area .content {
+    -fx-background-color: white;
+}
+
+/* Date Picker */
+
+.date-picker > .text-field {
+    -fx-background-radius: 0;
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-base: #303337 ;
+    -fx-mark-highlight-color: -fx-light-text-color ;
 }

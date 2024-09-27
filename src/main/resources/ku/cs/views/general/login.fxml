@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -11,42 +13,49 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #265252;" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.LoginController">
    <children>
       <Pane layoutX="120.0" layoutY="106.0" prefHeight="625.0" prefWidth="1200.0" style="-fx-background-color: #F2F2F2; -fx-background-radius: 40;">
          <children>
-            <Line endX="-100.0" endY="-310.0" layoutX="853.0" layoutY="310.0" startX="-100.0" startY="314.99993896484375" stroke="#00000080" />
-            <TextField fx:id="giveUsernameTextField" layoutX="180.0" layoutY="192.0" prefHeight="55.0" prefWidth="410.0" promptText="ชื่อผู้ใช้งาน" stylesheets="@../../styles/text-field.css">
+            <Line endX="-100.0" endY="-310.0" layoutX="853.0" layoutY="310.0" startX="-100.0" startY="314.99993896484375" stroke="#0000004d" />
+            <TextField fx:id="giveUsernameTextField" layoutX="180.0" layoutY="192.0" prefHeight="55.0" prefWidth="410.0" promptText="ชื่อผู้ใช้งาน" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
-            <Label layoutX="308.0" layoutY="111.0" text="เข้าสู่ระบบ">
+            <Label layoutX="308.0" layoutY="111.0" styleClass="label-bold" text="เข้าสู่ระบบ">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Label layoutX="170.0" layoutY="510.0" text="ยังไม่มีบัญชีใช่หรือไม่?">
+            <Label layoutX="170.0" layoutY="510.0" styleClass="label-medium" text="ยังไม่มีบัญชีใช่หรือไม่?">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" text="กดเพื่อลงทะเบียน" textFill="#265252">
+            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" styleClass="label-medium" text="กดเพื่อลงทะเบียน" textFill="#265252">
                <font>
                   <Font size="24.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#onLoginButtonClick" styleClass="login-button" stylesheets="@../../styles/button.css" text="เข้าสู่ระบบ">
+            <Button fx:id="loginButton" layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#onLoginButtonClick" stylesheets="@../../styles/button.css" text="เข้าสู่ระบบ">
                <font>
                   <Font size="24.0" />
                </font>
+               <styleClass>
+                  <String fx:value="login-button" />
+                  <String fx:value="label-medium" />
+               </styleClass>
             </Button>
             <Label fx:id="errorLabel" layoutX="181.0" layoutY="334.0" text="*ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <PasswordField fx:id="givePasswordTextField" layoutX="180.0" layoutY="272.0" prefHeight="55.0" prefWidth="410.0" promptText="รหัสผ่าน" stylesheets="@../../styles/text-field.css">
+            <PasswordField fx:id="givePasswordTextField" layoutX="180.0" layoutY="272.0" prefHeight="55.0" prefWidth="410.0" promptText="รหัสผ่าน" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
                <font>
                   <Font size="24.0" />
                </font>

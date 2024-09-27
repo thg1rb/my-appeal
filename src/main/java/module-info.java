@@ -4,6 +4,8 @@ module ku.cs {
     requires bcrypt;
     requires java.xml.crypto;
     requires java.desktop;
+    requires java.sql;
+    requires java.management;
 
     opens ku.cs.cs211671project to javafx.fxml;
     exports ku.cs.cs211671project;
@@ -32,9 +34,20 @@ module ku.cs {
     exports ku.cs.models.persons;
     opens ku.cs.models.persons to javafx.base;
 
-    exports ku.cs.models.appeal;
-    opens ku.cs.models.appeal to javafx.base;
+    exports ku.cs.models.appeals;
+    opens ku.cs.models.appeals to javafx.base;
 
     exports ku.cs.models.collections to javafx.fxml;
     opens ku.cs.models.collections to javafx.base;
+
+    exports ku.cs.services.exceptions to javafx.fxml;
+    opens ku.cs.services.exceptions to javafx.base;
+
+    exports ku.cs.services to javafx.fxml;
+    opens ku.cs.services to javafx.base;
+
+    exports ku.cs.services.fileuploaders to javafx.fxml;
+    opens ku.cs.services.fileuploaders to javafx.base;
+    exports ku.cs.services.datasources to javafx.fxml;
+    opens ku.cs.services.datasources to javafx.base;
 }

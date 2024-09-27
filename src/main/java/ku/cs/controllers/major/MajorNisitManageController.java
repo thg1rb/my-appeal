@@ -6,64 +6,82 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.models.appeal.Appeal;
-import ku.cs.models.collections.StudentList;
+import ku.cs.models.persons.Advisor;
+import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.models.persons.User;
-import ku.cs.services.StudentRosterListFileDatasource;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.UserListDatasource;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MajorNisitManageController {
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TextField searchTextField;
 
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
-    @FXML private Label topicLabel;
     @FXML private TableView<Student> nisitTableView;
 
-    private StudentList studentRoster;
-    private Datasource<StudentList> rosterDatasource;
-    private Datasource<StudentList> datasource;
-    private Student selectedNisit;
+    private UserList studentList;
+    private Datasource<UserList> datasource;
+    private User selectedNisit;
     private User user;
     public boolean addMode = false;
 
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (DepartmentStaff) FXRouter.getData();
 
-//        usernameLabel.setText(user.getUsername());
-//        roleLabel.setText(user.getRole());
-        datasource = new StudentRosterListFileDatasource("data", "student-roster.csv");
-        studentRoster = datasource.readData();
-        user = (User)FXRouter.getData();
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
-        showTable(studentRoster);
-        nisitTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
-            @Override
-            public void changed(ObservableValue<? extends Student> observableValue, Student oldValue, Student newValue) {
-                if (newValue != null) {
-                    selectedNisit = newValue;
-                    showPopUp(addMode);
-                }
+
+        datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = datasource.readData();
+
+
+        showTable(studentList);
+        // ช่องค้นหา
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("^[a-zA-zก-๙0-9]+$") && !newValue.isEmpty()) {
+                showSearchTable(studentList, newValue);
+            }
+            else if (newValue.isEmpty() || newValue.isBlank()) {
+                showTable(studentList);
             }
         });
+
+        nisitTableView.setOnMouseClicked(event ->{
+            selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
+            addMode = false;
+            showPopUp(addMode);
+        });
+
     }
-    public void onAddButtonClick(){
+
+    public void addNisitOnButtonClick(){
         addMode = true;
         showPopUp(addMode);
     }
-    public void showTable(StudentList studentRoster){
+
+    public void showTable(UserList studentList) {
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
         TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -85,11 +103,41 @@ public class MajorNisitManageController {
         emailColumn.setSortable(false);
 
         nisitTableView.getItems().clear();
-        if(studentRoster != null){
-            for(Student nisit : studentRoster.getStudents()){
-                if(nisit.getMajor().equals(user.getMajor())){
-                    nisitTableView.getItems().add(nisit);
+        if (studentList != null) {
+            for (User nisit : studentList.getUsers()) {
+                if (((Student)nisit).getDepartment().equals(((DepartmentStaff)user).getDepartment())) {
+                    nisitTableView.getItems().add((Student) nisit);
                 }
+            }
+        }
+    }
+    public void showSearchTable(UserList studentList, String searchText) {
+        TableColumn<Student, String> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+
+        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<Student, String> emailColumn = new TableColumn<>("Email");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        nisitTableView.getColumns().clear();
+        nisitTableView.getColumns().add(idColumn);
+        nisitTableView.getColumns().add(nameColumn);
+        nisitTableView.getColumns().add(emailColumn);
+
+        idColumn.setPrefWidth(367);
+        nameColumn.setPrefWidth(366);
+        emailColumn.setPrefWidth(366);
+
+        idColumn.setSortable(false);
+        nameColumn.setSortable(false);
+        emailColumn.setSortable(false);
+
+        nisitTableView.getItems().clear();
+        for (User nisit : studentList.getUsers()) {
+            if (nisit.getRole().equals("นักศึกษา") && (nisit.getUsername().contains(searchText) || nisit.getFullName().contains(searchText) || ((Student) nisit).getStudentId().contains(searchText))) {
+                nisitTableView.getItems().add((Student)nisit);
             }
         }
     }
@@ -100,12 +148,12 @@ public class MajorNisitManageController {
             Parent popuproot = fxmlLoader.load();
             MajorNisitEditPopupController controller = fxmlLoader.getController();
 
+            controller.setUser(((DepartmentStaff)user) , studentList);
             if(!addMode){
-                controller.setNisit(selectedNisit, user);
                 controller.setMode(addMode);
+                controller.setNisit(selectedNisit);
             }
             else{
-                controller.setUser(user, studentRoster);
                 controller.setMode(addMode);
             }
 
@@ -117,41 +165,12 @@ public class MajorNisitManageController {
 
             popupStage.showAndWait();
 
-            datasource.writeData(studentRoster);
-            studentRoster = datasource.readData();
-
-            showTable(studentRoster);
+            datasource.writeData(studentList);
+            studentList = datasource.readData();
+            showTable(studentList);
         }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void onApproverManageButtonClick() {
-        try {
-            FXRouter.goTo("major-approver-manage", user);
-        } catch (IOException e) {
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-    @FXML
-    protected void onAppealManageButtonClick() {
-        try {
-            FXRouter.goTo("major-appeal-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onLogoutButtonClick(){
-        try{
-            FXRouter.goTo("login");
-        }
-        catch(IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
 }

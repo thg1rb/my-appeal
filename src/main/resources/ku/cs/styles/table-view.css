@@ -9,11 +9,24 @@
     -fx-background-color: transparent;
 }
 
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
 .table-view .column-header{
     -fx-background-color: white;
     -fx-border-color: transparent transparent lightgrey transparent;
     -fx-background-radius: 0 20px 0 0;
     -fx-border-radius: 0 20px 0 0;
+    -fx-pref-height: 50;
+}
+
+/* table-view without tab-pane */
+.table-view-without-tab-pane .column-header {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
 }
 
 .table-view .column-header .label {
@@ -22,15 +35,29 @@
     -fx-font-size: 25px;
 }
 
+.table-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #265252;
+    -fx-background-radius: 100;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
 /* สไตล์สำหรับแถวใน TableView */
 .table-row-cell {
     -fx-background-color: #f2f2f2;
     -fx-border-width: 0 1px 1px 0;
     -fx-border-color: grey;
+    -fx-pref-height: 80;
 }
 
 .table-row-cell:hover{
-    -fx-background-color: grey;
+    -fx-background-color: lightgrey;
 }
 
 .table-row-cell:selected {
@@ -46,4 +73,25 @@
 
 .table-column .table-cell {
     -fx-alignment: CENTER; /* จัดข้อมูลในเซลล์ให้อยู่ตรงกลาง */
+}
+
+.mini-table-view .table-row-cell{
+    -fx-background-color: #f2f2f2;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-border-color: grey;
+    -fx-pref-height: 40;
+}
+.mini-table-view .table-row-cell:hover{
+    -fx-background-color: lightgrey;
+    -fx-text-fill: black;
+}
+.mini-table-view .table-row-cell:selected{
+    -fx-text-fill: black;
+}
+
+.mini-table-view .column-header{
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
 }

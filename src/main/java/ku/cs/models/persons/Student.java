@@ -1,74 +1,99 @@
 package ku.cs.models.persons;
 
-public class Student extends Human {
-    private String id;
+import java.util.UUID;
+
+public class Student extends User {
+    private String studentId;
     private String email;
     private String faculty;
-    private String major;
+    private String department;
+    private UUID advisorUUID;
 
-    private String advisor;
+    private boolean registered;
 
-    public Student(String id, String email, String firstName, String lastName, User adder) {
-        super(firstName, lastName);
-        this.id = id;
-        this.email = email;
-        this.faculty = adder.getFaculty();
-        this.major = adder.getMajor();
-    }
-
-    public Student(String id, String email, String firstName, String lastName, String advisor,User adder) {
-        this(id, email, firstName, lastName, adder);
-        this.advisor = advisor;
-    }
-
-    //Constructor for create Object from file
-    public Student(String id, String email, String firstName, String lastName, String faculty, String major, String advisor) {
-        super(firstName, lastName);
-        this.id = id;
+    //Constructor
+    // without advisor init
+    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department) {
+        super("นักศึกษา", firstName, lastName);
+        this.studentId = studentId;
         this.email = email;
         this.faculty = faculty;
-        this.major = major;
-        this.advisor = advisor;
+        this.department = department;
+        this.registered = false;
     }
-    public void setID(String id) {
-        this.id = id;
+    // with advisor init
+    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, UUID advisorUUID) {
+        this(firstName, lastName, studentId, email, faculty, department);
+        this.advisorUUID = advisorUUID;
+    }
+    //Constructor for reading file
+    public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisorUUID, boolean registered) {
+        super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
+        this.studentId = StudentId;
+        this.email = email;
+        this.faculty = faculty;
+        this.department = department;
+        if (advisorUUID == null || advisorUUID.equals("null")){
+            this.advisorUUID = null;
+        }else {
+            this.advisorUUID = UUID.fromString(advisorUUID);
+        }
+        this.registered = registered;
     }
 
+    public void registration(String username, String password){
+        setUsername(username);
+        setPasswordHash(password);
+        setRegistered();
+    }
+
+    //Setter
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public void setAdvisor(String advisor) {
-        this.advisor = advisor;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+    public void setAdvisor(UUID advisor) {
+        this.advisorUUID = advisor;
+    }
+    private void setRegistered() {
+        this.registered = true;
     }
 
-    public String getId() {
-        return id;
+    //Getter
+    public String getStudentId() {
+        return studentId;
     }
-
     public String getEmail() {
         return email;
     }
-
     public String getFaculty() {
         return faculty;
     }
-
-    public String getMajor() {
-        return major;
+    public String getDepartment() {
+        return department;
     }
-
-    public String getAdvisor() {
-        return advisor;
+    public UUID getAdvisorUUID() {
+        return advisorUUID;
+    }
+    public boolean isRegistered() {
+        return registered;
     }
 
     @Override
     public String toString() {
-        return  getFirstName() + "," +
-                getLastName() + "," +
-                id + "," +
-                email + "," +
-                faculty + "," +
-                major + "," + advisor;
+        return super.toString() +","+ studentId + "," + email + "," + faculty + "," + department + "," + advisorUUID + "," + registered;
+    }
+
+    @Override
+    public String getRoleInEnglish() {
+        return "student";
     }
 }

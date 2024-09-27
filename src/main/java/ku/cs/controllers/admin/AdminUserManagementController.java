@@ -1,25 +1,32 @@
 package ku.cs.controllers.admin;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
-import ku.cs.services.Datasource;
+import ku.cs.services.DateTimeService;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.datasources.UserListDatasource;
 
-import java.io.IOException;
+import java.io.File;
+import java.util.HashMap;
 
 public class AdminUserManagementController {
-    @FXML private Label usernameLabel;
-    @FXML private Label roleLabel;
+    @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
     @FXML private TableView<User> tableView;
@@ -27,214 +34,172 @@ public class AdminUserManagementController {
     @FXML private TextField searchTextField;
 
     private User user;
-    private Datasource<UserList> usersDatasource;
     private UserList userList;
+
+    private HashMap<String, Datasource<UserList> > datasourceMap;
+    private HashMap<String, UserList> userInSystemMap;
+
+    private String selectedTab;
+    private String searchText;
 
     @FXML
     public void initialize() {
-        user = (User) FXRouter.getData();
+        user = (AdminUser) FXRouter.getData();
 
-        usernameLabel.setText(user.getUsername());
-        roleLabel.setText(user.getRole());
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
-        usersDatasource = new UserListFileDatasource("data", "user.csv");
-        userList = usersDatasource.readData();
+        initMap();
+        selectedTab = tabPane.getSelectionModel().getSelectedItem().getText();
+        searchText = searchTextField.getText();
 
-        showTable(userList);
+        showTable(userInSystemMap.get(selectedTab), searchTextField.getText());
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable-> {
-            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                showTable(userList);
-            } else {
-                showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
-            }
+            selectedTab = tabPane.getSelectionModel().getSelectedItem().getText();
+            showTable(userInSystemMap.get(selectedTab), searchTextField.getText());
         });
 
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("^[a-zA-Zก-๙0-9]+$") && !newValue.isEmpty()) {
-                tabPane.getSelectionModel().select(0);
-                showSearchTable(userList, newValue);
-            }else if (newValue.isEmpty() || newValue.isBlank()) {
-                if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
-                    showTable(userList);
-                }else {
-                    showTable(userList, tabPane.getSelectionModel().getSelectedItem().getText());
-                }
-            }
+            searchText = newValue;
+            showTable(userInSystemMap.get(selectedTab), searchText);
         });
     }
 
-    private void showTable(UserList userList){
-        TableColumn<User, String> imgCol = new TableColumn<>("Profile");
-        imgCol.setCellValueFactory(new PropertyValueFactory<>("path"));
-
-        TableColumn<User, String> nameCol = new TableColumn<>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User, String> roleCol = new TableColumn<>("Role");
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
-
-        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
-        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
-
-        TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
-        banCol.setCellValueFactory(new PropertyValueFactory<>("ban"));
-
-        tableView.getColumns().clear();
-        tableView.getColumns().add(imgCol);
-        tableView.getColumns().add(nameCol);
-        tableView.getColumns().add(usernameCol);
-        tableView.getColumns().add(roleCol);
-        tableView.getColumns().add(loginDateCol);
-
-        tableView.getColumns().add(banCol);
-
-        imgCol.setPrefWidth(184);
-        nameCol.setPrefWidth(183);
-        usernameCol.setPrefWidth(183);
-        roleCol.setPrefWidth(183);
-        loginDateCol.setPrefWidth(183);
-        banCol.setPrefWidth(183);
-
-        tableView.getItems().clear();
-        for (User user : userList.getUsers()){
-            tableView.getItems().add(user);
-        }
-    }
-
-    private void showTable(UserList userList, String role){
-        TableColumn<User, String> imgCol = new TableColumn<>("Profile");
-        imgCol.setCellValueFactory(new PropertyValueFactory<>("path"));
-
-        TableColumn<User, String> nameCol = new TableColumn<>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
-        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
-
-        TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
-        banCol.setCellValueFactory(new PropertyValueFactory<>("ban"));
-
-        tableView.getColumns().clear();
-        tableView.getColumns().add(imgCol);
-        tableView.getColumns().add(nameCol);
-        tableView.getColumns().add(usernameCol);
-        tableView.getColumns().add(loginDateCol);
-        tableView.getColumns().add(banCol);
-
-        imgCol.setPrefWidth(220);
-        nameCol.setPrefWidth(220);
-        usernameCol.setPrefWidth(220);
-        loginDateCol.setPrefWidth(220);
-        banCol.setPrefWidth(220);
-
-        tableView.getItems().clear();
-        for (User user : userList.getUsers()){
-            if (user.getRole().equals(role)){
-                tableView.getItems().add(user);
+    private void showTable(UserList userList, String searchText){
+        basicInfoColCreator(!selectedTab.equals("ทั้งหมด"));
+        if (!searchText.isEmpty()) {
+            for (User user : userList.getUsers()) {
+                if (user.getFullName().contains(searchText)) {
+                    tableView.getItems().add(user);
+                }
             }
-        }
-    }
-
-    private void showSearchTable(UserList userList, String searchText){
-        TableColumn<User, String> imgCol = new TableColumn<>("Profile");
-        imgCol.setCellValueFactory(new PropertyValueFactory<>("path"));
-
-        TableColumn<User, String> nameCol = new TableColumn<>("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        TableColumn<User, String> usernameCol = new TableColumn<>("Username");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User, String> roleCol = new TableColumn<>("Role");
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
-
-        TableColumn<User, String> loginDateCol = new TableColumn<>("Last Login");
-        loginDateCol.setCellValueFactory(new PropertyValueFactory<>("loginDate"));
-
-        TableColumn<User, String> banCol = new TableColumn<>("Accessibility");
-        banCol.setCellValueFactory(new PropertyValueFactory<>("ban"));
-
-        tableView.getColumns().clear();
-        tableView.getColumns().add(imgCol);
-        tableView.getColumns().add(nameCol);
-        tableView.getColumns().add(usernameCol);
-        tableView.getColumns().add(roleCol);
-        tableView.getColumns().add(loginDateCol);
-        tableView.getColumns().add(banCol);
-
-        imgCol.setPrefWidth(184);
-        nameCol.setPrefWidth(183);
-        usernameCol.setPrefWidth(183);
-        roleCol.setPrefWidth(183);
-        loginDateCol.setPrefWidth(183);
-        banCol.setPrefWidth(183);
-
-        tableView.getItems().clear();
-        for (User user : userList.getUsers()){
-            if (user.getFullName().contains(searchText) || user.getId().contains(searchText)){
+        }else{
+            for (User user : userList.getUsers()) {
                 tableView.getItems().add(user);
             }
         }
 
+        tableView.sort();
+        for (TableColumn<?, ?> col : tableView.getColumns()) {
+            col.setSortable(false);
+        }
     }
 
-    private void saveData(){
-        usersDatasource.writeData(userList);
+    private void basicInfoColCreator(boolean roleSpecific) {
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
+        imgCol.setCellValueFactory(cellData ->{
+            User user = cellData.getValue();
+            Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(60);
+            return new SimpleObjectProperty<>(imageView);
+        });
+
+        TableColumn<User, String> nameCol = new TableColumn<>("ชื่อ-สกุล");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        TableColumn<User, String> usernameCol = new TableColumn<>("ชื่อผู้ใช้");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<User, String> roleCol = new TableColumn<>("ตำแหน่ง");
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+
+        TableColumn<User, String> loginDateCol = new TableColumn<>("ล็อคอินล่าสุด");
+        loginDateCol.setCellValueFactory(cellData ->{
+            String loginDate = cellData.getValue().getLoginDate();
+            if (loginDate == null || loginDate.isEmpty() || loginDate.equals("null")) {
+                return new SimpleStringProperty("ไม่เคยเข้าใช้งาน");
+            } else {
+                return new SimpleStringProperty(loginDate);
+            }
+        });
+
+        TableColumn<User, String> banCol = new TableColumn<>("สิทธิ์ในการใช้งาน");
+        banCol.setCellValueFactory(cellData -> {
+            User item = cellData.getValue();
+            String value = item.getAccesibility();
+            return new SimpleStringProperty(value);
+        });
+
+        //Add col
+        tableView.getColumns().clear();
+        tableView.getColumns().add(imgCol);
+        tableView.getColumns().add(nameCol);
+        tableView.getColumns().add(usernameCol);
+        if (!roleSpecific) {
+            tableView.getColumns().add(roleCol);
+        }
+        tableView.getColumns().add(loginDateCol);
+        tableView.getColumns().add(banCol);
+
+        //Resize Col
+        int colWidth = roleSpecific ? 220 : 183;
+        imgCol.setPrefWidth(colWidth-60);
+        nameCol.setPrefWidth(colWidth+30);
+        usernameCol.setPrefWidth(colWidth+15);
+        roleCol.setPrefWidth(colWidth);
+        loginDateCol.setPrefWidth(colWidth+15);
+        banCol.setPrefWidth(colWidth);
+
+        //Clear old item and set sort for table
+        loginDateCol.setComparator(new DateTimeService());
+        tableView.getSortOrder().add(loginDateCol);
+        tableView.getItems().clear();
+    }
+
+    private void saveData(User user){
+        if (user.getRole().equals("นักศึกษา")){
+            UserList allStudents = datasourceMap.get(user.getRole()).readData();
+            User savedStudent = allStudents.findUserByUUID(user.getUuid());
+            savedStudent.banUser();
+            datasourceMap.get(user.getRole()).writeData(allStudents);
+        }else {
+            datasourceMap.get(user.getRole()).writeData(userInSystemMap.get(user.getRole()));
+        }
+    }
+
+    private void initMap(){
+        userInSystemMap = new HashMap<>();
+        datasourceMap = new HashMap<>();
+
+        datasourceMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv"));
+        datasourceMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv"));
+        datasourceMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv"));
+        datasourceMap.put("นักศึกษา" , new UserListDatasource("data" + File.separator + "users", "student.csv"));
+
+        userInSystemMap.put("ทั้งหมด", new UserList());
+        for (String key : datasourceMap.keySet()) {
+            if (key.equals("นักศึกษา")){
+                userInSystemMap.put(key, datasourceMap.get(key).readData().getRegisteredStudents());
+            }else {
+                userInSystemMap.put(key, datasourceMap.get(key).readData());
+            }
+            userInSystemMap.get("ทั้งหมด").addUserLists(userInSystemMap.get(key));
+        }
     }
 
     @FXML
     public void onBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.banUser();
-        saveData();
-        userList = usersDatasource.readData();
+        saveData(user);
+        tableView.refresh();
     }
 
     @FXML
     public void onUnBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.unbanUser();
-        saveData();
-        userList = usersDatasource.readData();
-    }
-    @FXML
-    public void onDashboardButtonClicked() {
-        try {
-            FXRouter.goTo("admin-dashboard");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onFacultyButtonClicked() {
-        try {
-            FXRouter.goTo("admin-faculty-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    public void onStaffButtonClicked() {
-        try {
-            FXRouter.goTo("admin-staff-manage", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick() {
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveData(user);
+        tableView.refresh();
     }
 }

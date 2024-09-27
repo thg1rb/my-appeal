@@ -1,38 +1,65 @@
 package ku.cs.models.persons;
 
-public class Approver extends Human{
-    private String faculty;
-    private String major;
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
+import ku.cs.models.persons.User;
+
+public class Approver {
+    private String tier;
+    private String firstName;
+    private String lastName;
     private String role;
 
-    public Approver(String firstName, String lastName, String faculty, String major,String role) {
-        super(firstName, lastName);
-        this.faculty = faculty;
-        this.major= major;
+    //Constructor
+    public Approver(String firstName, String lastName, String role, User adder) {
+        this.tier = adder.getRole().equals("เจ้าหน้าที่คณะ") ? "ผู้อนุมัติคำร้องระดับคณะ" : "ผู้อนุมัติคำร้องระดับภาควิชา";
+        this.firstName = firstName;
+        this.lastName = lastName;
+        setRole(role, adder);
+    }
+    //Constructor for reading file
+    public Approver(String tier, String firstName, String lastName, String role) {
+        this.tier = tier;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
-    public Approver(String firstName, String lastName, String role,User adder) {
-        super(firstName, lastName);
+    //Getter
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public String getFullName(){return firstName + " " + lastName;}
+    public String getTier(){
+        return tier;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    //Setter
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    public void setRole(String role, User adder){
         this.role = role;
-        this.faculty = adder.getFaculty();
-        this.major = adder.getRole().equals("เจ้าหน้าที่ภาควิชา") ? adder.getMajor() : null;
+        if (adder instanceof DepartmentStaff){
+            this.role += ((DepartmentStaff) adder).getDepartment();
+        }else if (adder instanceof FacultyStaff){
+            this.role += "คณะ" + ((FacultyStaff) adder).getFaculty();
+        }
     }
-    public void setRole(String role) { this.role = role; }
-    public String getFaculty() {
-        return faculty;
-    }
-    public String getMajor(){
-        return major;
-    }
-    public String getRole() { return role; }
 
     @Override
     public String toString() {
-        return  getFirstName() + "," +
-                getLastName() + "," +
-                faculty + "," + major + "," + role;
+        return tier + "," + firstName + "," + lastName + "," + role;
     }
-
 
 }

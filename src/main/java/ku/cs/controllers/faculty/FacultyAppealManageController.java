@@ -1,233 +1,198 @@
 package ku.cs.controllers.faculty;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import ku.cs.models.appeal.Appeal;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import ku.cs.controllers.general.AppealEditController;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
+import ku.cs.models.collections.ModifyDateList;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
-import ku.cs.services.AppealListFileDatasource;
-import ku.cs.services.Datasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
+
 public class FacultyAppealManageController {
-
-    private User user;
-
-
-
-    @FXML private TableView<Appeal> allAppealTable;
-    @FXML private TableView<Appeal> selfAppealTable;
-
-    @FXML private ScrollPane detailScrollPane;
-    @FXML private VBox vbox;
-
-    @FXML private Label appealManageLabel;
-    @FXML private Label appealDetailsLabel;
-
-    @FXML private Label typeLabel;
-
-    @FXML private Label presentStatusLabel;
-
-    @FXML private Pane popupAppealPane;
-    @FXML private ChoiceBox statusChoiceBox;
-
-    @FXML private Label topicLabel;
-    @FXML private Label semesterLabel;
-    @FXML private Label purposeLabel;
-    @FXML private Label breakTimeLabel;
-    @FXML private Label reasonLabel;
-    @FXML private Label subjectLabel;
-    @FXML private Label academicTermLabel;
-    @FXML private Label yearLabel;
-
-    private String[] statusList = {"ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา", "อนุมัติโดยคณบดี | คำร้องดำเนินการครบถ้วน", "ปฏิเสธโดยคณบดี  | คำร้องถูกปฏิเสธ"};
-
-    String selectedStatus;
-    Appeal selectedAppeal;
-
-    public AppealList appealList;
-    public Datasource<AppealList> datasource;
+    @FXML
+    private Pane navbarAnchorPane;
 
     @FXML
-    public void initialize(){
-        user = (User) FXRouter.getData();
+    private TabPane tabPane;
 
+    @FXML
+    private TableView<Appeal> tableView;
 
+    private Appeal selectedAppeal;
+    private AppealList appealList;
+    private Datasource<AppealList> datasource;
+    private AppealList facultyAppealList;
+    private boolean preview = true;
+    private ModifyDateList modifyDateList;
+    private User user;
+    private Datasource<ModifyDateList> modifyDateListDatasource;
+    //    private Object selectedAppeal;
+
+    @FXML
+    public void initialize() {
+        user = (FacultyStaff) FXRouter.getData();
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        user = (User)FXRouter.getData();
+        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFaculty());
 
-        showTable(appealList);
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
 
-        statusChoiceBox.getItems().addAll(statusList);
-        statusChoiceBox.setOnAction(this::getStatus);
-        statusChoiceBox.setValue(statusList[0]);
+        //NavBar Component
+        String role = user.getRoleInEnglish();
+        FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
+        try {
+            Pane navbarComponent = navbarComponentLoader.load();
+            navbarAnchorPane.getChildren().add(navbarComponent);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-        allAppealTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Appeal>() {
-            @Override
-            public void changed(ObservableValue<? extends Appeal> observableValue, Appeal oldValue, Appeal newValue) {
-                if (newValue != null) {
-                    selectedAppeal = newValue;
-                    showPopup(selectedAppeal.getType(), selectedAppeal);
-                }
+        showTable(facultyAppealList, false);
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
+            if (tabPane.getSelectionModel().getSelectedIndex() == 0) {
+                preview = true;
+                showTable(facultyAppealList, false);
+            } else {
+                preview = false;
+                showTable(facultyAppealList, true);
             }
         });
-    }
-    @FXML
-    public void showPopup(String type, Appeal appeal){
-        purposeLabel.setVisible(false);
-        breakTimeLabel.setVisible(false);
 
-        reasonLabel.setVisible(false);
-        subjectLabel.setVisible(false);
-        academicTermLabel.setVisible(false);
-        yearLabel.setVisible(false);
-        semesterLabel.setVisible(false);
-
-        topicLabel.setText(appeal.getTopic());
-        reasonLabel.setText(appeal.getReason());
-
-
-
-        if(type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-            purposeLabel.setText("จุดประสงค์: " + appeal.getPurpose());
-            purposeLabel.setVisible(true);
-            purposeLabel.setLayoutY(70);
-
-            breakTimeLabel.setText("ระยะเวลา: " + appeal.getStartDate() + " - " + appeal.getEndDate());
-            breakTimeLabel.setVisible(true);
-            breakTimeLabel.setLayoutY(100);
-
-            reasonLabel.setText(appeal.getReason());
-            reasonLabel.setVisible(true);
-            reasonLabel.setLayoutY(130);
-
-            subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
-            subjectLabel.setVisible(true);
-            subjectLabel.setLayoutY(160);
-        }
-        else if(type.equals("คำร้องขอพักการศึกษา")) {
-            semesterLabel.setText("ภาคการศึกษา: " + appeal.getSemester());
-            yearLabel.setText("ปีการศึกษา: " + appeal.getYear());
-            subjectLabel.setText("รายวิชา: " + appeal.getSubjects());
-
-            semesterLabel.setVisible(true);
-            semesterLabel.setLayoutY(70);
-
-            yearLabel.setVisible(true);
-            yearLabel.setLayoutY(100);
-
-            subjectLabel.setVisible(true);
-            subjectLabel.setLayoutY(130);
-        }
-
-        typeLabel.setText("ประเภทคำร้อง: " + type);
-        reasonLabel.setVisible(true);
-        vbox.prefWidthProperty().bind(detailScrollPane.widthProperty().subtract(40));
-
-        detailScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        detailScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        detailScrollPane.setContent(vbox);
-        detailScrollPane.layout();
-
-        presentStatusLabel.setText(appeal.getStatus());
-
-        popupAppealPane.setVisible(true);
-        appealManageLabel.setVisible(false);
-        appealDetailsLabel.setVisible(true);
-    }
-    public void showTable(AppealList appealList) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-
-        dateColumn.setComparator((date1, date2)-> {
-            int result = DateTimeService.compareDate(date1, date2);
-            return result;
+        tableView.setRowFactory(v -> {
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if (selectedAppeal != null) {
+                    showAppealPopup(preview);
+                }
+            });
+            return row;
         });
+    }
 
-        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
+    public void showAppealPopup(boolean preview) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
+            Parent root = fxmlLoader.load();
+            AppealEditController controller = fxmlLoader.getController();
+            controller.setRole(user);
+            controller.setSelectedAppeal(selectedAppeal);
+            controller.setMode(preview);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+
+            datasource.writeData(appealList);
+
+            showTable(appealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showTable(AppealList appealList, boolean filter) {
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
+
+        dateColumn.setComparator(new DateTimeService());
+
+        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("ชื่อ-สกุล");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
 
-        TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Appeal, String> typeColumn = new TableColumn<>("ประเภทของคำร้อง");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        allAppealTable.getColumns().clear();
-        allAppealTable.getColumns().add(dateColumn);
-        allAppealTable.getColumns().add(ownerColumn);
-        allAppealTable.getColumns().add(typeColumn);
+        TableColumn<Appeal, String> statusColumn = new TableColumn<>("สถานะของคำร้อง");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        allAppealTable.getSortOrder().add(dateColumn);
+        statusColumn.setCellFactory(column -> new TableCell<Appeal, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    if (status.contains("อนุมัติโดยคณบดี") && status.contains("คำร้องดำเนินการครบถ้วน")) {
+                        setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                        setText("ดำเนินการแล้ว");
+                    } else if (status.contains("อนุมัติโดยหัวหน้าภาควิชา") && status.contains("คำร้องส่งต่อให้คณบดี")) {
+                        setText("รอดำเนินการ");
+                        setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
+                    } else if (status.contains("ปฏิเสธโดยคณบดี")) {
+                        setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                        setText("ถูกปฏิเสธ");
+                    } else {
+                        setText(status);
+                        setStyle("");
+                    }
+                }
+            }
+        });
+        tableView.getColumns().clear();
+        tableView.getColumns().add(dateColumn);
+        tableView.getColumns().add(ownerColumn);
+        tableView.getColumns().add(typeColumn);
+        tableView.getColumns().add(statusColumn);
+        dateColumn.setPrefWidth(275);
+        ownerColumn.setPrefWidth(275);
+        typeColumn.setPrefWidth(275);
+        statusColumn.setPrefWidth(275);
+        tableView.getSortOrder().add(dateColumn);
 
-        allAppealTable.getItems().clear();
-        if (appealList != null) {
-            for(Appeal appeal : appealList.getAppeals()){
-                allAppealTable.getItems().add(appeal);
+        tableView.getItems().clear();
+
+
+        if (appealList != null && !filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate().equals("null")
+                        && !appeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") && !appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน")) {
+                    tableView.getItems().add(appeal);
+                }
+            }
+        } else if (appealList != null && filter) {
+            for (Appeal appeal : appealList.getAppeals()) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
+                    tableView.getItems().add(appeal);
+                }
             }
         }
-        allAppealTable.sort();
+
+
+        tableView.getSortOrder().add(dateColumn);
+
+        tableView.sort();
 
         dateColumn.setSortable(false);
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
+        statusColumn.setSortable(false);
 
-
-    }
-    @FXML
-    public void confirmOnButtonClick(){
-        selectedAppeal = (Appeal) allAppealTable.getSelectionModel().getSelectedItem();
-        selectedAppeal.setStatus(selectedStatus);
-
-        popupAppealPane.setVisible(false);
-        appealDetailsLabel.setVisible(false);
-        appealManageLabel.setVisible(true);
-
-        allAppealTable.getSelectionModel().select(null);
-
-        selectedStatus = null;
-    }
-    @FXML
-    public void cancleOnButtonClick(){
-        popupAppealPane.setVisible(false);
-        appealDetailsLabel.setVisible(true);
-        appealManageLabel.setVisible(false);
-
-        allAppealTable.getSelectionModel().select(null);
-
-        selectedStatus = null;
-    }
-
-    public void getStatus(Event event) {
-        selectedStatus = (String) statusChoiceBox.getValue();
-    }
-
-    @FXML
-    public void onApproverButtonClick() {
-        try {
-            FXRouter.goTo("faculty-approver-manage",user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    public void onLogoutButtonClick(){
-
-        try {
-            FXRouter.goTo("login");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

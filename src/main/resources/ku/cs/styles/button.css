@@ -1,11 +1,19 @@
+/* Button Style */
+
+Button {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
 /* Sidebar Button Click */
 .sidebar-button {
     -fx-background-color: transparent;
-    -fx-cursor: hand;
+    -fx-text-fill: white;
 }
 
 .sidebar-button:hover {
     -fx-background-color: #183434;
+    -fx-text-fill: #a6a6a6;
 }
 
 .logout-button {
@@ -17,18 +25,71 @@
 }
 
 /* Login Button */
+
 .login-button {
     -fx-background-color: #303337;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 15px;
 }
 
+.login-button:hover {
+    -fx-background-color: #606060;
+}
+
+/* Approve & Reject Appeal Button Click */
+.approve-button {
+    -fx-background-color: #008f2f;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+}
+
+.approve-button:hover {
+    -fx-background-color: #007323;
+    -fx-text-fill: #d1d1d1;
+}
+
+.reject-button {
+    -fx-background-color: #cc0000;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+}
+
+.reject-button:hover {
+    -fx-background-color: #910000;
+    -fx-text-fill: #d1d1d1;
+}
+
+/* Close Pop Up */
+.close-pop-up {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+}
+
+.close-pop-up:hover {
+    -fx-text-fill: #c8c8c8;
+}
+
+.close-pop-up-dark {
+    -fx-background-color: transparent;
+    -fx-text-fill:  #265252;
+    -fx-font-size: 14;
+}
+
+.close-pop-up-dark:hover {
+    -fx-text-fill: #254747;
+}
+
+/* Choice Box Style */
+
 .choice-box {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-background-color: #303337;
     -fx-background-radius: 15px;
     -fx-font-size: 20px;
     -fx-text-fill: #FFFFFF;
     -fx-mark-color: #FFFFFF;
+    -fx-cursor: hand;
 }
 
 .choice-box .context-menu {
@@ -68,15 +129,4 @@
 }
 .choice-box-white .menu-item:focused{
     -fx-background-color: grey;
-}
-
-/* Confirm Button Click */
-.confirm-button {
-    -fx-background-color: #007D2A;
-    -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 10px;
-}
-
-.confirm-button:hover {
-
 }

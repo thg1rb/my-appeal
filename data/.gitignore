@@ -1,3 +1,7 @@
 *
 !.gitignore
 !*.csv
+!*.png
+!*.jpg
+!users/
+!profile-images/

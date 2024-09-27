@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -63,11 +64,6 @@
             <Font size="20.0" />
          </font>
       </TextField>
-      <TextField fx:id="professorTextField" layoutX="255.0" layoutY="541.0" prefHeight="47.0" prefWidth="267.0" promptText="กรอกอาจารย์ที่ปรึกษา" style="-fx-background-radius: 20;">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextField>
       <Button layoutX="119.0" layoutY="625.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="90.0" style="-fx-background-radius: 20;" text="ยกเลิก">
          <font>
             <Font size="20.0" />
@@ -79,5 +75,10 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <ComboBox fx:id="professorComboBox" layoutX="252.0" layoutY="540.0" prefHeight="50.0" prefWidth="267.0" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+      <Label fx:id="nameErrorLabel" layoutX="259.0" layoutY="195.0" text="*กรุณากรอกชื่อ" textFill="RED" visible="false" />
+      <Label fx:id="lastNameErrorLabel" layoutX="259.0" layoutY="295.0" text="*กรุณากรอกนามสกุล" textFill="RED" visible="false" />
+      <Label fx:id="idErrorLabel" layoutX="259.0" layoutY="396.0" text="*กรุณากรอกรหัสนิสิต" textFill="RED" visible="false" />
+      <Label fx:id="emailErrorLabel" layoutX="259.0" layoutY="496.0" text="*กรุณากรอกอีเมล" textFill="RED" visible="false" />
    </children>
 </AnchorPane>
