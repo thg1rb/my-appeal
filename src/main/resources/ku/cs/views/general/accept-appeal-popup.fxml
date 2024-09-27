@@ -42,7 +42,7 @@
             <Font size="32.0" />
          </font>
       </Label>
-      <Label fx:id="approverErrorLabel" layoutX="225.0" layoutY="522.0" text="*กรุณาเลือกผู้อนุมัติ" textFill="RED">
+      <Label fx:id="approverErrorLabel" layoutX="225.0" layoutY="522.0" text="*กรุณาเลือกผู้อนุมัติ" textFill="RED" visible="false">
          <opaqueInsets>
             <Insets top="-3.0" />
          </opaqueInsets></Label>
