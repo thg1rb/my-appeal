@@ -1,12 +1,21 @@
 package ku.cs.controllers.general;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
@@ -19,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoginController {
+    @FXML AnchorPane mainPane;
 
     @FXML private TextField giveUsernameTextField;
     @FXML private TextField givePasswordTextField;
@@ -59,9 +69,9 @@ public class LoginController {
         else{
             if (user.validatePassword(password)){
                 if (user.hasAccessibility()) {
-                    updateLoginTime(user);
                     switch (user.getRole()){
                         case "ผู้ดูแลระบบ":
+                            updateLoginTime(user);
                             try {
                                 FXRouter.goTo("admin-dashboard", user);
                             } catch (IOException e) {
@@ -69,6 +79,8 @@ public class LoginController {
                             }
                             break;
                         case "เจ้าหน้าที่คณะ":
+                            checkIfFirstTimeLoginForStaff(user, password);
+                            updateLoginTime(user);
                             try {
                                 FXRouter.goTo("faculty-appeal-manage", user);
                             } catch (IOException e) {
@@ -76,6 +88,8 @@ public class LoginController {
                             }
                             break;
                         case "เจ้าหน้าที่ภาควิชา":
+                            checkIfFirstTimeLoginForStaff(user, password);
+                            updateLoginTime(user);
                             try {
                                 FXRouter.goTo("major-appeal-manage", user);
                             } catch (IOException e) {
@@ -83,6 +97,8 @@ public class LoginController {
                             }
                             break;
                         case "อาจารย์ที่ปรึกษา":
+                            checkIfFirstTimeLoginForStaff(user, password);
+                            updateLoginTime(user);
                             try {
                                 FXRouter.goTo("professor-student-list", user);
                             } catch (IOException e) {
@@ -90,6 +106,7 @@ public class LoginController {
                             }
                             break;
                         default:
+                            updateLoginTime(user);
                             try {
                                 FXRouter.goTo("student-track-appeal", user);
                             } catch (IOException e) {
@@ -116,6 +133,31 @@ public class LoginController {
         user.setLoginDate(DateTimeService.updateTime());
         updateUser.setLoginDate(DateTimeService.updateTime());
         userUpdatedDatasource.writeData(userList);
+    }
+
+    private void checkIfFirstTimeLoginForStaff(User user, String currentPassword){
+        if (user instanceof FacultyStaff staff){
+            if (staff.getInitialPasswordText().equals(currentPassword)){
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/set-password.fxml"));
+                try {
+                    Parent root = fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    GaussianBlur blur = new GaussianBlur(10);
+
+                    FirstTimeLoginNewPasswordController controller = fxmlLoader.getController();
+                    controller.initPopUp(staff, currentPassword);
+
+                    stage.setScene(new Scene(root));
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    mainPane.setEffect(blur);
+                    stage.showAndWait();
+                    mainPane.setEffect(null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     // ไปที่หน้าลงทะเบียน (ข้อมูลส่วนบุคคล)
