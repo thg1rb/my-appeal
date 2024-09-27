@@ -1,6 +1,6 @@
 # CS211 Project ภาคต้น 2567
 
-## ชื่อทีม Com-Sci-Lore
+## ชื่อทีม com-sci-lore
 
 ### สมาชิกในทีม
 | รหัสนิสิต  | ชื่อ-นามสกุล (ชื่อเล่น)         | GitHub username |
