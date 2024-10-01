@@ -142,10 +142,10 @@ public class MajorNisitEditPopupController {
 
     public void onAddButtonClick(ActionEvent event){
         if(professorComboBox.getValue() == null){
-            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment()));
+            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFacultyUUID(), user.getDepartmentUUID()));
         }
         else{
-            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFaculty(), user.getDepartment(), advisorMap.get(professorComboBox.getValue())));
+            studentRoster.addUser(new Student(nisitNameTextField.getText(), nisitLastNameTextField.getText(), nisitIdTextField.getText(), nisitEmailTextField.getText(), user.getFacultyUUID(), user.getDepartmentUUID(), advisorMap.get(professorComboBox.getValue())));
 
         }
         onCancleButtonClick(event);

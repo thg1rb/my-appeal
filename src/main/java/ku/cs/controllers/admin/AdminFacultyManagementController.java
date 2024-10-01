@@ -150,7 +150,7 @@ public class AdminFacultyManagementController {
         TableColumn<Object, String> ofFacultyColumn = new TableColumn<>("Belong of Faculty");
         ofFacultyColumn.setCellValueFactory(cellData ->{
             Major major = (Major) cellData.getValue();
-            return new SimpleStringProperty(major.getFaculty());
+            return new SimpleStringProperty(facultyList.findFacultyByUUID(major.getFacultyUUID()).getFacultyName());
         });
 
         TableColumn<Object, String> majorIdColumn = new TableColumn<>("major ID");
@@ -205,7 +205,7 @@ public class AdminFacultyManagementController {
             if (majorFacultyPopup.isDeleted()){
                 if (selectedObject instanceof Faculty){
                     facultyList.deleteFaculty((Faculty) selectedObject);
-                    majorList.deleteAllMajorsOfFaculty(((Faculty) selectedObject).getFacultyName());
+                    majorList.deleteAllMajorsOfFaculty(((Faculty) selectedObject).getUuid());
                 }
                 else if (selectedObject instanceof Major){
                     majorList.deleteMajor((Major) selectedObject);

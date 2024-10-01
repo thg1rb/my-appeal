@@ -4,6 +4,7 @@ import ku.cs.models.Faculty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FacultyList {
     private ArrayList<Faculty> faculties;
@@ -70,6 +71,15 @@ public class FacultyList {
     public Faculty findFacultyByName(String facultyName){
         for (Faculty faculty : faculties){
             if (faculty.getFacultyName().equals(facultyName)){
+                return faculty;
+            }
+        }
+        return null;
+    }
+
+    public Faculty findFacultyByUUID(UUID facultyUUID){
+        for (Faculty faculty : faculties){
+            if (faculty.getUuid().equals(facultyUUID)){
                 return faculty;
             }
         }

@@ -1,17 +1,23 @@
 package ku.cs.models.persons;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import ku.cs.models.collections.FacultyList;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.FacultyListDatasource;
+
+import java.util.UUID;
 
 public class FacultyStaff extends User {
     private String initialPasswordText;
     private String initialPasswordHashed;
 
-    private String faculty;
+//    private String faculty;
+    private UUID facultyUUID;
 
     //Constructor
-    public FacultyStaff(String role, String username, String password, String firstName, String lastName, String faculty) {
+    public FacultyStaff(String role, String username, String password, String firstName, String lastName, UUID facultyUUID) {
         super(role, username, password, firstName, lastName);
-        this.faculty = faculty;
+        this.facultyUUID = facultyUUID;
         this.initialPasswordText = password;
         setInitPassword(password);
     }
@@ -20,7 +26,7 @@ public class FacultyStaff extends User {
         super(uuid, role, username, password, firstName, lastName, access, loginDate, profileImg);
         this.initialPasswordText = initialPasswordText;
         this.initialPasswordHashed = initialPasswordHashed;
-        this.faculty = faculty;
+        this.facultyUUID = UUID.fromString(faculty);
     }
 
     //Authentication
@@ -37,7 +43,12 @@ public class FacultyStaff extends User {
         return initialPasswordText;
     }
     public String getFaculty() {
+        Datasource<FacultyList> datasource = new FacultyListDatasource("data", "faculties.csv");
+        String faculty = datasource.readData().findFacultyByUUID(this.facultyUUID).getFacultyName();
         return faculty;
+    }
+    public UUID getFacultyUUID() {
+        return facultyUUID;
     }
 
     //Setter
@@ -45,13 +56,13 @@ public class FacultyStaff extends User {
         setInitPassword(password);
         this.initialPasswordText = password;
     }
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
+    public void setFacultyUUID(UUID facultyUUID) {
+        this.facultyUUID = facultyUUID;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "," + initialPasswordText + "," + initialPasswordHashed + "," + faculty;
+        return super.toString() + "," + initialPasswordText + "," + initialPasswordHashed + "," + facultyUUID;
     }
 
     @Override
