@@ -21,6 +21,7 @@ import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
@@ -142,7 +143,11 @@ public class AdminStaffManagementController {
         initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
         TableColumn<User, String> facultyCol = new TableColumn<>("คณะ");
-        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+//        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+        facultyCol.setCellValueFactory(cellData ->{
+            FacultyStaff user = (FacultyStaff) cellData.getValue();
+            return new SimpleStringProperty(facultyList.findFacultyByUUID(user.getFacultyUUID()).getFacultyName());
+        });
         facultyCol.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -161,7 +166,7 @@ public class AdminStaffManagementController {
             TableColumn<User, String> majorCol = new TableColumn<>("สาขา");
             majorCol.setCellValueFactory(cellData ->{
                 DepartmentStaff user = (DepartmentStaff) cellData.getValue();
-                return new SimpleStringProperty(user.getDepartment());
+                return new SimpleStringProperty(majorList.findMajorByUUID(user.getDepartmentUUID()).getMajorName());
             });
 
             tableView.getColumns().add(majorCol);
