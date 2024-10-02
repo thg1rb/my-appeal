@@ -8,8 +8,8 @@ public class BreakAppeal extends Appeal {
     private String endDate;
 
     // Constructor
-    public BreakAppeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects, String purpose, String startDate, String endDate) {
-        super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, null, null);
+    public BreakAppeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartmentUuid, String ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects, String purpose, String startDate, String endDate) {
+        super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartmentUuid, ownerFacultyUuid, departmentSignature, facultySignature, reason, subjects);
         this.purpose = purpose;
         this.startDate = startDate;
         this.endDate = endDate;

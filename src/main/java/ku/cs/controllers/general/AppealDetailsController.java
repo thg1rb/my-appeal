@@ -19,6 +19,8 @@ import ku.cs.models.dates.ModifyDate;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
+import java.io.File;
+
 public class AppealDetailsController {
 
     @FXML private ScrollPane generalScrollPane;
@@ -53,6 +55,10 @@ public class AppealDetailsController {
     @FXML private ScrollPane rejectedReasonScrollPane;
     @FXML private Label rejectedReasonTitleLabel;
     @FXML private Label rejectedReasonLabel;
+
+    @FXML private Pane approveSignatureAlertPane;
+    @FXML private Label approveSignatureTitleLabel;
+    @FXML private ImageView approveSignatureImageView;
 
     private Appeal selectedAppeal;
     private ModifyDate selectedAppealDate;
@@ -110,8 +116,6 @@ public class AppealDetailsController {
         departmentApproveDateLabel.setOnMouseClicked(null);
         facultyApproveDateLabel.setOnMouseClicked(null);
 
-        System.out.println(selectedAppealDate.isDepartmentRejected(selectedAppeal.getStatus()));
-
         if (selectedAppealDate.isAdvisorRejected(selectedAppeal.getStatus())) {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(rejectColor);
@@ -163,17 +167,25 @@ public class AppealDetailsController {
         } else if (selectedAppealDate.isFacultyPending()) {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(approveColor);
+
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(approveColor);
+            System.out.println(selectedAppeal.getDepartmentSignature());
+            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
+
             facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             facultyApproveDateLabel.setStyle(pendingColor);
         } else {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(approveColor);
+
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(approveColor);
+            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
+
             facultyApproveDateLabel.setText(selectedAppealDate.getFacultyApproveDate());
             facultyApproveDateLabel.setStyle(approveColor);
+            facultyApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่คณะ", selectedAppeal.getFacultySignature()));
         }
 
         //
@@ -203,10 +215,21 @@ public class AppealDetailsController {
         rejectedReasonAlertPane.setVisible(true);
     }
 
+    private void onShowApproveSignatureAlertPane(String approveSignatureTitle, String path) {
+        approveSignatureTitleLabel.setText(approveSignatureTitle);
+
+        File file = new File(path);
+        Image image = new Image(file.toURI().toString());
+        approveSignatureImageView.setImage(image);
+
+        approveSignatureAlertPane.setVisible(true);
+    }
+
     //
     @FXML
-    private void onCloseRejectedReasonButton() {
+    private void onCloseAlertPane() {
         rejectedReasonAlertPane.setVisible(false);
+        approveSignatureAlertPane.setVisible(false);
     }
 
     //

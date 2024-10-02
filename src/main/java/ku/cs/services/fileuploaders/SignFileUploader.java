@@ -21,6 +21,7 @@ public class SignFileUploader implements FileUploader {
     private User staff;
     private Appeal selectedAppeal;
     private String directoryName;
+    private String fullPath;
     private boolean success;
 
     @FXML private Rectangle imageRectangle;
@@ -66,6 +67,8 @@ public class SignFileUploader implements FileUploader {
                 fileName += "." +file.getName().split("\\.")[file.getName().split("\\.").length - 1];
                 Path destination = new File(directoryName + File.separator + fileName).toPath();
 
+                fullPath = destination.toString();
+
                 Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
                 Image image = new Image("file:" + directoryName + File.separator + fileName);
@@ -82,5 +85,9 @@ public class SignFileUploader implements FileUploader {
     }
     public boolean uploadSuccess(){
         return this.success;
+    }
+
+    public String getFullPath() {
+        return fullPath;
     }
 }

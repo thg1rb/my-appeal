@@ -21,6 +21,7 @@ import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
+import ku.cs.services.fileuploaders.FileUploader;
 import ku.cs.services.fileuploaders.SignFileUploader;
 
 import java.io.File;
@@ -144,7 +145,8 @@ public class AcceptAppealController {
             subStatus = ((RadioButton)toggleGroup.getSelectedToggle()).getText();
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
-            selectedAppeal.setStatus(selectedStatus + " | "+subStatus);
+            selectedAppeal.setStatus(selectedStatus + " | " + subStatus);
+            System.out.println("status: " + selectedAppeal.getStatus());
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {
@@ -156,10 +158,15 @@ public class AcceptAppealController {
     }
 
     private void uploadSign(){
-        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, "data" + File.separator + "approves-signs");
+        String path = "data" + File.separator + "approves-signs";
+        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, path);
         signFileUploader.upload((Stage) imageRectangle.getScene().getWindow());
         if (signFileUploader.uploadSuccess()) {
             uploadButton.setText("");
+
+            if (role.equals("เจ้าหน้าที่ภาควิชา")) selectedAppeal.setDepartmentSignature(signFileUploader.getFullPath());
+            else if (role.equals("เจ้าหน้าที่คณะ")) selectedAppeal.setFacultySignature(signFileUploader.getFullPath());
+
             imageViewButtonImageView.setImage(null);
         } else {
             errorUploadLabel.setVisible(true);

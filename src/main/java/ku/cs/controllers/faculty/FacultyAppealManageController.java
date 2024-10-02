@@ -50,7 +50,7 @@ public class FacultyAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFaculty());
+        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFacultyUUID().toString());
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
@@ -170,14 +170,14 @@ public class FacultyAppealManageController {
 
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate().equals("null")
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID().toString()) && modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate() != null
                         && !appeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") && !appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน")) {
                     tableView.getItems().add(appeal);
                 }
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID().toString()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
                     tableView.getItems().add(appeal);
                 }
             }

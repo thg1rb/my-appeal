@@ -19,7 +19,7 @@ public class Student extends User {
 
     private boolean registered;
 
-    //Constructor
+    // Constructor
     // without advisor init
     public Student(String firstName, String lastName, String studentId, String email, UUID faculty, UUID department) {
         super("นักศึกษา", firstName, lastName);
@@ -29,11 +29,13 @@ public class Student extends User {
         this.departmentUUID = department;
         this.registered = false;
     }
+
     // with advisor init
     public Student(String firstName, String lastName, String studentId, String email, UUID faculty, UUID department, UUID advisorUUID) {
         this(firstName, lastName, studentId, email, faculty, department);
         this.advisorUUID = advisorUUID;
     }
+
     //Constructor for reading file
     public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisorUUID, boolean registered) {
         super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
@@ -55,7 +57,7 @@ public class Student extends User {
         setRegistered();
     }
 
-    //Setter
+    // Setters
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
@@ -75,7 +77,7 @@ public class Student extends User {
         this.registered = true;
     }
 
-    //Getter
+    // Getters
     public String getStudentId() {
         return studentId;
     }
@@ -90,6 +92,7 @@ public class Student extends User {
     public UUID getFacultyUUID() {
         return facultyUUID;
     }
+    public UUID getDepartmentUUID() { return departmentUUID; }
     public String getDepartment() {
         Datasource<MajorList> datasource = new MajorListDatasource("data", "majors.csv");
         String department = datasource.readData().findMajorByUUID(this.departmentUUID).getMajorName();
