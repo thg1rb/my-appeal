@@ -61,10 +61,10 @@ public class FirstTimeLoginNewPasswordController {
             ValidationService validationService = new ValidationService();
 
             if (!validationService.validatePassword(password)) {
-                throw new IllegalValidationException();
+                throw new IllegalValidationException("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
             }
             if (password.isEmpty() || confirmNewPasswordTextField.getText().isEmpty()) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("โปรดกรอกข้อมูลให้ครบถ้วน");
             }
 
             if (!password.equals(confirmNewPasswordTextField.getText())) {
@@ -76,10 +76,10 @@ public class FirstTimeLoginNewPasswordController {
             }
         }catch (EmptyInputException e){
             errorLabel.setVisible(true);
-            errorLabel.setText("โปรดกรอกข้อมูลให้ครบถ้วน");
+            errorLabel.setText(e.getMessage());
         } catch (IllegalValidationException e) {
+            validateLabel.setText(e.getMessage());
             validateLabel.setVisible(true);
-            validateLabel.setText("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
         }
     }
 

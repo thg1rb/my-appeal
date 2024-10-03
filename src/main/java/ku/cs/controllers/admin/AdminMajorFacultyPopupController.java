@@ -160,7 +160,7 @@ public class AdminMajorFacultyPopupController {
                 id = facultyIdTextField.getText();
 
                 if (name.isEmpty() || id.isEmpty()){
-                    throw new EmptyInputException();
+                    throw new EmptyInputException("*กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
 
                 for (String faculty : facultyChoice){
@@ -176,7 +176,7 @@ public class AdminMajorFacultyPopupController {
                 UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
 
                 if (name.isEmpty() || id.isEmpty() || faculty == null){
-                    throw new EmptyInputException();
+                    throw new EmptyInputException("*กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
 
                 for (Major major : majorList.getMajors()){
@@ -189,10 +189,7 @@ public class AdminMajorFacultyPopupController {
 
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
-        }catch (EmptyInputException e){
-            emptyInputText.setText("*กรุณากรอกข้อมูลให้ครบถ้วน");
-            emptyInputText.setVisible(true);
-        }catch (DuplicateItemsException e){
+        }catch (EmptyInputException | DuplicateItemsException e){
             emptyInputText.setText(e.getMessage());
             emptyInputText.setVisible(true);
         }

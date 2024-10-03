@@ -116,9 +116,9 @@ public class ProfileSettingController {
             clearTextField();
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("โปรดใส่ข้อมูลให้ครบถ้วน");
             } else if (!validationService.validatePassword(newPassword)) {
-                throw new IllegalValidationException();
+                throw new IllegalValidationException("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
             } else if (!newPassword.equals(confirmPassword)) {
                 confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
             } else if (!user.validatePassword(oldPassword)) {
@@ -132,9 +132,9 @@ public class ProfileSettingController {
                 successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");
             }
         }catch (EmptyInputException e){
-            confirmEditErrorLabel.setText("โปรดใส่ข้อมูลให้ครบถ้วน");
+            confirmEditErrorLabel.setText(e.getMessage());
         } catch (IllegalValidationException e){
-            validationErrorLabel.setText("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
+            validationErrorLabel.setText(e.getMessage());
         }
     }
 

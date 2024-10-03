@@ -51,7 +51,7 @@ public class RegisterUsernamePasswordController {
         try{
             ValidationService validationService = new ValidationService();
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("กรุณาใส่ข้อมูลให้ครบถ้วน");
             }else if (studentList.findUserByUsername(username) != null){
                 throw new DuplicateItemsException("ชื่อผู้ใช้งานระบบนี้ถูกใช้ไปแล้ว กรุณาใช้ชื่ออื่น");
             }else if (!validationService.validateUsername(username)){
@@ -72,9 +72,7 @@ public class RegisterUsernamePasswordController {
                     errorLabel.setText("กรุณาใส่รหัสผ่านให้ตรงกัน");
                 }
             }
-        } catch (EmptyInputException e){
-            errorLabel.setText("กรุณาใส่ข้อมูลให้ครบถ้วน");
-        } catch (DuplicateItemsException e) {
+        } catch (EmptyInputException | DuplicateItemsException e){
             errorLabel.setText(e.getMessage());
         }
     }

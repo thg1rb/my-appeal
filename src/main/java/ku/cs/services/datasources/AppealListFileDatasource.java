@@ -71,20 +71,6 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-//                String createDate = data[0].trim();
-//                String ownerId = data[1].trim();
-//                String ownerFullName = data[2].trim();
-//                String type = data[3].trim();
-//                String status = data[4].trim();
-//                String topic = data[5].trim();
-//                String reason = data[6].trim();
-//                String purpose = data[7].trim();
-//                String subjects = data[8].trim();
-//                String startDate = data[9].trim();
-//                String endDate = data[10].trim();
-//                String semester = data[11].trim();
-//                String year = data[12].trim();
-//                String uuid = data[13].trim();
                 String modifyDate = data[0];
                 String uuid = data[1].trim();
                 String type = data[2].trim();

@@ -175,41 +175,38 @@ public class AdminStaffPopupController {
 
     @FXML
     public void onConfirmButtonClicked() {
-        try {
-            usernameValidationText.setVisible(false);
-            passwordValidationText.setVisible(false);
+        usernameValidationText.setVisible(false);
+        passwordValidationText.setVisible(false);
 
-            String firstName = firstNameTextField.getText();
-            String lastName = lastNameTextField.getText();
-            String username = usernameTextField.getText();
-            String password = initPasswordTextField.getText();
-            UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
-            UUID major = null;
-            String id = "";
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = initPasswordTextField.getText();
+        UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
+        UUID major = null;
+        String id = "";
+
+        try {
 
             if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("กรุณากรอกข้อมูลให้ครบถ้วน");
             }
             
-            if (!validateUsername(username)){
-                usernameValidationText.setVisible(true);
-                throw new IllegalValidationException();
-            }else if (!validatePassword(password)){
-                passwordValidationText.setVisible(true);
+            if (!validateUsername(username) || !validatePassword(password)){
                 throw new IllegalValidationException();
             }
 
             if (majorChoiceBox.isVisible()) {
                 major = majorList.findMajorByName(majorChoiceBox.getValue()).getUuid();
                 if (major == null) {
-                    throw new EmptyInputException();
+                    throw new EmptyInputException("กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
             }
 
             if (idTextField.isVisible()) {
                 id = idTextField.getText();
                 if (id.isEmpty()) {
-                    throw new EmptyInputException();
+                    throw new EmptyInputException("กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
             }
 
@@ -228,9 +225,14 @@ public class AdminStaffPopupController {
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
         } catch (EmptyInputException e) {
-            emptyInputText.setText("กรุณากรอกข้อมูลให้ครบถ้วน");
+            emptyInputText.setText(e.getMessage());
             emptyInputText.setVisible(true);
-        } catch (IllegalValidationException ignored){}
+        } catch (IllegalValidationException e) {
+            if (!validateUsername(username))
+                usernameValidationText.setVisible(true);
+            if (!validatePassword(password))
+                usernameValidationText.setVisible(true);
+        }
     }
 
     @FXML

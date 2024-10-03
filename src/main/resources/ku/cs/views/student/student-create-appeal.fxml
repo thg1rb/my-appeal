@@ -143,34 +143,6 @@
          </styleClass>
       </Button>
       <Pane fx:id="backgroundAlertPane" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
-      <Pane fx:id="noAdvisorAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
-         <children>
-            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" stylesheets="@../../styles/button.css" text="รับทราบ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="reject-button" />
-                  <String fx:value="label-medium" />
-               </styleClass>
-            </Button>
-            <Label layoutX="222.0" layoutY="239.0" styleClass="label-bold" text="ไม่สามารถสร้างคำร้องได้" textFill="#cc0000">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Label layoutX="132.0" layoutY="299.0" styleClass="label-medium" text="บัญชีของคุณยังไม่มีอาจารย์ที่ปรึกษาโปรดติดต่อเจ้าหน้าที่">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/create-appeal-fail.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
       <Pane fx:id="failAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
          <children>
             <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" stylesheets="@../../styles/button.css" text="รับทราบ">
@@ -182,12 +154,12 @@
                   <String fx:value="label-medium" />
                </styleClass>
             </Button>
-            <Label layoutX="232.0" layoutY="239.0" styleClass="label-bold" text="การสร้างคำร้องไม่สำเร็จ" textFill="#cc0000">
+            <Label layoutX="232.0" layoutY="239.0" styleClass="label-bold" text="ไม่สามารถสร้างคำร้องได้" textFill="#cc0000">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Label layoutX="142.0" layoutY="299.0" styleClass="label-medium" text="โปรดใส่รายละเอียดของคำร้องให้ครบก่อนสร้างคำร้อง">
+            <Label fx:id="failReasonLabel" layoutX="142.0" layoutY="299.0" styleClass="label-medium" text="โปรดใส่รายละเอียดของคำร้องให้ครบก่อนสร้างคำร้อง">
                <font>
                   <Font size="24.0" />
                </font>
