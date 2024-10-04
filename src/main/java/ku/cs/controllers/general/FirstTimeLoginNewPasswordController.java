@@ -4,11 +4,13 @@ package ku.cs.controllers.general;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
@@ -18,6 +20,8 @@ import ku.cs.services.exceptions.IllegalValidationException;
 import java.io.File;
 
 public class FirstTimeLoginNewPasswordController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private TextField newPasswordTextField;
     @FXML private TextField confirmNewPasswordTextField;
 
@@ -29,6 +33,8 @@ public class FirstTimeLoginNewPasswordController {
 
     @FXML
     public void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         clearText();
 
         newPasswordTextField.textProperty().addListener((observable, oldValue, newValue) -> {

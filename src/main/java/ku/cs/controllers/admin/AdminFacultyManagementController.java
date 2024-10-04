@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -20,6 +21,7 @@ import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.FacultyListDatasource;
 import ku.cs.services.datasources.MajorListDatasource;
@@ -28,6 +30,8 @@ import java.io.IOException;
 import java.util.Comparator;
 
 public class AdminFacultyManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
@@ -51,6 +55,8 @@ public class AdminFacultyManagementController {
     @FXML
     public void initialize() {
         user = (AdminUser) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

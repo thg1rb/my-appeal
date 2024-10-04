@@ -1,10 +1,6 @@
+/* Normal Font */
 * {
     -fx-font-family: Kanit;
-}
-
-/* Normal Font */
-.label-italic {
-    -fx-font-weight: italic;
 }
 
 .label-bold {
@@ -14,7 +10,7 @@
 
 .label-medium {
     -fx-font-size: 24px;
-    -fx-font-weight: medium;
+    -fx-font-weight: normal;
 }
 
 .label-regular {
@@ -24,5 +20,5 @@
 
 .label-thin {
     -fx-font-size: 14px;
-    -fx-font-weight: thin;
+    -fx-font-weight: normal;
 }

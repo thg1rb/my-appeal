@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.layout.AnchorPane;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class RegisterPersonalDataController {
+    @FXML private AnchorPane mainPane;
     @FXML private TextField firstNameTextField;
     @FXML private TextField lastNameTextField;
     @FXML private TextField emailTextField;
@@ -33,6 +36,8 @@ public class RegisterPersonalDataController {
     public void initialize() {
         studentDatasource = new UserListDatasource("data"+ File.separator+"users", "student.csv");
         studentList = studentDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         errorLabel.setText("");
     }

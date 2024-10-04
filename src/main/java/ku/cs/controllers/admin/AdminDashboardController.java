@@ -2,20 +2,27 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 
 public class AdminDashboardController {
+
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     private User user;
 
     public void initialize() {
         user = (AdminUser) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

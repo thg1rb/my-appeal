@@ -1,31 +1,42 @@
 package ku.cs.controllers.general;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import ku.cs.cs211671project.MainApplication;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 
 import java.io.IOException;
 
 public class ProgramSettingController {
-    @FXML private ChoiceBox<String> themeChoiceBox;
-
-    @FXML private ChoiceBox<String> fontChoiceBox;
-
-    @FXML private ChoiceBox<String> fontSizeChoiceBox;
+    @FXML private AnchorPane mainPane;
 
     @FXML private Pane navbarAnchorPane;
+
+    @FXML private ChoiceBox<String> themeChoiceBox;
+    @FXML private ChoiceBox<String> fontSizeChoiceBox;
+
     private User user;
-    private Scene scene; // The main scene of the app
+
+    private final String[] themes = {"สว่าง", "มืด"};
+    private String selectedTheme;
+
+    private final String[] fontSizes = {"เล็ก", "ปกติ", "ใหญ่"};
+    private String selectedFontSize;
 
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
+
+        selectedTheme = ProgramSetting.getInstance().getTheme();
+        selectedFontSize = ProgramSetting.getInstance().getFontSize();
+
+        onApplyButtonClick();
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -37,16 +48,39 @@ public class ProgramSettingController {
             throw new RuntimeException(e);
         }
 
-        themeChoiceBox.getItems().addAll("Dark", "Light");
-
-        fontChoiceBox.getItems().addAll();
-
-        fontSizeChoiceBox.getItems().addAll("Small", "Medium", "Large");
-
-
+        initializeChoiceBox();
     }
 
+    //
+    private void initializeChoiceBox() {
+        // ธีมสีของโปรแกรม
+        themeChoiceBox.getItems().addAll(themes);
+        themeChoiceBox.setOnAction((ActionEvent event) -> {
+            selectedTheme = themeChoiceBox.getSelectionModel().getSelectedItem();
+        });
+        themeChoiceBox.setValue(selectedTheme);
 
+        // ขนาดฟ้อนของโปรแกรม
+        fontSizeChoiceBox.getItems().addAll(fontSizes);
+        fontSizeChoiceBox.setOnAction((ActionEvent event) -> {
+            selectedFontSize = fontSizeChoiceBox.getSelectionModel().getSelectedItem();
+        });
+        fontSizeChoiceBox.setValue(selectedFontSize);
+    }
+
+    //
+    @FXML
+    public void onApplyButtonClick() {
+        if (selectedTheme != null) {
+            ProgramSetting.getInstance().setTheme(selectedTheme);
+        }
+
+        if (selectedFontSize != null) {
+            ProgramSetting.getInstance().setFontSize(selectedFontSize);
+        }
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+    }
 
     @FXML
     public void onAboutUsButtonClick() {

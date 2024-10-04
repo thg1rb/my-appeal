@@ -4,12 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.layout.AnchorPane;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class RegisterUsernamePasswordController {
+    @FXML private AnchorPane mainPane;
     @FXML private TextField usernameTextField;
     @FXML private TextField passwordTextField;
     @FXML private TextField confirmPasswordTextField;
@@ -38,6 +41,8 @@ public class RegisterUsernamePasswordController {
         data = FXRouter.getData() instanceof HashMap<?, ?> ? (HashMap<String, Object>) FXRouter.getData() : null;
         studentList = (UserList) data.get("studentsList");
         student = (User) data.get("studentRegistering");
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         errorLabel.setText("");
     }

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,6 +17,7 @@ import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.exceptions.DuplicateItemsException;
 import ku.cs.services.exceptions.EmptyInputException;
 
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class AdminMajorFacultyPopupController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Text modeText;
 
     @FXML private Text belongFacultyText;
@@ -59,6 +63,8 @@ public class AdminMajorFacultyPopupController {
 
     @FXML
     private void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         optionChoiceBox.getItems().addAll(optionChoice);
         emptyInputText.setVisible(false);
 

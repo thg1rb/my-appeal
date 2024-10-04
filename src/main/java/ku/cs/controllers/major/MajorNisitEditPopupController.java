@@ -9,12 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 
@@ -25,27 +27,33 @@ import java.util.UUID;
 import ku.cs.services.exceptions.EmptyInputException;
 
 public class MajorNisitEditPopupController {
-    @FXML TextField nisitNameTextField;
-    @FXML TextField nisitLastNameTextField;
-    @FXML TextField nisitIdTextField;
-    @FXML TextField nisitEmailTextField;
-    @FXML ComboBox<String> professorComboBox;
-    @FXML Button addButton;
-    @FXML Button confirmButton;
-    @FXML Label topicLabel;
+    @FXML private AnchorPane mainPane;
+    @FXML private TextField nisitNameTextField;
+    @FXML private TextField nisitLastNameTextField;
+    @FXML private TextField nisitIdTextField;
+    @FXML private TextField nisitEmailTextField;
+    @FXML private ComboBox<String> professorComboBox;
+    @FXML private Button addButton;
+    @FXML private Button confirmButton;
+    @FXML private Label topicLabel;
 
     private Datasource<UserList> advisorDatasource;
     private UserList advisorList;
     private HashMap<String, UUID> advisorMap;
 
-    @FXML Label nameErrorLabel;
-    @FXML Label lastNameErrorLabel;
-    @FXML Label idErrorLabel;
-    @FXML Label emailErrorLabel;
+    @FXML private Label nameErrorLabel;
+    @FXML private Label lastNameErrorLabel;
+    @FXML private Label idErrorLabel;
+    @FXML private Label emailErrorLabel;
 
     private DepartmentStaff user;
     private User nisit;
     private UserList studentRoster;
+
+    @FXML
+    private void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+    }
 
     public void setNisit(User selectedNisit){
         this.nisit = selectedNisit;

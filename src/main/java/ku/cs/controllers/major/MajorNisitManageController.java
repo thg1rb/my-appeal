@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.collections.UserList;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
@@ -26,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class MajorNisitManageController {
+    @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TextField searchTextField;
 
@@ -40,6 +43,11 @@ public class MajorNisitManageController {
     public void initialize() {
         user = (DepartmentStaff) FXRouter.getData();
 
+        datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = datasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -49,11 +57,6 @@ public class MajorNisitManageController {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
-
-        datasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
-        studentList = datasource.readData();
-
 
         showTable(studentList);
         // ช่องค้นหา

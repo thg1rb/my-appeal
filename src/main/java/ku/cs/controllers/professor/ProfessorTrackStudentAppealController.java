@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
@@ -36,7 +38,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProfessorTrackStudentAppealController {
-    @FXML Label ownerAppealLabel;
+    @FXML private AnchorPane mainPane;
+
+    @FXML private Label ownerAppealLabel;
 
     @FXML private TableView<Appeal> tableView;
     @FXML private Text totalText;
@@ -50,6 +54,11 @@ public class ProfessorTrackStudentAppealController {
     @FXML
     private void initialize() {
 
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         // ปุ่มปิดหน้าต่าง
         Image defaultClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up.png").toString());
         Image hoverClosePopUpImage = new Image(getClass().getResource("/icons/close-pop-up-hover.png").toString());
@@ -58,9 +67,6 @@ public class ProfessorTrackStudentAppealController {
 
         closePopUpButton.setOnMouseEntered(mouseEvent -> closePopUpImageView.setImage(hoverClosePopUpImage));
         closePopUpButton.setOnMouseExited(mouseEvent -> closePopUpImageView.setImage(defaultClosePopUpImage));
-
-        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
-        modifyDateList = modifyDateListDatasource.readData();
 
         tableView.setOnMouseClicked(mouseEvent -> {
             Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();

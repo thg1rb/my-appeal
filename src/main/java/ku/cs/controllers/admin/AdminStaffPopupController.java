@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.ValidationService;
 import ku.cs.services.exceptions.EmptyInputException;
 import ku.cs.services.exceptions.IllegalValidationException;
@@ -29,6 +31,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class AdminStaffPopupController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Text optionText;
     @FXML private Text majorText;
     @FXML private Text idText;
@@ -65,6 +69,8 @@ public class AdminStaffPopupController {
 
     @FXML
     private void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         roleChoiceBox.getItems().addAll(staffChoice);
 
         emptyInputText.setVisible(false);

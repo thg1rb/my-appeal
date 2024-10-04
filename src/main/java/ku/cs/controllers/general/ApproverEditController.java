@@ -6,13 +6,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.exceptions.EmptyInputException;
 
 public class ApproverEditController {
+    @FXML private AnchorPane mainPane;
     @FXML private TextField nameTextField;
     @FXML private TextField lastNameTextField;
     @FXML private TextField subRoleTextField;
@@ -32,6 +35,8 @@ public class ApproverEditController {
     private String selectedRole;
 
     public void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         roleComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 selectedRole = newValue;

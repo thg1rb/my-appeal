@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -25,15 +27,6 @@ import java.io.IOException;
 
 
 public class FacultyAppealManageController {
-    @FXML
-    private Pane navbarAnchorPane;
-
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private TableView<Appeal> tableView;
-
     private Appeal selectedAppeal;
     private AppealList appealList;
     private Datasource<AppealList> datasource;
@@ -42,7 +35,14 @@ public class FacultyAppealManageController {
     private ModifyDateList modifyDateList;
     private User user;
     private Datasource<ModifyDateList> modifyDateListDatasource;
-    //    private Object selectedAppeal;
+
+    @FXML private AnchorPane mainPane;
+
+    @FXML private Pane navbarAnchorPane;
+
+    @FXML private TabPane tabPane;
+
+    @FXML private TableView<Appeal> tableView;
 
     @FXML
     public void initialize() {
@@ -54,6 +54,8 @@ public class FacultyAppealManageController {
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

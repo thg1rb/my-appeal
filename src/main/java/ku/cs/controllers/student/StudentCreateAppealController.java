@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
@@ -30,9 +31,9 @@ import java.util.Date;
 import java.util.UUID;
 
 public class StudentCreateAppealController {
-    @FXML private Pane navbarAnchorPane;
+    @FXML private AnchorPane mainPane;
 
-    @FXML private Label createAppealTitle;
+    @FXML private Pane navbarAnchorPane;
 
     // Appeal
     @FXML private ChoiceBox<String> appealChoiceBox;
@@ -96,6 +97,8 @@ public class StudentCreateAppealController {
         // อ่านไฟล์ modify-date.csv (เอาไปใช้เขียนไฟล์หรือเพิ่มข้อมูล)
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

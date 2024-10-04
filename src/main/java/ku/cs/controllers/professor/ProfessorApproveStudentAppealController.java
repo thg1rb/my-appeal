@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -16,6 +17,7 @@ import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.ModifyDateList;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
@@ -24,6 +26,8 @@ import ku.cs.services.exceptions.EmptyInputException;
 import java.util.Date;
 
 public class ProfessorApproveStudentAppealController {
+
+    @FXML private AnchorPane mainPane;
 
     @FXML private ScrollPane generalAppealScrollPane;
     @FXML private ScrollPane suspendAppealScrollPane;
@@ -74,6 +78,8 @@ public class ProfessorApproveStudentAppealController {
     private void initialize() {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController

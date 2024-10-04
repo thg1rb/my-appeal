@@ -21,6 +21,7 @@ import ku.cs.models.collections.UserList;
 
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 
@@ -46,6 +47,8 @@ public class LoginController {
 
         giveUsernameTextField.setOnKeyPressed(this::handleKeyPressed);
         givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ

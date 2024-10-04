@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -17,6 +18,7 @@ import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.Approver;
 
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
@@ -28,15 +30,17 @@ import java.io.File;
 import java.util.Date;
 
 public class AcceptAppealController {
-    @FXML TableView<Approver> approverTableView;
-    @FXML RadioButton finishHereRadioButton;
-    @FXML RadioButton moreOperationRadioButton;
-    @FXML Label approverErrorLabel;
-    @FXML Button uploadButton;
-    @FXML Rectangle imageRectangle;
-    @FXML TextField searchTextField;
-    @FXML ImageView imageViewButtonImageView;
-    @FXML Label errorUploadLabel;
+    @FXML private AnchorPane mainPane;
+
+    @FXML private TableView<Approver> approverTableView;
+    @FXML private RadioButton finishHereRadioButton;
+    @FXML private RadioButton moreOperationRadioButton;
+    @FXML private Label approverErrorLabel;
+    @FXML private Button uploadButton;
+    @FXML private Rectangle imageRectangle;
+    @FXML private TextField searchTextField;
+    @FXML private ImageView imageViewButtonImageView;
+    @FXML private Label errorUploadLabel;
 
     private User staff;
     private String selectedStatus;
@@ -59,6 +63,8 @@ public class AcceptAppealController {
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         finishHereRadioButton.setSelected(true);
         subStatus = " | " + finishHereRadioButton.getText();

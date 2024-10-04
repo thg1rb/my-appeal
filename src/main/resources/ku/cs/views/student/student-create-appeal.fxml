@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #F1F1F1;" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.student.StudentCreateAppealController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #F1F1F1;" stylesheets="@../../styles/font-normal.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.student.StudentCreateAppealController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Label fx:id="createAppealTitle" layoutX="270.0" layoutY="115.0" styleClass="label-bold" text="สร้างใบคำร้อง">
@@ -49,7 +49,7 @@
             </TextArea>
          </children>
       </Pane>
-      <Pane fx:id="suspendAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css" visible="false">
+      <Pane fx:id="suspendAppealPane" layoutX="230.0" layoutY="205.0" prefHeight="600.0" prefWidth="1180.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
          <children>
             <Label layoutX="59.0" layoutY="57.0" styleClass="label-medium" text="ระบุเหตุผลในการลาพักการศึกษา">
                <font>

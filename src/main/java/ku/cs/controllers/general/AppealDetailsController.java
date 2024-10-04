@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -16,12 +17,15 @@ import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.dates.ModifyDate;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.File;
 
 public class AppealDetailsController {
+
+    @FXML private AnchorPane mainPane;
 
     @FXML private ScrollPane generalScrollPane;
     @FXML private ScrollPane suspendScrollPane;
@@ -71,6 +75,11 @@ public class AppealDetailsController {
 
     @FXML
     private void initialize() {
+        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
+        modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         defaultClosePopUpLightImage = new Image(getClass().getResource("/icons/close-pop-up.png").toString());
         hoverClosePopUpLightImage = new Image(getClass().getResource("/icons/close-pop-up-hover.png").toString());
 
@@ -79,8 +88,6 @@ public class AppealDetailsController {
         closePopUpLightButton.setOnMouseEntered(mouseEvent -> closePopUpLightImageView.setImage(hoverClosePopUpLightImage));
         closePopUpLightButton.setOnMouseExited(mouseEvent -> closePopUpLightImageView.setImage(defaultClosePopUpLightImage));
 
-        modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
-        modifyDateList = modifyDateListDatasource.readData();
     }
 
     //

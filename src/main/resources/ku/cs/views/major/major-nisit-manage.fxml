@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNisitManageController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" styleClass="label-regular" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNisitManageController">
    <children>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <Pane layoutX="281.0" layoutY="662.0" prefHeight="70.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-border-color: #D9D9D9; -fx-border-radius: 0 0 20 20; -fx-background-radius: 0 0 20 20;">

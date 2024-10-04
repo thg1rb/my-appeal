@@ -22,6 +22,7 @@ import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
@@ -90,6 +91,8 @@ public class AppealEditController {
     private void initialize() {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
