@@ -91,6 +91,8 @@ public class MajorAppealManageController {
         });
     }
 
+
+
     public void showAppealPopup(boolean preview) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
