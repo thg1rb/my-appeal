@@ -19,6 +19,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -54,6 +55,12 @@ public class MajorAppealManageController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = datasource.readData();
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -63,10 +70,6 @@ public class MajorAppealManageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        datasource = new AppealListFileDatasource("data", "appeal-list.csv");
-        appealList = datasource.readData();
-        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartment());
 
         showTable(departmentAppealList, false);
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
@@ -117,7 +120,7 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
             appealList = datasource.readData();
-            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartment());
+            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
             showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
 
         } catch (IOException e) {
@@ -153,10 +156,9 @@ public class MajorAppealManageController {
 
         tableView.getSortOrder().add(dateColumn);
         tableView.getItems().clear();
-
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate().equals("null") && !appeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")){
+                if (modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate() != null && !appeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")){
                     tableView.getItems().add(appeal);
                 }
             }

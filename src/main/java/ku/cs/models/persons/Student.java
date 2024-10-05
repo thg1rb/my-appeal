@@ -1,38 +1,48 @@
 package ku.cs.models.persons;
 
+import ku.cs.models.Major;
+import ku.cs.models.collections.FacultyList;
+import ku.cs.models.collections.MajorList;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.FacultyListDatasource;
+import ku.cs.services.datasources.MajorListDatasource;
+
 import java.util.UUID;
 
 public class Student extends User {
     private String studentId;
     private String email;
-    private String faculty;
-    private String department;
+//    private String faculty;
+    private UUID facultyUUID;
+    private UUID departmentUUID;
     private UUID advisorUUID;
 
     private boolean registered;
 
-    //Constructor
+    // Constructor
     // without advisor init
-    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department) {
+    public Student(String firstName, String lastName, String studentId, String email, UUID faculty, UUID department) {
         super("นักศึกษา", firstName, lastName);
         this.studentId = studentId;
         this.email = email;
-        this.faculty = faculty;
-        this.department = department;
+        this.facultyUUID = faculty;
+        this.departmentUUID = department;
         this.registered = false;
     }
+
     // with advisor init
-    public Student(String firstName, String lastName, String studentId, String email, String faculty, String department, UUID advisorUUID) {
+    public Student(String firstName, String lastName, String studentId, String email, UUID faculty, UUID department, UUID advisorUUID) {
         this(firstName, lastName, studentId, email, faculty, department);
         this.advisorUUID = advisorUUID;
     }
+
     //Constructor for reading file
     public Student(String uuid, String role, String username, String password, String firstName, String lastName, boolean access, String loginDate, String profileUrl, String StudentId, String email, String faculty, String department, String advisorUUID, boolean registered) {
         super(uuid, role, username, password, firstName, lastName, access, loginDate, profileUrl);
         this.studentId = StudentId;
         this.email = email;
-        this.faculty = faculty;
-        this.department = department;
+        this.facultyUUID = UUID.fromString(faculty);
+        this.departmentUUID = UUID.fromString(department);
         if (advisorUUID == null || advisorUUID.equals("null")){
             this.advisorUUID = null;
         }else {
@@ -47,18 +57,18 @@ public class Student extends User {
         setRegistered();
     }
 
-    //Setter
+    // Setters
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
+    public void setFacultyUUID(UUID facultyUUID) {
+        this.facultyUUID = facultyUUID;
     }
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentUUID(UUID departmentUUID) {
+        this.departmentUUID = departmentUUID;
     }
     public void setAdvisor(UUID advisor) {
         this.advisorUUID = advisor;
@@ -67,7 +77,7 @@ public class Student extends User {
         this.registered = true;
     }
 
-    //Getter
+    // Getters
     public String getStudentId() {
         return studentId;
     }
@@ -75,9 +85,17 @@ public class Student extends User {
         return email;
     }
     public String getFaculty() {
+        Datasource<FacultyList> facultyListDatasource = new FacultyListDatasource("data", "faculties.csv");
+        String faculty = facultyListDatasource.readData().findFacultyByUUID(this.facultyUUID).getFacultyName();
         return faculty;
     }
+    public UUID getFacultyUUID() {
+        return facultyUUID;
+    }
+    public UUID getDepartmentUUID() { return departmentUUID; }
     public String getDepartment() {
+        Datasource<MajorList> datasource = new MajorListDatasource("data", "majors.csv");
+        String department = datasource.readData().findMajorByUUID(this.departmentUUID).getMajorName();
         return department;
     }
     public UUID getAdvisorUUID() {
@@ -89,7 +107,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return super.toString() +","+ studentId + "," + email + "," + faculty + "," + department + "," + advisorUUID + "," + registered;
+        return super.toString() +","+ studentId + "," + email + "," + facultyUUID + "," + departmentUUID + "," + advisorUUID + "," + registered;
     }
 
     @Override

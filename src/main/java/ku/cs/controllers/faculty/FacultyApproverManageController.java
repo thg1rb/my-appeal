@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
@@ -27,12 +29,6 @@ import java.io.IOException;
 
 
 public class FacultyApproverManageController {
-    @FXML private Pane navbarAnchorPane;
-
-    @FXML
-    private TableView<Approver> approverTableView;
-    @FXML
-    private TextField searchTextField;
     private User user;
 
     private Datasource<ApproverList> approversDatasource;
@@ -41,14 +37,25 @@ public class FacultyApproverManageController {
     private Approver selectedApprover;
     private boolean addMode;
 
+    @FXML private AnchorPane mainPane;
+
+    @FXML private Pane navbarAnchorPane;
+
+    @FXML
+    private TableView<Approver> approverTableView;
+    @FXML
+    private TextField searchTextField;
+
 
     @FXML
     public void initialize() {
+        user = (FacultyStaff)FXRouter.getData();
+
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
         facultyTierApproverList = approverList.getFacultyTierApprovers();
 
-        user = (FacultyStaff)FXRouter.getData();
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

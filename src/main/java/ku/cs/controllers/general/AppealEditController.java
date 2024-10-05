@@ -20,7 +20,9 @@ import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.ModifyDateList;
+import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
@@ -89,6 +91,8 @@ public class AppealEditController {
     private void initialize() {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
@@ -203,7 +207,7 @@ public class AppealEditController {
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else {
-            if (!modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate().equals("null")) {
+            if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate() != null) {
                 departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
                 departmentApproveDateLabel.setStyle(createColor);
             } else {
@@ -211,7 +215,7 @@ public class AppealEditController {
                 departmentApproveDateLabel.setStyle(pendingColor);
             }
 
-            if (!modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate().equals("null")) {
+            if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate() != null) {
                 facultyApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate());
                 facultyApproveDateLabel.setStyle(createColor);
             } else {

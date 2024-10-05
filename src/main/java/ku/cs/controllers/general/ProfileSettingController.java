@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
@@ -24,6 +26,8 @@ import ku.cs.services.fileuploaders.ImageFileUploader;
 import java.io.File;
 
 public class ProfileSettingController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private Circle profileImageCircle;
@@ -46,6 +50,8 @@ public class ProfileSettingController {
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -116,9 +122,9 @@ public class ProfileSettingController {
             clearTextField();
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("โปรดใส่ข้อมูลให้ครบถ้วน");
             } else if (!validationService.validatePassword(newPassword)) {
-                throw new IllegalValidationException();
+                throw new IllegalValidationException("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
             } else if (!newPassword.equals(confirmPassword)) {
                 confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
             } else if (!user.validatePassword(oldPassword)) {
@@ -132,9 +138,9 @@ public class ProfileSettingController {
                 successLabel.setText("เปลี่ยนรหัสผ่านสำเร็จ");
             }
         }catch (EmptyInputException e){
-            confirmEditErrorLabel.setText("โปรดใส่ข้อมูลให้ครบถ้วน");
+            confirmEditErrorLabel.setText(e.getMessage());
         } catch (IllegalValidationException e){
-            validationErrorLabel.setText("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร และ ไม่เป็นภาษาไทย");
+            validationErrorLabel.setText(e.getMessage());
         }
     }
 

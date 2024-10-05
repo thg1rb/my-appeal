@@ -71,47 +71,35 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
                 String[] data = line.split(",");
 
                 // อ่านข้อมูลตาม index แล้วจัดการประเภทของข้อมูลให้เหมาะสม
-//                String createDate = data[0].trim();
-//                String ownerId = data[1].trim();
-//                String ownerFullName = data[2].trim();
-//                String type = data[3].trim();
-//                String status = data[4].trim();
-//                String topic = data[5].trim();
-//                String reason = data[6].trim();
-//                String purpose = data[7].trim();
-//                String subjects = data[8].trim();
-//                String startDate = data[9].trim();
-//                String endDate = data[10].trim();
-//                String semester = data[11].trim();
-//                String year = data[12].trim();
-//                String uuid = data[13].trim();
                 String modifyDate = data[0];
                 String uuid = data[1].trim();
                 String type = data[2].trim();
                 String status = data[3].trim();
                 String rejectedReason = data[4].trim();
                 String ownerId = data[5].trim();
-                String ownerFullName = data[6].trim();
-                String ownerDepartment = data[7].trim();
+                String ownerFullNameUuid = data[6].trim();
+                String ownerDepartmentUuid = data[7].trim();
                 String ownerFaculty = data[8].trim();
-                String reason = data[9].trim();
-                String subjects = data[10].trim();
+                String departmentSignature = data[9].trim();
+                String facultySignature = data[10].trim();
+                String reason = data[11].trim();
+                String subjects = data[12].trim();
 
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
-                    String topic = data[11].trim();
-                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, topic));
+                    String topic = data[13].trim();
+                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, topic));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
-                    String semester = data[11].trim();
-                    String year = data[12].trim();
-                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, semester, year));
+                    String semester = data[13].trim();
+                    String year = data[14].trim();
+                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, semester, year));
                 }
                 else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
-                    String purpose = data[11].trim();
-                    String startDate = data[12].trim();
-                    String endDate = data[13].trim();
-                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartment, ownerFaculty, reason, subjects, purpose, startDate, endDate));
+                    String purpose = data[13].trim();
+                    String startDate = data[14].trim();
+                    String endDate = data[15].trim();
+                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, purpose, startDate, endDate));
                 }
             }
         } catch (IOException e) {

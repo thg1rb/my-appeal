@@ -2,6 +2,7 @@ package ku.cs.controllers.major;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
 
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
@@ -24,6 +26,8 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class MajorApproverManageController {
+
+    @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Approver> approverTableView;
 
@@ -37,6 +41,13 @@ public class MajorApproverManageController {
     public void initialize() {
         user = (DepartmentStaff) FXRouter.getData();
 
+        approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
+        approverList = approverDatasource.readData();
+
+        departmentTierApproverList = approverList.getDepartmentTierApprovers();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -47,10 +58,6 @@ public class MajorApproverManageController {
             throw new RuntimeException(e);
         }
 
-        approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
-        approverList = approverDatasource.readData();
-
-        departmentTierApproverList = approverList.getDepartmentTierApprovers();
 
         showTable(departmentTierApproverList);
 

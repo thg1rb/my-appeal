@@ -4,12 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.layout.AnchorPane;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.ValidationService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class RegisterUsernamePasswordController {
+    @FXML private AnchorPane mainPane;
     @FXML private TextField usernameTextField;
     @FXML private TextField passwordTextField;
     @FXML private TextField confirmPasswordTextField;
@@ -39,6 +42,8 @@ public class RegisterUsernamePasswordController {
         studentList = (UserList) data.get("studentsList");
         student = (User) data.get("studentRegistering");
 
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         errorLabel.setText("");
     }
 
@@ -51,7 +56,7 @@ public class RegisterUsernamePasswordController {
         try{
             ValidationService validationService = new ValidationService();
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                throw new EmptyInputException();
+                throw new EmptyInputException("กรุณาใส่ข้อมูลให้ครบถ้วน");
             }else if (studentList.findUserByUsername(username) != null){
                 throw new DuplicateItemsException("ชื่อผู้ใช้งานระบบนี้ถูกใช้ไปแล้ว กรุณาใช้ชื่ออื่น");
             }else if (!validationService.validateUsername(username)){
@@ -72,9 +77,7 @@ public class RegisterUsernamePasswordController {
                     errorLabel.setText("กรุณาใส่รหัสผ่านให้ตรงกัน");
                 }
             }
-        } catch (EmptyInputException e){
-            errorLabel.setText("กรุณาใส่ข้อมูลให้ครบถ้วน");
-        } catch (DuplicateItemsException e) {
+        } catch (EmptyInputException | DuplicateItemsException e){
             errorLabel.setText(e.getMessage());
         }
     }

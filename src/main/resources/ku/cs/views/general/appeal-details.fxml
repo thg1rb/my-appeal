@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealDetailsController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealDetailsController">
    <children>
       <Pane prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #265252;">
          <children>
@@ -327,7 +327,7 @@
          <children>
             <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
                <children>
-                  <Button contentDisplay="TOP" layoutX="350.0" layoutY="364.0" mnemonicParsing="false" onAction="#onCloseRejectedReasonButton" stylesheets="@../../styles/button.css" text="รับทราบ">
+                  <Button contentDisplay="TOP" layoutX="350.0" layoutY="364.0" mnemonicParsing="false" onAction="#onCloseAlertPane" stylesheets="@../../styles/button.css" text="รับทราบ">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -359,6 +359,29 @@
                         </AnchorPane>
                     </content>
                   </ScrollPane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="approveSignatureAlertPane" prefHeight="700.0" prefWidth="1200.0" styleClass="background-alert-pane" stylesheets="@../../styles/pane.css" visible="false">
+         <children>
+            <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
+               <children>
+                  <Button contentDisplay="TOP" layoutX="350.0" layoutY="364.0" mnemonicParsing="false" onAction="#onCloseAlertPane" stylesheets="@../../styles/button.css" text="รับทราบ">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="approve-button" />
+                     </styleClass>
+                  </Button>
+                  <Label fx:id="approveSignatureTitleLabel" alignment="CENTER" layoutY="59.0" prefWidth="800.0" styleClass="label-bold" text="ApproveTitleLabel" textFill="#008f2f">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="approveSignatureImageView" fitHeight="200.0" fitWidth="300.0" layoutX="250.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
          </children>

@@ -8,17 +8,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="505.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ConfirmationDeleteAlertController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="505.0" styleClass="label-regular" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ConfirmationDeleteAlertController">
    <children>
       <Text layoutX="106.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-medium" text=" ข้อมูลนี้จะไม่สามารถกู้คืนได้&#10;คุณต้องการที่จะลบใช่หรือไม่ ?">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="cancelButton" layoutX="87.0" layoutY="243.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" styleClass="unban-button" stylesheets="@../../styles/ban-unban-button.css" text="ยกเลิก" textFill="#025fff">
+      <Button fx:id="cancelButton" layoutX="87.0" layoutY="243.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" stylesheets="@../../styles/ban-unban-button.css" text="ยกเลิก" textFill="#025fff">
          <font>
             <Font size="24.0" />
          </font>
+         <styleClass>
+            <String fx:value="unban-button" />
+            <String fx:value="label-regular" />
+         </styleClass>
       </Button>
       <Button fx:id="confirmButton" layoutX="277.0" layoutY="243.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" stylesheets="@../../styles/ban-unban-button.css" text="ยืนยัน" textFill="RED">
          <font>
@@ -26,7 +30,7 @@
          </font>
          <styleClass>
             <String fx:value="ban-button" />
-            <String fx:value="re" />
+            <String fx:value="label-regular" />
          </styleClass>
       </Button>
       <ImageView fitHeight="115.0" fitWidth="115.0" layoutX="195.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">

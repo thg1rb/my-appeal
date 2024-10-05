@@ -17,9 +17,15 @@ public class ModifyDate {
 
     public ModifyDate(String uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
         this(uuid, createDate);
-        this.advisorApproveDate = advisorApproveDate;
-        this.departmentApproveDate = departmentApproveDate;
-        this.facultyApproveDate = facultyApproveDate;
+
+        if (advisorApproveDate == null || advisorApproveDate.equals("null")) this.advisorApproveDate = null;
+        else this.advisorApproveDate = advisorApproveDate;
+
+        if (departmentApproveDate == null || departmentApproveDate.equals("null")) this.departmentApproveDate = null;
+        else this.departmentApproveDate = departmentApproveDate;
+
+        if (facultyApproveDate == null || facultyApproveDate.equals("null")) this.facultyApproveDate = null;
+        else this.facultyApproveDate = facultyApproveDate;
     }
 
     // Getters
@@ -69,15 +75,15 @@ public class ModifyDate {
     }
 
     public boolean isAdvisorPending() {
-        return advisorApproveDate.equals("null");
+        return advisorApproveDate == null;
     }
 
     public boolean isDepartmentPending() {
-        return departmentApproveDate.equals("null");
+        return departmentApproveDate == null;
     }
 
     public boolean isFacultyPending() {
-        return facultyApproveDate.equals("null");
+        return facultyApproveDate == null;
     }
 
     // Overriding Method

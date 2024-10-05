@@ -3,6 +3,7 @@ package ku.cs.models.collections;
 import ku.cs.models.Major;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MajorList {
     private ArrayList<Major> majors;
@@ -11,20 +12,18 @@ public class MajorList {
         this.majors = new ArrayList<>();
     }
 
-    public void addMajor(String name, String faculty, String id, FacultyList facultyList){
+    public void addMajor(String name, UUID faculty, String id, FacultyList facultyList){
         name = name.trim();
-        faculty = faculty.trim();
         id = id.trim();
-        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty() && facultyList.isFacultyExist(faculty)){
+        if (!name.isEmpty() && faculty != null && !id.isEmpty()){
             majors.add(new Major(name, faculty, id));
         }
     }
 
-    public void addMajor(String name, String faculty, String id){
+    public void addMajor(String name, UUID faculty, String id){
         name = name.trim();
-        faculty = faculty.trim();
         id = id.trim();
-        if (!name.isEmpty() && !faculty.isEmpty() && !id.isEmpty()){
+        if (!name.isEmpty() && faculty != null && !id.isEmpty()){
             majors.add(new Major(name, faculty, id));
         }
     }
@@ -46,20 +45,11 @@ public class MajorList {
         majors.add(obj);
     }
 
-    public ArrayList<Major> findObjMajorsByFaculty(String faculty){
-        ArrayList<Major> majorsInFaculty = new ArrayList<>();
-        for (Major major : majors){
-            if (major.getFaculty().equals(faculty)){
-                majorsInFaculty.add(major);
-            }
-        }
-        return majorsInFaculty;
-    }
 
-    public ArrayList<String> findMajorsByFaculty(String faculty){
+    public ArrayList<String> findMajorsByFaculty(UUID faculty){
         ArrayList<String> majorsInFaculty = new ArrayList<>();
         for (Major major : majors){
-            if (major.getFaculty().equals(faculty)){
+            if (major.getFacultyUUID().equals(faculty)){
                 majorsInFaculty.add(major.getMajorName());
             }
         }
@@ -84,8 +74,17 @@ public class MajorList {
         return null;
     }
 
-    public void deleteAllMajorsOfFaculty(String faculty){
-        majors.removeIf(major -> major.getFaculty().equals(faculty));
+    public Major findMajorByUUID(UUID majorUUID){
+        for (Major major : majors){
+            if (major.getUuid().equals(majorUUID)){
+                return major;
+            }
+        }
+        return null;
+    }
+
+    public void deleteAllMajorsOfFaculty(UUID faculty){
+        majors.removeIf(major -> major.getFacultyUUID().equals(faculty));
     }
 
     public void deleteMajor(Major major){

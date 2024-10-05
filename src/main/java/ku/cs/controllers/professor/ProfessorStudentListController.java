@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -18,9 +19,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.UserList;
-import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
@@ -32,6 +33,7 @@ import java.util.UUID;
 
 public class ProfessorStudentListController {
 
+    @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private Text totalText;
     @FXML private TableView<User> tableView;
@@ -49,6 +51,16 @@ public class ProfessorStudentListController {
     private void initialize() {
         user = (User) FXRouter.getData();
 
+        // Student Datasource
+        studentDatasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
+        studentList = studentDatasource.readData();
+
+        // Appeal Datasource
+        appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
+        appealList = appealDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         //NavBar Component
         String role = user.getRoleInEnglish();
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
@@ -59,13 +71,6 @@ public class ProfessorStudentListController {
             throw new RuntimeException(e);
         }
 
-        // Student Datasource
-        studentDatasource = new UserListDatasource("data" + File.separator + "users", "student.csv");
-        studentList = studentDatasource.readData();
-
-        // Appeal Datasource
-        appealDatasource = new AppealListFileDatasource("data", "appeal-list.csv");
-        appealList = appealDatasource.readData();
 
         // ช่องค้นหา
         showTable(studentList, searchTextField.getText());

@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -19,6 +20,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -26,7 +28,6 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
-
 
 public class StudentTrackAppealController {
 
@@ -37,6 +38,8 @@ public class StudentTrackAppealController {
     private ModifyDateList modifyDateList;
 
     private User user;
+
+    @FXML private AnchorPane mainPane;
 
     @FXML private Pane navbarAnchorPane;
 
@@ -56,6 +59,8 @@ public class StudentTrackAppealController {
 
         modifyDateDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         showTable(appealList, ((Student)user).getStudentId(), searchTextField.getText());
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {

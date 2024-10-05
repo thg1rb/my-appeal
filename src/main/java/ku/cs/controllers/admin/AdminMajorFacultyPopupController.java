@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,13 +17,17 @@ import ku.cs.models.Faculty;
 import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.exceptions.DuplicateItemsException;
 import ku.cs.services.exceptions.EmptyInputException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AdminMajorFacultyPopupController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Text modeText;
 
     @FXML private Text belongFacultyText;
@@ -58,6 +63,8 @@ public class AdminMajorFacultyPopupController {
 
     @FXML
     private void initialize() {
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         optionChoiceBox.getItems().addAll(optionChoice);
         emptyInputText.setVisible(false);
 
@@ -114,7 +121,7 @@ public class AdminMajorFacultyPopupController {
             }else if (data instanceof Major){
                 majorNameTextField.setText(((Major) data).getMajorName());
                 majorIdTextField.setText(((Major) data).getMajorId());
-                facultyChoiceBox.getSelectionModel().select(((Major) data).getFaculty());
+                facultyChoiceBox.getSelectionModel().select(facultyList.findFacultyByUUID(((Major) data).getFacultyUUID()).getFacultyName());
             }
         }
     }
@@ -159,7 +166,7 @@ public class AdminMajorFacultyPopupController {
                 id = facultyIdTextField.getText();
 
                 if (name.isEmpty() || id.isEmpty()){
-                    throw new EmptyInputException();
+                    throw new EmptyInputException("*กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
 
                 for (String faculty : facultyChoice){
@@ -172,10 +179,10 @@ public class AdminMajorFacultyPopupController {
             }else{
                 name = majorNameTextField.getText();
                 id = majorIdTextField.getText();
-                String faculty = facultyChoiceBox.getValue();
+                UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
 
-                if (name.isEmpty() || id.isEmpty() || faculty.isEmpty()){
-                    throw new EmptyInputException();
+                if (name.isEmpty() || id.isEmpty() || faculty == null){
+                    throw new EmptyInputException("*กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
 
                 for (Major major : majorList.getMajors()){
@@ -183,15 +190,12 @@ public class AdminMajorFacultyPopupController {
                         throw new DuplicateItemsException("*ภาควิชานี้มีในระบบอยู่แล้ว");
                     }
                 }
-                majorList.addMajor(name, faculty, id, facultyList);
+                majorList.addMajor(name, faculty, id);
             }
 
             Stage stage = (Stage) confirmButton.getScene().getWindow();
             stage.close();
-        }catch (EmptyInputException e){
-            emptyInputText.setText("*กรุณากรอกข้อมูลให้ครบถ้วน");
-            emptyInputText.setVisible(true);
-        }catch (DuplicateItemsException e){
+        }catch (EmptyInputException | DuplicateItemsException e){
             emptyInputText.setText(e.getMessage());
             emptyInputText.setVisible(true);
         }
@@ -219,13 +223,14 @@ public class AdminMajorFacultyPopupController {
             } else {
                 name = majorNameTextField.getText();
                 id = majorIdTextField.getText();
-                String faculty = facultyChoiceBox.getValue();
-                if (name.isEmpty() || id.isEmpty() || faculty.isEmpty()){
+                UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
+
+                if (name.isEmpty() || id.isEmpty() || faculty == null){
                     throw new EmptyInputException();
                 }
                 ((Major) data).setMajorName(name);
                 ((Major) data).setMajorId(id);
-                ((Major) data).setFaculty(facultyChoiceBox.getValue());
+                ((Major) data).setFacultyUUID(faculty);
             }
 
             Stage stage = (Stage) editButton.getScene().getWindow();

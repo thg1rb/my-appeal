@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.professor.ProfessorTrackStudentAppealController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="label-regular" stylesheets="@../../styles/font-normal.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.professor.ProfessorTrackStudentAppealController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1200.0" style="-fx-background-color: #265252;" />
       <Button fx:id="closePopUpButton" contentDisplay="TOP" layoutX="1065.0" layoutY="23.0" mnemonicParsing="false" onAction="#onCloseButtonClick" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">

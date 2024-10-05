@@ -12,12 +12,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.DateTimeService;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
@@ -26,6 +28,8 @@ import java.io.File;
 import java.util.HashMap;
 
 public class AdminUserManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
@@ -45,6 +49,8 @@ public class AdminUserManagementController {
     @FXML
     public void initialize() {
         user = (AdminUser) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();

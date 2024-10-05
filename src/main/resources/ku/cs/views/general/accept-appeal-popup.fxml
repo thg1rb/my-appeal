@@ -13,10 +13,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AcceptAppealController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AcceptAppealController">
    <children>
       <TableView fx:id="approverTableView" layoutX="53.0" layoutY="238.0" prefHeight="284.0" prefWidth="448.0" styleClass="mini-table-view" stylesheets="@../../styles/table-view.css" />
-      <Label layoutX="49.0" layoutY="188.0" text="ผู้อนุมัติคำร้อง">
+      <Label layoutX="49.0" layoutY="188.0" styleClass="label-bold" text="ผู้อนุมัติคำร้อง">
          <font>
             <Font size="32.0" />
          </font>
@@ -37,7 +37,7 @@
          <font>
             <Font size="18.0" />
          </font></RadioButton>
-      <Label layoutX="49.0" layoutY="37.0" text="เลือกดำเนินการคำร้อง">
+      <Label layoutX="49.0" layoutY="37.0" styleClass="label-bold" text="เลือกดำเนินการคำร้อง">
          <font>
             <Font size="32.0" />
          </font>
@@ -55,13 +55,13 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Label layoutX="556.0" layoutY="37.0" text="แนบไฟล์ลงนาม">
+      <Label layoutX="556.0" layoutY="37.0" styleClass="label-bold" text="แนบไฟล์ลงนาม">
          <font>
             <Font size="32.0" />
          </font>
       </Label>
       <Line endX="99.99996948242188" endY="364.18817138671875" layoutX="426.0" layoutY="163.0" startX="99.99993896484375" startY="-142.0096893310547" stroke="#c3c3c3" />
-      <TextField fx:id="searchTextField" layoutX="302.0" layoutY="193.0" prefHeight="30.0" prefWidth="198.0" promptText="ค้นหาจากชื่อ" stylesheets="@../../styles/text-field.css" />
+      <TextField fx:id="searchTextField" layoutX="302.0" layoutY="193.0" prefHeight="30.0" prefWidth="198.0" promptText="ค้นหาจากชื่อ" styleClass="label-medium" stylesheets="@../../styles/text-field.css" />
       <Label fx:id="errorUploadLabel" layoutX="558.0" layoutY="307.0" styleClass="l" text="*กรุณาอัปโหลดไฟล์ลายเซ็นต์ของท่าน" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

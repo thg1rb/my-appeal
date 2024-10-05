@@ -1,10 +1,12 @@
 package ku.cs.models.persons;
 
+import java.util.UUID;
+
 public class Advisor extends DepartmentStaff {
     private String advisorId;
 
     //Constructor
-    public Advisor(String role, String username, String password, String firstName, String lastName, String faculty, String department, String advisorId) {
+    public Advisor(String role, String username, String password, String firstName, String lastName, UUID faculty, UUID department, String advisorId) {
         super(role, username, password, firstName, lastName, faculty, department);
         this.advisorId = advisorId;
     }

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -17,25 +18,29 @@ import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.Approver;
 
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
+import ku.cs.services.fileuploaders.FileUploader;
 import ku.cs.services.fileuploaders.SignFileUploader;
 
 import java.io.File;
 import java.util.Date;
 
 public class AcceptAppealController {
-    @FXML TableView<Approver> approverTableView;
-    @FXML RadioButton finishHereRadioButton;
-    @FXML RadioButton moreOperationRadioButton;
-    @FXML Label approverErrorLabel;
-    @FXML Button uploadButton;
-    @FXML Rectangle imageRectangle;
-    @FXML TextField searchTextField;
-    @FXML ImageView imageViewButtonImageView;
-    @FXML Label errorUploadLabel;
+    @FXML private AnchorPane mainPane;
+
+    @FXML private TableView<Approver> approverTableView;
+    @FXML private RadioButton finishHereRadioButton;
+    @FXML private RadioButton moreOperationRadioButton;
+    @FXML private Label approverErrorLabel;
+    @FXML private Button uploadButton;
+    @FXML private Rectangle imageRectangle;
+    @FXML private TextField searchTextField;
+    @FXML private ImageView imageViewButtonImageView;
+    @FXML private Label errorUploadLabel;
 
     private User staff;
     private String selectedStatus;
@@ -58,6 +63,8 @@ public class AcceptAppealController {
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         finishHereRadioButton.setSelected(true);
         subStatus = " | " + finishHereRadioButton.getText();
@@ -144,7 +151,8 @@ public class AcceptAppealController {
             subStatus = ((RadioButton)toggleGroup.getSelectedToggle()).getText();
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
-            selectedAppeal.setStatus(selectedStatus + " | "+subStatus);
+            selectedAppeal.setStatus(selectedStatus + " | " + subStatus);
+            System.out.println("status: " + selectedAppeal.getStatus());
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {
@@ -156,10 +164,15 @@ public class AcceptAppealController {
     }
 
     private void uploadSign(){
-        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, "data" + File.separator + "approves-signs");
+        String path = "data" + File.separator + "approves-signs";
+        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, path);
         signFileUploader.upload((Stage) imageRectangle.getScene().getWindow());
         if (signFileUploader.uploadSuccess()) {
             uploadButton.setText("");
+
+            if (role.equals("เจ้าหน้าที่ภาควิชา")) selectedAppeal.setDepartmentSignature(signFileUploader.getFullPath());
+            else if (role.equals("เจ้าหน้าที่คณะ")) selectedAppeal.setFacultySignature(signFileUploader.getFullPath());
+
             imageViewButtonImageView.setImage(null);
         } else {
             errorUploadLabel.setVisible(true);

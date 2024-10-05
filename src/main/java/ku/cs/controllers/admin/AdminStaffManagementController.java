@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -21,9 +22,11 @@ import ku.cs.models.collections.MajorList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.FacultyListDatasource;
 import ku.cs.services.datasources.MajorListDatasource;
@@ -35,6 +38,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class AdminStaffManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
@@ -64,6 +69,8 @@ public class AdminStaffManagementController {
     @FXML
     private void initialize() {
         user = (User) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -142,7 +149,11 @@ public class AdminStaffManagementController {
         initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
         TableColumn<User, String> facultyCol = new TableColumn<>("คณะ");
-        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+//        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+        facultyCol.setCellValueFactory(cellData ->{
+            FacultyStaff user = (FacultyStaff) cellData.getValue();
+            return new SimpleStringProperty(facultyList.findFacultyByUUID(user.getFacultyUUID()).getFacultyName());
+        });
         facultyCol.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -161,7 +172,7 @@ public class AdminStaffManagementController {
             TableColumn<User, String> majorCol = new TableColumn<>("สาขา");
             majorCol.setCellValueFactory(cellData ->{
                 DepartmentStaff user = (DepartmentStaff) cellData.getValue();
-                return new SimpleStringProperty(user.getDepartment());
+                return new SimpleStringProperty(majorList.findMajorByUUID(user.getDepartmentUUID()).getMajorName());
             });
 
             tableView.getColumns().add(majorCol);

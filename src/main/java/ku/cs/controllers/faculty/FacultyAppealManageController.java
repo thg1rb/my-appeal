@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -25,15 +27,6 @@ import java.io.IOException;
 
 
 public class FacultyAppealManageController {
-    @FXML
-    private Pane navbarAnchorPane;
-
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private TableView<Appeal> tableView;
-
     private Appeal selectedAppeal;
     private AppealList appealList;
     private Datasource<AppealList> datasource;
@@ -42,7 +35,14 @@ public class FacultyAppealManageController {
     private ModifyDateList modifyDateList;
     private User user;
     private Datasource<ModifyDateList> modifyDateListDatasource;
-    //    private Object selectedAppeal;
+
+    @FXML private AnchorPane mainPane;
+
+    @FXML private Pane navbarAnchorPane;
+
+    @FXML private TabPane tabPane;
+
+    @FXML private TableView<Appeal> tableView;
 
     @FXML
     public void initialize() {
@@ -50,10 +50,12 @@ public class FacultyAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFaculty());
+        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFacultyUUID().toString());
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -170,14 +172,14 @@ public class FacultyAppealManageController {
 
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate().equals("null")
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID().toString()) && modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate() != null
                         && !appeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") && !appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน")) {
                     tableView.getItems().add(appeal);
                 }
             }
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID().toString()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
                     tableView.getItems().add(appeal);
                 }
             }
