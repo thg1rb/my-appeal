@@ -41,10 +41,10 @@ public class ProgramSetting {
         // Apply theme-specific styles
         switch (getTheme()) {
             case "สว่าง":
-                // Add light theme styles
+                anchorPane.getStylesheets().add(ProgramSetting.class.getResource("/ku/cs/styles/light-theme.css").toExternalForm());
                 break;
             case "มืด":
-                // Add dark theme styles
+                anchorPane.getStylesheets().add(ProgramSetting.class.getResource("/ku/cs/styles/dark-theme.css").toExternalForm());
                 break;
         }
 

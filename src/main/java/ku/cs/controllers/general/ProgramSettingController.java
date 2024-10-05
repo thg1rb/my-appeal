@@ -48,6 +48,7 @@ public class ProgramSettingController {
             throw new RuntimeException(e);
         }
 
+
         initializeChoiceBox();
     }
 
