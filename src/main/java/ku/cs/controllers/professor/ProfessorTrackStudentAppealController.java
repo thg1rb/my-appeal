@@ -43,7 +43,7 @@ public class ProfessorTrackStudentAppealController {
     @FXML private Label ownerAppealLabel;
 
     @FXML private TableView<Appeal> tableView;
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
 
     @FXML private ImageView closePopUpImageView;
     @FXML private Button closePopUpButton;
@@ -118,7 +118,7 @@ public class ProfessorTrackStudentAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
-        updateTotalText();
+        updateTotalLabel();
     }
 
     public void setSelectedStudent(AppealList appealList, Student selectedStudent) {
@@ -127,8 +127,8 @@ public class ProfessorTrackStudentAppealController {
     }
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด
-    private void updateTotalText() {
-        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+    private void updateTotalLabel() {
+        totalLabel.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 
     // ปิดหน้าต่าง pop up

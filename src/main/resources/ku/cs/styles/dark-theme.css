@@ -1,33 +1,385 @@
+/* Component */
+/** Sub-Component **/
+/*** Class-Component ***/
+
 .root {
-    -fx-background-color: #3C3D37;
+    -fx-background-color: #424242;
 }
 
+/* Label */
 .label {
     -fx-text-fill: white;
 }
 
-.table-view-without-tab-pane {
-    -fx-background-color: #181C14;
-    -fx-border-color: transparent;
-    -fx-background-radius: 20 20 00 00;
-    -fx-border-radius: 20 20 00 00;
-
+/* Pane */
+/*** Detail Pane (Pop Up -> visible technique) ***/
+.detail-pane {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.2), 10, 0, 0, 0);
+    -fx-background-color: #2E2E2E;
+    -fx-background-radius: 20;
 }
-.table-view-without-tab-pane .column-header-background {
-    -fx-background-color: transparent;
-    -fx-border-width: 1px;
-    -fx-border-color: transparent transparent #D9D9D9 transparent;
+
+/*** Count Pane (Pane Under TableView) ***/
+.count-pane {
+    -fx-text-fill: white;
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1B1B1B;
+    -fx-background-radius: 0 0 20 20;
+    -fx-border-radius: 0 0 20 20;
+    -fx-padding: 20;
+}
+
+/*** Pop Up Pane (color of pop up background) ***/
+.pop-up-pane {
+    -fx-background-color: #424242;
+}
+
+/*** Label Pop Up Pane (on the top of pop up) ***/
+.label-pop-up-pane {
+    -fx-background-color:  #265252;
+}
+
+/*** Background Alert Pane (Opacity background) ***/
+.background-alert-pane {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Table View */
+/*** table view with tab pane ***/
+.table-view-with-tab-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0 20 0 0;
+    -fx-border-radius: 0 20 0 0;
+}
+
+.table-view-with-tab-pane .column-header{
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-background-radius: 0 20 0 0;
+    -fx-border-radius: 0 20 0 0;
+    -fx-pref-height: 50;
+}
+
+/*** table-view without tab-pane ***/
+.table-view-without-tab-pane {
+    -fx-background-color: #2E2E2E;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: #1B1B1B;
+    -fx-border-radius: 20 20 0 0;
 }
 
 .table-view-without-tab-pane .column-header {
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: transparent;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
+}
+
+/*** mini table view ***/
+.mini-table-view .table-row-cell{
+    -fx-background-color: #f2f2f2;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-border-color: grey;
+    -fx-pref-height: 40;
+}
+.mini-table-view .table-row-cell:hover{
+    -fx-background-color: lightgrey;
+    -fx-text-fill: black;
+}
+.mini-table-view .table-row-cell:selected{
+    -fx-text-fill: black;
+}
+
+.mini-table-view .column-header{
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
+}
+
+/** Table View (Column) **/
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #D6D6D6;
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+}
+
+/** Table View (Row) **/
+.table-row-cell {
+    -fx-background-color: #424242;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-border-color: #D6D6D6;
+    -fx-pref-height: 80;
+}
+
+.table-row-cell:hover{
+    -fx-text-fill: #BBBBBB;
+    -fx-background-color: #202020;
+}
+
+.table-row-cell:selected {
+    -fx-text-fill: #BBBBBB;
+    -fx-background-color: #202020; /* สีพื้นหลังของแถวที่ถูกเลือก */
+}
+
+.table-cell {
+    -fx-padding: 5; /* กำหนดระยะขอบของเซลล์ */
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+}
+
+.table-column .table-cell {
+    -fx-alignment: CENTER; /* จัดข้อมูลในเซลล์ให้อยู่ตรงกลาง */
+}
+
+/** Table View (Scroll Bar) **/
+.table-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #D6D6D6;
+    -fx-background-radius: 100;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* Text Field */
+.text-field {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.2), 10, 0, 0, 0);
+    -fx-cursor: text;
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1B1B1B;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
+}
+
+/*** Search Text Field ***/
+.search-text-field {
+    -fx-alignment: center-right;
+}
+
+/* Text Area */
+.text-area {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+    -fx-cursor: text;
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1B1B1B;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: white;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: #D6D6D6;
+    -fx-background-radius: 100;
+}
+
+/* Detail Text Area (for show reason, subjects and so on) */
+.detail-text-area {
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0), 0, 0, 0, 0);
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-.table-row-cell {
+/* Date Picker */
+.date-picker {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
     -fx-background-color: transparent;
-    -fx-border-width: 0 1px 1px 0;
-    -fx-border-color: grey;
-    -fx-pref-height: 80;
 }
 
+.date-picker .text-field {
+    -fx-cursor: text;
+    -fx-text-fill: white;
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1B1B1B;
+    -fx-background-radius: 12 0 0 12;
+    -fx-border-radius: 12 0 0 12;
+    -fx-padding: 5;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-base: #303337 ;
+    -fx-mark-highlight-color: -fx-light-text-color ;
+}
+
+.date-picker .arrow-button {
+    -fx-cursor: hand;
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1B1B1B;
+    -fx-background-radius: 0 12 12 0;
+    -fx-border-radius: 0 12 12 0;
+    -fx-padding: 10;
+}
+
+/* Button */
+.button {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+/*** Sidebar Button (Features & Setting & Login & Logout) ***/
+.login-button {
+    -fx-background-color: #D6D6D6;
+    -fx-text-fill: #424242;
+    -fx-background-radius: 15;
+}
+
+.login-button:hover {
+    -fx-text-fill: #1B1B1B;
+    -fx-background-color: #BBBBBB;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #183434;
+    -fx-text-fill: #a6a6a6;
+}
+
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
+}
+
+.logout-button:hover {
+    -fx-background-color: #600000;
+    -fx-text-fill: #bf0000;
+}
+
+/*** Close Pop Up (White & Black) ***/
+.close-pop-up-white {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.close-pop-up-white:hover {
+    -fx-text-fill: #c8c8c8;
+}
+
+.close-pop-up-black {
+    -fx-background-color: transparent;
+    -fx-text-fill:  #265252;
+}
+
+.close-pop-up-black:hover {
+    -fx-text-fill: #254747;
+}
+
+/*** Approve and Reject Button ***/
+.approve-button {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+    -fx-background-color: #008f2f;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+}
+
+.approve-button:hover {
+    -fx-background-color: #007323;
+    -fx-text-fill: #d1d1d1;
+}
+
+.reject-button {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+    -fx-background-color: #cc0000;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+}
+
+.reject-button:hover {
+    -fx-background-color: #910000;
+    -fx-text-fill: #d1d1d1;
+}
+
+/* Choice Box */
+.choice-box {
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+/*** Choice Box (Black) ***/
+.choice-box-black {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-font-size: 20;
+    -fx-text-fill: #2E2E2E;
+    -fx-mark-color: #2E2E2E;
+}
+
+.choice-box-black .label {
+    -fx-text-fill: #2E2E2E;
+}
+
+.choice-box-black .context-menu {
+    -fx-background-color: white;
+    -fx-text-fill: #2E2E2E;
+}
+
+.choice-box-black .menu-item:focused {
+    -fx-background-color: #D6D6D6;
+    -fx-text-fill: #1B1B1B;
+}
+
+/*** Choice Box (White) ***/
+.choice-box-white {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-background-radius: 15px;
+    -fx-font-size: 20px;
+    -fx-mark-color: black;
+    -fx-border-color: grey;
+    -fx-border-radius: 10px;
+}
+
+.choice-box-white .label {
+    -fx-text-fill: black;
+}
+
+.choice-box-white .context-menu {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.choice-box-white .list-cell:hover {
+    -fx-background-color: grey;
+}
+
+.choice-box-white .menu-item:hover {
+    -fx-background-color: grey;
+}
+
+.choice-box-white .menu-item:focused {
+    -fx-background-color: grey;
+}

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,7 +30,7 @@ import java.io.IOException;
 public class ProfessorStudentAppealController {
 
     @FXML private AnchorPane mainPane;
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
 
@@ -133,11 +134,11 @@ public class ProfessorStudentAppealController {
             }
         }
         tableView.getSortOrder().add(dateTimeCol);
-        updateTotalText();
+        updateTotalLabel();
     }
 
     // อัพเดทข้อความแสดงจำนวนคำร้องทั้งหมด
-    private void updateTotalText() {
-        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+    private void updateTotalLabel() {
+        totalLabel.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }

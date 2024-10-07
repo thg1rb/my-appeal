@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -35,7 +36,7 @@ public class ProfessorStudentListController {
 
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
     @FXML private TableView<User> tableView;
     @FXML private TextField searchTextField;
 
@@ -152,11 +153,11 @@ public class ProfessorStudentListController {
                 }
             }
         }
-        updateTotalText();
+        updateTotalLabel();
     }
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด
-    private void updateTotalText() {
-        totalText.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+    private void updateTotalLabel() {
+        totalLabel.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }

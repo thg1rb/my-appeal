@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" stylesheets="@../../styles/font-normal.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNavbarController">
+<Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNavbarController">
    <children>
       <VBox alignment="CENTER" prefWidth="200.0">
          <children>
@@ -40,7 +40,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="light-font" text="ผู้ใช้งาน:">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-regular" text="ผู้ใช้งาน:">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -48,7 +48,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Text>
-                        <Label fx:id="usernameLabel" text="userLabel" textFill="WHITE">
+                        <Label fx:id="usernameLabel" styleClass="label-regular" text="userLabel" textFill="WHITE" wrapText="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -60,7 +60,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="light-font" text="ตำแหน่ง:">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-regular" text="ตำแหน่ง:">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -68,7 +68,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Text>
-                        <Label fx:id="roleLabel" text="roleLabel" textFill="WHITE" wrapText="true">
+                        <Label fx:id="roleLabel" styleClass="label-regular" text="roleLabel" textFill="WHITE" wrapText="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -93,7 +93,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onAppealManageButtonClick" prefWidth="200.0" stylesheets="@../../styles/button.css" text="จัดการคำร้อง         " textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onAppealManageButtonClick" prefWidth="200.0" text="จัดการคำร้อง         " textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -115,7 +115,7 @@
                         <String fx:value="label-regular" />
                      </styleClass>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onApproverManageButtonClick" prefWidth="202.0" stylesheets="@../../styles/button.css" text="จัดการข้อมูลผู้อนุมัติ " textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onApproverManageButtonClick" prefWidth="202.0" text="จัดการข้อมูลผู้อนุมัติ " textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -137,7 +137,7 @@
                         <String fx:value="label-regular" />
                      </styleClass>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onNisitManageButtonClick" prefWidth="200.0" stylesheets="@../../styles/button.css" text="จัดการข้อมูลนิสิต       &#10;" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onNisitManageButtonClick" prefWidth="200.0" text="จัดการข้อมูลนิสิต       &#10;" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -168,11 +168,11 @@
             </VBox>
          </children>
       </VBox>
-      <VBox layoutY="650.0" prefWidth="200.0">
+      <VBox alignment="BOTTOM_CENTER" layoutY="532.0" prefHeight="300.0" prefWidth="200.0">
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onProfileSettingButtonClicked" prefWidth="200.0" stylesheets="@../../styles/button.css" text="จัดการบัญชี     " textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onProfileSettingButtonClicked" prefWidth="200.0" text="จัดการบัญชี     " textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -200,7 +200,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onProgramSettingButtonClicked" prefWidth="200.0" stylesheets="@../../styles/button.css" text="ตั้งค่าโปรแกรม" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onProgramSettingButtonClicked" prefWidth="200.0" text="ตั้งค่าโปรแกรม" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -228,7 +228,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefWidth="200.0" stylesheets="@../../styles/button.css" text="ออกจากระบบ  " textFill="RED">
+                  <Button mnemonicParsing="false" onAction="#onLogoutButtonClicked" prefWidth="200.0" text="ออกจากระบบ  " textFill="RED">
                      <font>
                         <Font size="18.0" />
                      </font>

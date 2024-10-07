@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import ku.cs.models.appeals.BreakAppeal;
@@ -39,19 +40,20 @@ public class StudentCreateAppealController {
     @FXML private ChoiceBox<String> appealChoiceBox;
 
     // ประกาศตัวแปรคำร้องทั่วไป
-    @FXML private Pane generalAppealPane;
+    @FXML private VBox generalVBox;
+    @FXML private VBox suspendVBox;
+    @FXML private VBox breakVBox;
+
     @FXML private TextArea topicTextArea;
     @FXML private TextArea detailsTextArea;
 
     // ประกาศตัวแปรคำร้องขอพักการศึกษา
-    @FXML private Pane suspendAppealPane;
     @FXML private TextArea reasonSuspendTextArea;
     @FXML private TextArea subjectsSuspendTextArea;
     @FXML private ChoiceBox<String> semestersSuspendChoiceBox;
     @FXML private ChoiceBox<String> yearsSuspendChoiceBox;
 
     // ประกาศตัวแปรคำร้องขอลาป่วยหรือลากิจ
-    @FXML private Pane breakAppealPane;
     @FXML private ChoiceBox<String> purposesBreakChoiceBox;
     @FXML private TextArea reasonBreakTextArea;
     @FXML private TextArea subjectsBreakTextArea;
@@ -127,7 +129,7 @@ public class StudentCreateAppealController {
     private void initializeChoiceBox() {
         // ChoiceBox เลือกประเภทของคำร้อง
         selectedAppeal = "ทั่วไป";
-        generalAppealPane.setVisible(true);
+        generalVBox.setVisible(true);
 
         // Appeal Type ChoiceBox
         appealChoiceBox.getItems().addAll(appeals);
@@ -135,19 +137,19 @@ public class StudentCreateAppealController {
             selectedAppeal = appealChoiceBox.getValue();
 
             if (selectedAppeal.equals("ทั่วไป")) {
-                generalAppealPane.setVisible(true);
-                suspendAppealPane.setVisible(false);
-                breakAppealPane.setVisible(false);
+                generalVBox.setVisible(true);
+                suspendVBox.setVisible(false);
+                breakVBox.setVisible(false);
             }
             else if (selectedAppeal.equals("ขอพักการศึกษา")) {
-                generalAppealPane.setVisible(false);
-                suspendAppealPane.setVisible(true);
-                breakAppealPane.setVisible(false);
+                generalVBox.setVisible(false);
+                suspendVBox.setVisible(true);
+                breakVBox.setVisible(false);
             }
             else if (selectedAppeal.equals("ลาป่วยหรือลากิจ")) {
-                generalAppealPane.setVisible(false);
-                suspendAppealPane.setVisible(false);
-                breakAppealPane.setVisible(true);
+                generalVBox.setVisible(false);
+                suspendVBox.setVisible(false);
+                breakVBox.setVisible(true);
             }
         });
         appealChoiceBox.setValue(appeals[0]);
