@@ -19,6 +19,7 @@ public class AdminNavbarController {
     @FXML private Label usernameLabel;
 
     private User user;
+    private AdminDashboardController adminDashboardController;
 
     @FXML
     private void initialize(){
@@ -31,8 +32,15 @@ public class AdminNavbarController {
         profileImageCircle.setFill(new ImagePattern(image));
     }
 
+    public void setAdminDashboardController(AdminDashboardController adminDashboardController) {
+        this.adminDashboardController = adminDashboardController;
+    }
+
     @FXML
     void onUserButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("admin-user-manage",user);
         }catch(Exception e){
@@ -42,6 +50,9 @@ public class AdminNavbarController {
 
     @FXML
     void onStaffButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("admin-staff-manage",user);
         }catch(Exception e){
@@ -51,6 +62,9 @@ public class AdminNavbarController {
 
     @FXML
     void onFacultyButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("admin-faculty-manage",user);
         }catch(Exception e){
@@ -60,6 +74,9 @@ public class AdminNavbarController {
 
     @FXML
     void onDashboardButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("admin-dashboard",user);
         }catch(Exception e){
@@ -69,6 +86,9 @@ public class AdminNavbarController {
 
     @FXML
     void onProfileSettingButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("profile-setting",user);
         }catch(Exception e){
@@ -78,6 +98,9 @@ public class AdminNavbarController {
 
     @FXML
     void onProgramSettingButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("program-setting", user);
         } catch (IOException e) {
@@ -87,6 +110,9 @@ public class AdminNavbarController {
 
     @FXML
     void onLogoutButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             FXRouter.goTo("login");
         }catch(Exception e){

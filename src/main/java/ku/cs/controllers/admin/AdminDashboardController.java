@@ -1,14 +1,10 @@
 package ku.cs.controllers.admin;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -18,6 +14,7 @@ import ku.cs.models.Major;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
@@ -26,6 +23,7 @@ import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.*;
 
 import java.io.File;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,6 +39,7 @@ public class AdminDashboardController {
     @FXML private Label rejectAppealLabel;
 
     @FXML private TreeTableView<Displayable> treeTableView;
+    @FXML private ToggleButton inSystemToggleButton;
     @FXML private Label allUserLabel;
     @FXML private Label facultyStaffLabel;
     @FXML private Label departmentStaffLabel;
@@ -57,7 +56,9 @@ public class AdminDashboardController {
     private Datasource<MajorList> majorDatasource;
     private MajorList majorList;
 
-    private HashMap<String, Integer> numUserTypeMap;
+    private HashMap<String, UserList> userListHashMap;
+
+    private Thread fileWatcherThread;
 
     @FXML
     public void initialize() {
@@ -74,6 +75,8 @@ public class AdminDashboardController {
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
         try {
             Pane navbarComponent = navbarComponentLoader.load();
+            AdminNavbarController adminNavbarController = navbarComponentLoader.getController();
+            adminNavbarController.setAdminDashboardController(this);
             navbarAnchorPane.getChildren().add(navbarComponent);
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -81,7 +84,21 @@ public class AdminDashboardController {
 
         showAllStatusAppealsCount();
         showTreeTable();
-        showNumUsersInSystem();
+        showNumUsersInSystem(null);
+
+        treeTableView.setRowFactory(v->{
+            TreeTableRow<Displayable> row = new TreeTableRow<>();
+            row.setOnMouseClicked(event -> {
+                showNumUsersInSystem(row.getItem());
+            });
+            return row;
+        });
+
+        inSystemToggleButton.setOnMouseClicked(v->{
+            showNumUsersInSystem(treeTableView.getSelectionModel().getSelectedItem().getValue());
+        });
+
+        startWatchingFiles();
     }
 
     @FXML
@@ -133,12 +150,27 @@ public class AdminDashboardController {
     }
 
     @FXML
-    private void showNumUsersInSystem(){
-        allUserLabel.setText(numUserTypeMap.get("ทั้งหมด").toString());
-        facultyStaffLabel.setText(numUserTypeMap.get("เจ้าหน้าที่คณะ").toString());
-        departmentStaffLabel.setText(numUserTypeMap.get("เจ้าหน้าที่ภาควิชา").toString());
-        advisorLabel.setText(numUserTypeMap.get("อาจารย์ที่ปรึกษา").toString());
-        studentLabel.setText(numUserTypeMap.get("นักศึกษา").toString());
+    private void showNumUsersInSystem(Object filter){
+        if (inSystemToggleButton.isSelected() || filter == null){
+            facultyStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่คณะ").getUsers().size()));
+            departmentStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่ภาควิชา").getUsers().size()));
+            advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsers().size()));
+            studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsers().size()));
+            allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsers().size()));
+        }
+        else if (filter instanceof Faculty faculty){
+            facultyStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่คณะ").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
+            departmentStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่ภาควิชา").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
+            advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
+            studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
+            allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
+        } else if (filter instanceof Major major){
+            facultyStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่คณะ").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+            departmentStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่ภาควิชา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+            advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+            studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+            allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+        }
     }
 
     private void loadAppealData(){
@@ -154,19 +186,18 @@ public class AdminDashboardController {
     }
 
     private void loadUserData(){
-        numUserTypeMap = new HashMap<>();
-        numUserTypeMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv").readData().getUsers().size());
-        numUserTypeMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv").readData().getUsers().size());
-        numUserTypeMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv").readData().getUsers().size());
-        numUserTypeMap.put("นักศึกษา", new UserListDatasource("data" + File.separator + "users", "student.csv").readData().getRegisteredStudents().getUsers().size());
+        userListHashMap = new HashMap<>();
+        userListHashMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv").readData());
+        userListHashMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv").readData());
+        userListHashMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv").readData());
+        userListHashMap.put("นักศึกษา", new UserListDatasource("data" + File.separator + "users", "student.csv").readData().getRegisteredStudents());
 
-        int totalUsers = 0;
-        for (String key : numUserTypeMap.keySet()) {
-            if (!key.equals("ทั้งหมด")) {
-                totalUsers += numUserTypeMap.get(key);
+        userListHashMap.put("ทั้งหมด", new UserList());
+        for (String key : userListHashMap.keySet()){
+            if (!key.equals("ทั้งหมด")){
+                userListHashMap.get("ทั้งหมด").addUserLists(userListHashMap.get(key));
             }
         }
-        numUserTypeMap.put("ทั้งหมด", totalUsers);
     }
 
     @FXML
@@ -190,4 +221,68 @@ public class AdminDashboardController {
         operatingAppealLabel.setText(String.valueOf(operatingAppeals));
         rejectAppealLabel.setText(String.valueOf(rejectAppeals));
     }
+
+    private void startWatchingFiles() {
+        Runnable fileWatcherTask = () -> {
+            try {
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+
+                Path userPath = Paths.get("data/users");
+                Path appealPath = Paths.get("data");
+
+                userPath.register(watchService,
+                        StandardWatchEventKinds.ENTRY_CREATE,
+                        StandardWatchEventKinds.ENTRY_DELETE,
+                        StandardWatchEventKinds.ENTRY_MODIFY);
+                appealPath.register(watchService,
+                        StandardWatchEventKinds.ENTRY_CREATE,
+                        StandardWatchEventKinds.ENTRY_DELETE,
+                        StandardWatchEventKinds.ENTRY_MODIFY);
+
+                System.out.println("กำลังตรวจสอบการเปลี่ยนแปลงของไฟล์...");
+
+                WatchKey key;
+                while (!Thread.currentThread().isInterrupted() && (key = watchService.take()) != null) {
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        String fileName = event.context().toString();
+
+                        if (fileName.equals("facultyStaff.csv") ||
+                                fileName.equals("majorStaff.csv") ||
+                                fileName.equals("advisor.csv") ||
+                                fileName.equals("student.csv") ) {
+                            Platform.runLater(() -> {
+                                loadUserData();
+                                if (treeTableView.getSelectionModel().getSelectedItem().getValue() != null) {
+                                    showNumUsersInSystem(treeTableView.getSelectionModel().getSelectedItem().getValue());
+                                } else {
+                                    showNumUsersInSystem(null);
+                                }
+                            });
+                        }else if (fileName.equals("appeal-list.csv")){
+                            Platform.runLater(() -> {
+                                loadAppealData();
+                                showAllStatusAppealsCount();
+                                showTreeTable();
+                            });
+                        }
+                    }
+                    key.reset();
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+
+        fileWatcherThread  = new Thread(fileWatcherTask);
+        fileWatcherThread.start();
+    }
+
+    public void stopWatchingFilesThread() {
+        if (fileWatcherThread != null && fileWatcherThread.isAlive()) {
+            fileWatcherThread.interrupt();
+        }
+    }
+
 }
