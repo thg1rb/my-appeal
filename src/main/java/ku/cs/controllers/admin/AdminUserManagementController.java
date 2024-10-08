@@ -38,7 +38,6 @@ public class AdminUserManagementController {
     @FXML private TextField searchTextField;
 
     private User user;
-    private UserList userList;
 
     private HashMap<String, Datasource<UserList> > datasourceMap;
     private HashMap<String, UserList> userInSystemMap;

@@ -1,51 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #F1F1F1;" styleClass="label-regular" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminDashboardController">
     <children>
-        <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="แดชบอร์ด">
-            <font>
-                <Font size="40.0" />
-            </font>
-        </Text>
-      <TableView layoutX="272.0" layoutY="381.0" prefHeight="390.0" prefWidth="530.0" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;" stylesheets="@../../styles/table-view.css">
-         <columns>
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Faculty" />
-            <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="User" />
-            <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="Staff" />
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="Accept Appeal" />
-         </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <TableView layoutX="839.0" layoutY="381.0" prefHeight="390.0" prefWidth="530.0" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;" stylesheets="@../../styles/table-view.css">
-         <columns>
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Major" />
-            <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="User" />
-            <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="Staff" />
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="Accept Appeal" />
-         </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <TableView layoutX="272.0" layoutY="180.0" prefHeight="159.0" prefWidth="1100.0" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;" stylesheets="@../../styles/table-view.css">
-         <columns>
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 28;" text="All Appeal" />
-            <TableColumn prefWidth="75.0" style="-fx-font-size: 28;" text="Accept Appeal" />
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 28;" text="Refuse Appeal" />
-         </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
+      <Label layoutX="276.0" layoutY="98.0" text="แดชบอร์ด">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
+      <TreeTableView fx:id="treeTableView" layoutX="310.0" layoutY="373.0" prefHeight="431.0" prefWidth="551.0" />
+      <VBox alignment="TOP_CENTER" layoutX="310.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
+         <children>
+            <Label text="ทั้งหมด">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="allAppealLabel" text="0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="577.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
+         <children>
+            <Label text="ดำเนินการครบถ้วน">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="successAppealLabel" text="0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="848.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
+         <children>
+            <Label text="อยู่ระหว่างดำเนินการ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="operatingAppealLabel" text="0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="1114.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
+         <children>
+            <Label text="ถูกปฏิเสธ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="rejectAppealLabel" text="0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_LEFT" layoutX="885.0" layoutY="405.0" prefHeight="50.0" prefWidth="477.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="303.0" text="จำนวนผู้ใช้งานระบบ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="allUserLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" text="0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="885.0" layoutY="483.0" prefHeight="50.0" prefWidth="477.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="310.0" text="จำนวนเจ้าหน้าที่คณะ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="facultyStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" text="0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="885.0" layoutY="560.0" prefHeight="50.0" prefWidth="477.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="332.0" text="จำนวนเจ้าหน้าที่ภาควิชา">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="departmentStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" text="0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="885.0" layoutY="638.0" prefHeight="50.0" prefWidth="477.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="308.0" text="จำนวนอาจารย์ที่ปรึกษา">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="advisorLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" text="0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="883.0" layoutY="716.0" prefHeight="50.0" prefWidth="479.0">
+         <children>
+            <Label prefHeight="29.0" prefWidth="308.0" text="จำนวนนักศึกษา">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="studentLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" text="0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label layoutX="653.0" layoutY="151.0" text="จำนวนคำร้องภายในระบบ">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Line endX="892.8489990234375" layoutX="478.0" layoutY="192.0" startX="-163.1561279296875" stroke="#bfbbbb" />
+      <Line endX="892.8489990234375" layoutX="478.0" layoutY="343.0" startX="-163.1561279296875" stroke="#bfbbbb" />
     </children>
 </AnchorPane>

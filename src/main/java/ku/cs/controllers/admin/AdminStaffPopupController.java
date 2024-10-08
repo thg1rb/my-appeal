@@ -168,7 +168,7 @@ public class AdminStaffPopupController {
     }
 
     private void updateMajorChoiceBox(UUID faculty){
-        this.majorChoices = majorList.findMajorsByFaculty(faculty);
+        this.majorChoices = majorList.getMajorsNameByFaculty(faculty);
         majorChoiceBox.getItems().clear();
         majorChoiceBox.getItems().addAll(majorChoices);
     }

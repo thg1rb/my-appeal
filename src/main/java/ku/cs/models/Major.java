@@ -2,7 +2,7 @@ package ku.cs.models;
 
 import java.util.UUID;
 
-public class Major {
+public class Major implements Displayable {
     private UUID uuid;
 
     private String majorName;
@@ -56,5 +56,10 @@ public class Major {
     @Override
     public String toString() {
         return uuid.toString() + "," + majorName + "," + facultyUUID + "," + majorId;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return this.getMajorName();
     }
 }

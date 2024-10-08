@@ -46,11 +46,21 @@ public class MajorList {
     }
 
 
-    public ArrayList<String> findMajorsByFaculty(UUID faculty){
+    public ArrayList<String> getMajorsNameByFaculty(UUID faculty){
         ArrayList<String> majorsInFaculty = new ArrayList<>();
         for (Major major : majors){
             if (major.getFacultyUUID().equals(faculty)){
                 majorsInFaculty.add(major.getMajorName());
+            }
+        }
+        return majorsInFaculty;
+    }
+
+    public ArrayList<Major> getMajorsByFaculty(UUID faculty){
+        ArrayList<Major> majorsInFaculty = new ArrayList<>();
+        for (Major major : majors){
+            if (major.getFacultyUUID().equals(faculty)) {
+                majorsInFaculty.add(major);
             }
         }
         return majorsInFaculty;

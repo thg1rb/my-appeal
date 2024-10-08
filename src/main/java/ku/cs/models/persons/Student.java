@@ -1,6 +1,5 @@
 package ku.cs.models.persons;
 
-import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.MajorList;
 import ku.cs.services.datasources.Datasource;
@@ -12,7 +11,6 @@ import java.util.UUID;
 public class Student extends User {
     private String studentId;
     private String email;
-//    private String faculty;
     private UUID facultyUUID;
     private UUID departmentUUID;
     private UUID advisorUUID;
