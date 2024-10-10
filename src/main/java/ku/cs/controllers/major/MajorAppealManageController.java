@@ -29,14 +29,11 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import java.io.IOException;
 
 public class MajorAppealManageController {
-    @FXML
-    private AnchorPane mainPane;
-    @FXML
-    private Pane navbarAnchorPane;
-    @FXML
-    private TableView<Appeal> tableView;
-    @FXML
-    private TabPane tabPane;
+    @FXML private AnchorPane mainPane;
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TableView<Appeal> tableView;
+    @FXML private TabPane tabPane;
+    @FXML private Label totalLabel;
 
     private Appeal selectedAppeal;
     private AppealList appealList;
@@ -94,8 +91,6 @@ public class MajorAppealManageController {
         });
     }
 
-
-
     public void showAppealPopup(boolean preview) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-popup.fxml"));
@@ -103,11 +98,9 @@ public class MajorAppealManageController {
             AppealEditController controller = fxmlLoader.getController();
             GaussianBlur blur = new GaussianBlur(10);
 
-
             controller.setRole(user);
             controller.setMode(preview);
             controller.setSelectedAppeal(selectedAppeal);
-
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -162,12 +155,14 @@ public class MajorAppealManageController {
                     tableView.getItems().add(appeal);
                 }
             }
+            updateTotalLabel("จำนวนคำร้องทั้งหมด ");
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
                 if (appeal.getStatus().equals("อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา")) {
                     tableView.getItems().add(appeal);
                 }
             }
+            updateTotalLabel("จำนวนคำร้องที่รอดำเนินการทั้งหมด ");
         }
 
         // Custom cell factory for the status column
@@ -211,5 +206,9 @@ public class MajorAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
         statusColumn.setSortable(false);
+    }
+
+    private void updateTotalLabel(String label) {
+        totalLabel.setText(label + tableView.getItems().size() + " คำร้อง");
     }
 }

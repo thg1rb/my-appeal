@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,6 +34,8 @@ public class MajorNisitManageController {
     @FXML private TextField searchTextField;
 
     @FXML private TableView<Student> nisitTableView;
+
+    @FXML private Label totalLabel;
 
     private UserList studentList;
     private Datasource<UserList> datasource;
@@ -113,6 +116,7 @@ public class MajorNisitManageController {
                 }
             }
         }
+        updateTotalLabel();
     }
     public void showSearchTable(UserList studentList, String searchText) {
         TableColumn<Student, String> idColumn = new TableColumn<>("ID");
@@ -143,6 +147,7 @@ public class MajorNisitManageController {
                 nisitTableView.getItems().add((Student)nisit);
             }
         }
+        updateTotalLabel();
     }
 
     public void showPopUp(boolean addMode){
@@ -175,5 +180,9 @@ public class MajorNisitManageController {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void updateTotalLabel() {
+        totalLabel.setText("จำนวนนิสิตทั้งหมด " + nisitTableView.getItems().size() + " คน");
     }
 }
