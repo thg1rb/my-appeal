@@ -36,7 +36,7 @@ public class MajorNavbarController {
 
         // Wait for app to tun successfully and assign current scene
         Platform.runLater(() -> {
-            currentScene = (AnchorPane) profileImageCircle.getScene().getRoot();
+            currentScene = (AnchorPane) FXRouter.getStage().getScene().getRoot();
         });
     }
 
