@@ -1,5 +1,6 @@
 package ku.cs.controllers.general;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
+import ku.cs.services.Animation;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 import ku.cs.services.ProgramSetting;
@@ -38,6 +40,7 @@ public class LoginController {
 
     private UserList userList;
     private User user;
+    private AnchorPane currentScene;
 
     @FXML
     public void initialize() {
@@ -49,6 +52,10 @@ public class LoginController {
         givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
 
         ProgramSetting.getInstance().applyStyles(mainPane);
+
+        Platform.runLater(() -> {
+            currentScene = (AnchorPane) FXRouter.getStage().getScene().getRoot();
+        });
     }
 
     // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ
@@ -76,8 +83,8 @@ public class LoginController {
                         case "ผู้ดูแลระบบ":
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("admin-dashboard", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "admin-dashboard", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -85,8 +92,8 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("faculty-appeal-manage", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "faculty-appeal-manage", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -94,8 +101,8 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("major-appeal-manage", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "major-appeal-manage", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -103,16 +110,16 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("professor-student-list", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "professor-student-list", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         default:
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("student-track-appeal", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "student-track-appeal", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -167,8 +174,8 @@ public class LoginController {
     @FXML
     public void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("register-personal-data");
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "register-personal-data", null);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

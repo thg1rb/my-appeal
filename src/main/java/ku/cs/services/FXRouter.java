@@ -102,7 +102,16 @@ public final class FXRouter {
         currentRoute = route;
         String scenePath = "/" + route.scenePath;
         Parent resource = (Parent)FXMLLoader.load((new Object() {
-        }).getClass().getResource(scenePath));
+        }) .getClass().getResource(scenePath));
+
+        if ("fade".equalsIgnoreCase(animationType)) {
+            // Set opacity to 0 initially for fade-in
+            resource.setOpacity(0.0);
+        }
+        else {
+            resource.setOpacity(1.0);
+        }
+
         window.setTitle(route.windowTitle);
         window.setScene(new Scene(resource, route.sceneWidth, route.sceneHeight));
         window.show();
@@ -138,7 +147,7 @@ public final class FXRouter {
                 switch(var3) {
                     case 0:
                         Double fd = animationDuration != null ? animationDuration : FADE_ANIMATION_DURATION;
-                        FadeTransition ftCurrent = new FadeTransition(Duration.millis(fd), node);
+                        FadeTransition ftCurrent = new FadeTransition(Duration.seconds(fd), node);
                         ftCurrent.setFromValue(0.0D);
                         ftCurrent.setToValue(1.0D);
                         ftCurrent.play();
@@ -149,6 +158,10 @@ public final class FXRouter {
 
     public static Object getData() {
         return currentRoute.data;
+    }
+
+    public static Stage getStage() {
+        return window;
     }
 
     private static class RouteScene {
