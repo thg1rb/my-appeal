@@ -1,12 +1,16 @@
 package ku.cs.controllers.major;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.Animation;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
@@ -19,7 +23,7 @@ public class MajorNavbarController {
     @FXML private Label usernameLabel;
 
     private User user;
-
+    private AnchorPane currentScene;
     @FXML
     private void initialize(){
         user = (DepartmentStaff) FXRouter.getData();
@@ -29,13 +33,18 @@ public class MajorNavbarController {
 
         Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
         profileImageCircle.setFill(new ImagePattern(image));
+
+        // Wait for app to tun successfully and assign current scene
+        Platform.runLater(() -> {
+            currentScene = (AnchorPane) profileImageCircle.getScene().getRoot();
+        });
     }
 
     @FXML
     void onAppealManageButtonClick(){
         try {
-            FXRouter.goTo("major-appeal-manage", user);
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "major-appeal-manage", user);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -43,8 +52,8 @@ public class MajorNavbarController {
     @FXML
     void onApproverManageButtonClick(){
         try {
-            FXRouter.goTo("major-approver-manage", user);
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "major-approver-manage", user);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -52,8 +61,8 @@ public class MajorNavbarController {
     @FXML
     void onNisitManageButtonClick(){
         try {
-            FXRouter.goTo("major-nisit-manage", user);
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "major-nisit-manage", user);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -61,8 +70,8 @@ public class MajorNavbarController {
     @FXML
     void onProgramSettingButtonClicked() {
         try{
-            FXRouter.goTo("program-setting", user);
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "program-setting", user);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -70,7 +79,7 @@ public class MajorNavbarController {
     @FXML
     void onLogoutButtonClicked(){
         try{
-            FXRouter.goTo("login");
+            Animation.getInstance().switchSceneWithFade(currentScene, "login", null);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -79,7 +88,7 @@ public class MajorNavbarController {
     @FXML
     void onProfileSettingButtonClicked(){
         try{
-            FXRouter.goTo("profile-setting",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "profile-setting", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }

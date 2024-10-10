@@ -1,5 +1,7 @@
 package ku.cs.controllers.student;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import ku.cs.controllers.general.AppealDetailsController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
@@ -38,6 +41,8 @@ public class StudentTrackAppealController {
     private ModifyDateList modifyDateList;
 
     private User user;
+
+    private int tmpTableSize = 0;
 
     @FXML private AnchorPane mainPane;
 
@@ -128,6 +133,8 @@ public class StudentTrackAppealController {
         typeCol.setPrefWidth(366.66);
         statusCol.setPrefWidth(366.66);
 
+        tmpTableSize = tableView.getItems().size();
+
         tableView.getItems().clear();
         if (searchText.isEmpty()) {
             for (Appeal appeal : appealList.getAppeals()) {
@@ -144,7 +151,11 @@ public class StudentTrackAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        statusCol.setSortable(false);
         updateTotalText();
+
     }
 
     // อัพเดตข้อความแสดงคำร้องทั้งหมด
