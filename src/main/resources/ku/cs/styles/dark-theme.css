@@ -249,7 +249,7 @@
 
 /*** Sidebar Button (Features & Setting & Login & Logout) ***/
 .login-button {
-    -fx-background-color: #D6D6D6;
+    -fx-background-color: #EEEEEE;
     -fx-text-fill: #424242;
     -fx-background-radius: 15;
 }
@@ -277,6 +277,12 @@
 .logout-button:hover {
     -fx-background-color: #600000;
     -fx-text-fill: #bf0000;
+}
+
+/*** Register Back Button ***/
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
 }
 
 /*** Close Pop Up (White & Black) ***/
