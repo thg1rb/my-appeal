@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -30,16 +30,16 @@ public class AdminMajorFacultyPopupController {
 
     @FXML private Text modeText;
 
-    @FXML private Text belongFacultyText;
-    @FXML private Text majorIdText;
+    @FXML private Label belongFacultyLabel;
+    @FXML private Label majorIdLabel;
     @FXML private TextField majorIdTextField;
-    @FXML private Text majorNameText;
+    @FXML private Label majorNameLabel;
     @FXML private TextField majorNameTextField;
 
     @FXML private Text emptyInputText;
 
-    @FXML private Text facultyNameText;
-    @FXML private Text facultyIdText;
+    @FXML private Label facultyNameLabel;
+    @FXML private Label facultyIdLabel;
     @FXML private TextField facultyNameTextField;
     @FXML private TextField facultyIdTextField;
 
@@ -129,28 +129,28 @@ public class AdminMajorFacultyPopupController {
     private void setUi(String option){
         optionChoiceBox.setValue(option);
         if (option.equals("คณะ")) {
-            belongFacultyText.setVisible(false);
+            belongFacultyLabel.setVisible(false);
             facultyChoiceBox.setVisible(false);
-            majorNameText.setVisible(false);
+            majorNameLabel.setVisible(false);
             majorNameTextField.setVisible(false);
-            majorIdText.setVisible(false);
+            majorIdLabel.setVisible(false);
             majorIdTextField.setVisible(false);
 
-            facultyNameText.setVisible(true);
+            facultyNameLabel.setVisible(true);
             facultyNameTextField.setVisible(true);
-            facultyIdText.setVisible(true);
+            facultyIdLabel.setVisible(true);
             facultyIdTextField.setVisible(true);
         } else {
-            belongFacultyText.setVisible(true);
+            belongFacultyLabel.setVisible(true);
             facultyChoiceBox.setVisible(true);
-            majorNameText.setVisible(true);
+            majorNameLabel.setVisible(true);
             majorNameTextField.setVisible(true);
-            majorIdText.setVisible(true);
+            majorIdLabel.setVisible(true);
             majorIdTextField.setVisible(true);
 
-            facultyNameText.setVisible(false);
+            facultyNameLabel.setVisible(false);
             facultyNameTextField.setVisible(false);
-            facultyIdText.setVisible(false);
+            facultyIdLabel.setVisible(false);
             facultyIdTextField.setVisible(false);
         }
     }

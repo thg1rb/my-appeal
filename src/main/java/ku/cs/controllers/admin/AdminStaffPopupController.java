@@ -34,8 +34,8 @@ public class AdminStaffPopupController {
     @FXML private AnchorPane mainPane;
 
     @FXML private Text optionText;
-    @FXML private Text majorText;
-    @FXML private Text idText;
+    @FXML private Label majorLabel;
+    @FXML private Label idLabel;
     @FXML private Text emptyInputText;
     @FXML private Text usernameValidationText;
     @FXML private Text passwordValidationText;
@@ -83,20 +83,20 @@ public class AdminStaffPopupController {
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if (newValue.equals("เจ้าหน้าที่คณะ")){
                     selectedRole = newValue;
-                    majorText.setVisible(false);
-                    idText.setVisible(false);
+                    majorLabel.setVisible(false);
+                    idLabel.setVisible(false);
                     majorChoiceBox.setVisible(false);
                     idTextField.setVisible(false);
                 }else if (newValue.equals("เจ้าหน้าที่ภาควิชา")){
                     selectedRole = newValue;
-                    majorText.setVisible(true);
-                    idText.setVisible(false);
+                    majorLabel.setVisible(true);
+                    idLabel.setVisible(false);
                     majorChoiceBox.setVisible(true);
                     idTextField.setVisible(false);
                 }else{
                     selectedRole = newValue;
-                    majorText.setVisible(true);
-                    idText.setVisible(true);
+                    majorLabel.setVisible(true);
+                    idLabel.setVisible(true);
                     majorChoiceBox.setVisible(true);
                     idTextField.setVisible(true);
                 }

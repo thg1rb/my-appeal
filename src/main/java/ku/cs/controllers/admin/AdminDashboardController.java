@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -25,6 +26,7 @@ import ku.cs.services.datasources.*;
 import java.io.File;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AdminDashboardController {
@@ -95,7 +97,11 @@ public class AdminDashboardController {
         });
 
         inSystemToggleButton.setOnMouseClicked(v->{
-            showNumUsersInSystem(treeTableView.getSelectionModel().getSelectedItem().getValue());
+            if (treeTableView.getSelectionModel().getSelectedItem() != null) {
+                showNumUsersInSystem(treeTableView.getSelectionModel().getSelectedItem().getValue());
+            } else{
+                showNumUsersInSystem(null);
+            }
         });
 
         startWatchingFiles();
@@ -124,6 +130,12 @@ public class AdminDashboardController {
             }
             return null;
         });
+        successAppealCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.parseInt(o2) - Integer.parseInt(o1);
+            }
+        });
 
         treeTableView.getColumns().clear();
         treeTableView.getColumns().add(nameCol);
@@ -145,8 +157,11 @@ public class AdminDashboardController {
         }
 
         for (TreeTableColumn<?, ?> column : treeTableView.getColumns()){
-            column.setPrefWidth((double) 551 /treeTableView.getColumns().size());
+            column.setPrefWidth((double) 600 /treeTableView.getColumns().size());
         }
+        treeTableView.getSortOrder().add(successAppealCol);
+        nameCol.setSortable(false);
+        successAppealCol.setSortable(false);
     }
 
     @FXML
@@ -252,7 +267,7 @@ public class AdminDashboardController {
                                 fileName.equals("student.csv") ) {
                             Platform.runLater(() -> {
                                 loadUserData();
-                                if (treeTableView.getSelectionModel().getSelectedItem().getValue() != null) {
+                                if (treeTableView.getSelectionModel().getSelectedItem() != null) {
                                     showNumUsersInSystem(treeTableView.getSelectionModel().getSelectedItem().getValue());
                                 } else {
                                     showNumUsersInSystem(null);

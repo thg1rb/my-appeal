@@ -45,7 +45,7 @@ public class AdminStaffManagementController {
     @FXML private TabPane tabPane;
     @FXML private TableView<User> tableView;
 
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
 
     private User user;
 
@@ -149,7 +149,6 @@ public class AdminStaffManagementController {
         initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
         TableColumn<User, String> facultyCol = new TableColumn<>("คณะ");
-//        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
         facultyCol.setCellValueFactory(cellData ->{
             FacultyStaff user = (FacultyStaff) cellData.getValue();
             return new SimpleStringProperty(facultyList.findFacultyByUUID(user.getFacultyUUID()).getFacultyName());
@@ -220,7 +219,7 @@ public class AdminStaffManagementController {
     }
 
     private void updateTotalText(){
-        totalText.setText("จำนวน" + selectingTab + "ทั้งหมด " + tableView.getItems().size() + " คน");
+        totalLabel.setText("จำนวน" + selectingTab + "ทั้งหมด " + tableView.getItems().size() + " คน");
     }
 
     private void addEditPopup() {
