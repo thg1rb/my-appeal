@@ -1,7 +1,6 @@
 package ku.cs.controllers.general;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -34,27 +34,29 @@ import java.util.Date;
 public class AppealEditController {
     @FXML private AnchorPane mainPane;
 
-    @FXML private ScrollPane generalAppealScrollPane;
-    @FXML private ScrollPane suspendAppealScrollPane;
-    @FXML private ScrollPane breakAppealScrollPane;
-
     @FXML private Label topicLabel;
+
+    @FXML private VBox generalVBox;
+    @FXML private VBox suspendVBox;
+    @FXML private VBox breakVBox;
+
     @FXML private Label fullnameLabel;
     @FXML private Label idLabel;
     @FXML private Label typeLabel;
     @FXML private Label statusLabel;
 
-    @FXML private Label topicGeneralLabel;
-    @FXML private Label detailsGeneralLabel;
-    @FXML private Label reasonSuspendLabel;
+    @FXML private TextArea topicGeneralTextArea;
+    @FXML private TextArea detailsGeneralTextArea;
+
     @FXML private Label semesterSuspendLabel;
     @FXML private Label yearSuspendLabel;
-    @FXML private Label subjectsSuspendLabel;
+    @FXML private TextArea reasonSuspendTextArea;
+    @FXML private TextArea subjectsSuspendTextArea;
 
     @FXML private Label purposeBreakLabel;
     @FXML private Label startEndBreakLabel;
-    @FXML private Label reasonBreakLabel;
-    @FXML private Label subjectsBreakLabel;
+    @FXML private TextArea reasonBreakTextArea;
+    @FXML private TextArea subjectsBreakTextArea;
 
     @FXML private Label createDateLabel;
     @FXML private Label advisorApproveDateLabel;
@@ -159,9 +161,9 @@ public class AppealEditController {
     // แสดงรายละเอียดคำร้องตามประเภทของคำร้อง
     public void showAppealPane(Boolean isGeneralAppeal, Boolean isSuspendAppeal, Boolean isBreakAppeal) {
         initializeLabel(isGeneralAppeal, isSuspendAppeal, isBreakAppeal);
-        generalAppealScrollPane.setVisible(isGeneralAppeal);
-        suspendAppealScrollPane.setVisible(isSuspendAppeal);
-        breakAppealScrollPane.setVisible(isBreakAppeal);
+        generalVBox.setVisible(isGeneralAppeal);
+        suspendVBox.setVisible(isSuspendAppeal);
+        breakVBox.setVisible(isBreakAppeal);
     }
 
     // กำหนดรูปภาพให้กับปุ่ม (รูปภาพของปุ่มปิดหน้าต่าง)
@@ -226,20 +228,20 @@ public class AppealEditController {
             // Label ของแต่ละคำร้อง
         if (isGeneralAppeal) {
             GeneralAppeal generalAppeal = (GeneralAppeal) selectedAppeal;
-            topicGeneralLabel.setText(generalAppeal.getTopic() + "\n\n\n");
-            detailsGeneralLabel.setText(generalAppeal.getReason());
+            topicGeneralTextArea.setText(generalAppeal.getTopic());
+            detailsGeneralTextArea.setText(generalAppeal.getReason());
         } else if (isSuspendAppeal) {
             SuspendAppeal suspendAppeal = (SuspendAppeal) selectedAppeal;
-            reasonSuspendLabel.setText(suspendAppeal.getReason() + "\n\n\n");
+            reasonSuspendTextArea.setText(suspendAppeal.getReason());
             semesterSuspendLabel.setText(suspendAppeal.getSemester());
-            yearSuspendLabel.setText(suspendAppeal.getYear() + "\n\n\n");
-            subjectsSuspendLabel.setText(suspendAppeal.getSubjects());
+            yearSuspendLabel.setText(suspendAppeal.getYear());
+            subjectsSuspendTextArea.setText(suspendAppeal.getSubjects().replace('/', '\n'));
         } else if (isBreakAppeal) {
             BreakAppeal breakAppeal = (BreakAppeal) selectedAppeal;
-            reasonBreakLabel.setText(breakAppeal.getReason() + "\n\n\n");
             purposeBreakLabel.setText(breakAppeal.getPurpose());
-            startEndBreakLabel.setText(breakAppeal.getStartDate() + " - " + breakAppeal.getEndDate() + "\n\n\n");
-            subjectsBreakLabel.setText(breakAppeal.getSubjects());
+            startEndBreakLabel.setText(breakAppeal.getStartDate() + " - " + breakAppeal.getEndDate());
+            reasonBreakTextArea.setText(breakAppeal.getReason());
+            subjectsBreakTextArea.setText(breakAppeal.getSubjects().replace('/', '\n'));
             }
         }
 

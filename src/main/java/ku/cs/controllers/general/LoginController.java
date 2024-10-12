@@ -1,5 +1,6 @@
 package ku.cs.controllers.general;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,6 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +19,7 @@ import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
+import ku.cs.services.Animation;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.FXRouter;
 import ku.cs.services.ProgramSetting;
@@ -33,29 +34,31 @@ public class LoginController {
 
     @FXML private TextField giveUsernameTextField;
     @FXML private TextField givePasswordTextField;
+
     @FXML private Label errorLabel;
+
     @FXML private Button loginButton;
 
     private UserList userList;
     private User user;
+    private AnchorPane currentScene;
 
     @FXML
     public void initialize() {
         userList = UserListDatasource.readAllUsers().getActiveUser();
 
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         errorLabel.setText("");
 
-        giveUsernameTextField.setOnKeyPressed(this::handleKeyPressed);
-        givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
+        mainPane.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                loginButton.fire();
+        });
 
-        ProgramSetting.getInstance().applyStyles(mainPane);
-    }
-
-    // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ
-    private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            loginButton.fire();
-        }
+        Platform.runLater(() -> {
+            currentScene = (AnchorPane) FXRouter.getStage().getScene().getRoot();
+        });
     }
 
     // ไปที่หน้าประจำของแต่ละตำแหน่ง
@@ -76,8 +79,8 @@ public class LoginController {
                         case "ผู้ดูแลระบบ":
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("admin-dashboard", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "admin-dashboard", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -85,8 +88,8 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("faculty-appeal-manage", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "faculty-appeal-manage", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -94,8 +97,8 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("major-appeal-manage", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "major-appeal-manage", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -103,16 +106,16 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("professor-student-list", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "professor-student-list", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
                         default:
                             updateLoginTime(user);
                             try {
-                                FXRouter.goTo("student-track-appeal", user);
-                            } catch (IOException e) {
+                                Animation.getInstance().switchSceneWithFade(currentScene, "student-track-appeal", user);
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -167,8 +170,8 @@ public class LoginController {
     @FXML
     public void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("register-personal-data");
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "register-personal-data", null);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

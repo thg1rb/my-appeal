@@ -145,7 +145,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/professor-user-profile.png" />
+                              <Image url="@../../../../icons/user-profile.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -173,7 +173,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/student-setting.png" />
+                              <Image url="@../../../../icons/setting.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -201,7 +201,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/professor-logout.png" />
+                              <Image url="@../../../../icons/logout.png" />
                            </image>
                         </ImageView>
                      </graphic>

@@ -25,7 +25,6 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-
 public class FacultyAppealManageController {
     private Appeal selectedAppeal;
     private AppealList appealList;
@@ -37,12 +36,10 @@ public class FacultyAppealManageController {
     private Datasource<ModifyDateList> modifyDateListDatasource;
 
     @FXML private AnchorPane mainPane;
-
     @FXML private Pane navbarAnchorPane;
-
     @FXML private TabPane tabPane;
-
     @FXML private TableView<Appeal> tableView;
+    @FXML private Label totalLabel;
 
     @FXML
     public void initialize() {
@@ -113,7 +110,6 @@ public class FacultyAppealManageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void showTable(AppealList appealList, boolean filter) {
@@ -177,14 +173,15 @@ public class FacultyAppealManageController {
                     tableView.getItems().add(appeal);
                 }
             }
+            updateTotalLabel("จำนวนคำร้องทั้งหมด ");
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
                 if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID().toString()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
                     tableView.getItems().add(appeal);
                 }
             }
+            updateTotalLabel("จำนวนคำร้องที่รอดำเนินการทั้งหมด ");
         }
-
 
         tableView.getSortOrder().add(dateColumn);
 
@@ -194,7 +191,9 @@ public class FacultyAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
         statusColumn.setSortable(false);
-
     }
 
+    private void updateTotalLabel(String label) {
+        totalLabel.setText(label + tableView.getItems().size() + " คำร้อง");
+    }
 }

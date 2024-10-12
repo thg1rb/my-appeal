@@ -1,12 +1,15 @@
 package ku.cs.controllers.admin;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
+import ku.cs.services.Animation;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
@@ -20,6 +23,7 @@ public class AdminNavbarController {
 
     private User user;
     private AdminDashboardController adminDashboardController;
+    private AnchorPane currentScene;
 
     @FXML
     private void initialize(){
@@ -30,6 +34,10 @@ public class AdminNavbarController {
 
         Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
         profileImageCircle.setFill(new ImagePattern(image));
+
+        Platform.runLater(() -> {
+            currentScene = (AnchorPane) FXRouter.getStage().getScene().getRoot();
+        });
     }
 
     public void setAdminDashboardController(AdminDashboardController adminDashboardController) {
@@ -42,7 +50,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("admin-user-manage",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "admin-user-manage", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -54,7 +62,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("admin-staff-manage",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "admin-staff-manage", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -66,7 +74,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("admin-faculty-manage",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "admin-faculty-manage", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -78,7 +86,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("admin-dashboard",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "admin-dashboard", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -90,7 +98,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("profile-setting",user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "profile-setting", user);
         }catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -102,8 +110,8 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("program-setting", user);
-        } catch (IOException e) {
+            Animation.getInstance().switchSceneWithFade(currentScene, "program-setting", user);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -114,7 +122,7 @@ public class AdminNavbarController {
             adminDashboardController.stopWatchingFilesThread();
         }
         try{
-            FXRouter.goTo("login");
+            Animation.getInstance().switchSceneWithFade(currentScene, "login", null);
         }catch(Exception e){
             throw new RuntimeException(e);
         }

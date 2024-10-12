@@ -311,6 +311,12 @@
     -fx-text-fill: #bf0000;
 }
 
+/*** Register Back Button ***/
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
 /*** Close Pop Up (White & Black) ***/
 .close-pop-up-white {
     -fx-background-color: transparent;

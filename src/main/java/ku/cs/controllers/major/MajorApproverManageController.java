@@ -2,6 +2,7 @@ package ku.cs.controllers.major;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ public class MajorApproverManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Approver> approverTableView;
+    @FXML private Label totalLabel;
 
     private User user;
     private Datasource<ApproverList> approverDatasource;
@@ -119,10 +121,15 @@ public class MajorApproverManageController {
 
         roleColumn.setSortable(false);
         fullNameColumn.setSortable(false);
+        updateTotalLabel();
     }
 
     public void addApproverButtonClick(){
         addMode = true;
         showPopup();
+    }
+
+    private void updateTotalLabel() {
+        totalLabel.setText("จำนวนผู้อนุมัติทั้งหมด " + approverTableView.getItems().size() + " คน");
     }
 }

@@ -36,9 +36,9 @@
                   <String fx:value="table-view-without-tab-pane" />
                </styleClass>
             </TableView>
-            <HBox prefWidth="1100.0" styleClass="count-pane">
+            <HBox alignment="CENTER_LEFT" prefWidth="1100.0" styleClass="count-pane">
                <children>
-                  <Label fx:id="totalLabel" text="จำนวนคำร้องทั้งหมด">
+                  <Label fx:id="totalLabel" styleClass="label-regular" text="จำนวนคำร้องทั้งหมด">
                      <font>
                         <Font size="20.0" />
                      </font>
