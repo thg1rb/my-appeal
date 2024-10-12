@@ -82,14 +82,15 @@
 /*** table view with tab pane ***/
 .table-view-with-tab-pane {
     -fx-background-color: #2E2E2E;
-    -fx-border-color: transparent;
+    -fx-border-color: #1B1B1B;
     -fx-background-radius: 0 20 0 0;
     -fx-border-radius: 0 20 0 0;
+    -fx-table-cell-border-color: #2E2E2E;
 }
 
 .table-view-with-tab-pane .column-header{
     -fx-background-color: #2E2E2E;
-    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-border-color: transparent transparent #1B1B1B transparent;
     -fx-background-radius: 0 20 0 0;
     -fx-border-radius: 0 20 0 0;
     -fx-pref-height: 50;
@@ -101,11 +102,12 @@
     -fx-background-radius: 20 20 0 0;
     -fx-border-color: #1B1B1B;
     -fx-border-radius: 20 20 0 0;
+    -fx-table-cell-border-color: #2E2E2E;
 }
 
 .table-view-without-tab-pane .column-header {
     -fx-background-color: #2E2E2E;
-    -fx-border-color: transparent;
+    -fx-border-color: transparent transparent #1B1B1B transparent;
     -fx-background-radius: 20 20 0 0;
     -fx-border-radius: 20 20 0 0;
 }
@@ -151,7 +153,7 @@
 .table-row-cell {
     -fx-background-color: #424242;
     -fx-border-width: 0 1px 1px 0;
-    -fx-border-color: #D6D6D6;
+    -fx-border-color: #2E2E2E;
     -fx-pref-height: 80;
 }
 
@@ -181,7 +183,7 @@
 }
 
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color:  #D6D6D6;
+    -fx-background-color: #D6D6D6;
     -fx-background-radius: 100;
 }
 

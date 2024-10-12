@@ -20,175 +20,231 @@
          </font>
       </Label>
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
-      <TreeTableView fx:id="treeTableView" layoutX="310.0" layoutY="373.0" prefHeight="431.0" prefWidth="600.0" styleClass="tree-view" />
-      <VBox alignment="TOP_CENTER" layoutX="310.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
+      <VBox alignment="CENTER" layoutX="310.0" layoutY="144.0">
          <children>
-            <Label styleClass="label-regular" text="ทั้งหมด">
+            <Label styleClass="label-bold" text="จำนวนคำร้องภายในระบบ">
                <font>
-                  <Font size="24.0" />
+                  <Font size="28.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="25.0" />
+               </VBox.margin>
             </Label>
-            <Label fx:id="allAppealLabel" styleClass="label-regular" text="0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </Label>
+            <VBox>
+               <children>
+                  <Line endX="892.8489990234375" startX="-163.1561279296875" stroke="#bfbbbb" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="label-medium" text="ทั้งหมด">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="allAppealLabel" styleClass="label-medium" text="0">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="label-medium" text="ดำเนินการครบถ้วน">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="successAppealLabel" style="-fx-text-fill: green;" styleClass="label-medium" text="0">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="label-medium" text="อยู่ระหว่างดำเนินการ">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="operatingAppealLabel" style="-fx-text-fill: orange;" styleClass="label-medium" text="0">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="label-medium" text="ถูกปฏิเสธ">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="rejectAppealLabel" style="-fx-text-fill: red;" styleClass="label-medium" text="0">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Line endX="892.8489990234375" startX="-163.1561279296875" stroke="#bfbbbb" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="25.0" />
+               </VBox.margin>
+            </VBox>
+            <HBox>
+               <children>
+                  <TreeTableView fx:id="treeTableView" prefHeight="400.0" prefWidth="600.0" styleClass="tree-view">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </TreeTableView>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <ToggleButton fx:id="inSystemToggleButton" mnemonicParsing="false" prefHeight="56.0" text="แสดงทั้งหมด">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="label-regular" />
+                                    <String fx:value="toggle-button" />
+                                 </styleClass>
+                              </ToggleButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="431.0">
+                                 <children>
+                                    <Label prefHeight="29.0" prefWidth="303.0" styleClass="label-regular" text="จำนวนผู้ใช้งานระบบ">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="allUserLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="431.0">
+                                 <children>
+                                    <Label prefHeight="29.0" prefWidth="310.0" styleClass="label-regular" text="จำนวนเจ้าหน้าที่คณะ">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="facultyStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="431.0">
+                                 <children>
+                                    <Label prefHeight="29.0" prefWidth="332.0" styleClass="label-regular" text="จำนวนเจ้าหน้าที่ภาควิชา">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="departmentStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="431.0">
+                                 <children>
+                                    <Label prefHeight="29.0" prefWidth="308.0" styleClass="label-regular" text="จำนวนอาจารย์ที่ปรึกษา">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="advisorLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="431.0">
+                                 <children>
+                                    <Label prefHeight="29.0" prefWidth="308.0" styleClass="label-regular" text="จำนวนนักศึกษา">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="studentLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="577.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
-         <children>
-            <Label styleClass="label-regular" text="ดำเนินการครบถ้วน">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="successAppealLabel" styleClass="label-regular" text="0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="848.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
-         <children>
-            <Label styleClass="label-regular" text="อยู่ระหว่างดำเนินการ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="operatingAppealLabel" styleClass="label-regular" text="0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="1114.0" layoutY="213.0" prefHeight="130.0" prefWidth="240.0">
-         <children>
-            <Label styleClass="label-regular" text="ถูกปฏิเสธ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="rejectAppealLabel" styleClass="label-regular" text="0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </VBox>
-      <HBox alignment="CENTER_LEFT" layoutX="931.0" layoutY="449.0" prefHeight="50.0" prefWidth="431.0">
-         <children>
-            <Label prefHeight="29.0" prefWidth="303.0" styleClass="label-regular" text="จำนวนผู้ใช้งานระบบ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="allUserLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="931.0" layoutY="509.0" prefHeight="50.0" prefWidth="431.0">
-         <children>
-            <Label prefHeight="29.0" prefWidth="310.0" styleClass="label-regular" text="จำนวนเจ้าหน้าที่คณะ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="facultyStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="931.0" layoutY="569.0" prefHeight="50.0" prefWidth="431.0">
-         <children>
-            <Label prefHeight="29.0" prefWidth="332.0" styleClass="label-regular" text="จำนวนเจ้าหน้าที่ภาควิชา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="departmentStaffLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="931.0" layoutY="629.0" prefHeight="50.0" prefWidth="431.0">
-         <children>
-            <Label prefHeight="29.0" prefWidth="308.0" styleClass="label-regular" text="จำนวนอาจารย์ที่ปรึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="advisorLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="931.0" layoutY="689.0" prefHeight="50.0" prefWidth="431.0">
-         <children>
-            <Label prefHeight="29.0" prefWidth="308.0" styleClass="label-regular" text="จำนวนนักศึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="studentLabel" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="27.0" prefWidth="266.0" styleClass="label-regular" text="0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Label layoutX="708.0" layoutY="144.0" styleClass="label-medium" text="จำนวนคำร้องภายในระบบ">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
-      <Line endX="892.8489990234375" layoutX="478.0" layoutY="192.0" startX="-163.1561279296875" stroke="#bfbbbb" />
-      <Line endX="892.8489990234375" layoutX="478.0" layoutY="343.0" startX="-163.1561279296875" stroke="#bfbbbb" />
-      <ToggleButton fx:id="inSystemToggleButton" layoutX="1219.0" layoutY="374.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="152.0" text="แสดงทั้งหมด">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <styleClass>
-            <String fx:value="label-regular" />
-            <String fx:value="toggle-button" />
-         </styleClass>
-      </ToggleButton>
     </children>
 </AnchorPane>

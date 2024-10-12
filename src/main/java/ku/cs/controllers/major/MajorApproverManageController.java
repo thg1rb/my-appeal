@@ -99,10 +99,10 @@ public class MajorApproverManageController {
     }
 
     public void showTable(ApproverList approverList){
-        TableColumn<Approver, String> roleColumn = new TableColumn<>("Role");
+        TableColumn<Approver, String> roleColumn = new TableColumn<>("ตำแหน่ง");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
-        TableColumn<Approver, String> fullNameColumn = new TableColumn<>("Full Name");
+        TableColumn<Approver, String> fullNameColumn = new TableColumn<>("ชื่อ-สกุล");
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
         approverTableView.getColumns().clear();

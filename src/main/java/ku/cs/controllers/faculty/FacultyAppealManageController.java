@@ -113,7 +113,7 @@ public class FacultyAppealManageController {
     }
 
     public void showTable(AppealList appealList, boolean filter) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         dateColumn.setComparator(new DateTimeService());

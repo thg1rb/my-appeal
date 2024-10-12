@@ -86,13 +86,13 @@ public class MajorNisitManageController {
     }
 
     public void showTable(UserList studentList) {
-        TableColumn<Student, String> idColumn = new TableColumn<>("ID");
+        TableColumn<Student, String> idColumn = new TableColumn<>("รหัสนิสิต");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
-        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Student, String> nameColumn = new TableColumn<>("ชื่อ-สกุล");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<Student, String> emailColumn = new TableColumn<>("Email");
+        TableColumn<Student, String> emailColumn = new TableColumn<>("อีเมลล์");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         nisitTableView.getColumns().clear();
@@ -119,13 +119,13 @@ public class MajorNisitManageController {
         updateTotalLabel();
     }
     public void showSearchTable(UserList studentList, String searchText) {
-        TableColumn<Student, String> idColumn = new TableColumn<>("ID");
+        TableColumn<Student, String> idColumn = new TableColumn<>("รหัสนิสิต");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("studentId"));
 
-        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<Student, String> nameColumn = new TableColumn<>("ชื่อ-สกุล");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
-        TableColumn<Student, String> emailColumn = new TableColumn<>("Email");
+        TableColumn<Student, String> emailColumn = new TableColumn<>("อีเมลล์");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         nisitTableView.getColumns().clear();

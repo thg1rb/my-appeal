@@ -123,17 +123,17 @@ public class MajorAppealManageController {
     }
 
     public void showTable(AppealList appealList, boolean filter) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
         dateColumn.setComparator(new DateTimeService());
 
-        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
+        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("ชื่อ-สกุล");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
-        TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Appeal, String> typeColumn = new TableColumn<>("ประเภทของคำร้อง");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        TableColumn<Appeal, String> statusColumn = new TableColumn<>("Status");
+        TableColumn<Appeal, String> statusColumn = new TableColumn<>("สถานะของคำร้อง");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         tableView.getColumns().clear();
