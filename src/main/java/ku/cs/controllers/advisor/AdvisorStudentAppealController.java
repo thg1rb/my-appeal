@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ku.cs.models.appeals.Appeal;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,7 +26,7 @@ import ku.cs.services.datasources.Datasource;
 import java.io.File;
 import java.io.IOException;
 
-public class ProfessorStudentAppealController {
+public class AdvisorStudentAppealController {
 
     @FXML private AnchorPane mainPane;
     @FXML private Label totalLabel;
@@ -72,10 +71,10 @@ public class ProfessorStudentAppealController {
             Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
             if (selectedAppeal != null) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-approve-student-appeal.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/advisor/advisor-approve-student-appeal.fxml"));
                     Parent root = loader.load();
 
-                    ProfessorApproveStudentAppealController controller = loader.getController();
+                    AdvisorApproveStudentAppealController controller = loader.getController();
                     controller.setSelectedAppeal(selectedAppeal);
 
                     Stage stage = new Stage();

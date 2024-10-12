@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,22 +21,16 @@ import ku.cs.controllers.general.AppealDetailsController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
-import ku.cs.models.collections.UserList;
-import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.DateTimeService;
-import ku.cs.services.FXRouter;
 import ku.cs.services.ProgramSetting;
-import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
-import ku.cs.services.datasources.UserListDatasource;
 
-import java.io.File;
 import java.io.IOException;
 
-public class ProfessorTrackStudentAppealController {
+public class AdvisorTrackStudentAppealController {
     @FXML private AnchorPane mainPane;
 
     @FXML private Label ownerAppealLabel;

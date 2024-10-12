@@ -5,6 +5,7 @@ import ku.cs.models.dates.ModifyDate;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class ModifyDateListFileDatasource implements Datasource<ModifyDateList> {
     private String directoryName;
@@ -66,7 +67,7 @@ public class ModifyDateListFileDatasource implements Datasource<ModifyDateList> 
                 String departmentApproveDate = data[3];
                 String deanApproveDate = data[4];
 
-                modifyDateList.addModifyDate(new ModifyDate(uuid, createDate, advisorApproveDate, departmentApproveDate, deanApproveDate));
+                modifyDateList.addModifyDate(new ModifyDate(UUID.fromString(uuid), createDate, advisorApproveDate, departmentApproveDate, deanApproveDate));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

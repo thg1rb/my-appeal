@@ -176,6 +176,7 @@ public class AppealDetailsController {
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(approveColor);
             System.out.println(selectedAppeal.getDepartmentSignature());
+
             departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
 
             facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");

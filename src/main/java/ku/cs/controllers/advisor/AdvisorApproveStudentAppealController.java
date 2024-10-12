@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ import ku.cs.services.exceptions.EmptyInputException;
 
 import java.util.Date;
 
-public class ProfessorApproveStudentAppealController {
+public class AdvisorApproveStudentAppealController {
 
     @FXML private AnchorPane mainPane;
 

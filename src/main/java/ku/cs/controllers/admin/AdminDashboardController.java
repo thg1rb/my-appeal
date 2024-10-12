@@ -122,10 +122,10 @@ public class AdminDashboardController {
         successAppealCol.setCellValueFactory(cellData ->{
             Displayable item = cellData.getValue().getValue();
             if (item instanceof Faculty){
-                int count = appealList.countSuccessAppealByFacultyUUID(((Faculty)item).getUuid().toString());
+                int count = appealList.countSuccessAppealByFacultyUUID(((Faculty)item).getUuid());
                 return new SimpleStringProperty(String.valueOf(count));
             } else if (item instanceof Major){
-                int count = appealList.countSuccessAppealByDepartmentUUID(((Major)item).getUuid().toString());
+                int count = appealList.countSuccessAppealByDepartmentUUID(((Major)item).getUuid());
                 return new SimpleStringProperty(String.valueOf(count));
             }
             return null;
@@ -253,8 +253,6 @@ public class AdminDashboardController {
                         StandardWatchEventKinds.ENTRY_CREATE,
                         StandardWatchEventKinds.ENTRY_DELETE,
                         StandardWatchEventKinds.ENTRY_MODIFY);
-
-                System.out.println("กำลังตรวจสอบการเปลี่ยนแปลงของไฟล์...");
 
                 WatchKey key;
                 while (!Thread.currentThread().isInterrupted() && (key = watchService.take()) != null) {

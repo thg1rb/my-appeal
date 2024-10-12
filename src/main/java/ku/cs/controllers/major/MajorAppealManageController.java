@@ -54,7 +54,7 @@ public class MajorAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID());
 
         ProgramSetting.getInstance().applyStyles(mainPane);
 
@@ -113,7 +113,7 @@ public class MajorAppealManageController {
 
             datasource.writeData(appealList);
             appealList = datasource.readData();
-            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID());
             showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
 
         } catch (IOException e) {

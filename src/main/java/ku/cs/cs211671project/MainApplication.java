@@ -13,12 +13,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         String fontPath = "/fonts/";
-        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Thin"), 20);
         Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Regular.ttf"), 20);
-        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Medium.ttf"), 20);
         Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Bold.ttf"), 20);
-        Font.loadFont(getClass().getResourceAsStream(fontPath + "Kanit-Italic.ttf"), 20);
-
 
         FXRouter.bind(this, stage, "CS211 Project", 1440, 832);
         configRoutes();
@@ -37,8 +33,6 @@ public class MainApplication extends Application {
         FXRouter.when("program-setting", viewPath + "general/" + "program-setting.fxml");
         FXRouter.when("about-us", viewPath + "general/" + "about-us.fxml");
 
-
-
         // Admin
         FXRouter.when("admin-user-manage", viewPath + "admin/" + "admin-user-management.fxml");
         FXRouter.when("admin-faculty-manage", viewPath + "admin/" + "admin-faculty-management.fxml");
@@ -49,9 +43,9 @@ public class MainApplication extends Application {
         FXRouter.when("student-track-appeal", viewPath + "student/" + "student-track-appeal.fxml");
         FXRouter.when("student-create-appeal", viewPath + "student/" + "student-create-appeal.fxml");
 
-        // Professor
-        FXRouter.when("professor-student-list", viewPath + "professor/" + "professor-student-list.fxml");
-        FXRouter.when("professor-student-appeal", viewPath + "professor/" + "professor-student-appeal.fxml");
+        // Advisor
+        FXRouter.when("advisor-student-list", viewPath + "advisor/" + "advisor-student-list.fxml");
+        FXRouter.when("advisor-student-appeal", viewPath + "advisor/" + "advisor-student-appeal.fxml");
 
         // Faculty
         FXRouter.when("faculty-appeal-manage", viewPath + "faculty/" + "faculty-appeal-manage.fxml");
@@ -61,7 +55,6 @@ public class MainApplication extends Application {
         FXRouter.when("major-appeal-manage", viewPath + "major/" + "major-appeal-manage.fxml");
         FXRouter.when("major-approver-manage", viewPath + "major/" + "major-approver-manage.fxml");
         FXRouter.when("major-nisit-manage", viewPath + "major/" + "major-nisit-manage.fxml");
-
     }
 
     public static void main(String[] args) {

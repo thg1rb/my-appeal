@@ -58,7 +58,7 @@ public class SignFileUploader implements FileUploader {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             try {
-                String fileName = selectedAppeal.getUuid();
+                String fileName = selectedAppeal.getUuid().toString();
                 if (staff instanceof DepartmentStaff) {
                     fileName += "_department-sign";
                 } else if (staff instanceof FacultyStaff) {

@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -32,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-public class ProfessorStudentListController {
+public class AdvisorStudentListController {
 
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
@@ -84,10 +83,10 @@ public class ProfessorStudentListController {
             User selectedUser = tableView.getSelectionModel().getSelectedItem();
             if (selectedUser != null) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/professor/professor-track-student-appeal.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/advisor/advisor-track-student-appeal.fxml"));
                     Parent root = loader.load();
 
-                    ProfessorTrackStudentAppealController controller = loader.getController();
+                    AdvisorTrackStudentAppealController controller = loader.getController();
                     controller.setSelectedStudent(appealList, (Student) selectedUser);
 
                     Stage stage = new Stage();
