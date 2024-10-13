@@ -102,8 +102,8 @@ public class AdvisorStudentAppealController {
         TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันที่สร้างคำร้อง");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
-        TableColumn<Appeal, String> type = new TableColumn<>("ประเภทของคำร้อง");
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<Appeal, String> typeCol = new TableColumn<>("ประเภทของคำร้อง");
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         TableColumn<Appeal, String> ownerIdCol = new TableColumn<>("รหัสนิสิต");
         ownerIdCol.setCellValueFactory(new PropertyValueFactory<>("ownerId"));
@@ -115,12 +115,12 @@ public class AdvisorStudentAppealController {
 
         tableView.getColumns().clear();
         tableView.getColumns().add(dateTimeCol);
-        tableView.getColumns().add(type);
+        tableView.getColumns().add(typeCol);
         tableView.getColumns().add(ownerIdCol);
         tableView.getColumns().add(ownerFullNameCol);
 
         dateTimeCol.setPrefWidth(275);
-        type.setPrefWidth(275);
+        typeCol.setPrefWidth(275);
         ownerIdCol.setPrefWidth(275);
         ownerFullNameCol.setPrefWidth(275);
 
@@ -133,6 +133,12 @@ public class AdvisorStudentAppealController {
             }
         }
         tableView.getSortOrder().add(dateTimeCol);
+
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        ownerIdCol.setSortable(false);
+        ownerFullNameCol.setSortable(false);
+
         updateTotalLabel();
     }
 

@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,6 +41,8 @@ public class AdvisorTrackStudentAppealController {
     private Datasource<ModifyDateList> modifyDateListDatasource;
     private ModifyDateList modifyDateList;
 
+    private Appeal selectedAppeal;
+
     @FXML
     private void initialize() {
 
@@ -61,33 +60,20 @@ public class AdvisorTrackStudentAppealController {
         closePopUpButton.setOnMouseEntered(mouseEvent -> closePopUpImageView.setImage(hoverClosePopUpImage));
         closePopUpButton.setOnMouseExited(mouseEvent -> closePopUpImageView.setImage(defaultClosePopUpImage));
 
-        tableView.setOnMouseClicked(mouseEvent -> {
-            Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
-            if (selectedAppeal != null) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-details.fxml"));
-                    Parent root = loader.load();
-
-                    AppealDetailsController controller = loader.getController();
-                    controller.setSelectedAppeal(selectedAppeal, modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()));
-
-                    Stage stage = new Stage();
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setAlwaysOnTop(true);
-                    stage.setScene(new Scene(root));
-
-                    stage.showAndWait();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        tableView.setRowFactory(v -> {
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if (selectedAppeal != null)
+                    showStudentAppealDetail();
+            });
+            return row;
         });
     }
 
     // ตารางแสดงคำร้องของนิสิตในที่ปรึกษารายบุคคล
     public void showTable(AppealList appealList, User user) {
-        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
+        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> typeCol = new TableColumn<>("ประเภทของคำร้อง");
@@ -111,12 +97,37 @@ public class AdvisorTrackStudentAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
+
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        statusCol.setSortable(false);
+
         updateTotalLabel();
     }
 
     public void setSelectedStudent(AppealList appealList, Student selectedStudent) {
         ownerAppealLabel.setText("คำร้องทั้งหมดของ " + selectedStudent.getFullName());
         showTable(appealList, selectedStudent);
+    }
+
+    private void showStudentAppealDetail() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-details.fxml"));
+            Parent root = loader.load();
+
+            AppealDetailsController controller = loader.getController();
+            controller.setSelectedAppeal(selectedAppeal, modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()));
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด

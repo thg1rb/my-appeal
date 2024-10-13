@@ -5,11 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -47,6 +45,8 @@ public class AdvisorStudentListController {
     private Datasource<AppealList> appealDatasource;
     private AppealList appealList;
 
+    private User selectedUser;
+
     @FXML
     private void initialize() {
         user = (User) FXRouter.getData();
@@ -79,27 +79,14 @@ public class AdvisorStudentListController {
         });
 
         // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
-        tableView.setOnMouseClicked(mouseEvent -> {
-            User selectedUser = tableView.getSelectionModel().getSelectedItem();
-            if (selectedUser != null) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/advisor/advisor-track-student-appeal.fxml"));
-                    Parent root = loader.load();
-
-                    AdvisorTrackStudentAppealController controller = loader.getController();
-                    controller.setSelectedStudent(appealList, (Student) selectedUser);
-
-                    Stage stage = new Stage();
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setAlwaysOnTop(true);
-                    stage.setScene(new Scene(root));
-
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        tableView.setRowFactory(v -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedUser =  tableView.getSelectionModel().getSelectedItem();
+                if (selectedUser != null)
+                    showStudentAppeal();
+            });
+            return row;
         });
     }
 
@@ -135,7 +122,7 @@ public class AdvisorStudentListController {
         fullnameCol.setPrefWidth(275);
         idCol.setPrefWidth(275);
 
-        // Add Student filter by Professer name
+        // Add Student filter by Advisor UUID
         tableView.getItems().clear();
         if (searchText.isEmpty()) {
             for (User student : studentList.getUsers()) {
@@ -152,7 +139,33 @@ public class AdvisorStudentListController {
                 }
             }
         }
+
+        imgCol.setSortable(false);
+        usernameCol.setSortable(false);
+        fullnameCol.setSortable(false);
+        idCol.setSortable(false);
+
         updateTotalLabel();
+    }
+
+    private void showStudentAppeal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/advisor/advisor-track-student-appeal.fxml"));
+            Parent root = loader.load();
+
+            AdvisorTrackStudentAppealController controller = loader.getController();
+            controller.setSelectedStudent(appealList, (Student) selectedUser);
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด
