@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,15 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,22 +18,16 @@ import ku.cs.controllers.general.AppealDetailsController;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
-import ku.cs.models.collections.UserList;
-import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
 import ku.cs.services.DateTimeService;
-import ku.cs.services.FXRouter;
 import ku.cs.services.ProgramSetting;
-import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
-import ku.cs.services.datasources.UserListDatasource;
 
-import java.io.File;
 import java.io.IOException;
 
-public class ProfessorTrackStudentAppealController {
+public class AdvisorTrackStudentAppealController {
     @FXML private AnchorPane mainPane;
 
     @FXML private Label ownerAppealLabel;
@@ -50,6 +40,8 @@ public class ProfessorTrackStudentAppealController {
 
     private Datasource<ModifyDateList> modifyDateListDatasource;
     private ModifyDateList modifyDateList;
+
+    private Appeal selectedAppeal;
 
     @FXML
     private void initialize() {
@@ -68,33 +60,20 @@ public class ProfessorTrackStudentAppealController {
         closePopUpButton.setOnMouseEntered(mouseEvent -> closePopUpImageView.setImage(hoverClosePopUpImage));
         closePopUpButton.setOnMouseExited(mouseEvent -> closePopUpImageView.setImage(defaultClosePopUpImage));
 
-        tableView.setOnMouseClicked(mouseEvent -> {
-            Appeal selectedAppeal = tableView.getSelectionModel().getSelectedItem();
-            if (selectedAppeal != null) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-details.fxml"));
-                    Parent root = loader.load();
-
-                    AppealDetailsController controller = loader.getController();
-                    controller.setSelectedAppeal(selectedAppeal, modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()));
-
-                    Stage stage = new Stage();
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.setAlwaysOnTop(true);
-                    stage.setScene(new Scene(root));
-
-                    stage.showAndWait();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        tableView.setRowFactory(v -> {
+            TableRow<Appeal> row = new TableRow<>();
+            row.setOnMouseClicked(mouseEvent -> {
+                selectedAppeal = tableView.getSelectionModel().getSelectedItem();
+                if (selectedAppeal != null)
+                    showStudentAppealDetail();
+            });
+            return row;
         });
     }
 
     // ตารางแสดงคำร้องของนิสิตในที่ปรึกษารายบุคคล
     public void showTable(AppealList appealList, User user) {
-        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
+        TableColumn<Appeal, String> dateTimeCol = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         TableColumn<Appeal, String> typeCol = new TableColumn<>("ประเภทของคำร้อง");
@@ -118,12 +97,37 @@ public class ProfessorTrackStudentAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
+
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        statusCol.setSortable(false);
+
         updateTotalLabel();
     }
 
     public void setSelectedStudent(AppealList appealList, Student selectedStudent) {
         ownerAppealLabel.setText("คำร้องทั้งหมดของ " + selectedStudent.getFullName());
         showTable(appealList, selectedStudent);
+    }
+
+    private void showStudentAppealDetail() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/appeal-details.fxml"));
+            Parent root = loader.load();
+
+            AppealDetailsController controller = loader.getController();
+            controller.setSelectedAppeal(selectedAppeal, modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()));
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด

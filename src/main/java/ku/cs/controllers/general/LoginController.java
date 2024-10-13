@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,7 +34,9 @@ public class LoginController {
 
     @FXML private TextField giveUsernameTextField;
     @FXML private TextField givePasswordTextField;
+
     @FXML private Label errorLabel;
+
     @FXML private Button loginButton;
 
     private UserList userList;
@@ -46,23 +47,18 @@ public class LoginController {
     public void initialize() {
         userList = UserListDatasource.readAllUsers().getActiveUser();
 
+        ProgramSetting.getInstance().applyStyles(mainPane);
+
         errorLabel.setText("");
 
-        giveUsernameTextField.setOnKeyPressed(this::handleKeyPressed);
-        givePasswordTextField.setOnKeyPressed(this::handleKeyPressed);
-
-        ProgramSetting.getInstance().applyStyles(mainPane);
+        mainPane.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                loginButton.fire();
+        });
 
         Platform.runLater(() -> {
             currentScene = (AnchorPane) FXRouter.getStage().getScene().getRoot();
         });
-    }
-
-    // กดปุ่ม Enter บนคีย์บอร์ดเพื่อเข้าสู่ระบบ
-    private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            loginButton.fire();
-        }
     }
 
     // ไปที่หน้าประจำของแต่ละตำแหน่ง
@@ -110,7 +106,7 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                Animation.getInstance().switchSceneWithFade(currentScene, "professor-student-list", user);
+                                Animation.getInstance().switchSceneWithFade(currentScene, "advisor-student-list", user);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }

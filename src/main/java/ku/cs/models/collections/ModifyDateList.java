@@ -3,6 +3,7 @@ package ku.cs.models.collections;
 import ku.cs.models.dates.ModifyDate;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ModifyDateList {
     private ArrayList<ModifyDate> modifyDates;
@@ -16,7 +17,7 @@ public class ModifyDateList {
         return modifyDates;
     }
 
-    //
+    // add a new Modify Date (also add a new Appeal)
     public boolean addModifyDate(ModifyDate modifyDate) {
         if (modifyDate != null) {
             modifyDates.add(modifyDate);
@@ -26,7 +27,7 @@ public class ModifyDateList {
     }
 
     // Find Modify Date by UUID
-    public ModifyDate findModifyDateByUuid(String uuid) {
+    public ModifyDate findModifyDateByUuid(UUID uuid) {
         for (ModifyDate modifyDate : modifyDates) {
             if (modifyDate.getUuid().equals(uuid)) {
                 return modifyDate;

@@ -3,7 +3,7 @@ package ku.cs.models;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Faculty {
+public class Faculty implements Displayable {
     private UUID uuid;
 
     private String facultyName;
@@ -48,5 +48,10 @@ public class Faculty {
     @Override
     public String toString() {
         return uuid.toString() + "," + facultyName + "," + facultyId;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return this.getFacultyName();
     }
 }

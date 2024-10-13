@@ -3,6 +3,8 @@ package ku.cs.models.collections;
 import ku.cs.models.appeals.Appeal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class AppealList {
     private ArrayList<Appeal> appeals;
@@ -22,24 +24,37 @@ public class AppealList {
     }
 
     // Count by ...
-    public int countByDepartment(String department) {
+    public int countSuccessAppealByDepartmentUUID(UUID departmentUuid) {
         int departmentCount = 0;
         for (Appeal appeal : appeals) {
-            if (appeal.getOwnerDepartmentUuid().equals(department)) {
+            if (appeal.getOwnerDepartmentUuid().equals(departmentUuid) && appeal.getStatus().contains("ดำเนินการครบถ้วน")) {
                 departmentCount++;
             }
         }
         return departmentCount;
     }
 
-    public int countByFaculty(String faculty) {
+    public int countSuccessAppealByFacultyUUID(UUID facultyUuid) {
         int facultyCount = 0;
         for (Appeal appeal : appeals) {
-            if (appeal.getOwnerFacultyUuid().equals(faculty)) {
+            if (appeal.getOwnerFacultyUuid().equals(facultyUuid) && appeal.getStatus().contains("ดำเนินการครบถ้วน")) {
                 facultyCount++;
             }
         }
         return facultyCount;
+    }
+
+    public HashMap<String, Integer> getStatusAppealsCount(){
+        HashMap<String, Integer> appealsCount = new HashMap<>();
+        for (Appeal appeal : appeals) {
+            String status = appeal.getStatus();
+            if (appealsCount.containsKey(status)) {
+                appealsCount.put(status, appealsCount.get(status) + 1);
+            } else {
+                appealsCount.put(status, 1);
+            }
+        }
+        return appealsCount;
     }
 
     // Getters
@@ -47,20 +62,20 @@ public class AppealList {
         return appeals;
     }
 
-    public AppealList getAppealByDepartment(String department){
+    public AppealList getAppealByDepartment(UUID departmentUuid){
         AppealList appealList = new AppealList();
         for (Appeal appeal : appeals) {
-            if (appeal.getOwnerDepartmentUuid().equals(department)) {
+            if (appeal.getOwnerDepartmentUuid().equals(departmentUuid)) {
                 appealList.addAppeal(appeal);
             }
         }
         return appealList;
     }
 
-    public AppealList getAppealByFaculty(String faculty){
+    public AppealList getAppealByFaculty(UUID facultyUuid){
         AppealList appealList = new AppealList();
         for (Appeal appeal : appeals) {
-            if (appeal.getOwnerFacultyUuid().equals(faculty)) {
+            if (appeal.getOwnerFacultyUuid().equals(facultyUuid)) {
                 appealList.addAppeal(appeal);
             }
         }

@@ -1,8 +1,9 @@
-package ku.cs.controllers.department;
+package ku.cs.controllers.major;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -18,7 +19,6 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
-import ku.cs.services.Animation;
 import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
@@ -28,7 +28,7 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-public class DepartmentAppealManageController {
+public class MajorAppealManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
@@ -54,13 +54,12 @@ public class DepartmentAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+        departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID());
 
         ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
-        System.out.println("/ku/cs/views/general/" + role + "-navbar.fxml");
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
         try {
             Pane navbarComponent = navbarComponentLoader.load();
@@ -106,23 +105,16 @@ public class DepartmentAppealManageController {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
+            stage.setScene(new Scene(root));
 
             mainPane.setEffect(blur);
-            Animation.getInstance().showPopUpWithEffect(stage, root);
+            stage.showAndWait();
+            mainPane.setEffect(null);
 
-            stage.setOnHidden(event -> {
-                // After the pop-up closes, perform data actions
-                mainPane.setEffect(null);
-                datasource.writeData(appealList);
-                appealList = datasource.readData();
-                departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
-                showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
-            });
-
-//            datasource.writeData(appealList);
-//            appealList = datasource.readData();
-//            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
-//            showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+            datasource.writeData(appealList);
+            appealList = datasource.readData();
+            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID());
+            showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -131,17 +123,17 @@ public class DepartmentAppealManageController {
     }
 
     public void showTable(AppealList appealList, boolean filter) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("Date");
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
         dateColumn.setComparator(new DateTimeService());
 
-        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("Owner");
+        TableColumn<Appeal, String> ownerColumn = new TableColumn<>("ชื่อ-สกุล");
         ownerColumn.setCellValueFactory(new PropertyValueFactory<>("ownerFullName"));
 
-        TableColumn<Appeal, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<Appeal, String> typeColumn = new TableColumn<>("ประเภทของคำร้อง");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        TableColumn<Appeal, String> statusColumn = new TableColumn<>("Status");
+        TableColumn<Appeal, String> statusColumn = new TableColumn<>("สถานะของคำร้อง");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         tableView.getColumns().clear();

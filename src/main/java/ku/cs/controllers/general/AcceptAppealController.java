@@ -152,7 +152,6 @@ public class AcceptAppealController {
             String modifyDate = DateTimeService.detailedDateToString(new Date());
             selectedAppeal.setModifyDate(modifyDate);
             selectedAppeal.setStatus(selectedStatus + " | " + subStatus);
-            System.out.println("status: " + selectedAppeal.getStatus());
             if (role.equals("เจ้าหน้าที่ภาควิชา")) {
                 modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).setDepartmentApproveDate(modifyDate);
             } else if (role.equals("เจ้าหน้าที่คณะ")) {

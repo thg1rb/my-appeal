@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -13,9 +14,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.controllers.general.ConfirmationDeleteAlertController;
 import ku.cs.models.Faculty;
-import ku.cs.models.Department;
+import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
-import ku.cs.models.collections.DepartmentList;
+import ku.cs.models.collections.MajorList;
 import ku.cs.services.ProgramSetting;
 import ku.cs.services.exceptions.DuplicateItemsException;
 import ku.cs.services.exceptions.EmptyInputException;
@@ -24,21 +25,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AdminDepartmentFacultyPopupController {
+public class AdminMajorFacultyPopupController {
     @FXML private AnchorPane mainPane;
 
     @FXML private Text modeText;
 
-    @FXML private Text belongFacultyText;
-    @FXML private Text departmentIdText;
-    @FXML private TextField departmentIdTextField;
-    @FXML private Text departmentNameText;
-    @FXML private TextField departmentNameTextField;
+    @FXML private Label belongFacultyLabel;
+    @FXML private Label majorIdLabel;
+    @FXML private TextField majorIdTextField;
+    @FXML private Label majorNameLabel;
+    @FXML private TextField majorNameTextField;
 
     @FXML private Text emptyInputText;
 
-    @FXML private Text facultyNameText;
-    @FXML private Text facultyIdText;
+    @FXML private Label facultyNameLabel;
+    @FXML private Label facultyIdLabel;
     @FXML private TextField facultyNameTextField;
     @FXML private TextField facultyIdTextField;
 
@@ -52,7 +53,7 @@ public class AdminDepartmentFacultyPopupController {
 
     private Object data;
     private FacultyList facultyList;
-    private DepartmentList departmentList;
+    private MajorList majorList;
 
     private String[] optionChoice = {"คณะ", "ภาควิชา"};
     private ArrayList<String> facultyChoice;
@@ -75,15 +76,15 @@ public class AdminDepartmentFacultyPopupController {
         });
 
         facultyChoiceBox.setOnAction(e->{
-            departmentIdTextField.setPromptText(facultyList.findFacultyByName(facultyChoiceBox.getValue()).getFacultyId() + "...");
+            majorIdTextField.setPromptText(facultyList.findFacultyByName(facultyChoiceBox.getValue()).getFacultyId() + "...");
         });
     }
 
-    public void initPopup(boolean editMode, Object data, FacultyList facultyList, DepartmentList departmentList, String tabSelected){
+    public void initPopup(boolean editMode, Object data, FacultyList facultyList, MajorList majorList, String tabSelected){
         setMode(editMode, tabSelected);
 
         this.facultyList = facultyList;
-        this.departmentList = departmentList;
+        this.majorList = majorList;
         facultyChoice = facultyList.getAllFacultiesName();
 
         facultyChoiceBox.getItems().addAll(facultyChoice);
@@ -117,10 +118,10 @@ public class AdminDepartmentFacultyPopupController {
             if (data instanceof Faculty){
                 facultyNameTextField.setText(((Faculty) data).getFacultyName());
                 facultyIdTextField.setText(((Faculty) data).getFacultyId());
-            }else if (data instanceof Department){
-                departmentNameTextField.setText(((Department) data).getDepartmentName());
-                departmentIdTextField.setText(((Department) data).getDepartmentId());
-                facultyChoiceBox.getSelectionModel().select(facultyList.findFacultyByUUID(((Department) data).getFacultyUUID()).getFacultyName());
+            }else if (data instanceof Major){
+                majorNameTextField.setText(((Major) data).getMajorName());
+                majorIdTextField.setText(((Major) data).getMajorId());
+                facultyChoiceBox.getSelectionModel().select(facultyList.findFacultyByUUID(((Major) data).getFacultyUUID()).getFacultyName());
             }
         }
     }
@@ -128,28 +129,28 @@ public class AdminDepartmentFacultyPopupController {
     private void setUi(String option){
         optionChoiceBox.setValue(option);
         if (option.equals("คณะ")) {
-            belongFacultyText.setVisible(false);
+            belongFacultyLabel.setVisible(false);
             facultyChoiceBox.setVisible(false);
-            departmentNameText.setVisible(false);
-            departmentNameTextField.setVisible(false);
-            departmentIdText.setVisible(false);
-            departmentIdTextField.setVisible(false);
+            majorNameLabel.setVisible(false);
+            majorNameTextField.setVisible(false);
+            majorIdLabel.setVisible(false);
+            majorIdTextField.setVisible(false);
 
-            facultyNameText.setVisible(true);
+            facultyNameLabel.setVisible(true);
             facultyNameTextField.setVisible(true);
-            facultyIdText.setVisible(true);
+            facultyIdLabel.setVisible(true);
             facultyIdTextField.setVisible(true);
         } else {
-            belongFacultyText.setVisible(true);
+            belongFacultyLabel.setVisible(true);
             facultyChoiceBox.setVisible(true);
-            departmentNameText.setVisible(true);
-            departmentNameTextField.setVisible(true);
-            departmentIdText.setVisible(true);
-            departmentIdTextField.setVisible(true);
+            majorNameLabel.setVisible(true);
+            majorNameTextField.setVisible(true);
+            majorIdLabel.setVisible(true);
+            majorIdTextField.setVisible(true);
 
-            facultyNameText.setVisible(false);
+            facultyNameLabel.setVisible(false);
             facultyNameTextField.setVisible(false);
-            facultyIdText.setVisible(false);
+            facultyIdLabel.setVisible(false);
             facultyIdTextField.setVisible(false);
         }
     }
@@ -176,20 +177,20 @@ public class AdminDepartmentFacultyPopupController {
                 facultyList.addFaculty(name, id);
 
             }else{
-                name = departmentNameTextField.getText();
-                id = departmentIdTextField.getText();
+                name = majorNameTextField.getText();
+                id = majorIdTextField.getText();
                 UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
 
                 if (name.isEmpty() || id.isEmpty() || faculty == null){
                     throw new EmptyInputException("*กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
 
-                for (Department department : departmentList.getDepartments()){
-                    if (department.getDepartmentName().equals(name)){
+                for (Major major : majorList.getMajors()){
+                    if (major.getMajorName().equals(name)){
                         throw new DuplicateItemsException("*ภาควิชานี้มีในระบบอยู่แล้ว");
                     }
                 }
-                departmentList.addDepartment(name, faculty, id);
+                majorList.addMajor(name, faculty, id);
             }
 
             Stage stage = (Stage) confirmButton.getScene().getWindow();
@@ -220,16 +221,16 @@ public class AdminDepartmentFacultyPopupController {
                 ((Faculty) data).setFacultyName(name);
                 ((Faculty) data).setFacultyId(id);
             } else {
-                name = departmentNameTextField.getText();
-                id = departmentIdTextField.getText();
+                name = majorNameTextField.getText();
+                id = majorIdTextField.getText();
                 UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
 
                 if (name.isEmpty() || id.isEmpty() || faculty == null){
                     throw new EmptyInputException();
                 }
-                ((Department) data).setDepartmentName(name);
-                ((Department) data).setDepartmentId(id);
-                ((Department) data).setFacultyUUID(faculty);
+                ((Major) data).setMajorName(name);
+                ((Major) data).setMajorId(id);
+                ((Major) data).setFacultyUUID(faculty);
             }
 
             Stage stage = (Stage) editButton.getScene().getWindow();

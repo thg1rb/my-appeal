@@ -22,6 +22,7 @@ public class AdminNavbarController {
     @FXML private Label usernameLabel;
 
     private User user;
+    private AdminDashboardController adminDashboardController;
     private AnchorPane currentScene;
 
     @FXML
@@ -39,8 +40,15 @@ public class AdminNavbarController {
         });
     }
 
+    public void setAdminDashboardController(AdminDashboardController adminDashboardController) {
+        this.adminDashboardController = adminDashboardController;
+    }
+
     @FXML
     void onUserButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "admin-user-manage", user);
         }catch(Exception e){
@@ -50,6 +58,9 @@ public class AdminNavbarController {
 
     @FXML
     void onStaffButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "admin-staff-manage", user);
         }catch(Exception e){
@@ -59,6 +70,9 @@ public class AdminNavbarController {
 
     @FXML
     void onFacultyButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "admin-faculty-manage", user);
         }catch(Exception e){
@@ -68,6 +82,9 @@ public class AdminNavbarController {
 
     @FXML
     void onDashboardButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "admin-dashboard", user);
         }catch(Exception e){
@@ -77,6 +94,9 @@ public class AdminNavbarController {
 
     @FXML
     void onProfileSettingButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "profile-setting", user);
         }catch(Exception e){
@@ -86,6 +106,9 @@ public class AdminNavbarController {
 
     @FXML
     void onProgramSettingButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "program-setting", user);
         } catch (Exception e) {
@@ -95,6 +118,9 @@ public class AdminNavbarController {
 
     @FXML
     void onLogoutButtonClicked() {
+        if (adminDashboardController != null) {
+            adminDashboardController.stopWatchingFilesThread();
+        }
         try{
             Animation.getInstance().switchSceneWithFade(currentScene, "login", null);
         }catch(Exception e){

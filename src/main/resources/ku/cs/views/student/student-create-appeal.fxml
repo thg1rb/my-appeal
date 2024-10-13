@@ -347,9 +347,33 @@
          </children>
       </VBox>
       <Pane fx:id="backgroundAlertPane" opacity="0.6" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #000000;" visible="false" />
-      <Pane fx:id="failAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" styleClass="detail-pane" visible="false">
+      <VBox fx:id="failAlertVBox" alignment="CENTER" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" styleClass="detail-pane" visible="false">
          <children>
-            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="รับทราบ">
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/create-appeal-fail.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label styleClass="label-bold" text="ไม่สามารถสร้างคำร้องได้" textFill="#cc0000">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="failReasonLabel" styleClass="label-regular" text="โปรดใส่รายละเอียดของคำร้องให้ถูกต้องและครบถ้วนก่อนสร้างคำร้อง">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="7.0" />
+               </VBox.margin>
+            </Label>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onCloseButtonClick" text="รับทราบ">
                <font>
                   <Font size="24.0" />
                </font>
@@ -358,26 +382,35 @@
                   <String fx:value="label-medium" />
                </styleClass>
             </Button>
-            <Label layoutX="232.0" layoutY="239.0" styleClass="label-bold" text="ไม่สามารถสร้างคำร้องได้" textFill="#cc0000">
+         </children>
+      </VBox>
+      <VBox fx:id="successAlertVBox" alignment="CENTER" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" styleClass="detail-pane" visible="false">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/create-appeal-success.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label styleClass="label-bold" text="การสร้างคำร้องเสร็จสิ้น" textFill="#008f2f">
                <font>
                   <Font size="36.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
             </Label>
-            <Label fx:id="failReasonLabel" layoutX="142.0" layoutY="299.0" styleClass="label-medium" text="โปรดใส่รายละเอียดของคำร้องให้ครบก่อนสร้างคำร้อง">
+            <Label styleClass="label-regular" text="คำร้องของคุณจะถูกส่งต่อไปให้อาจารย์ที่ปรึกษา">
                <font>
                   <Font size="24.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="7.0" />
+               </VBox.margin>
             </Label>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/create-appeal-fail.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Pane fx:id="successAlertPane" layoutX="400.0" layoutY="164.0" prefHeight="450.0" prefWidth="800.0" styleClass="detail-pane" visible="false">
-         <children>
-            <Button contentDisplay="TOP" layoutX="347.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="รับทราบ">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#onCloseButtonClick" text="รับทราบ">
                <font>
                   <Font size="24.0" />
                </font>
@@ -386,22 +419,7 @@
                   <String fx:value="label-medium" />
                </styleClass>
             </Button>
-            <Label layoutX="222.0" layoutY="239.0" styleClass="label-bold" text="การสร้างคำร้องเสร็จสิ้น" textFill="#008f2f">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-            <Label layoutX="172.0" layoutY="299.0" style="-fx-font-family: Kanit;" styleClass="label-medium" text="คำร้องของคุณจะถูกส่งต่อไปให้อาจารย์ที่ปรึกษา">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="327.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../icons/create-appeal-success.png" />
-               </image>
-            </ImageView>
          </children>
-      </Pane>
+      </VBox>
    </children>
 </AnchorPane>

@@ -5,10 +5,10 @@ import ku.cs.models.appeals.BreakAppeal;
 import ku.cs.models.appeals.GeneralAppeal;
 import ku.cs.models.appeals.SuspendAppeal;
 import ku.cs.models.collections.AppealList;
-import ku.cs.services.AppealListHardCodeDatasource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class AppealListFileDatasource implements Datasource<AppealList> {
     private String directoryName;
@@ -77,9 +77,9 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
                 String status = data[3].trim();
                 String rejectedReason = data[4].trim();
                 String ownerId = data[5].trim();
-                String ownerFullNameUuid = data[6].trim();
+                String ownerFullName = data[6].trim();
                 String ownerDepartmentUuid = data[7].trim();
-                String ownerFaculty = data[8].trim();
+                String ownerFacultyUuid = data[8].trim();
                 String departmentSignature = data[9].trim();
                 String facultySignature = data[10].trim();
                 String reason = data[11].trim();
@@ -88,18 +88,18 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
                 // เพิ่มข้อมูลลงใน list
                 if (type.equals("คำร้องทั่วไป")) {
                     String topic = data[13].trim();
-                    appealList.addAppeal(new GeneralAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, topic));
+                    appealList.addAppeal(new GeneralAppeal(modifyDate, UUID.fromString(uuid), type, status, rejectedReason, ownerId, ownerFullName, UUID.fromString(ownerDepartmentUuid), UUID.fromString(ownerFacultyUuid), departmentSignature, facultySignature, reason, subjects, topic));
                 }
                 else if (type.equals("คำร้องขอพักการศึกษา")) {
                     String semester = data[13].trim();
                     String year = data[14].trim();
-                    appealList.addAppeal(new SuspendAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, semester, year));
+                    appealList.addAppeal(new SuspendAppeal(modifyDate, UUID.fromString(uuid), type, status, rejectedReason, ownerId, ownerFullName, UUID.fromString(ownerDepartmentUuid), UUID.fromString(ownerFacultyUuid), departmentSignature, facultySignature, reason, subjects, semester, year));
                 }
                 else if (type.equals("คำร้องขอลาป่วยหรือลากิจ")) {
                     String purpose = data[13].trim();
                     String startDate = data[14].trim();
                     String endDate = data[15].trim();
-                    appealList.addAppeal(new BreakAppeal(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullNameUuid, ownerDepartmentUuid, ownerFaculty, departmentSignature, facultySignature, reason, subjects, purpose, startDate, endDate));
+                    appealList.addAppeal(new BreakAppeal(modifyDate, UUID.fromString(uuid), type, status, rejectedReason, ownerId, ownerFullName, UUID.fromString(ownerDepartmentUuid), UUID.fromString(ownerFacultyUuid), departmentSignature, facultySignature, reason, subjects, purpose, startDate, endDate));
                 }
             }
         } catch (IOException e) {
@@ -162,14 +162,4 @@ public class AppealListFileDatasource implements Datasource<AppealList> {
             }
         }
     }
-
-    // ทดสอบการอ่านไฟล์
-    public static void main(String[] args) {
-        AppealListFileDatasource w = new AppealListFileDatasource("data", "appeal-list.csv");
-        AppealListHardCodeDatasource data = new AppealListHardCodeDatasource();
-        AppealList appeals = data.readData();
-
-        w.writeData(appeals);
-    }
-
 }

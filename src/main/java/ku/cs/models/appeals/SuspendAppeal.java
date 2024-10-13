@@ -1,5 +1,7 @@
 package ku.cs.models.appeals;
 
+import java.util.UUID;
+
 public class SuspendAppeal extends Appeal {
 
     // Fields
@@ -7,7 +9,7 @@ public class SuspendAppeal extends Appeal {
     private String year;
 
     // Constructor
-    public SuspendAppeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartmentUuid, String ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects, String semester, String year) {
+    public SuspendAppeal(String modifyDate, UUID uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, UUID ownerDepartmentUuid, UUID ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects, String semester, String year) {
         super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartmentUuid, ownerFacultyUuid, departmentSignature, facultySignature, reason, subjects);
         this.semester = semester;
         this.year = year;

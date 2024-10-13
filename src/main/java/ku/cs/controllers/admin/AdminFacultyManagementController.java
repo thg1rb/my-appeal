@@ -37,7 +37,7 @@ public class AdminFacultyManagementController {
     @FXML private TabPane tabPane;
     @FXML private TableView<Object> tableView;
 
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
 
     private User user;
 
@@ -192,7 +192,7 @@ public class AdminFacultyManagementController {
 
     private void updateTotalText(){
         String text = tabPane.getSelectionModel().getSelectedItem().getText();
-        totalText.setText("จำนวน" + text + "ทั้งหมด " + tableView.getItems().size() + " " +text);
+        totalLabel.setText("จำนวน" + text + "ทั้งหมด " + tableView.getItems().size() + " " +text);
     }
 
     private void addEditPopup(){

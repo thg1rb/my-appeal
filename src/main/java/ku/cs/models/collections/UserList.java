@@ -159,18 +159,6 @@ public class UserList {
         return activeUsers;
     }
 
-//    public UserList getUsersByFaculty(String faculty){
-//        UserList users = new UserList();
-//        for (User user : this.users) {
-//            if (user instanceof FacultyStaff && ((FacultyStaff) user).getFaculty().equals(faculty)) {
-//                users.addUser(user);
-//            }else if (user instanceof Student && ((Student) user).getFaculty().equals(faculty)) {
-//                users.addUser(user);
-//            }
-//        }
-//        return users;
-//    }
-
     public UserList getUsersByFacultyUUID(UUID facultyUUID){
         UserList users = new UserList();
         for (User user : this.users) {

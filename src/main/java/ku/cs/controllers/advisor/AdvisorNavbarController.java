@@ -1,4 +1,4 @@
-package ku.cs.controllers.professor;
+package ku.cs.controllers.advisor;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,9 +13,8 @@ import ku.cs.services.Animation;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
-import java.io.IOException;
 
-public class ProfessorNavbarController {
+public class AdvisorNavbarController {
     @FXML private Circle profileImageCircle;
 
     @FXML private Label roleLabel;
@@ -41,7 +40,7 @@ public class ProfessorNavbarController {
     @FXML
     void onStudentListButtonClick(){
         try {
-            Animation.getInstance().switchSceneWithFade(currentScene, "professor-student-list", user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "advisor-student-list", user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +49,7 @@ public class ProfessorNavbarController {
     @FXML
     void onStudentAppealButtonClick(){
         try {
-            Animation.getInstance().switchSceneWithFade(currentScene, "professor-student-appeal", user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "advisor-student-appeal", user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

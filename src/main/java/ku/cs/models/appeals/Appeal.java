@@ -1,24 +1,26 @@
 package ku.cs.models.appeals;
 
+import java.util.UUID;
+
 public class Appeal {
 
     // Fields
     protected String modifyDate;
-    protected String uuid;
+    protected UUID uuid;
     protected String type;
     protected String status;
     protected String rejectedReason;
     protected String ownerId;
     protected String ownerFullName;
-    protected String ownerDepartmentUuid;
-    protected String ownerFacultyUuid;
+    protected UUID ownerDepartmentUuid;
+    protected UUID ownerFacultyUuid;
     protected String departmentSignature;
     protected String facultySignature;
     protected String reason;
     protected String subjects;
 
     // Constructors
-    public Appeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartmentUuid, String ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects) {
+    public Appeal(String modifyDate, UUID uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, UUID ownerDepartmentUuid, UUID ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects) {
         this.modifyDate = modifyDate;
         this.uuid = uuid;
         this.type = type;
@@ -42,10 +44,6 @@ public class Appeal {
         this.subjects = subjects;
     }
 
-    public Appeal(Appeal appeal) {
-        this(appeal.modifyDate, appeal.getUuid(), appeal.getType(), appeal.getStatus(), appeal.getRejectedReason(), appeal.getOwnerId(), appeal.getOwnerFullName(), appeal.getOwnerDepartmentUuid(), appeal.getOwnerFacultyUuid(), appeal.getDepartmentSignature(), appeal.getFacultySignature(), appeal.getReason(), appeal.getSubjects());
-    }
-
     // ตรวจสอบเป็นคำร้องทั่วไปหรือไม่?
     public Boolean isGeneralAppeal() {
         return this instanceof GeneralAppeal;
@@ -66,7 +64,7 @@ public class Appeal {
         return modifyDate;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -90,11 +88,11 @@ public class Appeal {
         return ownerFullName;
     }
 
-    public String getOwnerDepartmentUuid() {
+    public UUID getOwnerDepartmentUuid() {
         return ownerDepartmentUuid;
     }
 
-    public String getOwnerFacultyUuid() {
+    public UUID getOwnerFacultyUuid() {
         return ownerFacultyUuid;
     }
 

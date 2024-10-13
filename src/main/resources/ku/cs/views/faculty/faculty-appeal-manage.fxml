@@ -21,13 +21,13 @@
       <Pane fx:id="navbarAnchorPane" prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" />
       <VBox layoutX="272.0" layoutY="180.0">
          <children>
-            <TabPane fx:id="tabPane" styleClass="label-regular" stylesheets="@../../styles/tab-pane-style.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
+            <TabPane fx:id="tabPane" styleClass="label-regular" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
                <tabs>
                   <Tab style="-fx-padding: 10; -fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="ทั้งหมด" />
                   <Tab style="-fx-padding: 10; -fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="รอดำเนินการ" />
                </tabs>
             </TabPane>
-            <TableView fx:id="tableView" prefHeight="455.0" prefWidth="1100.0" style="-fx-background-radius: 0 20 0 0;" stylesheets="@../../styles/table-view.css">
+            <TableView fx:id="tableView" prefHeight="455.0" prefWidth="1100.0" styleClass="table-view-with-tab-pane">
                <columns>
                   <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20;" text="Date/Time" />
                   <TableColumn prefWidth="183.0" sortable="false" style="-fx-font-size: 20; -fx-font-color: #303337;" text="Topic" />

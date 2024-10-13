@@ -2,20 +2,22 @@ package ku.cs.models.dates;
 
 import ku.cs.models.appeals.Appeal;
 
+import java.util.UUID;
+
 public class ModifyDate {
-    private String uuid;
+    private UUID uuid;
     private String createDate;
     private String advisorApproveDate;
     private String departmentApproveDate;
     private String facultyApproveDate;
 
     // Constructors
-    public ModifyDate(String uuid, String createDate) {
+    public ModifyDate(UUID uuid, String createDate) {
         this.uuid = uuid;
         this.createDate = createDate;
     }
 
-    public ModifyDate(String uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
+    public ModifyDate(UUID uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
         this(uuid, createDate);
 
         if (advisorApproveDate == null || advisorApproveDate.equals("null")) this.advisorApproveDate = null;
@@ -29,7 +31,7 @@ public class ModifyDate {
     }
 
     // Getters
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 

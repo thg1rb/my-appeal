@@ -22,8 +22,8 @@ module ku.cs {
     exports ku.cs.controllers.department;
     opens ku.cs.controllers.department to javafx.fxml;
 
-    exports ku.cs.controllers.professor;
-    opens ku.cs.controllers.professor to javafx.fxml;
+    exports ku.cs.controllers.advisor;
+    opens ku.cs.controllers.advisor to javafx.fxml;
 
     exports ku.cs.controllers.student;
     opens ku.cs.controllers.student to javafx.fxml;
