@@ -1,4 +1,4 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
-public class MajorApproverManageController {
+public class DepartmentApproverManageController {
 
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;

@@ -1,9 +1,8 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -19,6 +18,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.Animation;
 import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
@@ -28,7 +28,7 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-public class MajorAppealManageController {
+public class DepartmentAppealManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
@@ -60,6 +60,7 @@ public class MajorAppealManageController {
 
         //NavBar Component
         String role = user.getRoleInEnglish();
+        System.out.println("/ku/cs/views/general/" + role + "-navbar.fxml");
         FXMLLoader navbarComponentLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/general/" + role + "-navbar.fxml"));
         try {
             Pane navbarComponent = navbarComponentLoader.load();
@@ -105,16 +106,23 @@ public class MajorAppealManageController {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
-            stage.setScene(new Scene(root));
 
             mainPane.setEffect(blur);
-            stage.showAndWait();
-            mainPane.setEffect(null);
+            Animation.getInstance().showPopUpWithEffect(stage, root);
 
-            datasource.writeData(appealList);
-            appealList = datasource.readData();
-            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
-            showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+            stage.setOnHidden(event -> {
+                // After the pop-up closes, perform data actions
+                mainPane.setEffect(null);
+                datasource.writeData(appealList);
+                appealList = datasource.readData();
+                departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+                showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+            });
+
+//            datasource.writeData(appealList);
+//            appealList = datasource.readData();
+//            departmentAppealList = appealList.getAppealByDepartment(((DepartmentStaff) user).getDepartmentUUID().toString());
+//            showTable(departmentAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
 
         } catch (IOException e) {
             e.printStackTrace();

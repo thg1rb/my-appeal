@@ -19,8 +19,8 @@ module ku.cs {
     exports ku.cs.controllers.general;
     opens ku.cs.controllers.general to javafx.fxml;
 
-    exports ku.cs.controllers.major;
-    opens ku.cs.controllers.major to javafx.fxml;
+    exports ku.cs.controllers.department;
+    opens ku.cs.controllers.department to javafx.fxml;
 
     exports ku.cs.controllers.professor;
     opens ku.cs.controllers.professor to javafx.fxml;

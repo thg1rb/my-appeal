@@ -27,7 +27,7 @@
       </TableView>
       <TableView layoutX="839.0" layoutY="381.0" prefHeight="390.0" prefWidth="530.0" style="-fx-background-radius: 20; -fx-background-color: #FFFFFF;" stylesheets="@../../styles/table-view.css">
          <columns>
-            <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Major" />
+            <TableColumn prefWidth="75.0" style="-fx-background-radius: 20 0 0 0; -fx-font-size: 20;" text="Department" />
             <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="User" />
             <TableColumn prefWidth="75.0" style="-fx-font-size: 20;" text="Staff" />
             <TableColumn prefWidth="75.0" style="-fx-background-radius: 0 20 0 0; -fx-font-size: 20;" text="Accept Appeal" />

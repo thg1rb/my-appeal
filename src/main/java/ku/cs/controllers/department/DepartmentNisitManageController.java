@@ -1,7 +1,5 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -28,7 +25,7 @@ import ku.cs.services.datasources.UserListDatasource;
 import java.io.File;
 import java.io.IOException;
 
-public class MajorNisitManageController {
+public class DepartmentNisitManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TextField searchTextField;
@@ -152,9 +149,9 @@ public class MajorNisitManageController {
 
     public void showPopUp(boolean addMode){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/major/nisitEditPopup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/department/nisit-edit-popup.fxml"));
             Parent popuproot = fxmlLoader.load();
-            MajorNisitEditPopupController controller = fxmlLoader.getController();
+            DepartmentNisitEditPopupController controller = fxmlLoader.getController();
 
             controller.setUser(((DepartmentStaff)user) , studentList);
             if(!addMode){

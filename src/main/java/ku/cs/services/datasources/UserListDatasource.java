@@ -19,7 +19,7 @@ public class UserListDatasource implements Datasource<UserList> {
     public static UserList readAllUsers(){
         String adminFilePath = "data" + File.separator + "users" + File.separator +  "admin.csv";
         String facultyFilePath = "data" + File.separator + "users" + File.separator +  "facultyStaff.csv";
-        String departmentFilePath = "data" + File.separator + "users" + File.separator +  "majorStaff.csv";
+        String departmentFilePath = "data" + File.separator + "users" + File.separator +  "departmentStaff.csv";
         String advisorFilePath = "data" + File.separator + "users" + File.separator +  "advisor.csv";
         String studentFilePath = "data" + File.separator + "users" + File.separator +  "student.csv";
 
@@ -168,9 +168,9 @@ public class UserListDatasource implements Datasource<UserList> {
 //        UserListDatasource facultyDatasource = new UserListDatasource("data"+File.separator+"users", "facultyStaff.csv");
 //        facultyDatasource.writeData(faculty);
 //
-//        UserList major = userList.getDepartmentStaffs();
-//        UserListDatasource majorDatasource = new UserListDatasource("data"+File.separator+"users", "majorStaff.csv");
-//        majorDatasource.writeData(major);
+//        UserList department = userList.getDepartmentStaffs();
+//        UserListDatasource DepartmentDatasource = new UserListDatasource("data"+File.separator+"users", "departmentStaff.csv");
+//        departmentDatasource.writeData(department);
 //
 //        UserList advisor = userList.getAdvisors();
 //        UserListDatasource advisorDatasource = new UserListDatasource("data"+File.separator+"users", "advisor.csv");

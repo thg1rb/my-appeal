@@ -1,8 +1,8 @@
 package ku.cs.models.persons;
 
-import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.DepartmentList;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.MajorListDatasource;
+import ku.cs.services.datasources.DepartmentListDatasource;
 
 import java.util.UUID;
 
@@ -25,8 +25,8 @@ public class DepartmentStaff extends FacultyStaff {
 
     //Getter
     public String getDepartment() {
-        Datasource<MajorList> majorListDatasource = new MajorListDatasource("data", "majors.csv");
-        String department = majorListDatasource.readData().findMajorByUUID(this.departmentUUID).getMajorName();
+        Datasource<DepartmentList> departmentListDatasource = new DepartmentListDatasource("data", "departments.csv");
+        String department = departmentListDatasource.readData().findDepartmentByUUID(this.departmentUUID).getDepartmentName();
         return department;
     }
     public UUID getDepartmentUUID() {
@@ -44,6 +44,6 @@ public class DepartmentStaff extends FacultyStaff {
 
     @Override
     public String getRoleInEnglish() {
-        return "majorStaff";
+        return "departmentStaff";
     }
 }
