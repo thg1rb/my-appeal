@@ -155,6 +155,6 @@ public class StudentTrackAppealController {
 
     // อัพเดตข้อความแสดงคำร้องทั้งหมด
     private void updateTotalLabel() {
-        totalLabel.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+        totalLabel.setText("จำนวนคำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }
