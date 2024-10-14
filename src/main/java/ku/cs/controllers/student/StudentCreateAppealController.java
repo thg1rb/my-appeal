@@ -69,7 +69,7 @@ public class StudentCreateAppealController {
     private String[] semesters = {"ภาคต้น", "ภาคปลาย", "ภาคฤดูร้อน"};
     private String selectedSemester;
 
-    private String[] years = {"2565", "2566", "2567", "2568", "2569", "2570", "อื่นๆ"};
+    private String[] years = {"2567", "2568", "2569", "2570", "2571", "2572"};
     private String selectedYear;
 
     private String[] purposes = {"ลาป่วย", "ลากิจ"};
