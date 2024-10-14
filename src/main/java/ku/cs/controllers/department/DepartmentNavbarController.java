@@ -1,8 +1,7 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -14,9 +13,8 @@ import ku.cs.services.Animation;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
-import java.io.IOException;
 
-public class MajorNavbarController {
+public class DepartmentNavbarController {
     @FXML private Circle profileImageCircle;
 
     @FXML private Label roleLabel;
@@ -43,7 +41,7 @@ public class MajorNavbarController {
     @FXML
     void onAppealManageButtonClick(){
         try {
-            Animation.getInstance().switchSceneWithFade(currentScene, "major-appeal-manage", user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "department-appeal-manage", user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +50,7 @@ public class MajorNavbarController {
     @FXML
     void onApproverManageButtonClick(){
         try {
-            Animation.getInstance().switchSceneWithFade(currentScene, "major-approver-manage", user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "department-approver-manage", user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +59,7 @@ public class MajorNavbarController {
     @FXML
     void onNisitManageButtonClick(){
         try {
-            Animation.getInstance().switchSceneWithFade(currentScene, "major-nisit-manage", user);
+            Animation.getInstance().switchSceneWithFade(currentScene, "department-nisit-manage", user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

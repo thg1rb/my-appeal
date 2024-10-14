@@ -8,12 +8,12 @@ public class Faculty implements Displayable {
 
     private String facultyName;
     private String facultyId;
-    private ArrayList<Major> majors;
+    private ArrayList<Department> departments;
 
     //Constructor
     public Faculty() {
         this.uuid = UUID.randomUUID();
-        majors = new ArrayList<>();
+        departments = new ArrayList<>();
     }
     public Faculty(String facultyName, String facultyId) {
         this();
@@ -31,8 +31,8 @@ public class Faculty implements Displayable {
 
     public void setFacultyId(String facultyId) { this.facultyId = facultyId; }
 
-    public void setMajors(ArrayList<Major> majors) {
-        this.majors = majors;
+    public void setDepartments(ArrayList<Department> departments) {
+        this.departments = departments;
     }
 
     public String getFacultyName() { return facultyName; }
@@ -43,7 +43,7 @@ public class Faculty implements Displayable {
         return uuid;
     }
 
-    public ArrayList<Major> getMajors() { return majors; }
+    public ArrayList<Department> getDepartments() { return departments; }
 
     @Override
     public String toString() {

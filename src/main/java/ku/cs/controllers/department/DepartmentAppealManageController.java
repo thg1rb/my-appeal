@@ -1,4 +1,4 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +28,7 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-public class MajorAppealManageController {
+public class DepartmentAppealManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;

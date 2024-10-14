@@ -80,7 +80,7 @@ public class UserList {
         return switch (role) {
             case "admin" -> getAdmins();
             case "facultyStaff" -> getFacultyStaffs();
-            case "majorStaff" -> getDepartmentStaffs();
+            case "departmentStaff" -> getDepartmentStaffs();
             case "advisor" -> getAdvisors();
             case "student" -> getStudents();
             default -> null;

@@ -1,10 +1,10 @@
 package ku.cs.models.persons;
 
 import ku.cs.models.collections.FacultyList;
-import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.DepartmentList;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.FacultyListDatasource;
-import ku.cs.services.datasources.MajorListDatasource;
+import ku.cs.services.datasources.DepartmentListDatasource;
 
 import java.util.UUID;
 
@@ -92,8 +92,8 @@ public class Student extends User {
     }
     public UUID getDepartmentUUID() { return departmentUUID; }
     public String getDepartment() {
-        Datasource<MajorList> datasource = new MajorListDatasource("data", "majors.csv");
-        String department = datasource.readData().findMajorByUUID(this.departmentUUID).getMajorName();
+        Datasource<DepartmentList> datasource = new DepartmentListDatasource("data", "departments.csv");
+        String department = datasource.readData().findDepartmentByUUID(this.departmentUUID).getDepartmentName();
         return department;
     }
     public UUID getAdvisorUUID() {
