@@ -50,7 +50,7 @@
          <children>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เรื่องที่ร้องเรียน:">
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เรื่องที่ต้องการร้องเรียน:">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -71,7 +71,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายละเอียดของคำร้อง:">
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายละเอียดของเรื่องที่ร้องเรียน:">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -98,7 +98,7 @@
                <children>
                   <HBox alignment="BASELINE_LEFT">
                      <children>
-                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ภาคเรียน:">
+                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ภาคการศึกษา:">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin></Label>
@@ -145,7 +145,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่ลงทะเบียนไป:">
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่ได้ลงทะเบียนเรียนในภาคและปีการศึกษาดังกล่าว:">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -175,7 +175,8 @@
                         <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ความประสงค์:">
                            <HBox.margin>
                               <Insets right="10.0" />
-                           </HBox.margin></Label>
+                           </HBox.margin>
+                        </Label>
                         <Label fx:id="purposeBreakLabel" alignment="CENTER" styleClass="label-regular" text="purposeLabel" />
                      </children>
                      <HBox.margin>
@@ -187,7 +188,8 @@
                         <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่เริ่มต้น-สิ้นสุดการลา:">
                            <HBox.margin>
                               <Insets right="10.0" />
-                           </HBox.margin></Label>
+                           </HBox.margin>
+                        </Label>
                         <Label fx:id="startEndBreakLabel" alignment="CENTER" styleClass="label-regular" text="startEndDateLabel" />
                      </children>
                   </HBox>
@@ -198,7 +200,7 @@
             </HBox>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เหตุผลในการลาป่วยหรือลากิจ:">
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เหตุผลในการขอลา:">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -219,7 +221,7 @@
             </VBox>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่ต้องการหยุดเรียน:">
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่อยู่ในช่วงการลา:">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
