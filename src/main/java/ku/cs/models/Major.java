@@ -2,31 +2,31 @@ package ku.cs.models;
 
 import java.util.UUID;
 
-public class Major implements Displayable {
+public class Department implements Displayable {
     private UUID uuid;
 
     private String majorName;
-    private String majorId;
+    private String departmentId;
 
     private UUID facultyUUID;
 
     //Constructor
-    public Major() {
+    public Department() {
         this.uuid = UUID.randomUUID();
     }
-    public Major(String majorName, UUID faculty, String majorId) {
+    public Major(String majorName, UUID faculty, String departmentId) {
         this();
         this.majorName = majorName;
         this.facultyUUID = faculty;
-        this.majorId = majorId;
+        this.departmentId = departmentId;
     }
 
     //Constructor for reading file
-    public Major(String uuid, String majorName, String faculty, String majorId) {
+    public Major(String uuid, String majorName, String faculty, String departmentId) {
         this.uuid = UUID.fromString(uuid);
         this.majorName = majorName;
         this.facultyUUID = UUID.fromString(faculty);
-        this.majorId = majorId;
+        this.departmentId = departmentId;
     }
 
     //setter
@@ -38,7 +38,7 @@ public class Major implements Displayable {
         return facultyUUID;
     }
 
-    public void setMajorId(String majorId) { this.majorId = majorId; }
+    public void setDepartmentId(String departmentId) { this.departmentId = departmentId; }
 
     //getter
     public String getMajorName() { return majorName; }
@@ -49,13 +49,13 @@ public class Major implements Displayable {
         this.facultyUUID = facultyUUID;
     }
 
-    public String getMajorId() { return majorId; }
+    public String getDepartmentId() { return departmentId; }
 
     public UUID getUuid() { return uuid; }
 
     @Override
     public String toString() {
-        return uuid.toString() + "," + majorName + "," + facultyUUID + "," + majorId;
+        return uuid.toString() + "," + majorName + "," + facultyUUID + "," + departmentId;
     }
 
     @Override

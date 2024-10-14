@@ -31,7 +31,7 @@ public class AdminMajorFacultyPopupController {
     @FXML private Text modeText;
 
     @FXML private Label belongFacultyLabel;
-    @FXML private Label majorIdLabel;
+    @FXML private Label departmentIdLabel;
     @FXML private TextField majorIdTextField;
     @FXML private Label majorNameLabel;
     @FXML private TextField majorNameTextField;
@@ -120,7 +120,7 @@ public class AdminMajorFacultyPopupController {
                 facultyIdTextField.setText(((Faculty) data).getFacultyId());
             }else if (data instanceof Major){
                 majorNameTextField.setText(((Major) data).getMajorName());
-                majorIdTextField.setText(((Major) data).getMajorId());
+                majorIdTextField.setText(((Major) data).getDepartmentId());
                 facultyChoiceBox.getSelectionModel().select(facultyList.findFacultyByUUID(((Major) data).getFacultyUUID()).getFacultyName());
             }
         }
@@ -133,7 +133,7 @@ public class AdminMajorFacultyPopupController {
             facultyChoiceBox.setVisible(false);
             majorNameLabel.setVisible(false);
             majorNameTextField.setVisible(false);
-            majorIdLabel.setVisible(false);
+            departmentIdLabel.setVisible(false);
             majorIdTextField.setVisible(false);
 
             facultyNameLabel.setVisible(true);
@@ -145,7 +145,7 @@ public class AdminMajorFacultyPopupController {
             facultyChoiceBox.setVisible(true);
             majorNameLabel.setVisible(true);
             majorNameTextField.setVisible(true);
-            majorIdLabel.setVisible(true);
+            departmentIdLabel.setVisible(true);
             majorIdTextField.setVisible(true);
 
             facultyNameLabel.setVisible(false);
@@ -229,7 +229,7 @@ public class AdminMajorFacultyPopupController {
                     throw new EmptyInputException();
                 }
                 ((Major) data).setMajorName(name);
-                ((Major) data).setMajorId(id);
+                ((Major) data).setDepartmentId(id);
                 ((Major) data).setFacultyUUID(faculty);
             }
 

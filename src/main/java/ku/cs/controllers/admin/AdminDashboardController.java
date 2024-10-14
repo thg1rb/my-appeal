@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -55,7 +54,7 @@ public class AdminDashboardController {
 
     private Datasource<FacultyList> facultyDatasource;
     private FacultyList facultyList;
-    private Datasource<MajorList> majorDatasource;
+    private Datasource<MajorList> departmentDatasource;
     private MajorList majorList;
 
     private HashMap<String, UserList> userListHashMap;
@@ -196,8 +195,8 @@ public class AdminDashboardController {
     private void loadFacultyAndDepartmentData(){
         facultyDatasource = new FacultyListDatasource("data" , "faculties.csv");
         facultyList = facultyDatasource.readData();
-        majorDatasource = new MajorListDatasource("data" , "majors.csv");
-        majorList = majorDatasource.readData();
+        departmentDatasource = new MajorListDatasource("data" , "majors.csv");
+        majorList = departmentDatasource.readData();
     }
 
     private void loadUserData(){

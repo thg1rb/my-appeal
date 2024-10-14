@@ -77,7 +77,7 @@ public class MajorList {
 
     public Major findMajorById(String id){
         for (Major major : majors){
-            if (major.getMajorId().equals(id)){
+            if (major.getDepartmentId().equals(id)){
                 return major;
             }
         }

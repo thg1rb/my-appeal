@@ -42,7 +42,7 @@ public class AdminStaffPopupController {
 
     @FXML private ChoiceBox<String> roleChoiceBox;
     @FXML private ChoiceBox<String> facultyChoiceBox;
-    @FXML private ChoiceBox<String> majorChoiceBox;
+    @FXML private ChoiceBox<String> departmentChoiceBox;
 
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
@@ -61,8 +61,8 @@ public class AdminStaffPopupController {
     private final String[] staffChoice = {"เจ้าหน้าที่คณะ", "เจ้าหน้าที่ภาควิชา", "อาจารย์ที่ปรึกษา"};
 
     private FacultyList facultyList;
-    private MajorList majorList;
-    private ArrayList<String> majorChoices;
+    private MajorList departmentList;
+    private ArrayList<String> departmentChoices;
 
     private String selectedRole;
     private boolean deleted;
@@ -85,19 +85,19 @@ public class AdminStaffPopupController {
                     selectedRole = newValue;
                     majorLabel.setVisible(false);
                     idLabel.setVisible(false);
-                    majorChoiceBox.setVisible(false);
+                    departmentChoiceBox.setVisible(false);
                     idTextField.setVisible(false);
                 }else if (newValue.equals("เจ้าหน้าที่ภาควิชา")){
                     selectedRole = newValue;
                     majorLabel.setVisible(true);
                     idLabel.setVisible(false);
-                    majorChoiceBox.setVisible(true);
+                    departmentChoiceBox.setVisible(true);
                     idTextField.setVisible(false);
                 }else{
                     selectedRole = newValue;
                     majorLabel.setVisible(true);
                     idLabel.setVisible(true);
-                    majorChoiceBox.setVisible(true);
+                    departmentChoiceBox.setVisible(true);
                     idTextField.setVisible(true);
                 }
             }
@@ -121,7 +121,7 @@ public class AdminStaffPopupController {
         roleChoiceBox.getSelectionModel().select(selectedRole);
 
         this.facultyList = facultyList;
-        this.majorList = majorList;
+        this.departmentList = majorList;
         facultyChoiceBox.getItems().addAll(facultyList.getAllFacultiesName());
 
         if (editMode){
@@ -162,15 +162,15 @@ public class AdminStaffPopupController {
             usernameTextField.setText(user.getUsername());
             initPasswordTextField.setText(((FacultyStaff) user).getInitialPasswordText());
             facultyChoiceBox.setValue(facultyList.findFacultyByUUID(((FacultyStaff)user).getFacultyUUID()).getFacultyName());
-            if (user instanceof DepartmentStaff) majorChoiceBox.setValue(majorList.findMajorByUUID(((DepartmentStaff)user).getDepartmentUUID()).getMajorName());
+            if (user instanceof DepartmentStaff) departmentChoiceBox.setValue(departmentList.findMajorByUUID(((DepartmentStaff)user).getDepartmentUUID()).getMajorName());
             if (user instanceof Advisor) idTextField.setText(((Advisor)user).getAdvisorId());
         }
     }
 
     private void updateMajorChoiceBox(UUID faculty){
-        this.majorChoices = majorList.getMajorsNameByFaculty(faculty);
-        majorChoiceBox.getItems().clear();
-        majorChoiceBox.getItems().addAll(majorChoices);
+        this.departmentChoices = departmentList.getMajorsNameByFaculty(faculty);
+        departmentChoiceBox.getItems().clear();
+        departmentChoiceBox.getItems().addAll(departmentChoices);
     }
 
     @FXML
@@ -202,8 +202,8 @@ public class AdminStaffPopupController {
                 throw new IllegalValidationException();
             }
 
-            if (majorChoiceBox.isVisible()) {
-                major = majorList.findMajorByName(majorChoiceBox.getValue()).getUuid();
+            if (departmentChoiceBox.isVisible()) {
+                major = departmentList.findMajorByName(departmentChoiceBox.getValue()).getUuid();
                 if (major == null) {
                     throw new EmptyInputException("กรุณากรอกข้อมูลให้ครบถ้วน");
                 }
@@ -250,16 +250,16 @@ public class AdminStaffPopupController {
             String password = initPasswordTextField.getText();
             UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
 
-            UUID major = null;
+            UUID department = null;
             String id = "";
 
             if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
                 throw new EmptyInputException();
             }
 
-            if (majorChoiceBox.isVisible()) {
-                major = majorList.findMajorByName(majorChoiceBox.getValue()).getUuid();
-                if (major == null) {
+            if (departmentChoiceBox.isVisible()) {
+                department = departmentList.findMajorByName(departmentChoiceBox.getValue()).getUuid();
+                if (department == null) {
                     throw new EmptyInputException();
                 }
             }
@@ -278,7 +278,7 @@ public class AdminStaffPopupController {
             ((FacultyStaff)user).setFacultyUUID(faculty);
 
             if (user instanceof DepartmentStaff){
-                ((DepartmentStaff) user).setDepartmentUUID(major);
+                ((DepartmentStaff) user).setDepartmentUUID(department);
             }
             if (user instanceof Advisor){
                 ((Advisor) user).setAdvisorId(id);
