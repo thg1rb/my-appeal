@@ -169,7 +169,7 @@ public class UserListDatasource implements Datasource<UserList> {
 //        facultyDatasource.writeData(faculty);
 //
 //        UserList department = userList.getDepartmentStaffs();
-//        UserListDatasource DepartmentDatasource = new UserListDatasource("data"+File.separator+"users", "departmentStaff.csv");
+//        UserListDatasource departmentDatasource = new UserListDatasource("data"+File.separator+"users", "departmentStaff.csv");
 //        departmentDatasource.writeData(department);
 //
 //        UserList advisor = userList.getAdvisors();

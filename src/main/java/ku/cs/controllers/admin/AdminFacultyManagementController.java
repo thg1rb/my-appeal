@@ -9,12 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import ku.cs.models.Faculty;
 import ku.cs.models.Department;
+import ku.cs.models.Faculty;
 import ku.cs.models.collections.FacultyList;
 import ku.cs.models.collections.DepartmentList;
 import ku.cs.models.persons.AdminUser;
@@ -159,7 +158,7 @@ public class AdminFacultyManagementController {
             return new SimpleStringProperty(facultyList.findFacultyByUUID(department.getFacultyUUID()).getFacultyName());
         });
 
-        TableColumn<Object, String> departmentIdColumn = new TableColumn<>("Department ID");
+        TableColumn<Object, String> departmentIdColumn = new TableColumn<>("department ID");
         departmentIdColumn.setCellValueFactory(cellData -> {
             Department department = (Department) cellData.getValue();
             return new SimpleStringProperty(department.getDepartmentId());

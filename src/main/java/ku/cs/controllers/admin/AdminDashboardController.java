@@ -8,12 +8,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+import ku.cs.models.Department;
 import ku.cs.models.Displayable;
 import ku.cs.models.Faculty;
-import ku.cs.models.Major;
 import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.FacultyList;
-import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.DepartmentList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
@@ -54,8 +54,8 @@ public class AdminDashboardController {
 
     private Datasource<FacultyList> facultyDatasource;
     private FacultyList facultyList;
-    private Datasource<MajorList> departmentDatasource;
-    private MajorList majorList;
+    private Datasource<DepartmentList> departmentDatasource;
+    private DepartmentList departmentList;
 
     private HashMap<String, UserList> userListHashMap;
 
@@ -123,8 +123,8 @@ public class AdminDashboardController {
             if (item instanceof Faculty){
                 int count = appealList.countSuccessAppealByFacultyUUID(((Faculty)item).getUuid());
                 return new SimpleStringProperty(String.valueOf(count));
-            } else if (item instanceof Major){
-                int count = appealList.countSuccessAppealByDepartmentUUID(((Major)item).getUuid());
+            } else if (item instanceof Department){
+                int count = appealList.countSuccessAppealByDepartmentUUID(((Department)item).getUuid());
                 return new SimpleStringProperty(String.valueOf(count));
             }
             return null;
@@ -146,10 +146,10 @@ public class AdminDashboardController {
 
         for (Faculty faculty : facultyList.getFaculties()){
             TreeItem<Displayable> facultyTreeItem = new TreeItem<>(faculty);
-            ArrayList<Major> majorInFacultyList = majorList.getMajorsByFaculty(faculty.getUuid());
-            for (Major major : majorInFacultyList){
-                TreeItem<Displayable> majorTreeItem = new TreeItem<>(major);
-                facultyTreeItem.getChildren().add(majorTreeItem);
+            ArrayList<Department> departmentInFacultyList = departmentList.getDepartmentsByFaculty(faculty.getUuid());
+            for (Department department : departmentInFacultyList){
+                TreeItem<Displayable> departmentTreeItem = new TreeItem<>(department);
+                facultyTreeItem.getChildren().add(departmentTreeItem);
             }
             rootItem.getChildren().add(facultyTreeItem);
             facultyTreeItem.setExpanded(true);
@@ -178,12 +178,12 @@ public class AdminDashboardController {
             advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
             studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
             allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsersByFacultyUUID(faculty.getUuid()).getUsers().size()));
-        } else if (filter instanceof Major major){
-            facultyStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่คณะ").getUsersByDepartment(major.getMajorName()).getUsers().size()));
-            departmentStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่ภาควิชา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
-            advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
-            studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsersByDepartment(major.getMajorName()).getUsers().size()));
-            allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsersByDepartment(major.getMajorName()).getUsers().size()));
+        } else if (filter instanceof Department department){
+            facultyStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่คณะ").getUsersByDepartment(department.getDepartmentName()).getUsers().size()));
+            departmentStaffLabel.setText(String.valueOf(userListHashMap.get("เจ้าหน้าที่ภาควิชา").getUsersByDepartment(department.getDepartmentName()).getUsers().size()));
+            advisorLabel.setText(String.valueOf(userListHashMap.get("อาจารย์ที่ปรึกษา").getUsersByDepartment(department.getDepartmentName()).getUsers().size()));
+            studentLabel.setText(String.valueOf(userListHashMap.get("นักศึกษา").getUsersByDepartment(department.getDepartmentName()).getUsers().size()));
+            allUserLabel.setText(String.valueOf(userListHashMap.get("ทั้งหมด").getUsersByDepartment(department.getDepartmentName()).getUsers().size()));
         }
     }
 
@@ -195,14 +195,14 @@ public class AdminDashboardController {
     private void loadFacultyAndDepartmentData(){
         facultyDatasource = new FacultyListDatasource("data" , "faculties.csv");
         facultyList = facultyDatasource.readData();
-        departmentDatasource = new MajorListDatasource("data" , "majors.csv");
-        majorList = departmentDatasource.readData();
+        departmentDatasource = new DepartmentListDatasource("data" , "departments.csv");
+        departmentList = departmentDatasource.readData();
     }
 
     private void loadUserData(){
         userListHashMap = new HashMap<>();
         userListHashMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv").readData());
-        userListHashMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv").readData());
+        userListHashMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "departmentStaff.csv").readData());
         userListHashMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv").readData());
         userListHashMap.put("นักศึกษา", new UserListDatasource("data" + File.separator + "users", "student.csv").readData().getRegisteredStudents());
 
@@ -259,7 +259,7 @@ public class AdminDashboardController {
                         String fileName = event.context().toString();
 
                         if (fileName.equals("facultyStaff.csv") ||
-                                fileName.equals("majorStaff.csv") ||
+                                fileName.equals("departmentStaff.csv") ||
                                 fileName.equals("advisor.csv") ||
                                 fileName.equals("student.csv") ) {
                             Platform.runLater(() -> {

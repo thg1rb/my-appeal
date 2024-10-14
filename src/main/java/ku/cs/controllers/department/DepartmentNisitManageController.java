@@ -149,7 +149,7 @@ public class DepartmentNisitManageController {
 
     public void showPopUp(boolean addMode){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/department/nisit-edit-popup.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/department/nisitEditPopup.fxml"));
             Parent popuproot = fxmlLoader.load();
             DepartmentNisitEditPopupController controller = fxmlLoader.getController();
 

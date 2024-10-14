@@ -46,11 +46,21 @@ public class DepartmentList {
     }
 
 
-    public ArrayList<String> findDepartmentsByFaculty(UUID faculty){
+    public ArrayList<String> getDepartmentsNameByFaculty(UUID faculty){
         ArrayList<String> departmentsInFaculty = new ArrayList<>();
         for (Department department : departments){
             if (department.getFacultyUUID().equals(faculty)){
                 departmentsInFaculty.add(department.getDepartmentName());
+            }
+        }
+        return departmentsInFaculty;
+    }
+
+    public ArrayList<Department> getDepartmentsByFaculty(UUID faculty){
+        ArrayList<Department> departmentsInFaculty = new ArrayList<>();
+        for (Department department : departments){
+            if (department.getFacultyUUID().equals(faculty)) {
+                departmentsInFaculty.add(department);
             }
         }
         return departmentsInFaculty;

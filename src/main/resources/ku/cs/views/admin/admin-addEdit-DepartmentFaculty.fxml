@@ -79,12 +79,7 @@
             <String fx:value="delete-button" />
          </styleClass>
       </Button>
-      <Text fx:id="departmentNameText" layoutX="48.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อภาควิชา :">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <TextField fx:id="departmentNameTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/text-field.css">
+      <TextField fx:id="departmentNameTextField" layoutX="242.0" layoutY="231.0" prefHeight="42.0" prefWidth="307.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -93,12 +88,31 @@
             <String fx:value="text-field" />
          </styleClass>
       </TextField>
-      <Text fx:id="departmentIdText" layoutX="51.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="รหัสภาควิชา :">
+      <TextField fx:id="departmentIdTextField" layoutX="245.0" layoutY="292.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <styleClass>
+            <String fx:value="label-regular" />
+            <String fx:value="text-field" />
+         </styleClass>
+      </TextField>
+      <Label layoutX="48.0" layoutY="128.0" text="ประเภท :">
          <font>
             <Font size="24.0" />
          </font>
-      </Text>
-      <TextField fx:id="departmentIdTextField" layoutX="245.0" layoutY="292.0" prefHeight="42.0" prefWidth="307.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/text-field.css">
+      </Label>
+      <Label fx:id="departmentIdLabel" layoutX="51.0" layoutY="300.0" text="รหัสภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="departmentNameLabel" layoutX="48.0" layoutY="239.0" text="ชื่อภาควิชา :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="facultyIdLabel" layoutX="48.0" layoutY="239.0" text="รหัสคณะ :">
          <font>
             <Font size="24.0" />
          </font>

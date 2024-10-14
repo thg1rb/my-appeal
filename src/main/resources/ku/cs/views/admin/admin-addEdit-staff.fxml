@@ -96,7 +96,7 @@
             <String fx:value="choice-box-white" />
             <String fx:value="label-regular" />
          </styleClass></ChoiceBox>
-      <ChoiceBox fx:id="departmentChoiceBox" layoutX="242.0" layoutY="461.0" prefHeight="42.0" prefWidth="307.0" stylesheets="@../../styles/button.css">
+      <ChoiceBox fx:id="departmentChoiceBox" layoutX="242.0" layoutY="461.0" prefHeight="42.0" prefWidth="307.0">
          <styleClass>
             <String fx:value="choice-box-white" />
             <String fx:value="label-regular" />
@@ -147,7 +147,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="majorLabel" layoutX="48.0" layoutY="467.0" text="ภาควิชาที่สังกัด :">
+      <Label fx:id="departmentLabel" layoutX="48.0" layoutY="467.0" text="ภาควิชาที่สังกัด :">
          <font>
             <Font size="24.0" />
          </font>
