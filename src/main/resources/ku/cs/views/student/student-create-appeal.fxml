@@ -36,7 +36,7 @@
          <children>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="เรื่องร้องเรียนของคุณ">
+                  <Label styleClass="label-medium" text="เรื่องที่ต้องการร้องเรียน">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -62,7 +62,7 @@
             </VBox>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="เนื้อหาภายในคำร้อง">
+                  <Label styleClass="label-medium" text="รายละเอียดของเรื่องที่ร้องเรียน">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -105,7 +105,7 @@
          <children>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="ระบุเหตุผลในการลาพักการศึกษา">
+                  <Label styleClass="label-medium" text="เหตุผลในการขอพักการศึกษา">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -130,7 +130,7 @@
                <children>
                   <VBox>
                      <children>
-                        <Label styleClass="label-medium" text="ภาคการศึกษาที่ขอลา">
+                        <Label styleClass="label-medium" text="ภาคการศึกษา">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -154,7 +154,7 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label styleClass="label-medium" text="ปีการศึกษาที่ขอลา">
+                        <Label styleClass="label-medium" text="ปีการศึกษา">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -177,7 +177,7 @@
             </HBox>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="รายวิชาที่ได้ลงทะเบียนเรียนไว้ในภาคการศึกษานี้">
+                  <Label styleClass="label-medium" text="รายวิชาที่ได้ลงทะเบียนเรียนในภาคและปีการศึกษาดังกล่าว">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -248,7 +248,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT">
                      <children>
-                        <Label styleClass="label-medium" text="วันที่เริ่มต้นขอลา">
+                        <Label styleClass="label-medium" text="วันที่เริ่มต้นการลา">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -276,7 +276,7 @@
             </HBox>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="เหตุผลในการลาป่วยหรือลากิจ">
+                  <Label styleClass="label-medium" text="เหตุผลในการขอลา">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -299,7 +299,7 @@
             </VBox>
             <VBox>
                <children>
-                  <Label styleClass="label-medium" text="รายวิชาที่ต้องการหยุดเรียน">
+                  <Label styleClass="label-medium" text="รายวิชาที่อยู่ในช่วงการลา">
                      <font>
                         <Font size="24.0" />
                      </font>
