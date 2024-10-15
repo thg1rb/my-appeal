@@ -23,7 +23,7 @@
    <children>
       <Pane prefHeight="80.0" prefWidth="1200.0" styleClass="label-pop-up-pane">
          <children>
-            <Label fx:id="topicLabel" layoutX="47.0" layoutY="16.0" styleClass="label-bold" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต" textFill="WHITE">
+            <Label fx:id="topicLabel" layoutX="47.0" layoutY="16.0" styleClass="label-bold" text="ดำเนินการคำร้องของนิสิต" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
@@ -43,6 +43,14 @@
          </children></Pane>
       <HBox alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
          <children>
+            <Button fx:id="downloadButton" mnemonicParsing="false" styleClass="label-medium" text="ดาวน์โหลดเอกสาร">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="อนุมัติ">
                <font>
                   <Font size="24.0" />

@@ -1,6 +1,7 @@
 package ku.cs.models.persons;
 
 public class AdminUser extends User {
+
     //Constructor
     public AdminUser(String role, String username, String password, String firstName, String lastName) {
         super(role, username, password, firstName, lastName);

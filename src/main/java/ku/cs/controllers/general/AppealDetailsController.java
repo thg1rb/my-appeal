@@ -22,8 +22,11 @@ import ku.cs.models.dates.ModifyDate;
 import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
+import ku.cs.services.fileutilities.SignFileDownloader;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 public class AppealDetailsController {
 
@@ -67,6 +70,8 @@ public class AppealDetailsController {
     @FXML private Label approveSignatureTitleLabel;
     @FXML private ImageView approveSignatureImageView;
 
+    @FXML private Button downloadButton;
+
     private Appeal selectedAppeal;
     private ModifyDate selectedAppealDate;
 
@@ -91,6 +96,11 @@ public class AppealDetailsController {
         closePopUpLightButton.setOnMouseEntered(mouseEvent -> closePopUpLightImageView.setImage(hoverClosePopUpLightImage));
         closePopUpLightButton.setOnMouseExited(mouseEvent -> closePopUpLightImageView.setImage(defaultClosePopUpLightImage));
 
+        downloadButton.setOnMouseClicked(mouseEvent -> {
+            SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
+            downloader.download((Stage) downloadButton.getScene().getWindow());
+        });
+
     }
 
     //
@@ -98,6 +108,11 @@ public class AppealDetailsController {
         this.selectedAppeal = selectedAppeal;
         this.selectedAppealDate = selectedAppealDate;
 
+        // If selected appeal doesn't have files then download button disappear -> has (department-tier or above) sign == has files
+        if (selectedAppeal.getDepartmentSignature().equals("null") || selectedAppeal.getDepartmentSignature() == null) {
+            downloadButton.setVisible(false);
+            downloadButton.setDisable(true);
+        }
         showAppealScrollPane(selectedAppeal.isGeneralAppeal(), selectedAppeal.isSuspendAppeal(), selectedAppeal.isBreakAppeal());
     }
 
@@ -250,5 +265,4 @@ public class AppealDetailsController {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
-
 }

@@ -51,24 +51,4 @@ public class Animation {
             }
         });
     }
-
-    public void showPopUpWithEffect(Stage stage, Parent root) {
-        // Set initial scale for the root node
-        root.setScaleX(0);
-        root.setScaleY(0);
-
-        // Create scale transition for the pop-up
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.2), root);
-        scaleTransition.setFromX(0);  // Start scale
-        scaleTransition.setFromY(0);
-        scaleTransition.setToX(1);    // End scale
-        scaleTransition.setToY(1);
-
-        // Show the stage before starting the animation
-        stage.setScene(new Scene(root));
-        stage.show();
-
-        // Play the scale animation
-        scaleTransition.play();
-    }
 }
