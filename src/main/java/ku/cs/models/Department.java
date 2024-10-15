@@ -32,7 +32,6 @@ public class Department implements Displayable {
     //setter
     public void setDepartmentName(String departmentName) { this.departmentName = departmentName; }
 
-//    public void setFaculty(String faculty) { this.faculty = faculty; }
 
     public UUID getFacultyUUID() {
         return facultyUUID;
@@ -42,8 +41,6 @@ public class Department implements Displayable {
 
     //getter
     public String getDepartmentName() { return departmentName; }
-
-//    public String getFaculty() { return faculty; }
 
     public void setFacultyUUID(UUID facultyUUID) {
         this.facultyUUID = facultyUUID;

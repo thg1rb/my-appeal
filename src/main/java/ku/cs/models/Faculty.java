@@ -1,6 +1,5 @@
 package ku.cs.models;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class Faculty implements Displayable {
@@ -8,12 +7,10 @@ public class Faculty implements Displayable {
 
     private String facultyName;
     private String facultyId;
-    private ArrayList<Department> departments;
 
     //Constructor
     public Faculty() {
         this.uuid = UUID.randomUUID();
-        departments = new ArrayList<>();
     }
     public Faculty(String facultyName, String facultyId) {
         this();
@@ -31,10 +28,6 @@ public class Faculty implements Displayable {
 
     public void setFacultyId(String facultyId) { this.facultyId = facultyId; }
 
-    public void setDepartments(ArrayList<Department> departments) {
-        this.departments = departments;
-    }
-
     public String getFacultyName() { return facultyName; }
 
     public String getFacultyId() { return facultyId; }
@@ -42,8 +35,6 @@ public class Faculty implements Displayable {
     public UUID getUuid() {
         return uuid;
     }
-
-    public ArrayList<Department> getDepartments() { return departments; }
 
     @Override
     public String toString() {
