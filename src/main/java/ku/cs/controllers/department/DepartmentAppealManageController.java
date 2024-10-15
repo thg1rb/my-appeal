@@ -1,4 +1,4 @@
-package ku.cs.controllers.major;
+package ku.cs.controllers.department;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +28,7 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-public class MajorAppealManageController {
+public class DepartmentAppealManageController {
     @FXML private AnchorPane mainPane;
     @FXML private Pane navbarAnchorPane;
     @FXML private TableView<Appeal> tableView;
@@ -67,6 +67,7 @@ public class MajorAppealManageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
 
         showTable(departmentAppealList, false);
         tabPane.getSelectionModel().selectedItemProperty().addListener(observable -> {
@@ -151,10 +152,9 @@ public class MajorAppealManageController {
         tableView.getItems().clear();
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (modifyDateList.findModifyDateByUuid(appeal.getUuid()).getAdvisorApproveDate() != null && !appeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")){
                     tableView.getItems().add(appeal);
                 }
-            }
+
             updateTotalLabel("จำนวนคำร้องทั้งหมด ");
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
@@ -176,6 +176,7 @@ public class MajorAppealManageController {
                 } else {
                     // Simplify status text based on specific conditions
                     switch (status) {
+                        case "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา":
                         case "อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา":
                             setText("รอดำเนินการ");
                             setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
@@ -185,6 +186,7 @@ public class MajorAppealManageController {
                             setStyle("-fx-background-color: green; -fx-text-fill: white;");
                             setText("ดำเนินการแล้ว");
                             break;
+                        case "ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ":
                         case "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ":
                         case "ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ":
                             setStyle("-fx-background-color: red; -fx-text-fill: white;");

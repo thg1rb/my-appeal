@@ -97,7 +97,7 @@ public class LoginController {
                             checkIfFirstTimeLoginForStaff(user, password);
                             updateLoginTime(user);
                             try {
-                                Animation.getInstance().switchSceneWithFade(currentScene, "major-appeal-manage", user);
+                                Animation.getInstance().switchSceneWithFade(currentScene, "department-appeal-manage", user);
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }

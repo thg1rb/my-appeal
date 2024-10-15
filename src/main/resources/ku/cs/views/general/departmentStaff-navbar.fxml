@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.major.MajorNavbarController">
+<Pane prefHeight="832.0" prefWidth="200.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.department.DepartmentNavbarController">
    <children>
       <VBox alignment="CENTER" prefWidth="200.0">
          <children>
@@ -100,7 +100,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/major-appeal-manage-icon.png" />
+                              <Image url="@../../../../icons/department-appeal-manage-icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -122,7 +122,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/major-approver-manage-icon.png" />
+                              <Image url="@../../../../icons/department-approver-manage-icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -144,7 +144,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../icons/major-nisit-manage-icon.png" />
+                              <Image url="@../../../../icons/department-nisit-manage-icon.png" />
                            </image>
                         </ImageView>
                      </graphic>

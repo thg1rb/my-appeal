@@ -1,9 +1,5 @@
 package ku.cs.models.persons;
 
-import ku.cs.models.persons.DepartmentStaff;
-import ku.cs.models.persons.FacultyStaff;
-import ku.cs.models.persons.User;
-
 public class Approver {
     private String tier;
     private String firstName;

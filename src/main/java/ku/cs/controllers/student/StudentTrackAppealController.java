@@ -145,11 +145,16 @@ public class StudentTrackAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
+
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        statusCol.setSortable(false);
+
         updateTotalLabel();
     }
 
     // อัพเดตข้อความแสดงคำร้องทั้งหมด
     private void updateTotalLabel() {
-        totalLabel.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+        totalLabel.setText("จำนวนคำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }

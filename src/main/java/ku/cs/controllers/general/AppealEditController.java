@@ -27,6 +27,7 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
+import ku.cs.services.fileutilities.SignFileDownloader;
 
 import java.io.IOException;
 import java.util.Date;
@@ -74,7 +75,7 @@ public class AppealEditController {
 
     @FXML private Button confirmButton;
     @FXML private Button rejectButton;
-
+    @FXML private Button downloadButton;
 
     private Appeal selectedAppeal;
     private User staff;
@@ -94,12 +95,25 @@ public class AppealEditController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+
+        downloadButton.setOnMouseClicked(mouseEvent -> {
+            SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
+            downloader.download((Stage) downloadButton.getScene().getWindow());
+        });
+
         ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
     public void setSelectedAppeal(Appeal selectedAppeal) {
         this.selectedAppeal = selectedAppeal;
+
+        // If selected appeal doesn't have files then download button disappear -> has (department-tier or above) sign == has files
+        if (selectedAppeal.getDepartmentSignature() == null) {
+            downloadButton.setVisible(false);
+            downloadButton.setDisable(true);
+        }
+
         updateAppealDetails();
     }
     // set ตำแหน่งของผู้ใช้
@@ -115,7 +129,7 @@ public class AppealEditController {
             rejectButton.setVisible(false);
         }
         else {
-            topicLabel.setText("อนุมัติหรือปฏิเสธคำร้องของนิสิต");
+            topicLabel.setText("ดำเนินการคำร้องของนิสิต");
             confirmButton.setVisible(true);
             rejectButton.setVisible(true);
         }
@@ -191,10 +205,17 @@ public class AppealEditController {
         createDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getCreateDate());
         createDateLabel.setStyle(createColor);
 
-        advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
-        advisorApproveDateLabel.setStyle(createColor);
+        if (selectedAppeal.getStatus().equals("ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ")) {
+            advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
+            advisorApproveDateLabel.setStyle(rejectColor);
 
-        if (selectedAppeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ")) {
+            departmentApproveDateLabel.setText("คำร้องถูกปฏิเสธ");
+            departmentApproveDateLabel.setStyle(rejectColor);
+
+            facultyApproveDateLabel.setText("คำร้องถูกปฏิเสธ");
+            facultyApproveDateLabel.setStyle(rejectColor);
+        }
+        else if (selectedAppeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ")) {
             departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(rejectColor);
 
@@ -209,6 +230,15 @@ public class AppealEditController {
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else {
+            if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate()!=null) {
+                advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
+                advisorApproveDateLabel.setStyle(createColor);
+            }
+            else {
+                advisorApproveDateLabel.setText("กำลังรอการอนุมัติ...");
+                advisorApproveDateLabel.setStyle(pendingColor);
+            }
+
             if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate() != null) {
                 departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
                 departmentApproveDateLabel.setStyle(createColor);
