@@ -456,7 +456,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่หัวหน้าคณะอนุมัติ:">
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่คณบดีอนุมัติ:">
                      <font>
                         <Font size="20.0" />
                      </font>

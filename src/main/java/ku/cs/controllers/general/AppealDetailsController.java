@@ -179,8 +179,13 @@ public class AppealDetailsController {
 
             departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
 
-            facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
-            facultyApproveDateLabel.setStyle(pendingColor);
+            if (selectedAppeal.getStatus().contains("คำร้องดำเนินการครบถ้วน")) {
+                facultyApproveDateLabel.setText("ดำเนินการครบถ้วน");
+                facultyApproveDateLabel.setStyle(approveColor);
+            } else {
+                facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
+                facultyApproveDateLabel.setStyle(pendingColor);
+            }
         } else {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(approveColor);
