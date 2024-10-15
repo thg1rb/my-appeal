@@ -1,4 +1,4 @@
-package ku.cs.services.fileuploaders;
+package ku.cs.services.fileutilities;
 
 import javafx.stage.Stage;
 

@@ -112,6 +112,11 @@ public class Appeal {
         return facultySignature;
     }
 
+    public String getSignature(){
+        //  ถ้าจะทำไฟล์เดียว
+        return "Test";
+    }
+
     // Setters
     public void setModifyDate(String modifyDate) {
         this.modifyDate = modifyDate;
@@ -126,6 +131,10 @@ public class Appeal {
     public void setDepartmentSignature(String path) { this.departmentSignature = path; }
 
     public void setFacultySignature(String path) { this.facultySignature = path; }
+
+    public void setSignature(String path) {
+        //  ถ้าจะทำไฟล์เดียว
+    }
 
     // Overriding Method
     @Override

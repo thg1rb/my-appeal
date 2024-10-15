@@ -21,7 +21,7 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
 import ku.cs.services.exceptions.IllegalValidationException;
-import ku.cs.services.fileuploaders.ImageFileUploader;
+import ku.cs.services.fileutilities.ImageFileUploader;
 
 import java.io.File;
 
