@@ -125,7 +125,6 @@ public class AdminStaffPopupController {
         facultyChoiceBox.getItems().addAll(facultyList.getAllFacultiesName());
 
         if (editMode){
-//            updateDepartmentChoiceBox(((FacultyStaff)user).getFaculty());
             updateDepartmentChoiceBox(((FacultyStaff)user).getFacultyUUID());
             setPerson(user);
         }
@@ -237,24 +236,28 @@ public class AdminStaffPopupController {
             if (!validateUsername(username))
                 usernameValidationText.setVisible(true);
             if (!validatePassword(password))
-                usernameValidationText.setVisible(true);
+                passwordValidationText.setVisible(true);
         }
     }
 
     @FXML
     public void onEditButtonClicked() {
+        usernameValidationText.setVisible(false);
+        passwordValidationText.setVisible(false);
+
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = initPasswordTextField.getText();
+        UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
+        UUID department = null;
+        String id = "";
         try {
-            String firstName = firstNameTextField.getText();
-            String lastName = lastNameTextField.getText();
-            String username = usernameTextField.getText();
-            String password = initPasswordTextField.getText();
-            UUID faculty = facultyList.findFacultyByName(facultyChoiceBox.getValue()).getUuid();
-
-            UUID department = null;
-            String id = "";
-
             if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || faculty == null) {
                 throw new EmptyInputException();
+            }
+            if (!validateUsername(username) || !validatePassword(password)){
+                throw new IllegalValidationException();
             }
 
             if (departmentChoiceBox.isVisible()) {
@@ -287,6 +290,11 @@ public class AdminStaffPopupController {
             stage.close();
         } catch (EmptyInputException e){
             emptyInputText.setVisible(true);
+        } catch (IllegalValidationException e) {
+            if (!validateUsername(username))
+                usernameValidationText.setVisible(true);
+            if (!validatePassword(password))
+                passwordValidationText.setVisible(true);
         }
     }
 

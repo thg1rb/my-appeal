@@ -1,9 +1,8 @@
-package ku.cs.services.fileuploaders;
+package ku.cs.services.fileutilities;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
@@ -24,13 +23,13 @@ public class SignFileUploader implements FileUploader {
     private String fullPath;
     private boolean success;
 
-    @FXML private Rectangle imageRectangle;
+    @FXML private Button uploadButton;
 
-    public SignFileUploader(User staff, Rectangle imageRectangle, Appeal selectedAppeal, String directoryName) {
+    public SignFileUploader(User staff, Button uploadButton, Appeal selectedAppeal, String directoryName) {
         this.staff = staff;
         this.directoryName = directoryName;
-        this.imageRectangle = imageRectangle;
         this.selectedAppeal = selectedAppeal;
+        this.uploadButton = uploadButton;
         checkFileIsExisted();
     }
     private void checkFileIsExisted() {
@@ -53,7 +52,7 @@ public class SignFileUploader implements FileUploader {
     @Override
     public void upload(Stage stage) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
 
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -64,22 +63,24 @@ public class SignFileUploader implements FileUploader {
                 } else if (staff instanceof FacultyStaff) {
                     fileName += "_faculty-sign";
                 }
-                fileName += "." +file.getName().split("\\.")[file.getName().split("\\.").length - 1];
+                fileName += ".pdf";
                 Path destination = new File(directoryName + File.separator + fileName).toPath();
 
                 fullPath = destination.toString();
 
                 Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
-                Image image = new Image("file:" + directoryName + File.separator + fileName);
-                imageRectangle.setFill(new ImagePattern(image));
+                Platform.runLater(() -> {
+                    uploadButton.setText(file.getName());
+                });
+
                 success = true;
 
             }catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }else {
-            System.out.println("No image file selected");
+            System.out.println("No PDF file selected");
             success = false;
         }
     }

@@ -11,7 +11,6 @@ public class FacultyStaff extends User {
     private String initialPasswordText;
     private String initialPasswordHashed;
 
-//    private String faculty;
     private UUID facultyUUID;
 
     //Constructor
@@ -31,6 +30,9 @@ public class FacultyStaff extends User {
 
     //Authentication
     private void setInitPassword(String password) {
+        if (super.validatePassword(initialPasswordText)){
+            super.setPasswordHash(password);
+        }
         this.initialPasswordHashed = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
     public boolean validateInitialPassword(String initialPassword) {

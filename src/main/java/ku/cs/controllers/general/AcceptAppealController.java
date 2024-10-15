@@ -9,12 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
 import ku.cs.models.collections.ApproverList;
 import ku.cs.models.collections.ModifyDateList;
-import ku.cs.models.dates.ModifyDate;
 import ku.cs.models.persons.Approver;
 
 import ku.cs.models.persons.User;
@@ -23,8 +21,7 @@ import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
-import ku.cs.services.fileuploaders.FileUploader;
-import ku.cs.services.fileuploaders.SignFileUploader;
+import ku.cs.services.fileutilities.SignFileUploader;
 
 import java.io.File;
 import java.util.Date;
@@ -37,7 +34,6 @@ public class AcceptAppealController {
     @FXML private RadioButton moreOperationRadioButton;
     @FXML private Label approverErrorLabel;
     @FXML private Button uploadButton;
-    @FXML private Rectangle imageRectangle;
     @FXML private TextField searchTextField;
     @FXML private ImageView imageViewButtonImageView;
     @FXML private Label errorUploadLabel;
@@ -86,7 +82,7 @@ public class AcceptAppealController {
         });
 
         uploadButton.setOnAction(e ->{
-            uploadSign();
+            uploadPDF();
         });
     }
 
@@ -149,6 +145,8 @@ public class AcceptAppealController {
     public void onConfirmButtonClick(ActionEvent event){
         if (selectedApprover == null) {
             approverErrorLabel.setVisible(true);
+        } else if (uploadButton.getText().equals("อัปโหลดไฟล์")){
+            errorUploadLabel.setVisible(true);
         }
         else {
             subStatus = ((RadioButton)toggleGroup.getSelectedToggle()).getText();
@@ -165,17 +163,16 @@ public class AcceptAppealController {
         }
     }
 
-    private void uploadSign(){
+    private void uploadPDF(){
         String path = "data" + File.separator + "approves-signs";
-        SignFileUploader signFileUploader = new SignFileUploader(staff, imageRectangle, selectedAppeal, path);
-        signFileUploader.upload((Stage) imageRectangle.getScene().getWindow());
+        SignFileUploader signFileUploader = new SignFileUploader(staff, uploadButton, selectedAppeal, path);
+        signFileUploader.upload((Stage) uploadButton.getScene().getWindow());
         if (signFileUploader.uploadSuccess()) {
             uploadButton.setText("");
 
             if (role.equals("เจ้าหน้าที่ภาควิชา")) selectedAppeal.setDepartmentSignature(signFileUploader.getFullPath());
             else if (role.equals("เจ้าหน้าที่คณะ")) selectedAppeal.setFacultySignature(signFileUploader.getFullPath());
 
-            imageViewButtonImageView.setImage(null);
         } else {
             errorUploadLabel.setVisible(true);
         }

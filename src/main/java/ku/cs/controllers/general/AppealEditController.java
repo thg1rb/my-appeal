@@ -27,6 +27,7 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.DateTimeService;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import ku.cs.services.exceptions.EmptyInputException;
+import ku.cs.services.fileutilities.SignFileDownloader;
 
 import java.io.IOException;
 import java.util.Date;
@@ -74,7 +75,7 @@ public class AppealEditController {
 
     @FXML private Button confirmButton;
     @FXML private Button rejectButton;
-
+    @FXML private Button downloadButton;
 
     private Appeal selectedAppeal;
     private User staff;
@@ -94,12 +95,25 @@ public class AppealEditController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
+
+        downloadButton.setOnMouseClicked(mouseEvent -> {
+            SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
+            downloader.download((Stage) downloadButton.getScene().getWindow());
+        });
+
         ProgramSetting.getInstance().applyStyles(mainPane);
     }
 
     // รับ parameters ที่ส่งมาจากหน้า ProfessorStudentAppealController
     public void setSelectedAppeal(Appeal selectedAppeal) {
         this.selectedAppeal = selectedAppeal;
+
+        // If selected appeal doesn't have files then download button disappear -> has (department-tier or above) sign == has files
+        if (selectedAppeal.getDepartmentSignature() == null) {
+            downloadButton.setVisible(false);
+            downloadButton.setDisable(true);
+        }
+
         updateAppealDetails();
     }
     // set ตำแหน่งของผู้ใช้
