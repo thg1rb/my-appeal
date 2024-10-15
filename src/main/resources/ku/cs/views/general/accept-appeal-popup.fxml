@@ -37,7 +37,7 @@
          <font>
             <Font size="18.0" />
          </font></RadioButton>
-      <Label layoutX="49.0" layoutY="37.0" styleClass="label-bold" text="เลือกดำเนินการคำร้อง">
+      <Label layoutX="49.0" layoutY="37.0" styleClass="label-bold" text="ดำเนินการอนุมัติคำร้อง">
          <font>
             <Font size="32.0" />
          </font>

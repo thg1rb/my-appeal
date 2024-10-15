@@ -115,7 +115,7 @@ public class AppealEditController {
             rejectButton.setVisible(false);
         }
         else {
-            topicLabel.setText("อนุมัติหรือปฏิเสธคำร้องของนิสิต");
+            topicLabel.setText("ดำเนินการคำร้องของนิสิต");
             confirmButton.setVisible(true);
             rejectButton.setVisible(true);
         }

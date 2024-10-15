@@ -79,6 +79,7 @@ public class AcceptAppealController {
             });
             return row;
         });
+
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             String search = searchTextField.getText();
             showTable(specificTierApproverList, search);
@@ -122,7 +123,7 @@ public class AcceptAppealController {
             col.setPrefWidth((double) 448 / size);
         }
         roleColumn.setPrefWidth(roleColumn.getPrefWidth() - 50);
-        fullNameColumn.setPrefWidth(fullNameColumn.getPrefWidth() + 50);
+        fullNameColumn.setPrefWidth(fullNameColumn.getPrefWidth() - 50);
 
         approverTableView.getItems().clear();
         if (approverList != null) {
