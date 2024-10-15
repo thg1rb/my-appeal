@@ -11,6 +11,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -73,9 +74,13 @@ public class AppealEditController {
     @FXML private TextArea rejectReasonTextArea;
     @FXML private Label rejectReasonErrorLabel;
 
+    @FXML private HBox approveAndRejectHBox;
     @FXML private Button confirmButton;
     @FXML private Button rejectButton;
-    @FXML private Button downloadButton;
+
+    @FXML private HBox downloadHBox;
+    @FXML private Button downloadDepartmentButton;
+    @FXML private Button downloadFacultyButton;
 
     private Appeal selectedAppeal;
     private User staff;
@@ -95,10 +100,14 @@ public class AppealEditController {
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
-
-        downloadButton.setOnMouseClicked(mouseEvent -> {
+        downloadDepartmentButton.setOnMouseClicked(mouseEvent -> {
             SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
-            downloader.download((Stage) downloadButton.getScene().getWindow());
+           downloader.download((Stage) downloadDepartmentButton.getScene().getWindow(), true);
+        });
+
+        downloadFacultyButton.setOnMouseClicked(mouseEvent -> {
+            SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
+            downloader.download((Stage) downloadFacultyButton.getScene().getWindow(), false);
         });
 
         ProgramSetting.getInstance().applyStyles(mainPane);
@@ -110,8 +119,10 @@ public class AppealEditController {
 
         // If selected appeal doesn't have files then download button disappear -> has (department-tier or above) sign == has files
         if (selectedAppeal.getDepartmentSignature() == null) {
-            downloadButton.setVisible(false);
-            downloadButton.setDisable(true);
+            downloadDepartmentButton.setVisible(false);
+        }
+        if (selectedAppeal.getFacultySignature() == null) {
+            downloadFacultyButton.setVisible(false);
         }
 
         updateAppealDetails();
@@ -125,11 +136,15 @@ public class AppealEditController {
     public void setMode (boolean mode) {
         if(mode) {
             topicLabel.setText("รายละเอียดคำร้อง");
+            approveAndRejectHBox.setVisible(false);
+            downloadHBox.setVisible(true);
             confirmButton.setVisible(false);
             rejectButton.setVisible(false);
         }
         else {
             topicLabel.setText("ดำเนินการคำร้องของนิสิต");
+            approveAndRejectHBox.setVisible(true);
+            downloadHBox.setVisible(false);
             confirmButton.setVisible(true);
             rejectButton.setVisible(true);
         }
@@ -216,6 +231,9 @@ public class AppealEditController {
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else if (selectedAppeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ")) {
+            advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
+            advisorApproveDateLabel.setStyle(createColor);
+
             departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(rejectColor);
 
@@ -223,6 +241,9 @@ public class AppealEditController {
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else if (selectedAppeal.getStatus().equals("ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ")) {
+            advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
+            advisorApproveDateLabel.setStyle(createColor);
+
             departmentApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getDepartmentApproveDate());
             departmentApproveDateLabel.setStyle(createColor);
 

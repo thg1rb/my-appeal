@@ -41,16 +41,36 @@
                </graphic>
             </Button>
          </children></Pane>
-      <HBox alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
+      <HBox fx:id="downloadHBox" alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
          <children>
-            <Button fx:id="downloadButton" mnemonicParsing="false" styleClass="label-medium" text="ดาวน์โหลดเอกสาร">
+            <Button fx:id="downloadDepartmentButton" mnemonicParsing="false" text="เอกสารเจ้าหน้าที่ภาค">
                <font>
                   <Font size="24.0" />
                </font>
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
+               <styleClass>
+                  <String fx:value="label-medium" />
+                  <String fx:value="login-button" />
+               </styleClass>
             </Button>
+            <Button fx:id="downloadFacultyButton" mnemonicParsing="false" text="เอกสารคณบดี">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="label-medium" />
+                  <String fx:value="login-button" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+      <HBox fx:id="approveAndRejectHBox" alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
+         <children>
             <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="อนุมัติ">
                <font>
                   <Font size="24.0" />
