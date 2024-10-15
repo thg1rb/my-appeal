@@ -143,6 +143,7 @@ public class AcceptAppealController {
 
         roleColumn.setSortable(false);
         fullNameColumn.setSortable(false);
+        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     public void onConfirmButtonClick(ActionEvent event){

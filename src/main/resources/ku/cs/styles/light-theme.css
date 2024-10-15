@@ -532,16 +532,16 @@
 
 /* Tree Table View */
 .tree-view{
-    -fx-background-radius: 20px 20px 20px 20px;
-    -fx-border-radius: 20px 20px 20px 20px;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
     -fx-background-color: #FFFFFF;
     -fx-border-color: #D9D9D9;
 }
 .tree-view .column-header{
     -fx-background-color: white;
     -fx-border-color: transparent;
-    -fx-background-radius: 0 20 0 0;
-    -fx-border-radius: 0 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
     -fx-pref-height: 50;
 }
 .tree-view .column-header-background{
@@ -578,3 +578,15 @@
     -fx-text-fill: black;
     -fx-pref-height: 30;
 }
+
+.pdf-upload-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: darkblue;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15;
+    -fx-border-style: dashed;
+}
+ .radio-btn {
+     -fx-text-fill: black;
+ }

@@ -143,6 +143,7 @@ public class AdminFacultyManagementController {
 
         facultyIdColumn.setSortable(false);
         facultyNameColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void showDepartmentTable(DepartmentList departmentList) {
@@ -187,6 +188,7 @@ public class AdminFacultyManagementController {
         departmentIdColumn.setSortable(false);
         departmentNameColumn.setSortable(false);
         ofFacultyColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalText(){

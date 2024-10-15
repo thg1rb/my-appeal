@@ -144,6 +144,7 @@ public class AdvisorStudentListController {
         usernameCol.setSortable(false);
         fullnameCol.setSortable(false);
         idCol.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
 
         updateTotalLabel();
     }
