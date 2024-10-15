@@ -4,14 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.appeals.Appeal;
 import ku.cs.models.persons.DepartmentStaff;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
@@ -69,10 +67,15 @@ public class DepartmentNisitManageController {
             }
         });
 
-        nisitTableView.setOnMouseClicked(event ->{
-            selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
-            addMode = false;
-            showPopUp(addMode);
+        nisitTableView.setRowFactory(v -> {
+            TableRow<Student> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
+                if (selectedNisit != null) {
+                    showPopUp(addMode);
+                }
+            });
+            return row;
         });
 
     }

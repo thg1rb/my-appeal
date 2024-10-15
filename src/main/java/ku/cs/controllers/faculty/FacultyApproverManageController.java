@@ -94,8 +94,10 @@ public class FacultyApproverManageController {
             });
             return row;
         });
-        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
 
+        roleColumn.setSortable(false);
+        fullNameColumn.setSortable(false);
+        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
         updateTotalLabel();
     }
 
