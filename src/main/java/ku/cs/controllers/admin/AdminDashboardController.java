@@ -158,6 +158,8 @@ public class AdminDashboardController {
         for (TreeTableColumn<?, ?> column : treeTableView.getColumns()){
             column.setPrefWidth((double) 600 /treeTableView.getColumns().size());
         }
+
+        treeTableView.setColumnResizePolicy(treeTableView.CONSTRAINED_RESIZE_POLICY);
         treeTableView.getSortOrder().add(successAppealCol);
         nameCol.setSortable(false);
         successAppealCol.setSortable(false);
