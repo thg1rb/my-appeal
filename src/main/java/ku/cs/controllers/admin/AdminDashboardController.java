@@ -161,6 +161,7 @@ public class AdminDashboardController {
         treeTableView.getSortOrder().add(successAppealCol);
         nameCol.setSortable(false);
         successAppealCol.setSortable(false);
+        treeTableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     @FXML

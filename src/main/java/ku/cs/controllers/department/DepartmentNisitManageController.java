@@ -101,10 +101,6 @@ public class DepartmentNisitManageController {
         nameColumn.setPrefWidth(366);
         emailColumn.setPrefWidth(366);
 
-        idColumn.setSortable(false);
-        nameColumn.setSortable(false);
-        emailColumn.setSortable(false);
-
         nisitTableView.getItems().clear();
         if (studentList != null) {
             for (User nisit : studentList.getUsers()) {
@@ -113,6 +109,12 @@ public class DepartmentNisitManageController {
                 }
             }
         }
+
+        idColumn.setSortable(false);
+        nameColumn.setSortable(false);
+        emailColumn.setSortable(false);
+        nisitTableView.getColumns().forEach(column -> column.setReorderable(false));
+
         updateTotalLabel();
     }
     public void showSearchTable(UserList studentList, String searchText) {

@@ -149,6 +149,7 @@ public class StudentTrackAppealController {
         dateTimeCol.setSortable(false);
         typeCol.setSortable(false);
         statusCol.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
 
         updateTotalLabel();
     }
