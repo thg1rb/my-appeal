@@ -20,7 +20,7 @@ public class ProgramSettingController {
 
     @FXML private ChoiceBox<String> themeChoiceBox;
     @FXML private ChoiceBox<String> fontSizeChoiceBox;
-
+    @FXML private ChoiceBox<String> fontChoiceBox;
     private User user;
 
     private final String[] themes = {"สว่าง", "มืด"};
@@ -29,12 +29,16 @@ public class ProgramSettingController {
     private final String[] fontSizes = {"เล็ก", "ปกติ", "ใหญ่"};
     private String selectedFontSize;
 
+    private final String[] fonts = {"Kanit", "Arial"};
+    private String selectedFont;
+
     @FXML
     public void initialize() {
         user = (User) FXRouter.getData();
 
         selectedTheme = ProgramSetting.getInstance().getTheme();
         selectedFontSize = ProgramSetting.getInstance().getFontSize();
+        selectedFont = ProgramSetting.getInstance().getFont();
 
         onApplyButtonClick();
 
@@ -67,6 +71,12 @@ public class ProgramSettingController {
             selectedFontSize = fontSizeChoiceBox.getSelectionModel().getSelectedItem();
         });
         fontSizeChoiceBox.setValue(selectedFontSize);
+        // ฟอนต์ของโปรแกรม
+        fontChoiceBox.getItems().addAll(fonts);
+        fontChoiceBox.setOnAction((ActionEvent event) -> {
+            selectedFont = fontChoiceBox.getSelectionModel().getSelectedItem();
+        });
+        fontChoiceBox.setValue(selectedFont);
     }
 
     //
@@ -79,7 +89,9 @@ public class ProgramSettingController {
         if (selectedFontSize != null) {
             ProgramSetting.getInstance().setFontSize(selectedFontSize);
         }
-
+        if (selectedFont != null) {
+            ProgramSetting.getInstance().setFont(selectedFont);
+        }
         ProgramSetting.getInstance().applyStyles(mainPane);
     }
 

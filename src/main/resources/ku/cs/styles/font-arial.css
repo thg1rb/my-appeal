@@ -1,0 +1,4 @@
+/* Set the font family to Arial for all components */
+* {
+    -fx-font-family: Arial;
+}
