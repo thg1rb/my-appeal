@@ -16,51 +16,6 @@ public class UserListDatasource implements Datasource<UserList> {
         checkFileIsExisted();
     }
 
-    public static UserList readAllUsers(){
-        String adminFilePath = "data" + File.separator + "users" + File.separator +  "admin.csv";
-        String facultyFilePath = "data" + File.separator + "users" + File.separator +  "facultyStaff.csv";
-        String departmentFilePath = "data" + File.separator + "users" + File.separator +  "departmentStaff.csv";
-        String advisorFilePath = "data" + File.separator + "users" + File.separator +  "advisor.csv";
-        String studentFilePath = "data" + File.separator + "users" + File.separator +  "student.csv";
-
-        String[] paths = {adminFilePath,facultyFilePath,departmentFilePath,advisorFilePath,studentFilePath};
-
-        UserList userList = new UserList();
-        for (String file : paths) {
-            FileInputStream fileInputStream = null;
-
-            try {
-                fileInputStream = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            InputStreamReader inputStreamReader = new InputStreamReader(
-                    fileInputStream,
-                    StandardCharsets.UTF_8
-            );
-            BufferedReader buffer = new BufferedReader(inputStreamReader);
-
-            String line = "";
-            try {
-                // ใช้ while loop เพื่ออ่านข้อมูลรอบละบรรทัด
-                while ( (line = buffer.readLine()) != null ){
-                    // ถ้าเป็นบรรทัดว่าง ให้ข้าม
-                    if (line.equals("")) continue;
-
-                    // แยกสตริงด้วย ,
-                    String[] data = line.split(",");
-
-                    // เพิ่มข้อมูลลงใน list
-                    userList.addUser(data);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return userList;
-    }
-
     private void checkFileIsExisted() {
         File file = new File(directoryName);
         if (!file.exists()) {
