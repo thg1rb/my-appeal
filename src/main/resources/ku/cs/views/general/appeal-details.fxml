@@ -321,7 +321,7 @@
             </VBox>
             <VBox alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่หัวหน้าคณะอนุมัติ:">
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่คณบดีอนุมัติ:">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -391,18 +391,6 @@
             </Pane>
          </children>
       </Pane>
-      <HBox alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
-         <children>
-            <Button fx:id="downloadButton" mnemonicParsing="false" styleClass="label-medium" text="ดาวน์โหลดเอกสาร">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="40.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
    </children>
    <effect>
       <DropShadow />

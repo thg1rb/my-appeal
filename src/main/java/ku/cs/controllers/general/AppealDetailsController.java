@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,10 +23,6 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ModifyDateListFileDatasource;
 import ku.cs.services.fileutilities.SignFileDownloader;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
 public class AppealDetailsController {
 
     @FXML private AnchorPane mainPane;
@@ -35,11 +30,6 @@ public class AppealDetailsController {
     @FXML private VBox generalVBox;
     @FXML private VBox suspendVBox;
     @FXML private VBox breakVBox;
-
-    @FXML private Label fullnameLabel;
-    @FXML private Label idLabel;
-    @FXML private Label typeLabel;
-    @FXML private Label statusLabel;
 
     @FXML private TextArea topicGeneralTextArea;
     @FXML private TextArea detailsGeneralTextArea;
@@ -66,12 +56,6 @@ public class AppealDetailsController {
     @FXML private Label rejectedReasonTitleLabel;
     @FXML private TextArea rejectedReasonTextArea;
 
-    @FXML private Pane approveSignatureAlertPane;
-    @FXML private Label approveSignatureTitleLabel;
-    @FXML private ImageView approveSignatureImageView;
-
-    @FXML private Button downloadButton;
-
     private Appeal selectedAppeal;
     private ModifyDate selectedAppealDate;
 
@@ -95,24 +79,13 @@ public class AppealDetailsController {
 
         closePopUpLightButton.setOnMouseEntered(mouseEvent -> closePopUpLightImageView.setImage(hoverClosePopUpLightImage));
         closePopUpLightButton.setOnMouseExited(mouseEvent -> closePopUpLightImageView.setImage(defaultClosePopUpLightImage));
-
-        downloadButton.setOnMouseClicked(mouseEvent -> {
-            SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
-            downloader.download((Stage) downloadButton.getScene().getWindow());
-        });
-
     }
 
-    //
+    // รับค่าที่ส่งมาจากหน้าหลักมากำหนดให้หน้าต่างนี้
     public void setSelectedAppeal(Appeal selectedAppeal, ModifyDate selectedAppealDate) {
         this.selectedAppeal = selectedAppeal;
         this.selectedAppealDate = selectedAppealDate;
 
-        // If selected appeal doesn't have files then download button disappear -> has (department-tier or above) sign == has files
-        if (selectedAppeal.getDepartmentSignature().equals("null") || selectedAppeal.getDepartmentSignature() == null) {
-            downloadButton.setVisible(false);
-            downloadButton.setDisable(true);
-        }
         showAppealScrollPane(selectedAppeal.isGeneralAppeal(), selectedAppeal.isSuspendAppeal(), selectedAppeal.isBreakAppeal());
     }
 
@@ -129,6 +102,9 @@ public class AppealDetailsController {
         String rejectColor = "-fx-text-fill: #cc0000;";
         String pendingColor = "-fx-text-fill: #b57500;";
 
+        String downloadSignature = "ดาวน์โหลดเอกสาร";
+        String viewRejectedReason = "ดูเหตุผลในการปฏิเสธ";
+
         createDateLabel.setText(selectedAppealDate.getCreateDate());
         createDateLabel.setStyle(approveColor);
 
@@ -138,7 +114,9 @@ public class AppealDetailsController {
 
         if (selectedAppealDate.isAdvisorRejected(selectedAppeal.getStatus())) {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
-            advisorApproveDateLabel.setStyle(rejectColor);
+            advisorApproveDateLabel.setStyle(rejectColor + "-fx-cursor: hand;");
+            advisorApproveDateLabel.setOnMouseEntered(mouseEvent -> advisorApproveDateLabel.setText(viewRejectedReason));
+            advisorApproveDateLabel.setOnMouseExited(mouseEvent -> advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate()));
             rejectedReasonTitleLabel.setText("เหตุผลในการปฏิเสธคำร้องของอาจารย์ที่ปรึกษา");
             advisorApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowRejectedReasonAlertPane());
 
@@ -153,7 +131,9 @@ public class AppealDetailsController {
             advisorApproveDateLabel.setStyle(approveColor);
 
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
-            departmentApproveDateLabel.setStyle(rejectColor);
+            departmentApproveDateLabel.setStyle(rejectColor + "-fx-cursor: hand;");
+            departmentApproveDateLabel.setOnMouseEntered(mouseEvent -> departmentApproveDateLabel.setText(viewRejectedReason));
+            departmentApproveDateLabel.setOnMouseExited(mouseEvent -> departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate()));
             rejectedReasonTitleLabel.setText("เหตุผลในการปฏิเสธคำร้องของหัวหน้าภาค");
             departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowRejectedReasonAlertPane());
 
@@ -167,21 +147,27 @@ public class AppealDetailsController {
             departmentApproveDateLabel.setStyle(approveColor);
 
             facultyApproveDateLabel.setText(selectedAppealDate.getFacultyApproveDate());
-            facultyApproveDateLabel.setStyle(rejectColor);
+            facultyApproveDateLabel.setOnMouseEntered(mouseEvent -> facultyApproveDateLabel.setText(viewRejectedReason));
+            facultyApproveDateLabel.setOnMouseExited(mouseEvent -> facultyApproveDateLabel.setText(selectedAppealDate.getFacultyApproveDate()));
+            facultyApproveDateLabel.setStyle(rejectColor + "-fx-cursor: hand;");
             rejectedReasonTitleLabel.setText("เหตุผลในการปฏิเสธคำร้องของหัวหน้าคณะ");
             facultyApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowRejectedReasonAlertPane());
         } else if (selectedAppealDate.isAdvisorPending()) {
             advisorApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             advisorApproveDateLabel.setStyle(pendingColor);
+
             departmentApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             departmentApproveDateLabel.setStyle(pendingColor);
+
             facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             facultyApproveDateLabel.setStyle(pendingColor);
         } else if (selectedAppealDate.isDepartmentPending()) {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(approveColor);
+
             departmentApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             departmentApproveDateLabel.setStyle(pendingColor);
+
             facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
             facultyApproveDateLabel.setStyle(pendingColor);
         } else if (selectedAppealDate.isFacultyPending()) {
@@ -189,27 +175,35 @@ public class AppealDetailsController {
             advisorApproveDateLabel.setStyle(approveColor);
 
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
-            departmentApproveDateLabel.setStyle(approveColor);
-            System.out.println(selectedAppeal.getDepartmentSignature());
+            departmentApproveDateLabel.setStyle(approveColor + "-fx-cursor: hand;");
+            departmentApproveDateLabel.setOnMouseEntered(mouseEvent -> departmentApproveDateLabel.setText(downloadSignature));
+            departmentApproveDateLabel.setOnMouseExited(mouseEvent -> departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate()));
+            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> downloadApproveSignature(true));
 
-            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
-
-            facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
-            facultyApproveDateLabel.setStyle(pendingColor);
+            if (selectedAppeal.getStatus().contains("คำร้องดำเนินการครบถ้วน")) {
+                facultyApproveDateLabel.setText("ดำเนินการครบถ้วน");
+                facultyApproveDateLabel.setStyle(approveColor);
+            } else {
+                facultyApproveDateLabel.setText("กำลังรอการดำเนินการ...");
+                facultyApproveDateLabel.setStyle(pendingColor);
+            }
         } else {
             advisorApproveDateLabel.setText(selectedAppealDate.getAdvisorApproveDate());
             advisorApproveDateLabel.setStyle(approveColor);
 
             departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate());
-            departmentApproveDateLabel.setStyle(approveColor);
-            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่ภาควิชา", selectedAppeal.getDepartmentSignature()));
+            departmentApproveDateLabel.setStyle(approveColor + "-fx-cursor: hand;");
+            departmentApproveDateLabel.setOnMouseEntered(mouseEvent -> departmentApproveDateLabel.setText(downloadSignature));
+            departmentApproveDateLabel.setOnMouseExited(mouseEvent -> departmentApproveDateLabel.setText(selectedAppealDate.getDepartmentApproveDate()));
+            departmentApproveDateLabel.setOnMouseClicked(mouseEvent -> downloadApproveSignature(true));
 
             facultyApproveDateLabel.setText(selectedAppealDate.getFacultyApproveDate());
-            facultyApproveDateLabel.setStyle(approveColor);
-            facultyApproveDateLabel.setOnMouseClicked(mouseEvent -> onShowApproveSignatureAlertPane("คำร้องอนุมัติโดยเจ้าหน้าที่คณะ", selectedAppeal.getFacultySignature()));
+            facultyApproveDateLabel.setStyle(approveColor + "-fx-cursor: hand;");
+            facultyApproveDateLabel.setOnMouseEntered(mouseEvent -> facultyApproveDateLabel.setText(downloadSignature));
+            facultyApproveDateLabel.setOnMouseExited(mouseEvent -> facultyApproveDateLabel.setText(selectedAppealDate.getFacultyApproveDate()));
+            facultyApproveDateLabel.setOnMouseClicked(mouseEvent -> downloadApproveSignature(false));
         }
 
-        //
         if (isGeneralAppeal) {
             GeneralAppeal generalAppeal = (GeneralAppeal) selectedAppeal;
             topicGeneralTextArea.setText(generalAppeal.getTopic());
@@ -229,30 +223,25 @@ public class AppealDetailsController {
         }
     }
 
-    //
+    // แสดงหน้าต่างเหตุผลในการปฏิเสธคำร้อง
     private void onShowRejectedReasonAlertPane() {
         rejectedReasonTextArea.setText(selectedAppeal.getRejectedReason());
         rejectedReasonAlertPane.setVisible(true);
     }
 
-    private void onShowApproveSignatureAlertPane(String approveSignatureTitle, String path) {
-        approveSignatureTitleLabel.setText(approveSignatureTitle);
-
-        File file = new File(path);
-        Image image = new Image(file.toURI().toString());
-        approveSignatureImageView.setImage(image);
-
-        approveSignatureAlertPane.setVisible(true);
+    // ดาวน์โหลดไฟล์ลงนาม PDF
+    private void downloadApproveSignature(boolean isDepartment) {
+        SignFileDownloader downloader = new SignFileDownloader(selectedAppeal);
+        downloader.download((Stage) mainPane.getScene().getWindow(), isDepartment);
     }
 
-    //
+    // ปิดหน้าต่างสาเหตุในการปฏิเสธคำร้อง
     @FXML
     private void onCloseAlertPane() {
         rejectedReasonAlertPane.setVisible(false);
-        approveSignatureAlertPane.setVisible(false);
     }
 
-    //
+    // ปิดหน้าต่างของหน้าปัจจุบัน
     @FXML
     private void onCloseButtonClick(ActionEvent event) {
         modifyDateListDatasource.writeData(modifyDateList);
