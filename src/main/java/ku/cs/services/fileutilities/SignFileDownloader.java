@@ -19,17 +19,15 @@ public class SignFileDownloader {
         this.selectedAppeal = selectedAppeal;
     }
 
-    public void download(Stage stage) {
+    public void download(Stage stage, boolean isDepartment) {
 //        File file = new File(selectedAppeal.getSignature()); //  ถ้าจะทำไฟล์เดียว
 
         File file = null;
         // choose file base on their tier
-        // faculty > department
-        if (selectedAppeal.getFacultySignature() != null){
-            file = new File(selectedAppeal.getFacultySignature());
-        } else if (selectedAppeal.getDepartmentSignature() != null) {
+        if (isDepartment)
             file = new File(selectedAppeal.getDepartmentSignature());
-        }
+        else
+            file = new File(selectedAppeal.getFacultySignature());
 
         if (file.exists()) {
             FileChooser fileChooser = new FileChooser();

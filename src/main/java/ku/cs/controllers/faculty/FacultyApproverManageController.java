@@ -136,23 +136,7 @@ public class FacultyApproverManageController {
         showPopup();
     }
 
-    @FXML
-    public void onSearchKeyReleased() {
-        String searchText = searchTextField.getText().toLowerCase();
-        ApproverList filteredApproverList = new ApproverList();
 
-        if (searchText.isEmpty()) {
-            showApproverTable(facultyTierApproverList);
-        } else {
-            for (Approver approver : facultyTierApproverList.getApprovers()) {
-                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
-                if (fullName.contains(searchText)) {
-                    filteredApproverList.addApprover(approver);
-                }
-            }
-            showApproverTable(filteredApproverList);
-        }
-    }
 
     private void updateTotalLabel() {
         totalLabel.setText("จำนวนผู้อนุมัติทั้งหมด " + approverTableView.getItems().size() + " คน");
