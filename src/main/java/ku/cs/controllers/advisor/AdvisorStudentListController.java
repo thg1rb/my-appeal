@@ -92,7 +92,7 @@ public class AdvisorStudentListController {
 
     // ตารางแสดงนิสิตในที่ปรึกษาทั้งหมด (ใช้ร่วมกับ Search Text Field)
     private void showTable(UserList studentList, String searchText) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("โปรไฟล์");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("โพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -171,6 +171,6 @@ public class AdvisorStudentListController {
 
     // อัพเดทข้อความแสดงจำนวนนิสิตในที่ปรึกษาทั้งหมด
     private void updateTotalLabel() {
-        totalLabel.setText("คำร้องของนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+        totalLabel.setText("จำนวนนิสิตในที่ปรึกษาทั้งหมด " + tableView.getItems().size() + " คน");
     }
 }
