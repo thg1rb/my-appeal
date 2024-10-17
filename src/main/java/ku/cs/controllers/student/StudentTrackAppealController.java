@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -32,6 +31,12 @@ import java.io.IOException;
 
 public class StudentTrackAppealController {
 
+    @FXML private AnchorPane mainPane;
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TableView<Appeal> tableView;
+    @FXML private Label totalLabel;
+    @FXML private TextField searchTextField;
+
     private Datasource<AppealList> appealDatasource;
     private AppealList appealList;
 
@@ -39,16 +44,6 @@ public class StudentTrackAppealController {
     private ModifyDateList modifyDateList;
 
     private User user;
-
-    @FXML private AnchorPane mainPane;
-
-    @FXML private Pane navbarAnchorPane;
-
-    @FXML private TableView<Appeal> tableView;
-
-    @FXML private Label totalLabel;
-
-    @FXML private TextField searchTextField;
 
     @FXML
     private void initialize() {
