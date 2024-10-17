@@ -28,7 +28,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1103.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="close-pop-up" text="ปิดหน้าต่าง">
+            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1070.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" style="-fx-background-color: transparent;" text="ปิดหน้าต่าง" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -39,6 +39,10 @@
                      </effect>
                   </ImageView>
                </graphic>
+               <styleClass>
+                  <String fx:value="close-pop-up" />
+                  <String fx:value="label-regular" />
+               </styleClass>
             </Button>
          </children></Pane>
       <HBox fx:id="downloadHBox" alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
