@@ -13,24 +13,6 @@ public class FacultyList {
         faculties = new ArrayList<>();
     }
 
-    public boolean isFacultyExist(String facultyName) {
-        for (Faculty faculty : faculties) {
-            if (faculty.getFacultyName().equals(facultyName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void addFaculty(Faculty obj) {
-        for (Faculty faculty : faculties) {
-            if (faculty.getFacultyName().equals(obj.getFacultyName())) {
-                return;
-            }
-        }
-        faculties.add(obj);
-    }
-
     public ArrayList<String> getAllFacultiesName() {
         ArrayList<String> facultiesName = new ArrayList<>();
         for (Faculty faculty : faculties) {
@@ -58,14 +40,6 @@ public class FacultyList {
                 faculties.add(new Faculty(uuid, name, id));
             }
         }
-    }
-
-    public boolean removeFaculty(Faculty faculty){
-        if (faculties.contains(faculty) && faculty != null){
-            faculties.remove(faculty);
-            return true;
-        }
-        return false;
     }
 
     public Faculty findFacultyByName(String facultyName){

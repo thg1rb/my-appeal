@@ -128,7 +128,7 @@ public class AdminStaffManagementController {
     }
 
     private void showTable(UserList userList, String role) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("โปรไฟล์");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("รูปโพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -167,7 +167,7 @@ public class AdminStaffManagementController {
         tableView.getColumns().add(facultyCol);
 
         if (role.equals("เจ้าหน้าที่ภาควิชา") || role.equals("อาจารย์ที่ปรึกษา")){
-            TableColumn<User, String> departmentCol = new TableColumn<>("สาขา");
+            TableColumn<User, String> departmentCol = new TableColumn<>("ภาควิชา");
             departmentCol.setCellValueFactory(cellData ->{
                 DepartmentStaff user = (DepartmentStaff) cellData.getValue();
                 return new SimpleStringProperty(departmentList.findDepartmentByUUID(user.getDepartmentUUID()).getDepartmentName());

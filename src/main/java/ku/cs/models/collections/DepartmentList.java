@@ -12,14 +12,6 @@ public class DepartmentList {
         this.departments = new ArrayList<>();
     }
 
-    public void addDepartment(String name, UUID faculty, String id, FacultyList facultyList){
-        name = name.trim();
-        id = id.trim();
-        if (!name.isEmpty() && faculty != null && !id.isEmpty()){
-            departments.add(new Department(name, faculty, id));
-        }
-    }
-
     public void addDepartment(String name, UUID faculty, String id){
         name = name.trim();
         id = id.trim();
@@ -35,16 +27,6 @@ public class DepartmentList {
             departments.add(new Department(uuid, name, faculty, id));
         }
     }
-
-    public void addDepartment(Department obj){
-        for (Department m : departments){
-            if (m.getDepartmentName().equals(obj.getDepartmentName())){
-                return;
-            }
-        }
-        departments.add(obj);
-    }
-
 
     public ArrayList<String> getDepartmentsNameByFaculty(UUID faculty){
         ArrayList<String> departmentsInFaculty = new ArrayList<>();
@@ -69,15 +51,6 @@ public class DepartmentList {
     public Department findDepartmentByName(String name){
         for (Department department : departments){
             if (department.getDepartmentName().equals(name)){
-                return department;
-            }
-        }
-        return null;
-    }
-
-    public Department findDepartmentById(String id){
-        for (Department department : departments){
-            if (department.getDepartmentId().equals(id)){
                 return department;
             }
         }

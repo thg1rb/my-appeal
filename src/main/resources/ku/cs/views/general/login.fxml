@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -67,5 +68,23 @@
             </ImageView>
          </children>
       </Pane>
+      <Button contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="1226.0" layoutY="759.0" mnemonicParsing="false" onAction="#onManualButtonClicked" style="-fx-background-color: transparent;" styleClass="label-regular" text="คู่มือการใช้งาน" textFill="WHITE" underline="true">
+         <graphic>
+            <ImageView fitHeight="48.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../icons/manual-icon.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="1.0" />
+               </effect>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

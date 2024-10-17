@@ -54,9 +54,6 @@ public abstract class User {
     }
 
     //Authentication
-    public boolean isUsername(String username) {
-        return this.username.equals(username);
-    }
     public boolean validatePassword(String password) {
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.password);
         return result.verified;
