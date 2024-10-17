@@ -96,6 +96,7 @@ public class AdminUserManagementController {
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setSortable(false);
         }
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void basicInfoColCreator(boolean roleSpecific) {

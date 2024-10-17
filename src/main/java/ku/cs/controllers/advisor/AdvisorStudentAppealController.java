@@ -138,6 +138,7 @@ public class AdvisorStudentAppealController {
         typeCol.setSortable(false);
         ownerIdCol.setSortable(false);
         ownerFullNameCol.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
 
         updateTotalLabel();
     }

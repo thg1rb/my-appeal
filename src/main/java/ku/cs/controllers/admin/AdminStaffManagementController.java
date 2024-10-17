@@ -215,6 +215,7 @@ public class AdminStaffManagementController {
             col.setSortable(false);
         }
         tableView.sort();
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalText(){
