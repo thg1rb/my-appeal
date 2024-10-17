@@ -210,6 +210,7 @@ public class FacultyAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
         statusColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalLabel(String label) {

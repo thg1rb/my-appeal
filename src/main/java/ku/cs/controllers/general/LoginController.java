@@ -12,9 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
@@ -28,6 +30,9 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 
 public class LoginController {
     @FXML AnchorPane mainPane;
@@ -43,9 +48,13 @@ public class LoginController {
     private User user;
     private AnchorPane currentScene;
 
+    private HashMap<String, Datasource<UserList> > datasourceMap;
+    private HashMap<String, UserList> userInSystemMap;
+
     @FXML
     public void initialize() {
-        userList = UserListDatasource.readAllUsers().getActiveUser();
+        initMap();
+        userList = userInSystemMap.get("ทั้งหมด");
 
         ProgramSetting.getInstance().applyStyles(mainPane);
 
@@ -129,6 +138,27 @@ public class LoginController {
         }
     }
 
+    private void initMap(){
+        userInSystemMap = new HashMap<>();
+        datasourceMap = new HashMap<>();
+
+        datasourceMap.put("ผู้ดูแลระบบ", new UserListDatasource("data" + File.separator + "users", "admin.csv"));
+        datasourceMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv"));
+        datasourceMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "departmentStaff.csv"));
+        datasourceMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv"));
+        datasourceMap.put("นักศึกษา" , new UserListDatasource("data" + File.separator + "users", "student.csv"));
+
+        userInSystemMap.put("ทั้งหมด", new UserList());
+        for (String key : datasourceMap.keySet()) {
+            if (key.equals("นักศึกษา")){
+                userInSystemMap.put(key, datasourceMap.get(key).readData().getRegisteredStudents());
+            }else {
+                userInSystemMap.put(key, datasourceMap.get(key).readData());
+            }
+            userInSystemMap.get("ทั้งหมด").addUserLists(userInSystemMap.get(key));
+        }
+    }
+
     private void updateLoginTime(User user){
         String roleUpdated = user.getRoleInEnglish();
         Datasource<UserList> userUpdatedDatasource = new UserListDatasource("data" + File.separator + "users", roleUpdated + ".csv");
@@ -173,6 +203,27 @@ public class LoginController {
             Animation.getInstance().switchSceneWithFade(currentScene, "register-personal-data", null);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //ปุ่มดาวน์โหลดคู่มือ
+    @FXML
+    public void onManualButtonClicked(){
+        File file = new File("data" + File.separator + "user-manual.pdf");
+        if (file.exists()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName(file.getName());
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+            File destinationFile = fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+
+            if (destinationFile != null) {
+                try {
+                    Files.copy(file.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 

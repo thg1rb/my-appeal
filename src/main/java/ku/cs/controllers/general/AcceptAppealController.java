@@ -115,11 +115,12 @@ public class AcceptAppealController {
         approverTableView.getColumns().add(fullNameColumn);
 
         int size = approverTableView.getColumns().size();
+        double totalWidth = 448 - approverTableView.getPadding().getLeft() - approverTableView.getPadding().getRight();
+        approverTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         for (TableColumn<?, ?> col : approverTableView.getColumns()) {
-            col.setPrefWidth((double) 448 / size);
+            col.setPrefWidth(totalWidth / size);
         }
-        roleColumn.setPrefWidth(roleColumn.getPrefWidth() - 50);
-        fullNameColumn.setPrefWidth(fullNameColumn.getPrefWidth() - 50);
 
         approverTableView.getItems().clear();
         if (approverList != null) {
@@ -138,6 +139,7 @@ public class AcceptAppealController {
 
         roleColumn.setSortable(false);
         fullNameColumn.setSortable(false);
+        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     public void onConfirmButtonClick(ActionEvent event){

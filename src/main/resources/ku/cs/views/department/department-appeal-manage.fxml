@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -28,8 +29,16 @@
          <children>
             <TabPane fx:id="tabPane" styleClass="label-medium" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="70.0" tabMaxWidth="200.0" tabMinHeight="43.0" tabMinWidth="200.0">
               <tabs>
-                <Tab style="-fx-padding: 10; -fx-background-radius: 20 0 0; -fx-font-size: 20;" styleClass="label-regular" text="ทั้งหมด" />
-                <Tab style="-fx-padding: 10; -fx-background-radius: 0 20 0 0; -fx-font-size: 20;" styleClass="label-regular" text="รอดำเนินการ" />
+                <Tab text="ทั้งหมด">
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="first-tab" />
+                     </styleClass></Tab>
+                <Tab text="รอดำเนินการ">
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="last-tab" />
+                     </styleClass></Tab>
               </tabs>
             </TabPane>
             <TableView fx:id="tableView" prefHeight="455.0" prefWidth="1100.0" styleClass="table-view-with-tab-pane">

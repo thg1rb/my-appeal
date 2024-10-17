@@ -110,13 +110,13 @@ public class AdminFacultyManagementController {
     }
 
     private void showFacultyTable(FacultyList facultyList) {
-        TableColumn<Object, String> facultyNameColumn = new TableColumn<>("Faculty Name");
+        TableColumn<Object, String> facultyNameColumn = new TableColumn<>("ชื่อคณะ");
         facultyNameColumn.setCellValueFactory(cellData ->{
             Faculty faculty = (Faculty) cellData.getValue();
             return new SimpleStringProperty(faculty.getFacultyName());
         });
 
-        TableColumn<Object, String> facultyIdColumn = new TableColumn<>("Faculty ID");
+        TableColumn<Object, String> facultyIdColumn = new TableColumn<>("รหัสคณะ");
         facultyIdColumn.setCellValueFactory(cellData ->{
             Faculty faculty = (Faculty) cellData.getValue();
             return new SimpleStringProperty(faculty.getFacultyId());
@@ -143,22 +143,23 @@ public class AdminFacultyManagementController {
 
         facultyIdColumn.setSortable(false);
         facultyNameColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void showDepartmentTable(DepartmentList departmentList) {
-        TableColumn<Object, String> departmentNameColumn = new TableColumn<>("Department Name");
+        TableColumn<Object, String> departmentNameColumn = new TableColumn<>("ชื่อภาควิชา");
         departmentNameColumn.setCellValueFactory(cellData ->{
             Department department = (Department) cellData.getValue();
             return new SimpleStringProperty(department.getDepartmentName());
         });
 
-        TableColumn<Object, String> ofFacultyColumn = new TableColumn<>("Belong of Faculty");
+        TableColumn<Object, String> ofFacultyColumn = new TableColumn<>("ภายใต้สังกัดคณะ");
         ofFacultyColumn.setCellValueFactory(cellData ->{
             Department department = (Department) cellData.getValue();
             return new SimpleStringProperty(facultyList.findFacultyByUUID(department.getFacultyUUID()).getFacultyName());
         });
 
-        TableColumn<Object, String> departmentIdColumn = new TableColumn<>("department ID");
+        TableColumn<Object, String> departmentIdColumn = new TableColumn<>("รหัสภาควิชา");
         departmentIdColumn.setCellValueFactory(cellData -> {
             Department department = (Department) cellData.getValue();
             return new SimpleStringProperty(department.getDepartmentId());
@@ -187,6 +188,7 @@ public class AdminFacultyManagementController {
         departmentIdColumn.setSortable(false);
         departmentNameColumn.setSortable(false);
         ofFacultyColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalText(){

@@ -96,10 +96,11 @@ public class AdminUserManagementController {
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setSortable(false);
         }
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void basicInfoColCreator(boolean roleSpecific) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("รูปโพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -161,11 +162,12 @@ public class AdminUserManagementController {
         tableView.getItems().clear();
     }
 
-    private void saveData(User user){
+    private void saveData(User user, boolean ban){
         if (user.getRole().equals("นักศึกษา")){
             UserList allStudents = datasourceMap.get(user.getRole()).readData();
             User savedStudent = allStudents.findUserByUUID(user.getUuid());
-            savedStudent.banUser();
+            if (ban)savedStudent.banUser();
+            else savedStudent.unbanUser();
             datasourceMap.get(user.getRole()).writeData(allStudents);
         }else {
             datasourceMap.get(user.getRole()).writeData(userInSystemMap.get(user.getRole()));
@@ -196,7 +198,7 @@ public class AdminUserManagementController {
     public void onBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.banUser();
-        saveData(user);
+        saveData(user, true);
         tableView.refresh();
     }
 
@@ -204,7 +206,7 @@ public class AdminUserManagementController {
     public void onUnBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.unbanUser();
-        saveData(user);
+        saveData(user, false);
         tableView.refresh();
     }
 }

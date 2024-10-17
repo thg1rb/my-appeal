@@ -57,11 +57,20 @@
 .tab-header-background {
     -fx-background-color: transparent;
 }
-
+.first-tab {
+    -fx-background-radius: 20 0 0 0;
+    -fx-border-radius: 20 0 0 0;
+}
+.last-tab {
+    -fx-background-radius: 0 20 0 0;
+    -fx-border-radius: 0 20 0 0;
+}
 .tab-pane .tab{
     -fx-background-insets: 0 0 0 0,0,0;
     -fx-background-color: #D9D9D9;
     -fx-pref-height: 60;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 .tab-pane .tab-label{
     -fx-text-fill: black;
@@ -116,6 +125,14 @@
 }
 
 /*** mini table view ***/
+.mini-table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
+    -fx-border-color: #D9D9D9;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
 .mini-table-view .table-row-cell{
     -fx-background-color: #f2f2f2;
     -fx-border-width: 0 1px 1px 0;
@@ -136,6 +153,7 @@
     -fx-background-radius: 20px 20px 0 0;
     -fx-border-radius: 20px 20px 0 0;
 }
+
 
 /** Table View (Column) **/
 .table-view .column-header-background {
@@ -514,16 +532,16 @@
 
 /* Tree Table View */
 .tree-view{
-    -fx-background-radius: 20px 20px 20px 20px;
-    -fx-border-radius: 20px 20px 20px 20px;
+    -fx-background-radius: 20px 20px 0 0;
+    -fx-border-radius: 20px 20px 0 0;
     -fx-background-color: #FFFFFF;
     -fx-border-color: #D9D9D9;
 }
 .tree-view .column-header{
     -fx-background-color: white;
     -fx-border-color: transparent;
-    -fx-background-radius: 0 20 0 0;
-    -fx-border-radius: 0 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
     -fx-pref-height: 50;
 }
 .tree-view .column-header-background{
@@ -560,3 +578,15 @@
     -fx-text-fill: black;
     -fx-pref-height: 30;
 }
+
+.pdf-upload-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: darkblue;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15;
+    -fx-border-style: dashed;
+}
+ .radio-btn {
+     -fx-text-fill: black;
+ }

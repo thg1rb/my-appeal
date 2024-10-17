@@ -177,9 +177,12 @@ public class DepartmentAppealManageController {
                     // Simplify status text based on specific conditions
                     switch (status) {
                         case "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา":
+                            setText("คำร้องใหม่");
+                            setStyle("-fx-background-color: lime; -fx-text-fill: black;");
+                            break;
                         case "อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา":
                             setText("รอดำเนินการ");
-                            setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
+                            setStyle("-fx-background-color: orange; -fx-text-fill: black;");
                             break;
                         case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน":
                         case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี":
@@ -208,6 +211,7 @@ public class DepartmentAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
         statusColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalLabel(String label) {

@@ -51,6 +51,15 @@
     -fx-border-color: transparent;
 }
 
+.first-tab {
+    -fx-background-radius: 20 0 0 0;
+    -fx-border-radius: 20 0 0 0;
+}
+.last-tab {
+    -fx-background-radius: 0 20 0 0;
+    -fx-border-radius: 0 20 0 0;
+}
+
 .tab-header-background {
     -fx-background-color: transparent;
 }
@@ -59,6 +68,8 @@
     -fx-background-insets: 0 0 0 0,0,0;
     -fx-background-color: #D9D9D9;
     -fx-pref-height: 60;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 .tab-pane .tab-label{
     -fx-text-fill: black;
@@ -86,6 +97,8 @@
     -fx-background-radius: 0 20 0 0;
     -fx-border-radius: 0 20 0 0;
     -fx-table-cell-border-color: #2E2E2E;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .table-view-with-tab-pane .column-header{
@@ -108,30 +121,22 @@
 .table-view-without-tab-pane .column-header {
     -fx-background-color: #2E2E2E;
     -fx-border-color: transparent transparent #1B1B1B transparent;
-    -fx-background-radius: 20 20 0 0;
-    -fx-border-radius: 20 20 0 0;
 }
 
 /*** mini table view ***/
-.mini-table-view .table-row-cell{
+.mini-table-view {
     -fx-background-color: #2E2E2E;
-    -fx-border-width: 0 1px 1px 0;
-    -fx-border-color: grey;
-    -fx-pref-height: 40;
-}
-.mini-table-view .table-row-cell:hover{
-    -fx-background-color: lightgrey;
-    -fx-text-fill: black;
-}
-.mini-table-view .table-row-cell:selected{
-    -fx-text-fill: black;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: #1B1B1B;
+    -fx-border-radius: 20 20 0 0;
+    -fx-table-cell-border-color: #2E2E2E;
 }
 
-.mini-table-view .column-header{
-    -fx-background-color: white;
-    -fx-border-color: transparent transparent lightgrey transparent;
-    -fx-background-radius: 20px 20px 0 0;
-    -fx-border-radius: 20px 20px 0 0;
+.mini-table-view .column-header {
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: transparent transparent #1B1B1B transparent;
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-radius: 20 20 0 0;
 }
 
 /** Table View (Column) **/
@@ -564,4 +569,18 @@
     -fx-border-color: transparent;
     -fx-text-fill: white;
     -fx-pref-height: 30;
+}
+
+.pdf-upload-btn {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: lightgray;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15;
+    -fx-border-style: dashed;
+}
+
+.radio-btn {
+    -fx-text-fill: white;
 }

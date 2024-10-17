@@ -99,7 +99,6 @@ public class DepartmentListDatasource implements Datasource<DepartmentList> {
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
 
         try {
-            // สร้าง csv ของ Student และเขียนลงในไฟล์ทีละบรรทัด
             for (Department department : data.getDepartments()) {
                 String line = department.toString();
                 buffer.append(line);

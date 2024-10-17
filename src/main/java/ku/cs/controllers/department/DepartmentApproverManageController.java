@@ -121,6 +121,7 @@ public class DepartmentApproverManageController {
 
         roleColumn.setSortable(false);
         fullNameColumn.setSortable(false);
+        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
         updateTotalLabel();
     }
 
