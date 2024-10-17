@@ -99,7 +99,7 @@ public class AdminUserManagementController {
     }
 
     private void basicInfoColCreator(boolean roleSpecific) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("รูปโพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
