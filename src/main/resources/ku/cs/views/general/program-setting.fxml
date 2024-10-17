@@ -121,7 +121,7 @@
                      </VBox.margin>
                   </GridPane>
                   <VBox alignment="CENTER" prefWidth="1100.0" />
-                  <Button mnemonicParsing="false" onAction="#onApplyButtonClick" stylesheets="@../../styles/button.css" text="บันทึก">
+                  <Button mnemonicParsing="false" onAction="#onApplyButtonClick" text="บันทึก">
                      <styleClass>
                         <String fx:value="approve-button" />
                         <String fx:value="label-medium" />

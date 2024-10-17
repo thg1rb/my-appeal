@@ -38,7 +38,7 @@
                         <Insets right="700.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" stylesheets="@../../styles/add-button.css" text="เพิ่ม">
+                  <Button mnemonicParsing="false" onAction="#addNisitOnButtonClick" prefHeight="45.0" prefWidth="102.0" text="เพิ่ม">
                      <font>
                         <Font size="20.0" />
                      </font>

@@ -17,7 +17,7 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" styleClass="label-regular" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminUserManagementController">
     <children>
-        <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1087.0" layoutY="108.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาชื่อ" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
+        <TextField fx:id="searchTextField" alignment="CENTER_RIGHT" layoutX="1087.0" layoutY="108.0" prefHeight="45.0" prefWidth="285.0" promptText="ค้นหาชื่อ" styleClass="label-regular">
             <font>
                 <Font size="18.0" />
             </font>
