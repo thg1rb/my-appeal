@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -29,6 +30,8 @@ import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 
 public class LoginController {
@@ -200,6 +203,27 @@ public class LoginController {
             Animation.getInstance().switchSceneWithFade(currentScene, "register-personal-data", null);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //ปุ่มดาวน์โหลดคู่มือ
+    @FXML
+    public void onManualButtonClicked(){
+        File file = new File("data" + File.separator + "user-manual.pdf");
+        if (file.exists()) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName(file.getName());
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+            File destinationFile = fileChooser.showSaveDialog(mainPane.getScene().getWindow());
+
+            if (destinationFile != null) {
+                try {
+                    Files.copy(file.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 

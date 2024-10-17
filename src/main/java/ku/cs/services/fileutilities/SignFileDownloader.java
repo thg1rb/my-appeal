@@ -3,9 +3,6 @@ package ku.cs.services.fileutilities;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ku.cs.models.appeals.Appeal;
-import ku.cs.models.persons.DepartmentStaff;
-import ku.cs.models.persons.FacultyStaff;
-import ku.cs.models.persons.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +17,6 @@ public class SignFileDownloader {
     }
 
     public void download(Stage stage, boolean isDepartment) {
-//        File file = new File(selectedAppeal.getSignature()); //  ถ้าจะทำไฟล์เดียว
-
         File file = null;
         // choose file base on their tier
         if (isDepartment)

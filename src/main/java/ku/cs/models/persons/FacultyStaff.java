@@ -35,10 +35,6 @@ public class FacultyStaff extends User {
         }
         this.initialPasswordHashed = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
-    public boolean validateInitialPassword(String initialPassword) {
-        BCrypt.Result result = BCrypt.verifyer().verify(initialPassword.toCharArray(), this.initialPasswordHashed);
-        return result.verified;
-    }
 
     //Getter
     public String getInitialPasswordText() {

@@ -62,12 +62,6 @@ public class Student extends User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setFacultyUUID(UUID facultyUUID) {
-        this.facultyUUID = facultyUUID;
-    }
-    public void setDepartmentUUID(UUID departmentUUID) {
-        this.departmentUUID = departmentUUID;
-    }
     public void setAdvisor(UUID advisor) {
         this.advisorUUID = advisor;
     }

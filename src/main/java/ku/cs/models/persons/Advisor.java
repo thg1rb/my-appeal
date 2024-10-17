@@ -20,9 +20,6 @@ public class Advisor extends DepartmentStaff {
     public String getAdvisorId() {
         return advisorId;
     }
-    public String getAdvisorDetail(){
-        return advisorId + " " + getFullName();
-    }
 
     //Setter
     public void setAdvisorId(String advisorId) {

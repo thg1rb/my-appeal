@@ -4,9 +4,6 @@ public class ValidationService {
     public boolean validatePassword(String password) {
         return password.length() >= 8 && password.matches("^[^\\u0E00-\\u0E7F]+$");
     }
-    public boolean validateEmail(String email) {
-        return email.matches("^[a-zA-Z0-9.]+@[a-zA-Z.]+$");
-    }
     public boolean validateUsername(String username) {
         return username.length() >= 6 && username.matches("^[^\\u0E00-\\u0E7F]+$");
     }

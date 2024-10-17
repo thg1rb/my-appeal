@@ -76,67 +76,6 @@ public class UserList {
     }
 
     //Getter
-    public UserList getSpecificRoleUser(String role){
-        return switch (role) {
-            case "admin" -> getAdmins();
-            case "facultyStaff" -> getFacultyStaffs();
-            case "departmentStaff" -> getDepartmentStaffs();
-            case "advisor" -> getAdvisors();
-            case "student" -> getStudents();
-            default -> null;
-        };
-    }
-
-    public UserList getAdmins(){
-        UserList admins = new UserList();
-        for (User user : users) {
-            if (user instanceof AdminUser) {
-                admins.addUser(user);
-            }
-        }
-        return admins;
-    }
-
-    public UserList getFacultyStaffs() {
-        UserList facultyStaff = new UserList();
-        for (User user : this.users) {
-            if (user instanceof FacultyStaff && !(user instanceof DepartmentStaff)) {
-                facultyStaff.addUser(user);
-            }
-        }
-        return facultyStaff;
-    }
-
-    public UserList getDepartmentStaffs() {
-        UserList departmentStaff = new UserList();
-        for (User user : this.users) {
-            if (user instanceof DepartmentStaff && !(user instanceof Advisor)) {
-                departmentStaff.addUser(user);
-            }
-        }
-        return departmentStaff;
-    }
-
-    public UserList getAdvisors() {
-        UserList advisor = new UserList();
-        for (User user : this.users) {
-            if (user instanceof Advisor) {
-                advisor.addUser(user);
-            }
-        }
-        return advisor;
-    }
-
-    public UserList getStudents() {
-        UserList students = new UserList();
-        for (User user : this.users) {
-            if (user instanceof Student) {
-                students.addUser(user);
-            }
-        }
-        return students;
-    }
-
     public UserList getRegisteredStudents(){
         UserList registeredStudents = new UserList();
         for (User user : this.users) {
@@ -145,18 +84,6 @@ public class UserList {
             }
         }
         return registeredStudents;
-    }
-
-    public UserList getActiveUser(){
-        UserList activeUsers = new UserList();
-        for (User user : this.users) {
-            if (user instanceof Student && ((Student) user).isRegistered()) {
-                activeUsers.addUser(user);
-            } else if (!(user instanceof Student)){
-                activeUsers.addUser(user);
-            }
-        }
-        return activeUsers;
     }
 
     public UserList getUsersByFacultyUUID(UUID facultyUUID){
