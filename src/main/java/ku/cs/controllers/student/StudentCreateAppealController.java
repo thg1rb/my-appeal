@@ -347,5 +347,4 @@ public class StudentCreateAppealController {
             throw new RuntimeException(e);
         }
     }
-
 }

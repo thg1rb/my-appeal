@@ -63,7 +63,6 @@ public class AdvisorStudentAppealController {
             throw new RuntimeException(e);
         }
 
-
         showTable(appealList, studentList);
 
         // แสดง pop-up เมื่อกดที่เซลล์ใดเซลล์หนึ่งในตาราง
