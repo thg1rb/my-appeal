@@ -9,7 +9,7 @@ public class BreakAppeal extends Appeal {
     private String startDate;
     private String endDate;
 
-    // Constructor
+    // A Constructor
     public BreakAppeal(String modifyDate, UUID uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, UUID ownerDepartmentUuid, UUID ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects, String purpose, String startDate, String endDate) {
         super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartmentUuid, ownerFacultyUuid, departmentSignature, facultySignature, reason, subjects);
         this.purpose = purpose;
