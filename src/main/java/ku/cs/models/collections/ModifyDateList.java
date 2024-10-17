@@ -12,11 +12,6 @@ public class ModifyDateList {
         this.modifyDates = new ArrayList<>();
     }
 
-    // Getter
-    public ArrayList<ModifyDate> getModifyDates() {
-        return modifyDates;
-    }
-
     // add a new Modify Date (also add a new Appeal)
     public boolean addModifyDate(ModifyDate modifyDate) {
         if (modifyDate != null) {
@@ -34,5 +29,10 @@ public class ModifyDateList {
             }
         }
         return null;
+    }
+
+    // Getter
+    public ArrayList<ModifyDate> getModifyDates() {
+        return modifyDates;
     }
 }

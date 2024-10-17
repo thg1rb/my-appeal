@@ -9,7 +9,7 @@ import java.util.UUID;
 public class AppealList {
     private ArrayList<Appeal> appeals;
 
-    // Constructor
+    // A Constructor
     public AppealList(){
         appeals =  new ArrayList<>();
     }
@@ -44,6 +44,11 @@ public class AppealList {
         return facultyCount;
     }
 
+    // Getters
+    public ArrayList<Appeal> getAppeals(){
+        return appeals;
+    }
+
     public HashMap<String, Integer> getStatusAppealsCount(){
         HashMap<String, Integer> appealsCount = new HashMap<>();
         for (Appeal appeal : appeals) {
@@ -55,11 +60,6 @@ public class AppealList {
             }
         }
         return appealsCount;
-    }
-
-    // Getters
-    public ArrayList<Appeal> getAppeals(){
-        return appeals;
     }
 
     public AppealList getAppealByDepartment(UUID departmentUuid){
