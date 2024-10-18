@@ -127,6 +127,7 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
 3. ดับเบิลคลิ้ก "cs211-project.jar"  
    ![click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/clickprogram.png)  
    คุณเปิดโปรแกรมสำเร็จ  
+   ![success window](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/success-windows.png)  
    **or**  
    ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
       ```
