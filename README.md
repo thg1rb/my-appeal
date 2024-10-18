@@ -95,12 +95,63 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
 อธิบายวิธีการติดตั้ง และวิธีการรันโปรแกรม รวมถึงที่อยู่ของไฟล์ pdf
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
-| Role                | Username  | Password  |
-|---------------------|-----------|-----------|
-| ผู้ดูแลระบบ         | admin     | admin123     |
-| เจ้าหน้าที่คณะ      | Karn      | Karnesque   |
-| เจ้าหน้าที่ภาควิชา  | Ton       | tonton1678     |
-| อาจารย์             | BrightPro | professor |
-| นักศึกษา            | BrightStu       | student   |
-| นักศึกษา (ถูกระงับ) | nisitban                | ban          |
+| Role                                      | Username  | Password   |
+|-------------------------------------------|-----------|------------|
+| ผู้ดูแลระบบ                               | admin     | 1234567890 |
+| เจ้าหน้าที่คณะ                            | karn      | 12345678   |
+| เจ้าหน้าที่ภาควิชา                        | ton       | 12345678   |
+| อาจารย์ที่ปรึกษา                          | BrightPro | 12345678   |
+| อาจารย์ทที่ปรึกษาี่เข้าใช้งานระบบครั้งแรก | adv-ec01  | ec-adv01    |
+| นักศึกษา                                  | BrightStu | student    |
 ## การวางโครงสร้างไฟล์ของโครงงาน
+```markdown
+├── data (ข้อมูลภายในระบบ)
+│   ├── appeal-list.csv (ข้อมูลของคำร้องภายในระบบทั้งหมด)
+│   ├── approver.csv 	(ข้อมูลของผู้อนุมัติภายในระบบทั้งหมด)
+│   ├── approves-signs	(Directory ของ ไฟล์พร้อมลงนาม โดยมีสกุลของไฟล์คือ PDF ทั้งหมด)
+│   ├── departments.csv	(ข้อมูลของภาควิชาภายในระบบทั้งหมด)
+│   ├── faculties.csv	(ข้อมูลของคณะภายในระบบทั้งหมด)
+│   ├── modify-date.csv	(ข้อมูลบันทึกเวลาของคำร้องแต่ละคำร้องภายในระบบทั้งหมด)
+│   ├── profile-images	(Directory ของ รูปโพรไฟล์บัญชีผู้ใช้ภายในระบบทั้งหมด)
+│   ├── user-manual.pdf	(คู่มือการใช้งานระบบ)
+│   └── users		(Directory เก็บข้อมูลผู้ใช้โดยแยกตามตำแหน่งภายในระบบทั้งหมด)
+├── src     (Source Code ของโปรแกรม)
+│   └── main
+│       ├── java
+│       │   └── ku
+│       │       ├── cs
+│       │       │   ├── Main.java
+│       │       │   ├── controllers	(Directory ของ Controllers ภายในระบบ แยกตามฟีเจอร์ของตำแหน่งผู้ใช้งาน)
+│       │       │   │   ├── admin
+│       │       │   │   ├── advisor
+│       │       │   │   ├── department
+│       │       │   │   ├── faculty
+│       │       │   │   ├── general
+│       │       │   │   └── student
+│       │       │   ├── cs211671project	(Directory เก็บตัวรัน Application)
+│       │       │   ├── models		(Directory ของ Models ภายในระบบ)
+│       │       │   │   ├── appeals	(Directory ของ Models คำร้อง ภายในระบบ)
+│       │       │   │   ├── collections	(Directory ของ	Collection ภายในระบบ)
+│       │       │   │   ├── dates	(Directory ของ Models การบันทึกเวลาของคำร้อง ภายในระบบ)
+│       │       │   │   └── persons	(Directory ของ Models ที่เป็นบุคคล ภายในระบบ)
+│       │       │   └── services	        (Directory ของ Services ที่ใช้ภายในระบบ)
+│       │       │       ├── datasources
+│       │       │       ├── exceptions
+│       │       │       └── fileutilities	(Directory ของคลาสที่ทำงานเกี่ยวข้องกับไฟล์ เช่น การอัปโหลด,ดาวน์โหลด)
+│       │       └── module-info.java
+│       └── resources
+│           ├── fonts (เก็บ font ที่ใช้ภายในระบบ)
+│           ├── icons (เก็บ icons ที่ใช้ภายในระบบ)
+│           ├── images (รูปภาพตั้งต้นภายในระบบ)
+│           └── ku 
+│               └── cs
+│                   ├── styles (CSS ที่ใช้ภายในระบบ)
+│                   └── views  (FXML ภายในระบบทั้งหมด แยกตามตำแหน่งผู้ใช้งาน)
+│                       ├── admin
+│                       ├── advisor
+│                       ├── department
+│                       ├── faculty
+│                       ├── general
+│                       └── student
+└── uml    (UML Diagram ของระบบ)
+```
