@@ -85,7 +85,7 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
     * ทำหน้า Dashboard ของผู้ใช้งานตำแหน่ง ผู้ดูแลระบบ
     * ทำข้อ EXTRA ของ Dashboard ในเรื่องการอัปเดตข้อมูลโดยไม่ต้องทำการกระทำใดๆหากมีการเพิ่มหรือลดข้อมูลจากการใช้ระบบ
     * ทำ Service สำหรับการอัปโหลดและดาวน์โหลดไฟล์ PDF 
-    * ทำคู่มือการใช้งานระบบ ในส่วนของ ผู้ดูแลระบบและการลงทะเบียนสำหรับนักศึกษา
+    * ทำคู่มือการใช้งานระบบ ในส่วนของ ผู้ดูแลระบบ การลงทะเบียนสำหรับนักศึกษา และโครงสร้างไฟล์ข้อมูลของ คณะและภาควิชา
 3. 6610402132 บวรรัตน์ ตั้งนรารัชชกิจ (ไบร์ท)
     * ทำ Service Class ที่ชื่อว่า ProgramSetting (ใช้ Singleton pattern) สำหรับการปรับแต่งภายโปรแกรม เช่น เปลี่ยนธีม, ปรับขนาดตัวอักษร และเปลี่ยนฟอนต์
     * ทำคู่มือการใช้งานระบบ ในส่วนของ การเข้าสู่ระบบ, นิสิต, อาจารย์, โครงสร้างของระบบ, UML Class Diagram และ โครงสร้างฐานข้อมูลของคำร้อง (appeal-list.csv และ modify-date.csv)
@@ -94,7 +94,27 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
     * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
 
 ## วิธีการติดตั้งและรันโปรแกรม
-อธิบายวิธีการติดตั้ง และวิธีการรันโปรแกรม รวมถึงที่อยู่ของไฟล์ pdf
+อธิบายวิธีการติดตั้ง และวิธีการรันโปรแกรม รวมถึงที่อยู่ของไฟล์ pdf  
+### Download  
+- - -
+โปรแกรม สำหรับ MacOS Chip Apple Silicon สามารถดาวน์โหลดได้ที่
+* release CS211-project-4.0.0 ชื่อไฟล์ ***CS211-project-for-macOS-apple-silicon.zip***  
+
+โปรแกรม สำหรับ Windows สามารถดาวน์โหลดได้ที่  
+* release CS211-project-4.0.0 ชื่อไฟล์ ***CS211-project-for-windows.zip***  
+### Installation  
+- - -
+### MacOS Chip Apple Silicon  
+1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"
+
+2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
+3. ดับเบิลคลิ้ก "cs211-project.jar"  
+   
+**or**  
+ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
+   ```
+   $ java -jar cs211-project.jar
+   ```
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
 | Role                                       | Username  | Password   |
