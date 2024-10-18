@@ -89,7 +89,7 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
 3. 6610402132 บวรรัตน์ ตั้งนรารัชชกิจ (ไบร์ท)
     * ทำ Service Class ที่ชื่อว่า ProgramSetting (ใช้ Singleton pattern) สำหรับการปรับแต่งภายโปรแกรม เช่น เปลี่ยนธีม, ปรับขนาดตัวอักษร และเปลี่ยนฟอนต์
     * ทำคู่มือการใช้งานระบบ ในส่วนของ การเข้าสู่ระบบ, นิสิต, อาจารย์, โครงสร้างของระบบ, UML Class Diagram และ โครงสร้างฐานข้อมูลของคำร้อง (appeal-list.csv และ modify-date.csv)
-4. 6610405824 คมชาญ วงศ์ศิิริสมพงษ์ (กานต์)
+4. 6610405824 คมชาญ วงศ์ศิริสมพงษ์ (กานต์)
     * เพิ่มส่วนของการเปลี่ยน font ใน ProgramSetting
     * ทำข้อมูลเริ่มต้นในการทดสอบโปรแกรม เสมือนว่าโปรแกรมถูกใช้งานมาประมาณ 3 เดือน
     * ทำคู่มือการใช้งานระบบ ในส่วนของ การเข้าใช้งานระบบของเจ้าที่คณะ, การจัดการบัญชี และการตั้งค่าในระบบ
@@ -100,23 +100,41 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
 ### Download  
 - - -
 โปรแกรม สำหรับ MacOS Chip Apple Silicon สามารถดาวน์โหลดได้ที่
-* release CS211-project-4.0.0 ชื่อไฟล์ ***CS211-project-for-macOS-apple-silicon.zip***  
+* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-macOS-apple-silicon.zip***  
 
 โปรแกรม สำหรับ Windows สามารถดาวน์โหลดได้ที่  
-* release CS211-project-4.0.0 ชื่อไฟล์ ***CS211-project-for-windows.zip***  
+* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-windows.zip***  
 ### Installation  
 - - -
 ### MacOS Chip Apple Silicon  
-1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"
-
-2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
+1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"  
+   ![Double Click zip file](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/clickfile-mac.png)  
+2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"  
+   ![extracted](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/indirec-mac.png)  
 3. ดับเบิลคลิ้ก "cs211-project.jar"  
-   
-**or**  
-ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
-   ```
-   $ java -jar cs211-project.jar
-   ```
+   คุณเปิดโปรแกรมสำเร็จ  
+   ![double click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/success-mac.png)  
+   **or**  
+   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon" เพื่อเปิดโปรแกรมได้
+      ```
+      $ java -jar cs211-project.jar
+      ```
+### Windows
+1. คลิกขวาและแตกไฟล์ "CS211-project-for-windows.zip"  
+   ![extracting windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracting-windows.png)  
+2. เข้าไปที่โฟลเดอร์ "CS211-project-for-windows"  
+   ![in folder windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracted-windows.png)  
+3. ดับเบิลคลิ้ก "cs211-project.jar"  
+   ![click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/clickprogram.png)  
+   คุณเปิดโปรแกรมสำเร็จ  
+   **or**  
+   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
+      ```
+      $ java -jar cs211-project.jar
+      ```  
+
+### วิธีดาวน์โหลดคู่มือ  
+![how to download](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/how-to.png)
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
 | Role                                       | Username  | Password   |
