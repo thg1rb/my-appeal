@@ -505,7 +505,7 @@
          <children>
             <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
                <children>
-                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" styleClass="close-pop-up-dark" text="ปิดหน้าต่าง">
+                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" styleClass="close-pop-up-black" text="ปิดหน้าต่าง">
                      <font>
                         <Font size="14.0" />
                      </font>
