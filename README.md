@@ -109,8 +109,9 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
 1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"  
    ![Double Click zip file](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/clickfile-mac.png)  
 2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"  
-   ![extracted](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/indirec-mac.png)  
+   ![extracted](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/extractedfile-mac.png)  
 3. ดับเบิลคลิ้ก "cs211-project.jar"  
+   ![in directory](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/indirec-mac.png)  
    คุณเปิดโปรแกรมสำเร็จ  
    ![double click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/success-mac.png)  
    **or**  
