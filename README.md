@@ -96,7 +96,6 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
     * แก้บัคในส่วนของการแสดงตารางคำร้องของเจ้าที่คณะ
 
 ## วิธีการติดตั้งและรันโปรแกรม
-อธิบายวิธีการติดตั้ง และวิธีการรันโปรแกรม รวมถึงที่อยู่ของไฟล์ pdf  
 ### Download  
 - - -
 โปรแกรม สำหรับ MacOS Chip Apple Silicon สามารถดาวน์โหลดได้ที่
@@ -129,23 +128,24 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
    คุณเปิดโปรแกรมสำเร็จ  
    ![success window](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/success-windows.png)  
    **or**  
-   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon"
+   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-windows"
       ```
       $ java -jar cs211-project.jar
       ```  
 
-### วิธีดาวน์โหลดคู่มือ  
+### วิธีดาวน์โหลดคู่มือ
+คลิกที่[ข้อความนี้](data/user-manual.pdf) เพื่อดาวน์โหลดคู่มือการใช้งาน หรือดาวน์โหลดจากปุ่ม “คู่มือการใช้งาน” ที่แสดงอยู่ในหน้าเข้าสู่ระบบตามรูปที่ปรากฏ  
 ![how to download](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/how-to.png)
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
-| Role                                       | Username  | Password   |
-|--------------------------------------------|-----------|------------|
-| ผู้ดูแลระบบ                                | admin     | 1234567890 |
-| เจ้าหน้าที่คณะ                             | karn      | 12345678   |
-| เจ้าหน้าที่ภาควิชา                         | ton       | 12345678   |
-| อาจารย์ที่ปรึกษา                           | BrightPro | 12345678   |
-| อาจารย์ทที่ปรึกษาที่เข้าใช้งานระบบครั้งแรก | adv-ec01  | ec-adv01    |
-| นักศึกษา                                   | BrightStu | student    |
+| Role                                                     | Username  | Password   |
+|----------------------------------------------------------|-----------|------------|
+| ผู้ดูแลระบบ                                              | admin     | 1234567890 |
+| เจ้าหน้าที่คณะ (วิทยาศาสตร์)                             | karn      | 12345678   |
+| เจ้าหน้าที่ภาควิชา (วิทยาการคอมพิวเตอร์)                 | ton       | 12345678   |
+| อาจารย์ที่ปรึกษา (วิทยาการคอมพิวเตอร์)                   | BrightPro | 12345678   |
+| อาจารย์ทที่ปรึกษาที่เข้าใช้งานระบบครั้งแรก (เศรษฐศาสตร์) | adv-ec01  | ec-adv01    |
+| นักศึกษา (วิทยาการคอมพิวเตอร์)                           | BrightStu | student    |
 ## การวางโครงสร้างไฟล์ของโครงงาน
 ```markdown
 ├── data (ข้อมูลภายในระบบ)
