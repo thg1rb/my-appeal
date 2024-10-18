@@ -4,11 +4,11 @@
 
 ### สมาชิกในทีม
 | รหัสนิสิต  | ชื่อ-นามสกุล (ชื่อเล่น)         | GitHub username |
-|------------|---------------------------------|----------------|
-| 6610401934 | เกิดสิริ ศรีเจริญ (ต้น)         | tonwantpillow  |
+|------------|---------------------------------|-----------------|
+| 6610401934 | เกิดสิริ ศรีเจริญ (ต้น)         | tonup           |
 | 6610401985 | ไชยวัตน์ หนูวัฒนา (โอ้ค)        | aockgonnabefree |
-| 6610402132 | บวรรัตน์ ตั้งนรารัชชกิจ (ไบร์ท) | thg1rb         |
-| 6610405824 | คมชาญ วงศ์ศิริสมพงษ์ (กานต์)    | karnesque      |
+| 6610402132 | บวรรัตน์ ตั้งนรารัชชกิจ (ไบร์ท) | thg1rb          |
+| 6610405824 | คมชาญ วงศ์ศิริสมพงษ์ (กานต์)    | karnesque       |
 
 ## คลิปความก้าวหน้าของระบบ
 | ครั้งที่                      |       กำหนดส่ง        | Youtube Link |
@@ -16,7 +16,7 @@
 | ความก้าวหน้าของระบบครั้งที่ 1 | 9 ส.ค. 2567 17:00 น.  | https://youtu.be/Y-2oY6yPBaU |
 | ความก้าวหน้าของระบบครั้งที่ 2 | 6 ก.ย. 2567 17:00 น.  | https://youtu.be/l7R4g-AhKtM |
 | ความก้าวหน้าของระบบครั้งที่ 3 | 27 ก.ย. 2567 17:00 น. | https://youtu.be/IhHnqhBZbiI |
-| โครงงานที่สมบูรณ์             | 18 ต.ค. 2567 17:00 น. | ____________ |
+| โครงงานที่สมบูรณ์             | 18 ต.ค. 2567 17:00 น. | https://youtu.be/t2GLL_iBwXY |
 
 ## สรุปสิ่งที่พัฒนาในแต่ละครั้ง
 ### ความก้าวหน้าของระบบครั้งที่ 1  
@@ -76,29 +76,126 @@ Figma Link: https://www.figma.com/design/mr25IyLrrW5Z0escY7Rywe/cs211-project?no
     * ออกแบบและเขียน fxml หน้าการตั้งค่าโปรแกรมและคณะผู้จัดทำ ร่วมกับเขียน controller ให้กับหน้าดังกล่าว
 
 ### โครงงานที่สมบูรณ์
-1. คนที่หนึ่ง ซึ่งยังไม่ใช่ (วัน)
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-2. คนที่สอง แค่ลองรักกัน (ทรู)
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-3. คนที่สาม ต้องห้ามตัวเอง (ทรี)
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-4. คนที่สี่ คนนี้แค่พี่น้อง (โฟร์)
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
-    * อธิบายสิ่งที่เป็นประโยชน์ต่อระบบ และทำให้ทีมภูมิใจ ไม่จำกัดจำนวนข้อย่อย
+1. 6610401934 เกิดสิริ ศรีเจริญ (ต้น) 
+   * ทำ Service Class Animation ให้สำหรับการเปลี่ยนหน้าในระบบ และทำให้ Service class อื่นอยู่ในแนวคิด Singleton
+   * แก้ไข Styles ต่างๆ ให้ดูเหมาะสม ทั้ง light-theme และ dark-theme
+   * แก้ไขตารางคำร้องให้แสดงคำร้องทั้งหมดที่เกี่ยข้อง และแก้บัค
+   * เพิ่ม method getStage() ใน Class FXRouter เพิื่อเข้าถึง Stage ของหน้าที่ต้องการจะไป (ใช้ควบคู่กับ Class Animation)
+2. 6610401985 ไชยวัตน์ หนูวัฒนา (โอ้ค)
+    * ทำหน้า Dashboard ของผู้ใช้งานตำแหน่ง ผู้ดูแลระบบ
+    * ทำข้อ EXTRA ของ Dashboard ในเรื่องการอัปเดตข้อมูลโดยไม่ต้องทำการกระทำใดๆหากมีการเพิ่มหรือลดข้อมูลจากการใช้ระบบ
+    * ทำ Service สำหรับการอัปโหลดและดาวน์โหลดไฟล์ PDF 
+    * ทำคู่มือการใช้งานระบบ ในส่วนของ ผู้ดูแลระบบ การลงทะเบียนสำหรับนักศึกษา และโครงสร้างไฟล์ข้อมูลของ คณะและภาควิชา
+3. 6610402132 บวรรัตน์ ตั้งนรารัชชกิจ (ไบร์ท)
+    * ทำ Service Class ที่ชื่อว่า ProgramSetting (ใช้ Singleton pattern) สำหรับการปรับแต่งภายโปรแกรม เช่น เปลี่ยนธีม, ปรับขนาดตัวอักษร และเปลี่ยนฟอนต์
+    * ทำคู่มือการใช้งานระบบ ในส่วนของ การเข้าสู่ระบบ, นิสิต, อาจารย์, โครงสร้างของระบบ, UML Class Diagram และ โครงสร้างฐานข้อมูลของคำร้อง (appeal-list.csv และ modify-date.csv)
+4. 6610405824 คมชาญ วงศ์ศิริสมพงษ์ (กานต์)
+    * เพิ่มส่วนของการเปลี่ยน font ใน ProgramSetting
+    * ทำข้อมูลเริ่มต้นในการทดสอบโปรแกรม เสมือนว่าโปรแกรมถูกใช้งานมาประมาณ 3 เดือน
+    * ทำคู่มือการใช้งานระบบ ในส่วนของ การเข้าใช้งานระบบของเจ้าที่คณะ, การจัดการบัญชี และการตั้งค่าในระบบ
+    * แก้บัคในส่วนของการแสดงตารางคำร้องของเจ้าที่คณะ
 
 ## วิธีการติดตั้งและรันโปรแกรม
-อธิบายวิธีการติดตั้ง และวิธีการรันโปรแกรม รวมถึงที่อยู่ของไฟล์ pdf
+### Download  
+- - -
+โปรแกรม สำหรับ MacOS Chip Apple Silicon สามารถดาวน์โหลดได้ที่
+* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-macOS-apple-silicon.zip***  
+
+โปรแกรม สำหรับ Windows สามารถดาวน์โหลดได้ที่  
+* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-windows.zip***  
+### Installation  
+- - -
+### MacOS Chip Apple Silicon  
+1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"  
+   ![Double Click zip file](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/clickfile-mac.png)  
+2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"  
+   ![extracted](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/extractedfile-mac.png)  
+3. ดับเบิลคลิ้ก "cs211-project.jar"  
+   ![in directory](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/indirec-mac.png)  
+   คุณเปิดโปรแกรมสำเร็จ  
+   ![double click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/success-mac.png)  
+   **or**  
+   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon" เพื่อเปิดโปรแกรมได้
+      ```
+      $ java -jar cs211-project.jar
+      ```
+### Windows
+1. คลิกขวาและแตกไฟล์ "CS211-project-for-windows.zip"  
+   ![extracting windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracting-windows.png)  
+2. เข้าไปที่โฟลเดอร์ "CS211-project-for-windows"  
+   ![in folder windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracted-windows.png)  
+3. ดับเบิลคลิ้ก "cs211-project.jar"  
+   ![click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/clickprogram.png)  
+   คุณเปิดโปรแกรมสำเร็จ  
+   ![success window](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/success-windows.png)  
+   **or**  
+   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-windows"
+      ```
+      $ java -jar cs211-project.jar
+      ```  
+
+### วิธีดาวน์โหลดคู่มือ
+คลิกที่[ข้อความนี้](data/user-manual.pdf) เพื่อดาวน์โหลดคู่มือการใช้งาน หรือดาวน์โหลดจากปุ่ม “คู่มือการใช้งาน” ที่แสดงอยู่ในหน้าเข้าสู่ระบบตามรูปที่ปรากฏ  
+![how to download](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/how-to.png)
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
-| Role                | Username  | Password  |
-|---------------------|-----------|-----------|
-| ผู้ดูแลระบบ         | admin     | admin123     |
-| เจ้าหน้าที่คณะ      | Karn      | Karnesque   |
-| เจ้าหน้าที่ภาควิชา  | Ton       | tonton1678     |
-| อาจารย์             | BrightPro | professor |
-| นักศึกษา            | BrightStu       | student   |
-| นักศึกษา (ถูกระงับ) | nisitban                | ban          |
+| Role                                                     | Username  | Password   |
+|----------------------------------------------------------|-----------|------------|
+| ผู้ดูแลระบบ                                              | admin     | 1234567890 |
+| เจ้าหน้าที่คณะ (วิทยาศาสตร์)                             | karn      | 12345678   |
+| เจ้าหน้าที่ภาควิชา (วิทยาการคอมพิวเตอร์)                 | ton       | 12345678   |
+| อาจารย์ที่ปรึกษา (วิทยาการคอมพิวเตอร์)                   | BrightPro | 12345678   |
+| อาจารย์ทที่ปรึกษาที่เข้าใช้งานระบบครั้งแรก (เศรษฐศาสตร์) | adv-ec01  | ec-adv01    |
+| นักศึกษา (วิทยาการคอมพิวเตอร์)                           | BrightStu | student    |
 ## การวางโครงสร้างไฟล์ของโครงงาน
+```markdown
+├── data (ข้อมูลภายในระบบ)
+│   ├── appeal-list.csv (ข้อมูลของคำร้องภายในระบบทั้งหมด)
+│   ├── approver.csv 	(ข้อมูลของผู้อนุมัติภายในระบบทั้งหมด)
+│   ├── approves-signs	(Directory ของ ไฟล์พร้อมลงนาม โดยมีสกุลของไฟล์คือ PDF ทั้งหมด)
+│   ├── departments.csv	(ข้อมูลของภาควิชาภายในระบบทั้งหมด)
+│   ├── faculties.csv	(ข้อมูลของคณะภายในระบบทั้งหมด)
+│   ├── modify-date.csv	(ข้อมูลบันทึกเวลาของคำร้องแต่ละคำร้องภายในระบบทั้งหมด)
+│   ├── profile-images	(Directory ของ รูปโพรไฟล์บัญชีผู้ใช้ภายในระบบทั้งหมด)
+│   ├── user-manual.pdf	(คู่มือการใช้งานระบบ)
+│   └── users		(Directory เก็บข้อมูลผู้ใช้โดยแยกตามตำแหน่งภายในระบบทั้งหมด)
+├── src     (Source Code ของโปรแกรม)
+│   └── main
+│       ├── java
+│       │   └── ku
+│       │       ├── cs
+│       │       │   ├── Main.java
+│       │       │   ├── controllers	(Directory ของ Controllers ภายในระบบ แยกตามฟีเจอร์ของตำแหน่งผู้ใช้งาน)
+│       │       │   │   ├── admin
+│       │       │   │   ├── advisor
+│       │       │   │   ├── department
+│       │       │   │   ├── faculty
+│       │       │   │   ├── general
+│       │       │   │   └── student
+│       │       │   ├── cs211671project	(Directory เก็บตัวรัน Application)
+│       │       │   ├── models		(Directory ของ Models ภายในระบบ)
+│       │       │   │   ├── appeals	(Directory ของ Models คำร้อง ภายในระบบ)
+│       │       │   │   ├── collections	(Directory ของ	Collection ภายในระบบ)
+│       │       │   │   ├── dates	(Directory ของ Models การบันทึกเวลาของคำร้อง ภายในระบบ)
+│       │       │   │   └── persons	(Directory ของ Models ที่เป็นบุคคล ภายในระบบ)
+│       │       │   └── services	        (Directory ของ Services ที่ใช้ภายในระบบ)
+│       │       │       ├── datasources
+│       │       │       ├── exceptions
+│       │       │       └── fileutilities	(Directory ของคลาสที่ทำงานเกี่ยวข้องกับไฟล์ เช่น การอัปโหลด,ดาวน์โหลด)
+│       │       └── module-info.java
+│       └── resources
+│           ├── fonts (เก็บ font ที่ใช้ภายในระบบ)
+│           ├── icons (เก็บ icons ที่ใช้ภายในระบบ)
+│           ├── images (รูปภาพตั้งต้นภายในระบบ)
+│           └── ku 
+│               └── cs
+│                   ├── styles (CSS ที่ใช้ภายในระบบ)
+│                   └── views  (FXML ภายในระบบทั้งหมด แยกตามตำแหน่งผู้ใช้งาน)
+│                       ├── admin
+│                       ├── advisor
+│                       ├── department
+│                       ├── faculty
+│                       ├── general
+│                       └── student
+└── uml    (UML Diagram ของระบบ)
+```

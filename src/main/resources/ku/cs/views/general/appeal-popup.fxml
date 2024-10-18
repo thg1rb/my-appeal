@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #F8F8F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealEditController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="label-regular" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.AppealEditController">
    <children>
-      <Pane prefHeight="80.0" prefWidth="1200.0" style="-fx-background-color: #265252;">
+      <Pane prefHeight="80.0" prefWidth="1200.0" styleClass="label-pop-up-pane">
          <children>
-            <Label fx:id="topicLabel" layoutX="47.0" layoutY="16.0" text="อนุมัติหรือปฏิเสธคำร้องของนิสิต" textFill="WHITE">
+            <Label fx:id="topicLabel" layoutX="47.0" layoutY="16.0" styleClass="label-bold" text="ดำเนินการคำร้องของนิสิต" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1103.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" styleClass="close-pop-up" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
+            <Button fx:id="closePopUpButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="1070.0" layoutY="10.0" mnemonicParsing="false" onAction="#onCloseButtonClick" style="-fx-background-color: transparent;" text="ปิดหน้าต่าง" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -34,291 +39,473 @@
                      </effect>
                   </ImageView>
                </graphic>
+               <styleClass>
+                  <String fx:value="close-pop-up" />
+                  <String fx:value="label-regular" />
+               </styleClass>
             </Button>
          </children></Pane>
-      <Pane layoutX="50.0" layoutY="100.0" prefHeight="136.0" prefWidth="855.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
+      <HBox fx:id="downloadHBox" alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
          <children>
-            <Label layoutX="40.0" layoutY="30.0" text="ชื่อ-สกุล:">
+            <Button fx:id="downloadDepartmentButton" mnemonicParsing="false" text="เอกสารเจ้าหน้าที่ภาค">
                <font>
-                  <Font size="20.0" />
+                  <Font size="24.0" />
                </font>
-            </Label>
-            <Label layoutX="370.0" layoutY="80.0" text="ประเภทของคำร้อง:">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="label-medium" />
+                  <String fx:value="login-button" />
+               </styleClass>
+            </Button>
+            <Button fx:id="downloadFacultyButton" mnemonicParsing="false" text="เอกสารคณบดี">
                <font>
-                  <Font size="20.0" />
+                  <Font size="24.0" />
                </font>
-            </Label>
-            <Label layoutX="40.0" layoutY="80.0" text="รหัสนิสิต:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="370.0" layoutY="30.0" text="สถานะคำร้อง:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="fullnameLabel" layoutX="160.0" layoutY="30.0" text="Label">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="typeLabel" layoutX="570.0" layoutY="80.0" text="Label">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="idLabel" layoutX="160.0" layoutY="80.0" text="Label">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="statusLabel" alignment="TOP_LEFT" layoutX="540.0" layoutY="20.0" text="Label">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="label-medium" />
+                  <String fx:value="login-button" />
+               </styleClass>
+            </Button>
          </children>
-      </Pane>
-      <Button fx:id="confirmButton" layoutX="963.0" layoutY="635.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" styleClass="approve-button" stylesheets="@../../styles/button.css" text="อนุมัติ">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button fx:id="rejectButton" layoutX="1065.0" layoutY="635.0" mnemonicParsing="false" onAction="#onRejectButtonClick" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ปฏิเสธ">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <ScrollPane fx:id="generalAppealScrollPane" layoutX="50.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" stylesheets="@../../styles/pane.css" visible="false">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="355.0" prefWidth="815.0">
-               <children>
-                  <TextFlow layoutX="5.0" layoutY="5.0" prefHeight="345.0" prefWidth="805.0">
-                     <children>
-                        <Label text="หัวเรื่องที่จะร้องเรียน:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="topicGeneralLabel" alignment="TOP_LEFT" lineSpacing="3.0" prefWidth="800.0" text="Label" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                        <Label text="เนื้อหาภายในคำร้อง:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="detailsGeneralLabel" alignment="TOP_LEFT" lineSpacing="3.0" prefWidth="800.0" text="detailsLabel" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </TextFlow>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <ScrollPane fx:id="suspendAppealScrollPane" layoutX="50.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" stylesheets="@../../styles/pane.css" visible="false">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="815.0">
-               <children>
-                  <TextFlow layoutX="5.0" layoutY="5.0" prefHeight="490.0" prefWidth="805.0">
-                     <children>
-                        <Label text="ภาคเรียนที่ต้องการพักการศึกษา:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="semesterSuspendLabel" text="semesterLabel">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="40.0" />
-                           </padding>
-                        </Label>
-                        <Label text="ปีที่ต้องการพักการศึกษา:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="yearSuspendLabel" alignment="TOP_LEFT" text="yearLabel">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label text="เหตุผลในการขอพักการศึกษา:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="reasonSuspendLabel" alignment="TOP_LEFT" lineSpacing="3.0" prefWidth="800.0" text="reasonLabel" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                        <Label text="รายวิชาที่ลงทะเบียนไป:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="subjectsSuspendLabel" lineSpacing="3.0" prefWidth="800.0" text="subjectsLabel" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </TextFlow>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <ScrollPane fx:id="breakAppealScrollPane" layoutX="50.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" stylesheets="@../../styles/pane.css" visible="false">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="815.0">
-               <children>
-                  <TextFlow layoutX="5.0" layoutY="5.0" prefHeight="490.0" prefWidth="805.0">
-                     <children>
-                        <Label text="ความประสงค์:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="purposeBreakLabel" text="purposeLabel">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="40.0" />
-                           </padding>
-                        </Label>
-                        <Label text="วันที่เริ่มต้น-สิ้นสุดการลา:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="startEndBreakLabel" alignment="TOP_LEFT" text="startEndDateLabel">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label text="เหตุผลในการลาป่วยหรือลากิจ:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="20.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="reasonBreakLabel" alignment="TOP_LEFT" prefWidth="800.0" text="reasonLabel" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                        <Label text="รายวิชาที่ต้องการหยุดเรียน:">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="subjectsBreakLabel" prefWidth="800.0" text="subjectsLabel" wrapText="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </TextFlow>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <Pane layoutX="939.0" layoutY="100.0" prefHeight="510.0" prefWidth="235.0" style="-fx-background-color: white; -fx-background-radius: 20;" stylesheets="@../../styles/pane.css">
+      </HBox>
+      <HBox fx:id="approveAndRejectHBox" alignment="CENTER_RIGHT" layoutY="635.0" prefWidth="1200.0">
          <children>
-            <Label layoutX="19.0" layoutY="39.0" text="วันที่สร้างคำร้อง:">
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonClick" text="อนุมัติ">
                <font>
-                  <Font size="20.0" />
+                  <Font size="24.0" />
                </font>
-            </Label>
-            <Label fx:id="createDateLabel" layoutX="19.0" layoutY="69.0" text="createDateLabel">
+               <styleClass>
+                  <String fx:value="approve-button" />
+                  <String fx:value="label-medium" />
+               </styleClass>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="rejectButton" mnemonicParsing="false" onAction="#onRejectButtonClick" text="ปฏิเสธ">
                <font>
-                  <Font size="20.0" />
+                  <Font size="24.0" />
                </font>
-            </Label>
-            <Label layoutX="19.0" layoutY="159.0" text="วันที่อาจารย์อนุมัติ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="advisorApproveDateLabel" layoutX="19.0" layoutY="189.0" text="advisorDateLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="19.0" layoutY="289.0" text="วันที่หัวหน้าภาคอนุมัติ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="departmentApproveDateLabel" layoutX="19.0" layoutY="319.0" text="departmentDateLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="19.0" layoutY="409.0" text="วันที่หัวหน้าคณะอนุมัติ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="facultyApproveDateLabel" layoutX="19.0" layoutY="439.0" text="facultyDateLabel">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Line endX="100.0" layoutX="119.0" layoutY="126.0" startX="-100.0" stroke="#0000004d" />
-            <Line endX="100.0" layoutX="119.0" layoutY="246.0" startX="-100.0" stroke="#0000004d" />
-            <Line endX="100.0" layoutX="119.0" layoutY="376.0" startX="-100.0" stroke="#0000004d" />
-         </children></Pane>
-      <Pane fx:id="rejectReasonAlertPane" prefHeight="700.0" prefWidth="1200.0" styleClass="background-alert-pane" stylesheets="@../../styles/pane.css" visible="false">
+               <styleClass>
+                  <String fx:value="reject-button" />
+                  <String fx:value="label-medium" />
+               </styleClass>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="25.0" layoutY="100.0" prefHeight="136.0" prefWidth="855.0" styleClass="detail-pane">
+         <children>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="ชื่อ-สกุล:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="fullnameLabel" styleClass="label-regular" text="Label">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets right="30.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รหัสนิสิต:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="idLabel" styleClass="label-regular" text="Label">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets right="30.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="สถานะคำร้อง:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="statusLabel" alignment="TOP_LEFT" styleClass="label-regular" text="Label">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="ประเภทของคำร้อง:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="typeLabel" styleClass="label-regular" text="Label">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="908.0" layoutY="100.0" prefHeight="510.0" prefWidth="260.0" styleClass="detail-pane">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่สร้างคำร้อง:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="createDateLabel" alignment="CENTER" styleClass="label-regular" text="createDateLabel">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" stroke="#0000004d">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Line>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่อาจารย์อนุมัติ:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="advisorApproveDateLabel" alignment="CENTER" styleClass="label-regular" text="advisorDateLabel">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" stroke="#0000004d">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Line>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่หัวหน้าภาคอนุมัติ:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="departmentApproveDateLabel" alignment="CENTER" styleClass="label-regular" text="departmentDateLabel">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Line endX="100.0" startX="-100.0" stroke="#0000004d">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Line>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่คณบดีอนุมัติ:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="facultyApproveDateLabel" alignment="CENTER" styleClass="label-regular" text="facultyDateLabel">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.30000001192092896" />
+               </color>
+            </DropShadow>
+         </effect>
+      </VBox>
+      <VBox fx:id="generalVBox" layoutX="25.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" styleClass="detail-pane" visible="false">
+         <children>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เรื่องที่ต้องการร้องเรียน:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="topicGeneralTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายละเอียดของเรื่องที่ร้องเรียน:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="detailsGeneralTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox fx:id="suspendVBox" layoutX="25.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" styleClass="detail-pane" visible="false">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <HBox alignment="BASELINE_LEFT">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ภาคการศึกษา:">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
+                        <Label fx:id="semesterSuspendLabel" alignment="CENTER" styleClass="label-regular" text="semesterLabel" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <HBox alignment="BASELINE_LEFT">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ปีการศึกษา:">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
+                        <Label fx:id="yearSuspendLabel" alignment="CENTER" styleClass="label-regular" text="yearLabel" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เหตุผลในการขอพักการศึกษา:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="reasonSuspendTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่ได้ลงทะเบียนเรียนในภาคและปีการศึกษาดังกล่าว:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="subjectsSuspendTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox fx:id="breakVBox" layoutX="25.0" layoutY="255.0" prefHeight="355.0" prefWidth="855.0" styleClass="detail-pane" visible="false">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <HBox alignment="BASELINE_LEFT">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="ความประสงค์:">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
+                        <Label fx:id="purposeBreakLabel" alignment="CENTER" styleClass="label-regular" text="purposeLabel" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <HBox alignment="BASELINE_LEFT">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-weight: bold;" styleClass="label-regular" text="วันที่เริ่มต้น-สิ้นสุดการลา:">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Label>
+                        <Label fx:id="startEndBreakLabel" alignment="CENTER" styleClass="label-regular" text="startEndDateLabel" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="เหตุผลในการขอลา:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="reasonBreakTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="label-regular" text="รายวิชาที่อยู่ในช่วงการลา:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="subjectsBreakTextArea" editable="false" prefHeight="200.0" prefWidth="100.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="label-regular" />
+                        <String fx:value="detail-text-area" />
+                     </styleClass>
+                  </TextArea>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+      <Pane fx:id="rejectReasonAlertPane" prefHeight="700.0" prefWidth="1200.0" styleClass="background-alert-pane" visible="false">
          <children>
             <Pane layoutX="200.0" layoutY="130.0" prefHeight="450.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
                <children>
-                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" styleClass="close-pop-up-dark" stylesheets="@../../styles/button.css" text="ปิดหน้าต่าง">
+                  <Button fx:id="closePopUpDarkButton" contentDisplay="TOP" graphicTextGap="1.0" layoutX="690.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseRejectReasonButtonClick" styleClass="close-pop-up-black" text="ปิดหน้าต่าง">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -330,7 +517,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="TOP" layoutX="307.0" layoutY="364.0" mnemonicParsing="false" onAction="#onConfirmRejectReasonButton" styleClass="reject-button" stylesheets="@../../styles/button.css" text="ยืนยันการปฏิเสธ">
+                  <Button contentDisplay="TOP" layoutX="307.0" layoutY="364.0" mnemonicParsing="false" onAction="#onConfirmRejectReasonButton" styleClass="reject-button" text="ยืนยันการปฏิเสธ">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -340,7 +527,7 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="rejectReasonTextArea" layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" stylesheets="@../../styles/text-field.css" wrapText="true">
+                  <TextArea fx:id="rejectReasonTextArea" layoutX="23.0" layoutY="132.0" prefHeight="200.0" prefWidth="750.0" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>

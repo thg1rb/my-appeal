@@ -1,29 +1,37 @@
 package ku.cs.models.dates;
 
-import ku.cs.models.appeals.Appeal;
+import java.util.UUID;
 
 public class ModifyDate {
-    private String uuid;
+
+    // Fields
+    private UUID uuid;
     private String createDate;
     private String advisorApproveDate;
     private String departmentApproveDate;
     private String facultyApproveDate;
 
     // Constructors
-    public ModifyDate(String uuid, String createDate) {
+    public ModifyDate(UUID uuid, String createDate) {
         this.uuid = uuid;
         this.createDate = createDate;
     }
 
-    public ModifyDate(String uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
+    public ModifyDate(UUID uuid, String createDate, String advisorApproveDate, String departmentApproveDate, String facultyApproveDate) {
         this(uuid, createDate);
-        this.advisorApproveDate = advisorApproveDate;
-        this.departmentApproveDate = departmentApproveDate;
-        this.facultyApproveDate = facultyApproveDate;
+
+        if (advisorApproveDate == null || advisorApproveDate.equals("null")) this.advisorApproveDate = null;
+        else this.advisorApproveDate = advisorApproveDate;
+
+        if (departmentApproveDate == null || departmentApproveDate.equals("null")) this.departmentApproveDate = null;
+        else this.departmentApproveDate = departmentApproveDate;
+
+        if (facultyApproveDate == null || facultyApproveDate.equals("null")) this.facultyApproveDate = null;
+        else this.facultyApproveDate = facultyApproveDate;
     }
 
     // Getters
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -69,15 +77,15 @@ public class ModifyDate {
     }
 
     public boolean isAdvisorPending() {
-        return advisorApproveDate.equals("null");
+        return advisorApproveDate == null;
     }
 
     public boolean isDepartmentPending() {
-        return departmentApproveDate.equals("null");
+        return departmentApproveDate == null;
     }
 
     public boolean isFacultyPending() {
-        return facultyApproveDate.equals("null");
+        return facultyApproveDate == null;
     }
 
     // Overriding Method

@@ -10,10 +10,6 @@ public class DateTimeService implements Comparator<String> {
     public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     public static SimpleDateFormat detailedFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-    public static String dateToString(Date date){
-        return dateFormatter.format(date);
-    }
-
     public static String detailedDateToString(Date date){
         return detailedFormatter.format(date);
     }

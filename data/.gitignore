@@ -1,7 +1,9 @@
 *
 !.gitignore
 !*.csv
+!*.pdf
 !*.png
 !*.jpg
 !users/
 !profile-images/
+!approves-signs/

@@ -1,44 +1,47 @@
 package ku.cs.models.appeals;
 
-import ku.cs.models.persons.User;
-
 import java.util.UUID;
 
 public class Appeal {
 
     // Fields
     protected String modifyDate;
-    protected String uuid;
+    protected UUID uuid;
     protected String type;
     protected String status;
     protected String rejectedReason;
     protected String ownerId;
     protected String ownerFullName;
-    protected String ownerDepartment;
-    protected String ownerFaculty;
+    protected UUID ownerDepartmentUuid;
+    protected UUID ownerFacultyUuid;
+    protected String departmentSignature;
+    protected String facultySignature;
     protected String reason;
     protected String subjects;
-    protected String DepartmentSignature;
-    protected String FacultySignature;
+
     // Constructors
-    public Appeal(String modifyDate, String uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, String ownerDepartment, String ownerFaculty, String reason, String subjects, String departmentSignature, String facultySignature) {
+    public Appeal(String modifyDate, UUID uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, UUID ownerDepartmentUuid, UUID ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects) {
         this.modifyDate = modifyDate;
         this.uuid = uuid;
         this.type = type;
         this.status = status;
-        this.rejectedReason = rejectedReason;
+
+        if (rejectedReason == null || rejectedReason.equals("null")) this.rejectedReason = null;
+        else this.rejectedReason = rejectedReason;
+
         this.ownerId = ownerId;
         this.ownerFullName = ownerFullName;
-        this.ownerDepartment = ownerDepartment;
-        this.ownerFaculty = ownerFaculty;
+        this.ownerDepartmentUuid = ownerDepartmentUuid;
+        this.ownerFacultyUuid = ownerFacultyUuid;
+
+        if (departmentSignature == null || departmentSignature.equals("null")) this.departmentSignature = null;
+        else this.departmentSignature = departmentSignature;
+
+        if (facultySignature == null || facultySignature.equals("null")) this.facultySignature = null;
+        else this.facultySignature = facultySignature;
+
         this.reason = reason;
         this.subjects = subjects;
-        this.DepartmentSignature = departmentSignature;
-        this.FacultySignature = facultySignature;
-    }
-
-    public Appeal(Appeal appeal) {
-        this(appeal.modifyDate, appeal.getUuid(), appeal.getType(), appeal.getStatus(), appeal.getRejectedReason(), appeal.getOwnerId(), appeal.getOwnerFullName(), appeal.getOwnerDepartment(), appeal.getOwnerFaculty(), appeal.getReason(), appeal.getSubjects(), appeal.getDepartmentSignature(), appeal.getFacultySignature());
     }
 
     // ตรวจสอบเป็นคำร้องทั่วไปหรือไม่?
@@ -61,7 +64,7 @@ public class Appeal {
         return modifyDate;
     }
 
-    public String getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -85,12 +88,12 @@ public class Appeal {
         return ownerFullName;
     }
 
-    public String getOwnerDepartment() {
-        return ownerDepartment;
+    public UUID getOwnerDepartmentUuid() {
+        return ownerDepartmentUuid;
     }
 
-    public String getOwnerFaculty() {
-        return ownerFaculty;
+    public UUID getOwnerFacultyUuid() {
+        return ownerFacultyUuid;
     }
 
     public String getReason() {
@@ -102,11 +105,11 @@ public class Appeal {
     }
 
     public String getDepartmentSignature() {
-        return DepartmentSignature;
+        return departmentSignature;
     }
 
     public String getFacultySignature() {
-        return FacultySignature;
+        return facultySignature;
     }
 
     // Setters
@@ -120,9 +123,25 @@ public class Appeal {
 
     public void setRejectedReason(String rejectedReason) { this.rejectedReason = rejectedReason; }
 
+    public void setDepartmentSignature(String path) { this.departmentSignature = path; }
+
+    public void setFacultySignature(String path) { this.facultySignature = path; }
+
     // Overriding Method
     @Override
     public String toString() {
-        return modifyDate + "," + uuid + "," + type + "," + status + "," + rejectedReason + "," + ownerId + "," + ownerFullName + "," + ownerDepartment + "," + ownerFaculty + "," + reason + "," + subjects;
+        return modifyDate + ","
+                + uuid + ","
+                + type + ","
+                + status + ","
+                + rejectedReason + ","
+                + ownerId + ","
+                + ownerFullName + ","
+                + ownerDepartmentUuid + ","
+                + ownerFacultyUuid + ","
+                + departmentSignature + ","
+                + facultySignature + ","
+                + reason + ","
+                + subjects;
     }
 }

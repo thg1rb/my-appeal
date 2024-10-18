@@ -11,22 +11,24 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import ku.cs.models.collections.FacultyList;
-import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.DepartmentList;
 import ku.cs.models.collections.UserList;
 import ku.cs.models.persons.Advisor;
 import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.FacultyListDatasource;
-import ku.cs.services.datasources.MajorListDatasource;
+import ku.cs.services.datasources.DepartmentListDatasource;
 import ku.cs.services.datasources.UserListDatasource;
 
 import java.io.File;
@@ -35,12 +37,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class AdminStaffManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
     @FXML private TableView<User> tableView;
 
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
 
     private User user;
 
@@ -48,13 +52,13 @@ public class AdminStaffManagementController {
     private HashMap<String, UserList> staffMap;
 
     private Datasource<UserList> facultyStaffDatasource;
-    private Datasource<UserList> majorStaffDatasource;
+    private Datasource<UserList> departmentStaffDatasource;
     private Datasource<UserList> advisorDatasource;
     private Datasource<FacultyList> facultyListDatasource;
-    private Datasource<MajorList> majorListDatasource;
+    private Datasource<DepartmentList> departmentListDatasource;
 
     private FacultyList facultyList;
-    private MajorList majorList;
+    private DepartmentList departmentList;
 
     private User selectedStaff;
     private String selectingTab;
@@ -64,6 +68,8 @@ public class AdminStaffManagementController {
     @FXML
     private void initialize() {
         user = (User) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -76,14 +82,14 @@ public class AdminStaffManagementController {
         }
 
         facultyStaffDatasource = new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv");
-        majorStaffDatasource = new UserListDatasource("data" + File.separator + "users", "majorStaff.csv");
+        departmentStaffDatasource = new UserListDatasource("data" + File.separator + "users", "departmentStaff.csv");
         advisorDatasource = new UserListDatasource("data" + File.separator + "users", "advisor.csv");
         initMap();
 
         facultyListDatasource = new FacultyListDatasource("data", "faculties.csv");
-        majorListDatasource = new MajorListDatasource("data", "majors.csv");
+        departmentListDatasource = new DepartmentListDatasource("data", "departments.csv");
         facultyList = facultyListDatasource.readData();
-        majorList = majorListDatasource.readData();
+        departmentList = departmentListDatasource.readData();
 
         selectingTab = tabPane.getSelectionModel().getSelectedItem().getText();
         showTable(staffMap.get(selectingTab), selectingTab);
@@ -118,11 +124,11 @@ public class AdminStaffManagementController {
             staffMap.put(key, datasourcesMap.get(key).readData());
         }
         facultyList = facultyListDatasource.readData();
-        majorList = majorListDatasource.readData();
+        departmentList = departmentListDatasource.readData();
     }
 
     private void showTable(UserList userList, String role) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("โปรไฟล์");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("รูปโพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -142,7 +148,10 @@ public class AdminStaffManagementController {
         initPasswordCol.setCellValueFactory(new PropertyValueFactory<>("initialPasswordText"));
 
         TableColumn<User, String> facultyCol = new TableColumn<>("คณะ");
-        facultyCol.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+        facultyCol.setCellValueFactory(cellData ->{
+            FacultyStaff user = (FacultyStaff) cellData.getValue();
+            return new SimpleStringProperty(facultyList.findFacultyByUUID(user.getFacultyUUID()).getFacultyName());
+        });
         facultyCol.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -158,13 +167,13 @@ public class AdminStaffManagementController {
         tableView.getColumns().add(facultyCol);
 
         if (role.equals("เจ้าหน้าที่ภาควิชา") || role.equals("อาจารย์ที่ปรึกษา")){
-            TableColumn<User, String> majorCol = new TableColumn<>("สาขา");
-            majorCol.setCellValueFactory(cellData ->{
+            TableColumn<User, String> departmentCol = new TableColumn<>("ภาควิชา");
+            departmentCol.setCellValueFactory(cellData ->{
                 DepartmentStaff user = (DepartmentStaff) cellData.getValue();
-                return new SimpleStringProperty(user.getDepartment());
+                return new SimpleStringProperty(departmentList.findDepartmentByUUID(user.getDepartmentUUID()).getDepartmentName());
             });
 
-            tableView.getColumns().add(majorCol);
+            tableView.getColumns().add(departmentCol);
         }
         if (role.equals("อาจารย์ที่ปรึกษา")){
             TableColumn<User, String> idCol = new TableColumn<>("รหัสประจำตัว");
@@ -186,11 +195,11 @@ public class AdminStaffManagementController {
         facultyCol.setPrefWidth(facultyCol.getPrefWidth() + 30);
         if (!role.equals("เจ้าหน้าที่คณะ")) {
             facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 15);
-            TableColumn<?, ?> majorCol = (tableView.getColumns()).get(5);
-            majorCol.setPrefWidth(majorCol.getPrefWidth() + 15);
+            TableColumn<?, ?> departmentCol = (tableView.getColumns()).get(5);
+            departmentCol.setPrefWidth(departmentCol.getPrefWidth() + 15);
             if (role.equals("อาจารย์ที่ปรึกษา")){
                 facultyCol.setPrefWidth(facultyCol.getPrefWidth() - 5);
-                majorCol.setPrefWidth(facultyCol.getPrefWidth() + 15);
+                departmentCol.setPrefWidth(facultyCol.getPrefWidth() + 15);
                 TableColumn<?, ?> idCol = (tableView.getColumns()).get(6);
                 idCol.setPrefWidth(idCol.getPrefWidth() - 10);
             }
@@ -206,10 +215,11 @@ public class AdminStaffManagementController {
             col.setSortable(false);
         }
         tableView.sort();
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalText(){
-        totalText.setText("จำนวน" + selectingTab + "ทั้งหมด " + tableView.getItems().size() + " คน");
+        totalLabel.setText("จำนวน" + selectingTab + "ทั้งหมด " + tableView.getItems().size() + " คน");
     }
 
     private void addEditPopup() {
@@ -219,7 +229,7 @@ public class AdminStaffManagementController {
             Stage stage = new Stage();
 
             AdminStaffPopupController staffPopup = fxmlLoader.getController();
-            staffPopup.initPopup(popupEditMode, selectedStaff, facultyList, majorList, selectingTab, staffMap);
+            staffPopup.initPopup(popupEditMode, selectedStaff, facultyList, departmentList, selectingTab, staffMap);
 
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -240,11 +250,11 @@ public class AdminStaffManagementController {
     private void initMap(){
         staffMap = new HashMap<>();
         staffMap.put("เจ้าหน้าที่คณะ", facultyStaffDatasource.readData());
-        staffMap.put("เจ้าหน้าที่ภาควิชา", majorStaffDatasource.readData());
+        staffMap.put("เจ้าหน้าที่ภาควิชา", departmentStaffDatasource.readData());
         staffMap.put("อาจารย์ที่ปรึกษา", advisorDatasource.readData());
         datasourcesMap = new HashMap<>();
         datasourcesMap.put("เจ้าหน้าที่คณะ", facultyStaffDatasource);
-        datasourcesMap.put("เจ้าหน้าที่ภาควิชา", majorStaffDatasource);
+        datasourcesMap.put("เจ้าหน้าที่ภาควิชา", departmentStaffDatasource);
         datasourcesMap.put("อาจารย์ที่ปรึกษา", advisorDatasource);
     }
 

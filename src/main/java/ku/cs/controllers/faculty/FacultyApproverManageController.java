@@ -4,12 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +17,7 @@ import ku.cs.models.persons.Approver;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ApproverListFileDatasource;
 import ku.cs.services.FXRouter;
@@ -27,12 +26,6 @@ import java.io.IOException;
 
 
 public class FacultyApproverManageController {
-    @FXML private Pane navbarAnchorPane;
-
-    @FXML
-    private TableView<Approver> approverTableView;
-    @FXML
-    private TextField searchTextField;
     private User user;
 
     private Datasource<ApproverList> approversDatasource;
@@ -41,14 +34,23 @@ public class FacultyApproverManageController {
     private Approver selectedApprover;
     private boolean addMode;
 
+    @FXML private AnchorPane mainPane;
+    @FXML private Pane navbarAnchorPane;
+
+    @FXML private TableView<Approver> approverTableView;
+    @FXML private TextField searchTextField;
+
+    @FXML private Label totalLabel;
 
     @FXML
     public void initialize() {
+        user = (FacultyStaff)FXRouter.getData();
+
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
-        facultyTierApproverList = approverList.getFacultyTierApprovers();
+        facultyTierApproverList = approverList.getFacultyTierApprovers(((FacultyStaff)user).getFaculty());
 
-        user = (FacultyStaff)FXRouter.getData();
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -66,7 +68,6 @@ public class FacultyApproverManageController {
     private void showApproverTable(ApproverList approverList) {
         TableColumn<Approver, String> roleColumn = new TableColumn<>("ตำแหน่ง");
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-
 
         TableColumn<Approver, String> fullNameColumn = new TableColumn<>("ชื่อ-สกุล");
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
@@ -93,6 +94,11 @@ public class FacultyApproverManageController {
             });
             return row;
         });
+
+        roleColumn.setSortable(false);
+        fullNameColumn.setSortable(false);
+        approverTableView.getColumns().forEach(column -> column.setReorderable(false));
+        updateTotalLabel();
     }
 
     public void showPopup(){
@@ -101,10 +107,7 @@ public class FacultyApproverManageController {
             Parent root = loader.load();
             ApproverEditController controller = loader.getController();
 
-
-
             controller.setRole(user);
-
             controller.setMode(addMode, selectedApprover, user, approverList);
 
             Stage stage = new Stage();
@@ -117,9 +120,8 @@ public class FacultyApproverManageController {
             stage.showAndWait();
 
             approversDatasource.writeData(approverList);
-
             approverList = approversDatasource.readData();
-            facultyTierApproverList = approverList.getFacultyTierApprovers();
+            facultyTierApproverList = approverList.getFacultyTierApprovers(((FacultyStaff)user).getFaculty());
 
             showApproverTable(facultyTierApproverList);
         }
@@ -127,7 +129,6 @@ public class FacultyApproverManageController {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     public void addApproverButton() {
@@ -137,23 +138,7 @@ public class FacultyApproverManageController {
 
 
 
-
-    @FXML
-    public void onSearchKeyReleased() {
-        String searchText = searchTextField.getText().toLowerCase();
-        ApproverList filteredApproverList = new ApproverList();
-
-        if (searchText.isEmpty()) {
-            showApproverTable(facultyTierApproverList);
-        } else {
-            for (Approver approver : facultyTierApproverList.getApprovers()) {
-                String fullName = (approver.getFirstName() + " " + approver.getLastName()).toLowerCase();
-                if (fullName.contains(searchText)) {
-                    filteredApproverList.addApprover(approver);
-                }
-            }
-            showApproverTable(filteredApproverList);
-        }
+    private void updateTotalLabel() {
+        totalLabel.setText("จำนวนผู้อนุมัติทั้งหมด " + approverTableView.getItems().size() + " คน");
     }
-
 }

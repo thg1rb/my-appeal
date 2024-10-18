@@ -19,11 +19,11 @@ module ku.cs {
     exports ku.cs.controllers.general;
     opens ku.cs.controllers.general to javafx.fxml;
 
-    exports ku.cs.controllers.major;
-    opens ku.cs.controllers.major to javafx.fxml;
+    exports ku.cs.controllers.department;
+    opens ku.cs.controllers.department to javafx.fxml;
 
-    exports ku.cs.controllers.professor;
-    opens ku.cs.controllers.professor to javafx.fxml;
+    exports ku.cs.controllers.advisor;
+    opens ku.cs.controllers.advisor to javafx.fxml;
 
     exports ku.cs.controllers.student;
     opens ku.cs.controllers.student to javafx.fxml;
@@ -43,11 +43,10 @@ module ku.cs {
     exports ku.cs.services.exceptions to javafx.fxml;
     opens ku.cs.services.exceptions to javafx.base;
 
-    exports ku.cs.services to javafx.fxml;
-    opens ku.cs.services to javafx.base;
-
-    exports ku.cs.services.fileuploaders to javafx.fxml;
-    opens ku.cs.services.fileuploaders to javafx.base;
+    exports ku.cs.services.fileutilities to javafx.fxml;
+    opens ku.cs.services.fileutilities to javafx.base;
     exports ku.cs.services.datasources to javafx.fxml;
     opens ku.cs.services.datasources to javafx.base;
+    exports ku.cs.services;
+    opens ku.cs.services to javafx.base, javafx.fxml;
 }

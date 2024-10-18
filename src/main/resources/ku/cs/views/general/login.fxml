@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #265252;" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.LoginController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1440.0" style="-fx-background-color: #265252;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.LoginController">
    <children>
-      <Pane layoutX="120.0" layoutY="106.0" prefHeight="625.0" prefWidth="1200.0" style="-fx-background-color: #F2F2F2; -fx-background-radius: 40;">
+      <Pane layoutX="130.0" layoutY="100.0" prefHeight="625.0" prefWidth="1200.0" style="-fx-background-radius: 40;" styleClass="detail-pane">
          <children>
             <Line endX="-100.0" endY="-310.0" layoutX="853.0" layoutY="310.0" startX="-100.0" startY="314.99993896484375" stroke="#0000004d" />
-            <TextField fx:id="giveUsernameTextField" layoutX="180.0" layoutY="192.0" prefHeight="55.0" prefWidth="410.0" promptText="ชื่อผู้ใช้งาน" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
+            <TextField fx:id="giveUsernameTextField" layoutX="180.0" layoutY="192.0" prefHeight="55.0" prefWidth="410.0" promptText="ชื่อผู้ใช้งาน" styleClass="label-medium">
                <font>
                   <Font size="24.0" />
                </font>
@@ -33,7 +36,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" styleClass="label-medium" text="กดเพื่อลงทะเบียน" textFill="#265252">
+            <Button layoutX="406.0" layoutY="501.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" style="-fx-background-color: transparent;" styleClass="label-medium" text="กดเพื่อลงทะเบียน" textFill="#4200c6">
                <font>
                   <Font size="24.0" />
                </font>
@@ -41,7 +44,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="loginButton" layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#onLoginButtonClick" stylesheets="@../../styles/button.css" text="เข้าสู่ระบบ">
+            <Button fx:id="loginButton" layoutX="318.0" layoutY="381.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="เข้าสู่ระบบ">
                <font>
                   <Font size="24.0" />
                </font>
@@ -50,12 +53,12 @@
                   <String fx:value="label-medium" />
                </styleClass>
             </Button>
-            <Label fx:id="errorLabel" layoutX="181.0" layoutY="334.0" text="*ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" textFill="RED">
+            <Label fx:id="errorLabel" layoutX="181.0" layoutY="334.0" style="-fx-text-fill: red;" styleClass="label-thin" text="*ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <PasswordField fx:id="givePasswordTextField" layoutX="180.0" layoutY="272.0" prefHeight="55.0" prefWidth="410.0" promptText="รหัสผ่าน" styleClass="label-medium" stylesheets="@../../styles/text-field.css">
+            <PasswordField fx:id="givePasswordTextField" layoutX="180.0" layoutY="272.0" prefHeight="55.0" prefWidth="410.0" promptText="รหัสผ่าน" styleClass="label-medium">
                <font>
                   <Font size="24.0" />
                </font>
@@ -67,5 +70,30 @@
             </ImageView>
          </children>
       </Pane>
+      <HBox alignment="CENTER_RIGHT" layoutY="750.0" prefWidth="1440.0">
+         <children>
+            <Button contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onManualButtonClicked" style="-fx-background-color: transparent;" styleClass="label-regular" text="คู่มือการใช้งาน" textFill="WHITE" underline="true">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../icons/manual-icon.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets right="40.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

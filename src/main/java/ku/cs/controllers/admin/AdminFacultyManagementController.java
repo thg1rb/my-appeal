@@ -7,41 +7,44 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import ku.cs.models.Department;
 import ku.cs.models.Faculty;
-import ku.cs.models.Major;
 import ku.cs.models.collections.FacultyList;
-import ku.cs.models.collections.MajorList;
+import ku.cs.models.collections.DepartmentList;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 
 import ku.cs.services.FXRouter;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.FacultyListDatasource;
-import ku.cs.services.datasources.MajorListDatasource;
+import ku.cs.services.datasources.DepartmentListDatasource;
 
 import java.io.IOException;
 import java.util.Comparator;
 
 public class AdminFacultyManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
     @FXML private TableView<Object> tableView;
 
-    @FXML private Text totalText;
+    @FXML private Label totalLabel;
 
     private User user;
 
     private Datasource<FacultyList> facultyDatasource;
     private FacultyList facultyList;
 
-    private Datasource<MajorList> majorDatasource;
-    private MajorList majorList;
+    private Datasource<DepartmentList> departmentDatasource;
+    private DepartmentList departmentList;
 
     private String selectingTab;
     private Object selectedObject;
@@ -51,6 +54,8 @@ public class AdminFacultyManagementController {
     @FXML
     public void initialize() {
         user = (AdminUser) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -63,7 +68,7 @@ public class AdminFacultyManagementController {
         }
 
         facultyDatasource = new FacultyListDatasource("data", "faculties.csv");
-        majorDatasource = new MajorListDatasource("data", "majors.csv");
+        departmentDatasource = new DepartmentListDatasource("data", "departments.csv");
         readData();
 
         showFacultyTable(facultyList);
@@ -78,7 +83,7 @@ public class AdminFacultyManagementController {
             }
             else {
                 selectingTab = tabPane.getSelectionModel().getSelectedItem().getText();
-                showMajorTable(majorList);
+                showDepartmentTable(departmentList);
             }
         });
 
@@ -97,21 +102,21 @@ public class AdminFacultyManagementController {
 
     private void readData(){
         facultyList = facultyDatasource.readData();
-        majorList = majorDatasource.readData();
+        departmentList = departmentDatasource.readData();
     }
     private void writeData(){
         facultyDatasource.writeData(facultyList);
-        majorDatasource.writeData(majorList);
+        departmentDatasource.writeData(departmentList);
     }
 
     private void showFacultyTable(FacultyList facultyList) {
-        TableColumn<Object, String> facultyNameColumn = new TableColumn<>("Faculty Name");
+        TableColumn<Object, String> facultyNameColumn = new TableColumn<>("ชื่อคณะ");
         facultyNameColumn.setCellValueFactory(cellData ->{
             Faculty faculty = (Faculty) cellData.getValue();
             return new SimpleStringProperty(faculty.getFacultyName());
         });
 
-        TableColumn<Object, String> facultyIdColumn = new TableColumn<>("Faculty ID");
+        TableColumn<Object, String> facultyIdColumn = new TableColumn<>("รหัสคณะ");
         facultyIdColumn.setCellValueFactory(cellData ->{
             Faculty faculty = (Faculty) cellData.getValue();
             return new SimpleStringProperty(faculty.getFacultyId());
@@ -138,27 +143,28 @@ public class AdminFacultyManagementController {
 
         facultyIdColumn.setSortable(false);
         facultyNameColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
-    private void showMajorTable(MajorList majorList) {
-        TableColumn<Object, String> majorNameColumn = new TableColumn<>("Major Name");
-        majorNameColumn.setCellValueFactory(cellData ->{
-            Major major = (Major) cellData.getValue();
-            return new SimpleStringProperty(major.getMajorName());
+    private void showDepartmentTable(DepartmentList departmentList) {
+        TableColumn<Object, String> departmentNameColumn = new TableColumn<>("ชื่อภาควิชา");
+        departmentNameColumn.setCellValueFactory(cellData ->{
+            Department department = (Department) cellData.getValue();
+            return new SimpleStringProperty(department.getDepartmentName());
         });
 
-        TableColumn<Object, String> ofFacultyColumn = new TableColumn<>("Belong of Faculty");
+        TableColumn<Object, String> ofFacultyColumn = new TableColumn<>("ภายใต้สังกัดคณะ");
         ofFacultyColumn.setCellValueFactory(cellData ->{
-            Major major = (Major) cellData.getValue();
-            return new SimpleStringProperty(major.getFaculty());
+            Department department = (Department) cellData.getValue();
+            return new SimpleStringProperty(facultyList.findFacultyByUUID(department.getFacultyUUID()).getFacultyName());
         });
 
-        TableColumn<Object, String> majorIdColumn = new TableColumn<>("major ID");
-        majorIdColumn.setCellValueFactory(cellData -> {
-            Major major = (Major) cellData.getValue();
-            return new SimpleStringProperty(major.getMajorId());
+        TableColumn<Object, String> departmentIdColumn = new TableColumn<>("รหัสภาควิชา");
+        departmentIdColumn.setCellValueFactory(cellData -> {
+            Department department = (Department) cellData.getValue();
+            return new SimpleStringProperty(department.getDepartmentId());
         });
-        majorIdColumn.setComparator(new Comparator<String>() {
+        departmentIdColumn.setComparator(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return o1.compareTo(o2);
@@ -166,49 +172,50 @@ public class AdminFacultyManagementController {
         });
 
         tableView.getColumns().clear();
-        tableView.getColumns().add((majorIdColumn));
-        tableView.getColumns().add(majorNameColumn);
+        tableView.getColumns().add((departmentIdColumn));
+        tableView.getColumns().add(departmentNameColumn);
         tableView.getColumns().add(ofFacultyColumn);
-        majorIdColumn.setPrefWidth(220);
+        departmentIdColumn.setPrefWidth(220);
         ofFacultyColumn.setPrefWidth(330);
-        majorNameColumn.setPrefWidth(550);
+        departmentNameColumn.setPrefWidth(550);
 
         tableView.getItems().clear();
-        for (Major major : majorList.getMajors()){
-            tableView.getItems().add(major);
+        for (Department department : departmentList.getDepartments()){
+            tableView.getItems().add(department);
         }
-        tableView.getSortOrder().add(majorIdColumn);
+        tableView.getSortOrder().add(departmentIdColumn);
         tableView.sort();
-        majorIdColumn.setSortable(false);
-        majorNameColumn.setSortable(false);
+        departmentIdColumn.setSortable(false);
+        departmentNameColumn.setSortable(false);
         ofFacultyColumn.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void updateTotalText(){
         String text = tabPane.getSelectionModel().getSelectedItem().getText();
-        totalText.setText("จำนวน" + text + "ทั้งหมด " + tableView.getItems().size() + " " +text);
+        totalLabel.setText("จำนวน" + text + "ทั้งหมด " + tableView.getItems().size() + " " +text);
     }
 
     private void addEditPopup(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/admin-addEdit-MajorFaculty.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/views/admin/admin-addEdit-DepartmentFaculty.fxml"));
         try{
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
 
-            AdminMajorFacultyPopupController majorFacultyPopup = fxmlLoader.getController();
-            majorFacultyPopup.initPopup(popupEditMode, selectedObject, facultyList, majorList, selectingTab);
+            AdminDepartmentFacultyPopupController departmentFacultyPopup = fxmlLoader.getController();
+            departmentFacultyPopup.initPopup(popupEditMode, selectedObject, facultyList, departmentList, selectingTab);
 
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            if (majorFacultyPopup.isDeleted()){
+            if (departmentFacultyPopup.isDeleted()){
                 if (selectedObject instanceof Faculty){
                     facultyList.deleteFaculty((Faculty) selectedObject);
-                    majorList.deleteAllMajorsOfFaculty(((Faculty) selectedObject).getFacultyName());
+                    departmentList.deleteAllDepartmentsOfFaculty(((Faculty) selectedObject).getUuid());
                 }
-                else if (selectedObject instanceof Major){
-                    majorList.deleteMajor((Major) selectedObject);
+                else if (selectedObject instanceof Department){
+                    departmentList.deleteDepartment((Department) selectedObject);
                 }
             }
 
@@ -217,7 +224,7 @@ public class AdminFacultyManagementController {
             if (selectingTab.equals("คณะ")){
                 showFacultyTable(facultyList);
             }else{
-                showMajorTable(majorList);
+                showDepartmentTable(departmentList);
             }
         }catch (IOException e){
             throw new RuntimeException(e);

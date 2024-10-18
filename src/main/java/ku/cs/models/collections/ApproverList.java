@@ -34,19 +34,19 @@ public class ApproverList {
     public List<Approver> getApprovers() {
         return approvers;
     }
-    public ApproverList getFacultyTierApprovers() {
+    public ApproverList getFacultyTierApprovers(String faculty) {
         ApproverList approverList = new ApproverList();
         for(Approver approver : approvers) {
-            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับคณะ")){
+            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับคณะ") && approver.getRole().contains(faculty)){
                 approverList.addApprover(approver);
             }
         }
         return approverList;
     }
-    public ApproverList getDepartmentTierApprovers() {
+    public ApproverList getDepartmentTierApprovers(String department) {
         ApproverList approverList = new ApproverList();
         for(Approver approver : approvers) {
-            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับภาควิชา")){
+            if (approver.getTier().equals("ผู้อนุมัติคำร้องระดับภาควิชา") && approver.getRole().contains(department)){
                 approverList.addApprover(approver);
             }
         }

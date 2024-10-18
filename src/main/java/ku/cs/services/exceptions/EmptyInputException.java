@@ -1,7 +1,13 @@
 package ku.cs.services.exceptions;
 
-public class EmptyInputException extends Exception {
+public class EmptyInputException extends RuntimeException {
+
     public EmptyInputException() {
-        super("กรุณากรอกข้อมูลให้ครบถ้วน");
+        super();
     }
+
+    public EmptyInputException(String message) {
+        super(message);
+    }
+
 }

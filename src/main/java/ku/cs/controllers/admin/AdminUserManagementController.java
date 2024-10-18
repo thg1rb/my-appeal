@@ -12,12 +12,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ku.cs.models.persons.AdminUser;
 import ku.cs.models.persons.User;
 import ku.cs.models.collections.UserList;
 
 import ku.cs.services.DateTimeService;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.UserListDatasource;
@@ -26,6 +28,8 @@ import java.io.File;
 import java.util.HashMap;
 
 public class AdminUserManagementController {
+    @FXML private AnchorPane mainPane;
+
     @FXML private Pane navbarAnchorPane;
 
     @FXML private TabPane tabPane;
@@ -34,7 +38,6 @@ public class AdminUserManagementController {
     @FXML private TextField searchTextField;
 
     private User user;
-    private UserList userList;
 
     private HashMap<String, Datasource<UserList> > datasourceMap;
     private HashMap<String, UserList> userInSystemMap;
@@ -45,6 +48,8 @@ public class AdminUserManagementController {
     @FXML
     public void initialize() {
         user = (AdminUser) FXRouter.getData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -91,10 +96,11 @@ public class AdminUserManagementController {
         for (TableColumn<?, ?> col : tableView.getColumns()) {
             col.setSortable(false);
         }
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
     private void basicInfoColCreator(boolean roleSpecific) {
-        TableColumn<User, ImageView> imgCol = new TableColumn<>("Profile");
+        TableColumn<User, ImageView> imgCol = new TableColumn<>("รูปโพรไฟล์");
         imgCol.setCellValueFactory(cellData ->{
             User user = cellData.getValue();
             Image image = new Image("file:data" + File.separator + "profile-images" + File.separator + user.getProfileUrl());
@@ -156,11 +162,12 @@ public class AdminUserManagementController {
         tableView.getItems().clear();
     }
 
-    private void saveData(User user){
+    private void saveData(User user, boolean ban){
         if (user.getRole().equals("นักศึกษา")){
             UserList allStudents = datasourceMap.get(user.getRole()).readData();
             User savedStudent = allStudents.findUserByUUID(user.getUuid());
-            savedStudent.banUser();
+            if (ban)savedStudent.banUser();
+            else savedStudent.unbanUser();
             datasourceMap.get(user.getRole()).writeData(allStudents);
         }else {
             datasourceMap.get(user.getRole()).writeData(userInSystemMap.get(user.getRole()));
@@ -172,7 +179,7 @@ public class AdminUserManagementController {
         datasourceMap = new HashMap<>();
 
         datasourceMap.put("เจ้าหน้าที่คณะ", new UserListDatasource("data" + File.separator + "users", "facultyStaff.csv"));
-        datasourceMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "majorStaff.csv"));
+        datasourceMap.put("เจ้าหน้าที่ภาควิชา", new UserListDatasource("data" + File.separator + "users", "departmentStaff.csv"));
         datasourceMap.put("อาจารย์ที่ปรึกษา", new UserListDatasource("data" + File.separator + "users", "advisor.csv"));
         datasourceMap.put("นักศึกษา" , new UserListDatasource("data" + File.separator + "users", "student.csv"));
 
@@ -191,7 +198,7 @@ public class AdminUserManagementController {
     public void onBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.banUser();
-        saveData(user);
+        saveData(user, true);
         tableView.refresh();
     }
 
@@ -199,7 +206,7 @@ public class AdminUserManagementController {
     public void onUnBanButtonClicked(){
         User user = tableView.getSelectionModel().getSelectedItem();
         user.unbanUser();
-        saveData(user);
+        saveData(user, false);
         tableView.refresh();
     }
 }

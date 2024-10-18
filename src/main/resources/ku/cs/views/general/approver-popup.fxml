@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="601.0" styleClass="label-regular" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ApproverEditController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.general.ApproverEditController">
    <children>
       <Pane prefHeight="74.0" prefWidth="601.0" style="-fx-background-color: #265252;">
          <children>
@@ -23,12 +23,7 @@
             </Label>
          </children>
       </Pane>
-      <Button layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" styleClass="approve-button" stylesheets="@../../styles/button.css" text="เพิ่ม">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="confirmButton" layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ตกลง">
+      <Button layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onAddButtonClick" style="-fx-background-radius: 10;" text="เพิ่ม">
          <font>
             <Font size="20.0" />
          </font>
@@ -37,7 +32,16 @@
             <String fx:value="approve-button" />
          </styleClass>
       </Button>
-      <Button layoutX="194.0" layoutY="414.0" mnemonicParsing="false" onAction="#onCancleButtonClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 10;" stylesheets="@../../styles/button.css" text="ยกเลิก">
+      <Button fx:id="confirmButton" layoutX="324.0" layoutY="414.0" mnemonicParsing="false" onAction="#onConfirmButtonClick" style="-fx-background-radius: 10;" text="ตกลง">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <styleClass>
+            <String fx:value="label-medium" />
+            <String fx:value="approve-button" />
+         </styleClass>
+      </Button>
+      <Button layoutX="194.0" layoutY="414.0" mnemonicParsing="false" onAction="#onCancleButtonClick" style="-fx-background-radius: 10;" text="ยกเลิก">
          <font>
             <Font size="20.0" />
          </font>
@@ -46,98 +50,122 @@
             <String fx:value="reject-button" />
          </styleClass>
       </Button>
-      <TextField fx:id="subRoleTextField" layoutX="238.0" layoutY="340.0" prefHeight="47.0" prefWidth="267.0" promptText="ฝ่าย..." style="-fx-background-radius: 10;" visible="false">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextField>
-      <Label fx:id="subRoleErrorLabel" layoutX="241.0" layoutY="351.0" text="*กรุณากรอกฝ่าย" textFill="RED" visible="false" />
-      <VBox layoutX="140.0" layoutY="100.0">
+      <VBox layoutY="100.0" prefWidth="601.0">
          <children>
-            <HBox>
+            <VBox>
                <children>
-                  <Label styleClass="label-medium" text="ชื่อ :">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="60.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="nameTextField" prefHeight="47.0" prefWidth="267.0" promptText="กรอกชื่อ" style="-fx-background-radius: 10;" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </TextField>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="label-medium" text="ชื่อ :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="60.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="nameTextField" prefHeight="47.0" prefWidth="267.0" promptText="กรอกชื่อ" style="-fx-background-radius: 10;" styleClass="label-regular">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="nameErrorLabel" styleClass="label-thin" text="*กรุณากรอกชื่อ" textFill="RED" visible="false">
+                           <HBox.margin>
+                              <Insets right="70.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <VBox alignment="TOP_RIGHT">
-               <children>
-                  <Label fx:id="nameErrorLabel" styleClass="label-thin" text="*กรุณากรอกชื่อ" textFill="RED" visible="false">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="20.0" />
-               </padding>
             </VBox>
-            <HBox>
+            <VBox>
                <children>
-                  <Label styleClass="label-medium" text="นามสกุล:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="lastNameTextField" prefHeight="47.0" prefWidth="267.0" promptText="กรอกนามสกุล" style="-fx-background-radius: 10;" styleClass="label-regular" stylesheets="@../../styles/text-field.css">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </TextField>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="label-medium" text="นามสกุล:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="lastNameTextField" prefHeight="47.0" prefWidth="267.0" promptText="กรอกนามสกุล" style="-fx-background-radius: 10;" styleClass="label-regular">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lastNameErrorLabel" styleClass="label-thin" text="*กรุณากรอกนามสกุล" textFill="RED" visible="false">
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <VBox alignment="TOP_RIGHT">
-               <children>
-                  <Label fx:id="lastNameErrorLabel" styleClass="label-thin" text="*กรุณากรอกนามสกุล" textFill="RED" visible="false" />
-               </children>
-               <padding>
-                  <Insets bottom="20.0" />
-               </padding>
             </VBox>
-            <HBox>
+            <VBox>
                <children>
-                  <Label styleClass="label-medium" text="ตำแหน่ง:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="11.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ComboBox fx:id="roleComboBox" prefHeight="39.0" prefWidth="267.0" promptText="---เลือกตำแหน่ง---" stylesheets="@../../styles/button.css">
-                     <styleClass>
-                        <String fx:value="label-regular" />
-                        <String fx:value="choice-box-white" />
-                     </styleClass>
-                  </ComboBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label styleClass="label-medium" text="ตำแหน่ง:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="11.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="roleComboBox" prefHeight="39.0" prefWidth="267.0" promptText="---เลือกตำแหน่ง---">
+                           <styleClass>
+                              <String fx:value="label-regular" />
+                              <String fx:value="choice-box-white" />
+                           </styleClass>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="roleErrorLabel" styleClass="label-thin" text="*กรุณากรอกตำแหน่ง" textFill="RED" visible="false">
+                           <HBox.margin>
+                              <Insets right="60.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <VBox alignment="TOP_RIGHT">
+            </VBox>
+            <VBox>
                <children>
-                  <Label fx:id="roleErrorLabel" styleClass="label-thin" text="*กรุณากรอกตำแหน่ง" textFill="RED" visible="false" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <TextField fx:id="subRoleTextField" prefHeight="47.0" prefWidth="267.0" promptText="ฝ่าย..." style="-fx-background-radius: 10;" styleClass="label-regular" visible="false">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" visible="false">
+                     <children>
+                        <Label fx:id="subRoleErrorLabel" styleClass="label-thin" text="*กรุณากรอกฝ่าย" textFill="RED" visible="false">
+                           <HBox.margin>
+                              <Insets right="70.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

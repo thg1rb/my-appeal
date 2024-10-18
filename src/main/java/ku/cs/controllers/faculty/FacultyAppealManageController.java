@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -23,17 +25,7 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-
 public class FacultyAppealManageController {
-    @FXML
-    private Pane navbarAnchorPane;
-
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private TableView<Appeal> tableView;
-
     private Appeal selectedAppeal;
     private AppealList appealList;
     private Datasource<AppealList> datasource;
@@ -42,7 +34,12 @@ public class FacultyAppealManageController {
     private ModifyDateList modifyDateList;
     private User user;
     private Datasource<ModifyDateList> modifyDateListDatasource;
-    //    private Object selectedAppeal;
+
+    @FXML private AnchorPane mainPane;
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TabPane tabPane;
+    @FXML private TableView<Appeal> tableView;
+    @FXML private Label totalLabel;
 
     @FXML
     public void initialize() {
@@ -50,10 +47,13 @@ public class FacultyAppealManageController {
 
         datasource = new AppealListFileDatasource("data", "appeal-list.csv");
         appealList = datasource.readData();
-        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFaculty());
+        facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFacultyUUID());
+
 
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         //NavBar Component
         String role = user.getRoleInEnglish();
@@ -107,15 +107,14 @@ public class FacultyAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+            showTable(facultyAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void showTable(AppealList appealList, boolean filter) {
-        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยนแปลง");
+        TableColumn<Appeal, String> dateColumn = new TableColumn<>("วันเวลาที่สถานะเปลี่ยน");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("modifyDate"));
 
         dateColumn.setComparator(new DateTimeService());
@@ -138,18 +137,38 @@ public class FacultyAppealManageController {
                     setText(null);
                     setStyle("");
                 } else {
-                    if (status.contains("อนุมัติโดยคณบดี") && status.contains("คำร้องดำเนินการครบถ้วน")) {
-                        setStyle("-fx-background-color: green; -fx-text-fill: white;");
-                        setText("ดำเนินการแล้ว");
-                    } else if (status.contains("อนุมัติโดยหัวหน้าภาควิชา") && status.contains("คำร้องส่งต่อให้คณบดี")) {
-                        setText("รอดำเนินการ");
-                        setStyle("-fx-background-color: eed202; -fx-text-fill: black;");
-                    } else if (status.contains("ปฏิเสธโดยคณบดี")) {
-                        setStyle("-fx-background-color: red; -fx-text-fill: white;");
-                        setText("ถูกปฏิเสธ");
-                    } else {
-                        setText(status);
-                        setStyle("");
+                    switch (status) {
+                        case "ใบคำร้องใหม่ | คำร้องส่งต่อให้อาจารย์ที่ปรึกษา":
+                            setText("คำร้องใหม่");
+                            setStyle("-fx-background-color: lime; -fx-text-fill: black;");
+                            break;
+                        case "อนุมัติโดยอาจารย์ที่ปรึกษา | คำร้องส่งต่อให้หัวหน้าภาควิชา":
+                            setText("รอภาควิชาดำเนินการ");
+                            setStyle("-fx-background-color: yellow; -fx-text-fill: black;");
+                            break;
+                        case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน":
+                            setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                            setText("ดำเนินการแล้ว");
+                            break;
+                        case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี":
+                            setStyle("-fx-background-color: orange; -fx-text-fill: white;");
+                            setText("รอดำเนินการ");
+                            break;
+
+                        case "อนุมัติโดยคณบดี | คำร้องดำเนินการครบถ้วน":
+                            setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                            setText("ดำเนินการแล้ว");
+                            break;
+                        case "ปฏิเสธโดยอาจารย์ที่ปรึกษา | คำร้องถูกปฏิเสธ":
+                        case "ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ":
+                        case "ปฏิเสธโดยคณบดี | คำร้องถูกปฏิเสธ":
+                            setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                            setText("ถูกปฏิเสธ");
+                            break;
+                        default:
+                            setText(status);
+                            setStyle("");
+                            break;
                     }
                 }
             }
@@ -170,17 +189,17 @@ public class FacultyAppealManageController {
 
         if (appealList != null && !filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && !modifyDateList.findModifyDateByUuid(appeal.getUuid()).getDepartmentApproveDate().equals("null")
-                        && !appeal.getStatus().equals("ปฏิเสธโดยหัวหน้าภาควิชา | คำร้องถูกปฏิเสธ") && !appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน")) {
                     tableView.getItems().add(appeal);
                 }
-            }
+
+            updateTotalLabel("จำนวนคำร้องทั้งหมด ");
         } else if (appealList != null && filter) {
             for (Appeal appeal : appealList.getAppeals()) {
-                if (!appeal.getStatus().equals("null") && appeal.getOwnerFaculty().equals(((FacultyStaff) user).getFaculty()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
+                if (!appeal.getStatus().equals("null") && appeal.getOwnerFacultyUuid().equals(((FacultyStaff) user).getFacultyUUID()) && appeal.getStatus().equals("อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี")) {
                     tableView.getItems().add(appeal);
                 }
             }
+            updateTotalLabel("จำนวนคำร้องที่รอดำเนินการทั้งหมด ");
         }
 
 
@@ -192,7 +211,10 @@ public class FacultyAppealManageController {
         ownerColumn.setSortable(false);
         typeColumn.setSortable(false);
         statusColumn.setSortable(false);
-
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
     }
 
+    private void updateTotalLabel(String label) {
+        totalLabel.setText(label + tableView.getItems().size() + " คำร้อง");
+    }
 }

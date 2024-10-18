@@ -4,12 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -19,6 +20,7 @@ import ku.cs.models.collections.AppealList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.Student;
 import ku.cs.models.persons.User;
+import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.AppealListFileDatasource;
 import ku.cs.services.DateTimeService;
@@ -27,8 +29,13 @@ import ku.cs.services.datasources.ModifyDateListFileDatasource;
 
 import java.io.IOException;
 
-
 public class StudentTrackAppealController {
+
+    @FXML private AnchorPane mainPane;
+    @FXML private Pane navbarAnchorPane;
+    @FXML private TableView<Appeal> tableView;
+    @FXML private Label totalLabel;
+    @FXML private TextField searchTextField;
 
     private Datasource<AppealList> appealDatasource;
     private AppealList appealList;
@@ -37,14 +44,6 @@ public class StudentTrackAppealController {
     private ModifyDateList modifyDateList;
 
     private User user;
-
-    @FXML private Pane navbarAnchorPane;
-
-    @FXML private TableView<Appeal> tableView;
-
-    @FXML private Text totalText;
-
-    @FXML private TextField searchTextField;
 
     @FXML
     private void initialize() {
@@ -56,6 +55,8 @@ public class StudentTrackAppealController {
 
         modifyDateDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateDatasource.readData();
+
+        ProgramSetting.getInstance().applyStyles(mainPane);
 
         showTable(appealList, ((Student)user).getStudentId(), searchTextField.getText());
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -139,11 +140,17 @@ public class StudentTrackAppealController {
         }
 
         tableView.getSortOrder().add(dateTimeCol);
-        updateTotalText();
+
+        dateTimeCol.setSortable(false);
+        typeCol.setSortable(false);
+        statusCol.setSortable(false);
+        tableView.getColumns().forEach(column -> column.setReorderable(false));
+
+        updateTotalLabel();
     }
 
     // อัพเดตข้อความแสดงคำร้องทั้งหมด
-    private void updateTotalText() {
-        totalText.setText("คำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
+    private void updateTotalLabel() {
+        totalLabel.setText("จำนวนคำร้องทั้งหมด " + tableView.getItems().size() + " คำร้อง");
     }
 }
