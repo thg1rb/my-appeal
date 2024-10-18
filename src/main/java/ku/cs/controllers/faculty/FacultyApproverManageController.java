@@ -48,7 +48,7 @@ public class FacultyApproverManageController {
 
         approversDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approversDatasource.readData();
-        facultyTierApproverList = approverList.getFacultyTierApprovers();
+        facultyTierApproverList = approverList.getFacultyTierApprovers(((FacultyStaff)user).getFaculty());
 
         ProgramSetting.getInstance().applyStyles(mainPane);
 
@@ -121,7 +121,7 @@ public class FacultyApproverManageController {
 
             approversDatasource.writeData(approverList);
             approverList = approversDatasource.readData();
-            facultyTierApproverList = approverList.getFacultyTierApprovers();
+            facultyTierApproverList = approverList.getFacultyTierApprovers(((FacultyStaff)user).getFaculty());
 
             showApproverTable(facultyTierApproverList);
         }

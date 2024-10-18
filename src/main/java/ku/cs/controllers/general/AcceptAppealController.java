@@ -15,6 +15,8 @@ import ku.cs.models.collections.ApproverList;
 import ku.cs.models.collections.ModifyDateList;
 import ku.cs.models.persons.Approver;
 
+import ku.cs.models.persons.DepartmentStaff;
+import ku.cs.models.persons.FacultyStaff;
 import ku.cs.models.persons.User;
 import ku.cs.services.ProgramSetting;
 import ku.cs.services.datasources.ApproverListFileDatasource;
@@ -91,12 +93,12 @@ public class AcceptAppealController {
         this.role = role;
         if (role.equals("เจ้าหน้าที่ภาควิชา")) {
             finishHereRadioButton.setSelected(true);
-            specificTierApproverList = approverList.getDepartmentTierApprovers();
+            specificTierApproverList = approverList.getDepartmentTierApprovers(((DepartmentStaff)staff).getDepartment());
         } else if (role.equals("เจ้าหน้าที่คณะ")) {
             finishHereRadioButton.setSelected(true);
             moreOperationRadioButton.setVisible(false);
             moreOperationRadioButton.setDisable(true);
-            specificTierApproverList = approverList.getFacultyTierApprovers();
+            specificTierApproverList = approverList.getFacultyTierApprovers(((FacultyStaff)staff).getFaculty());
         }
         showTable(specificTierApproverList, null);
         selectedStatus = status;
