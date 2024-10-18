@@ -1,10 +1,10 @@
 package ku.cs.models.dates;
 
-import ku.cs.models.appeals.Appeal;
-
 import java.util.UUID;
 
 public class ModifyDate {
+
+    // Fields
     private UUID uuid;
     private String createDate;
     private String advisorApproveDate;

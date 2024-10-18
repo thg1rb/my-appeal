@@ -15,6 +15,7 @@ public class ModifyDateListFileDatasource implements Datasource<ModifyDateList> 
     public ModifyDateListFileDatasource(String directoryName, String fileName) {
         this.directoryName = directoryName;
         this.fileName = fileName;
+        checkFileIsExisted();
     }
 
     // ตรวจสอบไฟล์ว่ามีจริงหรือไม่?

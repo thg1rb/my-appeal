@@ -49,6 +49,7 @@ public class FacultyAppealManageController {
         appealList = datasource.readData();
         facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFacultyUUID());
 
+
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 

@@ -72,6 +72,7 @@ public class DepartmentNisitManageController {
             row.setOnMouseClicked(event -> {
                 selectedNisit = nisitTableView.getSelectionModel().getSelectedItem();
                 if (selectedNisit != null) {
+                    addMode = false;
                     showPopUp(addMode);
                 }
             });

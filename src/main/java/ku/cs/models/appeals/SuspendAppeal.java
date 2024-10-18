@@ -8,7 +8,7 @@ public class SuspendAppeal extends Appeal {
     private String semester;
     private String year;
 
-    // Constructor
+    // A Constructor
     public SuspendAppeal(String modifyDate, UUID uuid, String type, String status, String rejectedReason, String ownerId, String ownerFullName, UUID ownerDepartmentUuid, UUID ownerFacultyUuid, String departmentSignature, String facultySignature, String reason, String subjects, String semester, String year) {
         super(modifyDate, uuid, type, status, rejectedReason, ownerId, ownerFullName, ownerDepartmentUuid, ownerFacultyUuid, departmentSignature, facultySignature, reason, subjects);
         this.semester = semester;

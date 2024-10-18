@@ -186,6 +186,7 @@ public class DepartmentAppealManageController {
                             break;
                         case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องดำเนินการครบถ้วน":
                         case "อนุมัติโดยหัวหน้าภาควิชา | คำร้องส่งต่อให้คณบดี":
+                        case "อนุมัติโดยคณบดี | คำร้องดำเนินการครบถ้วน" :
                             setStyle("-fx-background-color: green; -fx-text-fill: white;");
                             setText("ดำเนินการแล้ว");
                             break;
