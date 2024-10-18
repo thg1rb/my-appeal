@@ -49,6 +49,7 @@ public class FacultyAppealManageController {
         appealList = datasource.readData();
         facultyAppealList = appealList.getAppealByFaculty(((FacultyStaff) user).getFacultyUUID());
 
+
         modifyDateListDatasource = new ModifyDateListFileDatasource("data", "modify-date.csv");
         modifyDateList = modifyDateListDatasource.readData();
 
@@ -106,7 +107,7 @@ public class FacultyAppealManageController {
 
             datasource.writeData(appealList);
 
-            showTable(appealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
+            showTable(facultyAppealList, tabPane.getSelectionModel().getSelectedIndex() == 1);
         } catch (IOException e) {
             e.printStackTrace();
         }

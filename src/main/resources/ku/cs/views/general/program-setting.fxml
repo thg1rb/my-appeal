@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -39,10 +38,7 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT">
                            <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0">
-                                 <image>
-                                    <Image url="@../../../../icons/theme-program.png" />
-                                 </image>
+                              <ImageView fx:id="themeImageView" fitHeight="50.0" fitWidth="50.0">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -65,10 +61,7 @@
                         </ChoiceBox>
                         <HBox alignment="CENTER_RIGHT" GridPane.rowIndex="1">
                            <children>
-                              <ImageView fitHeight="50.0" fitWidth="50.0">
-                                 <image>
-                                    <Image url="@../../../../icons/font-program.png" />
-                                 </image>
+                              <ImageView fx:id="fontSizeImageView" fitHeight="50.0" fitWidth="50.0">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -103,11 +96,7 @@
                         </ChoiceBox>
                         <HBox alignment="CENTER_RIGHT" GridPane.rowIndex="2">
                            <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../icons/font-change.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="fontChangeImageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                               <Label styleClass="label-bold" text="ฟอนต์:">
                                  <font>
                                     <Font size="38.0" />
@@ -121,7 +110,7 @@
                      </VBox.margin>
                   </GridPane>
                   <VBox alignment="CENTER" prefWidth="1100.0" />
-                  <Button mnemonicParsing="false" onAction="#onApplyButtonClick" stylesheets="@../../styles/button.css" text="บันทึก">
+                  <Button mnemonicParsing="false" onAction="#onApplyButtonClick" text="บันทึก">
                      <styleClass>
                         <String fx:value="approve-button" />
                         <String fx:value="label-medium" />

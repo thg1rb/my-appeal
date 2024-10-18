@@ -5,18 +5,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ku.cs.models.persons.User;
 import ku.cs.services.FXRouter;
 import ku.cs.services.ProgramSetting;
 
+import java.awt.image.ImagingOpException;
 import java.io.IOException;
 
 public class ProgramSettingController {
     @FXML private AnchorPane mainPane;
 
     @FXML private Pane navbarAnchorPane;
+
+    @FXML private ImageView themeImageView;
+    @FXML private ImageView fontSizeImageView;
+    @FXML private ImageView fontChangeImageView;
 
     @FXML private ChoiceBox<String> themeChoiceBox;
     @FXML private ChoiceBox<String> fontSizeChoiceBox;
@@ -84,6 +91,16 @@ public class ProgramSettingController {
     public void onApplyButtonClick() {
         if (selectedTheme != null) {
             ProgramSetting.getInstance().setTheme(selectedTheme);
+
+            if (ProgramSetting.getInstance().getTheme().equals("สว่าง")) {
+                themeImageView.setImage(new Image(getClass().getResource("/icons/theme-program.png").toString()));
+                fontSizeImageView.setImage(new Image(getClass().getResource("/icons/font-program.png").toString()));
+                fontChangeImageView.setImage(new Image(getClass().getResource("/icons/font-change.png").toString()));
+            } else {
+                themeImageView.setImage(new Image(getClass().getResource("/icons/theme-program-white.png").toString()));
+                fontSizeImageView.setImage(new Image(getClass().getResource("/icons/font-program-white.png").toString()));
+                fontChangeImageView.setImage(new Image(getClass().getResource("/icons/font-change-white.png").toString()));
+            }
         }
 
         if (selectedFontSize != null) {

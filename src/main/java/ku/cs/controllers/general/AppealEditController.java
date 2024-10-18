@@ -251,7 +251,7 @@ public class AppealEditController {
             facultyApproveDateLabel.setStyle(rejectColor);
         }
         else {
-            if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate()!=null) {
+            if (modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate() !=null) {
                 advisorApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getAdvisorApproveDate());
                 advisorApproveDateLabel.setStyle(createColor);
             }
@@ -272,8 +272,14 @@ public class AppealEditController {
                 facultyApproveDateLabel.setText(modifyDateList.findModifyDateByUuid(selectedAppeal.getUuid()).getFacultyApproveDate());
                 facultyApproveDateLabel.setStyle(createColor);
             } else {
-                facultyApproveDateLabel.setText("กำลังรอการอนุมัติ...");
-                facultyApproveDateLabel.setStyle(pendingColor);
+                if (selectedAppeal.getStatus().contains("ครบถ้วน")) {
+                    facultyApproveDateLabel.setText("ดำเนินการครบถ้วน");
+                    facultyApproveDateLabel.setStyle(createColor);
+                }
+                else {
+                    facultyApproveDateLabel.setText("กำลังรอการอนุมัติ...");
+                    facultyApproveDateLabel.setStyle(pendingColor);
+                }
             }
         }
             // Label ของแต่ละคำร้อง
