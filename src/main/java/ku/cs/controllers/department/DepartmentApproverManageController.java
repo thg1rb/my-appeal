@@ -46,7 +46,7 @@ public class DepartmentApproverManageController {
         approverDatasource = new ApproverListFileDatasource("data", "approver.csv");
         approverList = approverDatasource.readData();
 
-        departmentTierApproverList = approverList.getDepartmentTierApprovers();
+        departmentTierApproverList = approverList.getDepartmentTierApprovers(((DepartmentStaff)user).getDepartment());
 
         ProgramSetting.getInstance().applyStyles(mainPane);
 
@@ -90,7 +90,7 @@ public class DepartmentApproverManageController {
 
             approverDatasource.writeData(approverList);
             approverList = approverDatasource.readData();
-            departmentTierApproverList = approverList.getDepartmentTierApprovers();
+            departmentTierApproverList = approverList.getDepartmentTierApprovers(((DepartmentStaff)user).getDepartment());
             showTable(departmentTierApproverList);
         }
         catch(IOException e){
