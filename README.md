@@ -1,8 +1,6 @@
-# CS211 Project MyAppeal
+# 🏫 CS211 Project MyAppeal
 
-## ชื่อทีม com-sci-lore
-
-## 👤 Team Members
+## 👤 Team Members (com-sci-lore)
 | Student ID  | Full Name (Nickname)          | GitHub Username |
 |:-------------:|-------------------------------|:-----------------:|
 | 6610401934 | Kerdsiri Srijaroen (Tonnam)   | [tonup](https://github.com/tonup) |
@@ -36,7 +34,23 @@ Features are categorized based on roles, divided into the following 5 roles:
 
 5. **System Administrators** - Manage and oversee the entire system.
 
+## 📸 Screenshots
+
+![screenshot1](https://github.com/user-attachments/assets/af1b248d-1a69-4017-88f8-7c544c3a32e1)
+
+![screenshot2](https://github.com/user-attachments/assets/5a31d1a0-26b9-44a3-aac9-a466015ae949)
+
+![screenshot3](https://github.com/user-attachments/assets/daf8c5bb-7868-4c6f-a154-bac04c55e154)
+
+![screenshot4](https://github.com/user-attachments/assets/8308d001-59f0-43a1-8adc-6851606ac274)
+
+![screenshot5](https://github.com/user-attachments/assets/cdf75ace-2041-40f7-a9cf-3004b4fdf2dd)
+
 ## 🛠️ Tech. Stacks
+
+- **Framework**: JavaFX
+- **Language**: Java
+- **UI Design**: Figma, Scene Builder
 
 ## 📂 Project Structure
 
@@ -99,51 +113,36 @@ my-appeal/
 └── uml/
 ```
 
-## 🗃️ Installation And Execution
+## 🗃️ Installation & Running Guide
 
-### 🧑🏻‍💻 MacOS (Apple Silicon)
+### 🍎 MacOS (Apple Silicon)
 
-โปรแกรม สำหรับ MacOS Chip Apple Silicon สามารถดาวน์โหลดได้ที่
-* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-macOS-apple-silicon.zip***  
+1. Download the [CS211-project-for-MacOS-apple-silicon.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-MacOS-apple-silicon.zip)
+2. Extract the `.zip` file to get a folder named `CS211-project-for-MacOS-apple-silicon`
+3. Locate the `cs211-project.jar` file inside the folder
+4. Run the program by either:
 
----
+   - Double-clicking the `.jar` file, or
 
-1. ดับเบิ้ลคลิก "CS211-project-for-macOS-apple-silicon.zip"  
-   ![Double Click zip file](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/clickfile-mac.png)  
-2. เข้าไปที่โฟลเดอร์ "CS211-project-for-macOS-apple-silicon"  
-   ![extracted](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/extractedfile-mac.png)  
-3. ดับเบิลคลิ้ก "cs211-project.jar"  
-   ![in directory](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/indirec-mac.png)  
-   คุณเปิดโปรแกรมสำเร็จ  
-   ![double click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/b587c6bf05a934604a0ad68fd9fd303cec7a783a/success-mac.png)  
-   **or**  
-   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-macOS-apple-silicon" เพื่อเปิดโปรแกรมได้
-      ```bash
-      java -jar cs211-project.jar
-      ```
+   - Using terminal command:
+    ```bash
+    java -jar cs211-project.jar
+    ```
 
-### 👨🏻‍💻 Windows (x86)
 
----
+### 🪟 Windows (x86)
 
-โปรแกรม สำหรับ Windows สามารถดาวน์โหลดได้ที่ 
-* release [CS211-project-4.0.0](https://github.com/CS211-671/cs211-project-com-sci-lore/releases) ชื่อไฟล์ ***CS211-project-for-windows.zip***
+1. Download the [CS211-project-for-Windows.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-Windows.zip)
+2. Extract the `.zip` file to get a folder named `CS211-project-for-Windows`
+3. Locate the `cs211-project.jar` file inside the folder
+4. Run the program by either:
 
----
+   - Double-clicking the `.jar` file, or
 
-1. คลิกขวาและแตกไฟล์ "CS211-project-for-windows.zip"  
-   ![extracting windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracting-windows.png)
-2. เข้าไปที่โฟลเดอร์ "CS211-project-for-windows"  
-   ![in folder windows](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/extracted-windows.png)  
-3. ดับเบิลคลิ้ก "cs211-project.jar"  
-   ![click program](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/1c12db3bd2b18cdb1d8f77ef9b96c40247479d8e/clickprogram.png)  
-   เปิดโปรแกรมสำเร็จ  
-   ![success window](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/success-windows.png)  
-   **or**  
-   ใช้คำสั่งด้านล่างในโฟลเดอร์ "CS211-project-for-windows"
-      ```bash
-      java -jar cs211-project.jar
-      ```  
+   - Using terminal command:
+    ```bash
+    java -jar cs211-project.jar
+    ```
 
 ## 📖 User Manual
 [Click on this text](data/user-manual.pdf) to download the user manual, or download it from the "User Manual" button shown on the login page as displayed in the image:
