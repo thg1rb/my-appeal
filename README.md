@@ -1,9 +1,7 @@
-<center>
-    <h1>🏫 CS211 Project MyAppeal</h1>
-    <p>
-        This Appeal Management System was developed as part of Course <b>01418211 - Software Construction</b> in the Department of Computer Science.
-    </p>
-</center>
+<h1 align="center">🏫 CS211 Project MyAppeal</h1>
+<p align="center">
+  This Appeal Management System was developed as part of Course <b>01418211 - Software Construction</b> in the Department of Computer Science.
+</p>
 
 ## 👤 Team Members (com-sci-lore)
 | Student ID  | Full Name (Nickname)          | GitHub Username |
