@@ -1,4 +1,9 @@
-# 🏫 CS211 Project MyAppeal
+<center>
+    <h1>🏫 CS211 Project MyAppeal</h1>
+    <p>
+        This Appeal Management System was developed as part of Course <b>01418211 - Software Construction</b> in the Department of Computer Science.
+    </p>
+</center>
 
 ## 👤 Team Members (com-sci-lore)
 | Student ID  | Full Name (Nickname)          | GitHub Username |
@@ -36,15 +41,17 @@ Features are categorized based on roles, divided into the following 5 roles:
 
 ## 📸 Screenshots
 
-![screenshot1](https://github.com/user-attachments/assets/af1b248d-1a69-4017-88f8-7c544c3a32e1)
+![screenshot1](https://github.com/user-attachments/assets/449a3e25-da56-4287-8dd6-506671c8c112)
 
-![screenshot2](https://github.com/user-attachments/assets/5a31d1a0-26b9-44a3-aac9-a466015ae949)
+![screenshot2](https://github.com/user-attachments/assets/af1b248d-1a69-4017-88f8-7c544c3a32e1)
 
-![screenshot3](https://github.com/user-attachments/assets/daf8c5bb-7868-4c6f-a154-bac04c55e154)
+![screenshot3](https://github.com/user-attachments/assets/5a31d1a0-26b9-44a3-aac9-a466015ae949)
 
-![screenshot4](https://github.com/user-attachments/assets/8308d001-59f0-43a1-8adc-6851606ac274)
+![screenshot4](https://github.com/user-attachments/assets/daf8c5bb-7868-4c6f-a154-bac04c55e154)
 
-![screenshot5](https://github.com/user-attachments/assets/cdf75ace-2041-40f7-a9cf-3004b4fdf2dd)
+![screenshot5](https://github.com/user-attachments/assets/8308d001-59f0-43a1-8adc-6851606ac274)
+
+![screenshot6](https://github.com/user-attachments/assets/cdf75ace-2041-40f7-a9cf-3004b4fdf2dd)
 
 ## 🛠️ Tech. Stacks
 
@@ -117,9 +124,9 @@ my-appeal/
 
 ### 🍎 MacOS (Apple Silicon)
 
-1. Download the [CS211-project-for-MacOS-apple-silicon.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-MacOS-apple-silicon.zip)
-2. Extract the `.zip` file to get a folder named `CS211-project-for-MacOS-apple-silicon`
-3. Locate the `cs211-project.jar` file inside the folder
+1. Download the [CS211-project-for-MacOS-apple-silicon.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-MacOS-apple-silicon.zip).
+2. Extract the `.zip` file to get a folder named `CS211-project-for-MacOS-apple-silicon`.
+3. Locate the `cs211-project.jar` file inside the folder.
 4. Run the program by either:
 
    - Double-clicking the `.jar` file, or
@@ -132,9 +139,9 @@ my-appeal/
 
 ### 🪟 Windows (x86)
 
-1. Download the [CS211-project-for-Windows.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-Windows.zip)
-2. Extract the `.zip` file to get a folder named `CS211-project-for-Windows`
-3. Locate the `cs211-project.jar` file inside the folder
+1. Download the [CS211-project-for-Windows.zip](https://github.com/thg1rb/my-appeal/releases/download/4.0.0/CS211-project-for-Windows.zip).
+2. Extract the `.zip` file to get a folder named `CS211-project-for-Windows`.
+3. Locate the `cs211-project.jar` file inside the folder.
 4. Run the program by either:
 
    - Double-clicking the `.jar` file, or
@@ -145,9 +152,10 @@ my-appeal/
     ```
 
 ## 📖 User Manual
-[Click on this text](data/user-manual.pdf) to download the user manual, or download it from the "User Manual" button shown on the login page as displayed in the image:
+- [Click on this text](data/user-manual.pdf) to download the user manual.
+- Or download it from the "User Manual" button shown on the login page as displayed in the image:
 
-![how to download](https://github.com/aockgonnabefree/cs211-java-extended-resource/blob/d6abd66ea636bf872942dcb31a4d455818935682/how-to.png)
+![manual](https://github.com/user-attachments/assets/f6f7a530-8c6a-49f1-9c01-6d7d2e92e482)
 
 ## 🔐 Mock Users
 | Role                                                     | Username  | Password   |
